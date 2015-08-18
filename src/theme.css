@@ -1,0 +1,10 @@
+body {
+    background: #000000;
+}
+
+.title-bar {
+    width: 100%;
+    height: 100%;
+    border-bottom: 3px solid rgb(250, 240, 20);
+    background: #222222;
+}
