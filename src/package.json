@@ -4,11 +4,11 @@
   "main": "main.html",
   "version": "0.1.0",
   "window": {
-    "frame": false,
+    "frame": true,
     "width": 1440,
     "height": 820,
     "show": false,
     "title": "Animk",
-    "toolbar": false
+    "toolbar": true
   }
 }

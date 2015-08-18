@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="theme.css">
+    <script src="js/jquery/jquery-2.1.4.min.js"/>
+    <script src="js/jquery/splitter.js"/>
+    <style>
+        #vsplitter .a {
+            background-color: #2d2d2d;
+        }
+
+        #vsplitter .b {
+            background-color: #2d002d;
+        }
+
+        #foo {
+            background-color: #E92727;
+        }
+
+        #x {
+            background-color: #EFBD73;
+        }
+
+        #y {
+            background-color: #EF3e32;
+        }
+
+        #b {
+            background-color: #73A4EF;
+        }
+
+        #bar {
+            background-color: #BEE927;
+        }
+    </style>
+    <script>
+        jQuery(function ($) {
+            $('#a').split({orientation: 'vertical', limit: 10});
+            console.log("s");
+
+            $('#vsplitter').css({width: 200, height: 300}).split({orientation: 'horizontal', limit: 20});
+        });
+    </script>
 </head>
 <body>
-<div class="title-bar">animk</div>
+<div class="title-bar" onclick="console.log('ss')">animk</div>
+<div id="vsplitter" style="width: 200px; height: 300px;">
+    <div class="a"></div>
+    <div class="hsplitter" style="top: 173px;"></div>
+    <div class="b"></div>
+</div>
+
 </body>
+
 </html>
