@@ -4,6 +4,7 @@ interface JQuery {
     focus(): JQuery;
     html(): string;
     html(val:string): JQuery;
+    data(val:string):JQuery;
     show(): JQuery;
     addClass(className:string): JQuery;
     removeClass(className:string): JQuery;
@@ -22,6 +23,28 @@ declare var $:{
     (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
+class BaseModel {
+    _func:Object;
+
+    constructor() {
+        this._func = {};
+    }
+
+    add(type:string, func) {
+        if (!this._func[type])
+            this._func[type] = [];
+        this._func[type].push(func);
+    }
+
+    dis(type:string) {
+        if (this._func[type])
+            for (var i = 0; i < this._func[type].length; ++i) {
+                var f = this._func[type][i];
+                f();
+            }
+    }
+}
+
 
 class ProjectInfo {
     comps:Array<CompositionInfo>;
@@ -35,79 +58,123 @@ class ProjectInfo {
 }
 
 class TrackInfo {
-    idx:Number;
+    idx:number;
     name:string;
+    isRomve:boolean;
+
 }
-interface BaseView {
+interface IBaseView {
     render():void;
 }
-class TrackView implements BaseView {
+class TrackView implements IBaseView {
     trackInfo:TrackInfo;
+    el:HTMLElement;
 
-    constructor(trackInfo) {
-        this.trackInfo = trackInfo;
+    constructor(idx:number) {
+        this.trackInfo = new TrackInfo();
+        this.trackInfo.idx = idx;
     }
 
     render() {
-        return $('<div class="track">track_' + this.trackInfo.idx + '</div>');
+        if (!this.el) {
+            this.el = $('<div class="track">track_' + this.trackInfo.idx + '</div>').data('idx', this.trackInfo.idx);
+        }
+        var instance = this;
+        $(this.el).on("click", function () {
+            app.projectInfo.curComp.delTrack(instance.trackInfo.idx);
+        });
+        return this.el;
+    }
+
+    remove() {
+        console.log(this, "remove1");
+        $(this.el).remove();
     }
 
 }
-class CompositionInfo {
-    tracks:Array<TrackInfo>;
+class CompositionInfo extends BaseModel {
+    trackArr:Array<TrackInfo>;
+    trackViewArr:Array<TrackView>;
 
     constructor() {
-        this.tracks = new Array<TrackInfo>();
-        console.log("new CompInfo", this.tracks);
+        super();
+        this.trackArr = [];
+        this.trackViewArr = [];
+        console.log("new CompInfo");
     }
 
     newTrack() {
-        var trackInfo:TrackInfo = new TrackInfo();
-        trackInfo.idx = this.tracks.length;
-        this.tracks.push(trackInfo);
-        var view = new TrackView(trackInfo);
+        //this.trackArr.push(trackInfo);
+        var view = new TrackView(this.trackViewArr.length);
+        this.trackViewArr.push(view);
         $("#composition").append(view.render());
     }
-}
 
+    delTrack(idx:number) {
+        //this.trackArr.splice(idx, 1);
+        //delete this.trackArr[idx];
+        app.projectInfo.curComp.dis("delTrack");
+        console.log("delete trackInfo", this.getTrackInfoArr().length);
+        this.trackViewArr[idx].remove();
+        delete this.trackViewArr[idx];
+        //this.trackViewArr.splice(idx, 1);
+    }
+
+    getTrackInfoArr():Array<TrackInfo> {
+        var a = [];
+        for (var i = 0; i < this.trackViewArr.length; ++i) {
+            if (this.trackViewArr[i])
+                a.push(this.trackViewArr[i].trackInfo);
+        }
+        return a;
+    }
+}
+class CompositionView implements IBaseView {
+    trackViewArr:Array<TrackView>;
+
+    constructor() {
+        this.trackViewArr = [];
+    }
+
+    render():void {
+
+    }
+
+    newTrack() {
+        //this.trackArr.push(trackInfo);
+        var view = new TrackView(this.trackViewArr.length);
+        this.trackViewArr.push(view);
+        $("#composition").append(view.render());
+    }
+
+}
 class AnimkView {
     projectInfo:ProjectInfo;
 
     constructor() {
-        //super();
-        //this.setElement($("#root"), true);
-
         //jq
         var instance = this;
         $("#newTrack").on("click", function () {
-            console.log("this", this);
             instance.onNewTrack();
         });
 
 
         this.projectInfo = new ProjectInfo();
+        this.projectInfo.curComp.add("delTrack", this.onDelTrack);
     }
-
-    onClkTrack(event) {
-        //$("#track")
-        //$("#track1").remove();
-        event.target.remove();
-        console.log("del track", event.target.id);
+    onDelTrack(){
+        console.log("test event");
     }
-
     onNewTrack() {
         console.log("on click");
         this.projectInfo.curComp.newTrack();
     }
-
-    render() {
-    }
 }
 
-
+var app:AnimkView;
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
     // Finally, we kick things off by creating the **App**.
-    new AnimkView();
+    app = new AnimkView();
 });
 
