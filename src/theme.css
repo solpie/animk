@@ -11,16 +11,20 @@ body {
 
 .content {
     width: 100%;
-    height: 800px;
+    height: 100%;
     background: #444444;
 }
 
-.content.viewport {
+.viewport {
     height: 300px;
+    background: #555555;
+
 }
 
-.content.timeline {
+.timeline {
+    width: 100%;
     height: 300px;
+    background: #5b2e66;
 }
 
 .vsplitbar {
