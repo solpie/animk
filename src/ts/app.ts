@@ -18,7 +18,7 @@ interface JQuery {
 
 declare var $:{
     (el:HTMLElement): JQuery;
-    (selector:string): JQuery;
+    (selector:string): any;
     (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
@@ -38,26 +38,18 @@ class TrackInfo {
     idx:Number;
     name:string;
 }
-class BaseView {
-
-
-    constructor() {
-    }
-
-    newEl(val:string) {
-        return $(val, true);
-    }
+interface BaseView {
+    render():void;
 }
-class TrackView extends BaseView {
+class TrackView implements BaseView {
     trackInfo:TrackInfo;
 
     constructor(trackInfo) {
-        super();
         this.trackInfo = trackInfo;
     }
 
     render() {
-        return this.newEl('<div class="track">track_' + this.trackInfo.idx + '</div>');
+        return $('<div class="track">track_' + this.trackInfo.idx + '</div>');
     }
 
 }
