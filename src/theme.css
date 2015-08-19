@@ -26,6 +26,15 @@ body {
     height: 300px;
     background: #5b2e66;
 }
+#newTrack{
+    width:80px;
+    height: 30px;
+}
+.track {
+    width: 100%;
+    height: 70px;
+    background: #e4f1d3;
+}
 
 .vsplitbar {
     width: 5px;

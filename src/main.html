@@ -13,16 +13,54 @@
 </head>
 <body>
 
-<div class="root">
+<div class="root" id="root">
     <div class="title-bar"></div>
     <div class="content">
         <div class="viewport">
             <div class="comp"></div>
             <div class="tools"></div>
         </div>
-        <div class="timeline"></div>
+        <div class="timeline">
+            <button id="newTrack" value="newTrack"></button>
+            <div id="composition2">
+                <div class="track" id="track1"></div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Templates -->
+<script type="text/template" id="item-template">
+    <div class="todo <%= done ? 'done' : '' %>">
+        <div class="display">
+            <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+            <label class="todo-content"><%= content %></label>
+            <span class="todo-destroy"></span>
+        </div>
+        <div class="edit">
+            <input class="todo-input" type="text" value="<%= content %>"/>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/template" id="stats-template">
+    <% if (total) { %>
+    <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left.
+        </span>
+    <% } %>
+    <% if (done) { %>
+    <span class="todo-clear">
+          <a href="#">
+              Clear <span class="number-done"><%= done %></span>
+              completed <span class="word-done"><%= done == 1 ? 'item' : 'items' %></span>
+          </a>
+        </span>
+    <% } %>
+</script>
+
 </body>
 
 </html>

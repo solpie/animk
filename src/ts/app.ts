@@ -68,6 +68,7 @@ interface JQuery {
     show(): JQuery;
     addClass(className:string): JQuery;
     removeClass(className:string): JQuery;
+    remove();
     append(el:HTMLElement): JQuery;
     val(): string;
     val(value:string): JQuery;
@@ -87,22 +88,100 @@ declare var _:{
 declare var Store:any;
 
 class ProjectInfo extends Backbone.Model {
-    comps:CompositionInfo;
+    comps:Array<CompositionInfo>
+    curComp:CompositionInfo;
 
     constructor(options?) {
         super(options);
         console.log("new project");
+        this.curComp = new CompositionInfo();
+    }
+
+}
+
+class TrackInfo{
+    idx:Number;
+    name:string;
+}
+class TrackView extends Backbone.View {
+    render() {
+        this.$el.html('<div class="track"></div>');
+        return this;
     }
 }
-var projectInfo = new ProjectInfo();
-
-class TrackInfo extends Backbone.Model {
-
-
-}
-
-class CompositionInfo extends Backbone.Collection<TrackInfo> {
-    localStorage = new Store("todos-backbone");
+class TrackInfoList extends Backbone.Collection<TrackInfo> {
+    model = TrackInfo;
+    localStorage = new Store("animk-track");
 
 }
+class CompositionInfo {
+    tracks:Array<TrackInfo>;
+
+    constructor() {
+        this.tracks = new Array<TrackInfo>();
+        console.log("new CompInfo", this.tracks);
+    }
+
+    newTrack() {
+        var trackInfo:TrackInfo = new TrackInfo();
+        trackInfo.idx = this.tracks.length;
+        this.tracks.push(trackInfo);
+        var comp = $("#composition2");
+        if (comp) {
+            var view = new TrackView();
+            comp.append(view.render().el);
+        }
+    }
+}
+
+class AnimkView extends Backbone.View {
+    // Delegated events for creating new items, and clearing completed ones.
+    events = {
+        //    "keypress #new-todo": "createOnEnter",
+        //    "keyup #new-todo": "showTooltip",
+        "click #newTrack": "onNewTrack",
+        "click .track": "onClkTrack",
+        //    "click .mark-all-done": "toggleAllComplete"
+    };
+    input:JQuery;
+    projectInfo:ProjectInfo;
+
+    constructor() {
+        super();
+        this.setElement($("#root"), true);
+        _.bindAll(this, 'render');
+        this.projectInfo = new ProjectInfo();
+    }
+
+    onClkTrack(event) {
+        //$("#track")
+        //$("#track1").remove();
+        event.target.remove();
+        console.log("del track", event.target.id);
+    }
+
+    onNewTrack() {
+        console.log("on click");
+        this.projectInfo.curComp.newTrack();
+    }
+
+    addTrack(trackInfo) {
+        var comp = $("#composition2");
+        console.log("add Track", trackInfo, this);
+        if (comp) {
+            var view = new TrackView();
+            comp.append(view.render().el);
+        }
+    }
+
+    render() {
+    }
+}
+
+
+// Load the application once the DOM is ready, using `jQuery.ready`:
+$(() => {
+    // Finally, we kick things off by creating the **App**.
+    new AnimkView();
+});
 
