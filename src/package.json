@@ -7,7 +7,7 @@
     "frame": true,
     "width": 1440,
     "height": 820,
-    "show": false,
+    "show": true,
     "title": "Animk",
     "toolbar": true
   }
