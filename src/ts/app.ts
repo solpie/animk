@@ -28,10 +28,11 @@ class AnimkView {
                 ins.onNewComp();
             }
         );
-        
+
         this.compViews = [];
         //jq
         var instance = this;
+        $("#root").data("app", this);
         $("#newTrack").on("click", function () {
             instance.onNewTrack();
         });

@@ -1,6 +1,7 @@
 /// <reference path="BaseView.ts"/>
 /// <reference path="../model/TrackInfo.ts"/>
 /// <reference path="../JQuery.ts"/>
+/// <reference path="../app.ts"/>
 
 class TrackView implements IBaseView {
     trackInfo:TrackInfo;
@@ -17,7 +18,9 @@ class TrackView implements IBaseView {
         }
         var instance = this;
         $(this.el).on("click", function () {
-            //appModel.projectInfo.curComp.delTrack(instance.trackInfo.idx);
+            //var appView = $("#root").data("app");
+            //appView.projectInfo.curComp.delTrack(instance.trackInfo.idx);
+            appModel.projectInfo.curComp.delTrack(instance.trackInfo.idx);
         });
         return this.el;
     }
