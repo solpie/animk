@@ -5,7 +5,9 @@ class BaseObj {
         this.thisObj = this;
     }
 }
-
+interface IBaseView {
+    render():void;
+}
 class BaseView extends BaseObj {
     constructor() {
         super();
