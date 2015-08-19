@@ -1,64 +1,3 @@
-declare module Backbone {
-    export class Model {
-        constructor(attr?, opts?);
-
-        get(name:string):any;
-
-        set(name:string, val:any):void;
-        set(obj:any):void;
-
-        save(attr?, opts?):void;
-
-        destroy():void;
-
-        bind(ev:string, f:Function, ctx?:any):void;
-
-        toJSON():any;
-    }
-    export class Collection<T> {
-        constructor(models?, opts?);
-
-        bind(ev:string, f:Function, ctx?:any):void;
-
-        length:number;
-
-        create(attrs, opts?):any;
-
-        each(f:(elem:T) => void):void;
-
-        fetch(opts?:any):void;
-
-        last():T;
-        last(n:number):T[];
-
-        filter(f:(elem:T) => boolean):T[];
-
-        without(...values:T[]):T[];
-    }
-    export class View {
-        constructor(options?);
-
-        $(selector:string):JQuery;
-
-        el:HTMLElement;
-        $el:JQuery;
-        model:Model;
-
-        remove():void;
-
-        delegateEvents:any;
-
-        make(tagName:string, attrs?, opts?):View;
-
-        setElement(element:HTMLElement, delegate?:boolean):void;
-        setElement(element:JQuery, delegate?:boolean):void;
-
-        tagName:string;
-        events:any;
-
-        static extend:any;
-    }
-}
 interface JQuery {
     fadeIn(): JQuery;
     fadeOut(): JQuery;
@@ -68,51 +7,66 @@ interface JQuery {
     show(): JQuery;
     addClass(className:string): JQuery;
     removeClass(className:string): JQuery;
+    on(type:string, func):JQuery;
     remove();
     append(el:HTMLElement): JQuery;
     val(): string;
     val(value:string): JQuery;
     attr(attrName:string): string;
 }
+
+
 declare var $:{
     (el:HTMLElement): JQuery;
     (selector:string): JQuery;
+    (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
-declare var _:{
-    each<T, U>(arr:T[], f:(elem:T) => U): U[];
-    delay(f:Function, wait:number, ...arguments:any[]): number;
-    template(template:string): (model:any) => string;
-    bindAll(object:any, ...methodNames:string[]): void;
-};
-declare var Store:any;
 
-class ProjectInfo extends Backbone.Model {
-    comps:Array<CompositionInfo>
+class ProjectInfo {
+    comps:Array<CompositionInfo>;
     curComp:CompositionInfo;
 
     constructor(options?) {
-        super(options);
         console.log("new project");
         this.curComp = new CompositionInfo();
     }
 
 }
 
-class TrackInfo{
+class TrackInfo {
     idx:Number;
     name:string;
 }
-class TrackView extends Backbone.View {
-    render() {
-        this.$el.html('<div class="track"></div>');
-        return this;
+class BaseView {
+
+    el:HTMLElement;
+    $el:JQuery;
+
+    constructor() {
     }
 }
-class TrackInfoList extends Backbone.Collection<TrackInfo> {
-    model = TrackInfo;
-    localStorage = new Store("animk-track");
+//class TrackView extends Backbone.View {
+class TrackView extends BaseView {
+    trackInfo:TrackInfo;
 
+    constructor(trackInfo) {
+        super();
+        this.trackInfo = trackInfo;
+    }
+
+    render() {
+        this.$el.html('<div class="track">track_' + this.trackInfo.idx + '</div>');
+        console.log(this, this.$el);
+        //var newTrack = document.createElement('<div class="track">track' + this.trackInfo.idx + '</div>');
+        //return newTrack;
+        return this;
+        //return '<div class="track">track' + this.trackInfo.idx + '</div>';
+    }
+
+    html() {
+        return $('<div class="track">track_' + this.trackInfo.idx + '</div>', true);
+    }
 }
 class CompositionInfo {
     tracks:Array<TrackInfo>;
@@ -126,30 +80,27 @@ class CompositionInfo {
         var trackInfo:TrackInfo = new TrackInfo();
         trackInfo.idx = this.tracks.length;
         this.tracks.push(trackInfo);
-        var comp = $("#composition2");
-        if (comp) {
-            var view = new TrackView();
-            comp.append(view.render().el);
-        }
+        var view = new TrackView(trackInfo);
+        //$("#composition").append(view.render().el);
+        $("#composition").append(view.html());
     }
 }
 
-class AnimkView extends Backbone.View {
-    // Delegated events for creating new items, and clearing completed ones.
-    events = {
-        //    "keypress #new-todo": "createOnEnter",
-        //    "keyup #new-todo": "showTooltip",
-        "click #newTrack": "onNewTrack",
-        "click .track": "onClkTrack",
-        //    "click .mark-all-done": "toggleAllComplete"
-    };
-    input:JQuery;
+class AnimkView {
     projectInfo:ProjectInfo;
 
     constructor() {
-        super();
-        this.setElement($("#root"), true);
-        _.bindAll(this, 'render');
+        //super();
+        //this.setElement($("#root"), true);
+
+        //jq
+        var instance = this;
+        $("#newTrack").on("click", function () {
+            console.log("this", this);
+            instance.onNewTrack();
+        });
+
+
         this.projectInfo = new ProjectInfo();
     }
 
@@ -163,15 +114,6 @@ class AnimkView extends Backbone.View {
     onNewTrack() {
         console.log("on click");
         this.projectInfo.curComp.newTrack();
-    }
-
-    addTrack(trackInfo) {
-        var comp = $("#composition2");
-        console.log("add Track", trackInfo, this);
-        if (comp) {
-            var view = new TrackView();
-            comp.append(view.render().el);
-        }
     }
 
     render() {
