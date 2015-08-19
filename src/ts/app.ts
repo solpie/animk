@@ -1,117 +1,8 @@
 /// <reference path="view/BaseView.ts"/>
 /// <reference path="event/EventDispatcher.ts"/>
 /// <reference path="JQuery.ts"/>
-
-class ProjectInfo extends EventDispatcher {
-    comps:Array<CompositionInfo>;
-    curComp:CompositionInfo;
-    constructor(options?) {
-        super();
-        console.log("new project");
-    }
-
-    newComp():CompositionInfo {
-        this.curComp = new CompositionInfo();
-        return this.curComp;
-    }
-
-}
-
-class TrackInfo {
-    idx:number;
-    name:string;
-    isRomve:boolean;
-}
-
-class TrackView implements IBaseView {
-    trackInfo:TrackInfo;
-    el:HTMLElement;
-
-    constructor(idx:number) {
-        this.trackInfo = new TrackInfo();
-        this.trackInfo.idx = idx;
-    }
-
-    render() {
-        if (!this.el) {
-            this.el = $('<div class="track">track_' + this.trackInfo.idx + '</div>').data('idx', this.trackInfo.idx);
-        }
-        var instance = this;
-        $(this.el).on("click", function () {
-            appModel.projectInfo.curComp.delTrack(instance.trackInfo.idx);
-        });
-        return this.el;
-    }
-
-    remove() {
-        console.log(this, "remove1");
-        $(this.el).remove();
-    }
-
-}
-class CompositionInfo extends EventDispatcher {
-    trackArr:Array<TrackInfo>;
-    trackViewArr:Array<TrackView>;
-
-    constructor() {
-        super();
-        this.trackArr = [];
-        this.trackViewArr = [];
-        console.log("new CompInfo");
-    }
-
-    newTrack() {
-        //this.trackArr.push(trackInfo);
-        var view = new TrackView(this.trackViewArr.length);
-        this.trackViewArr.push(view);
-        $("#composition").append(view.render());
-    }
-
-    delTrack(idx:number) {
-        //this.trackArr.splice(idx, 1);
-        //delete this.trackArr[idx];
-        this.dis("delTrack");
-        console.log("delete trackInfo", this, this.getTrackInfoArr().length);
-        this.trackViewArr[idx].remove();
-        delete this.trackViewArr[idx];
-        //this.trackViewArr.splice(idx, 1);
-    }
-
-    getTrackInfoArr():Array<TrackInfo> {
-        var a = [];
-        for (var i = 0; i < this.trackViewArr.length; ++i) {
-            if (this.trackViewArr[i])
-                a.push(this.trackViewArr[i].trackInfo);
-        }
-        return a;
-    }
-}
-class CompositionView implements IBaseView {
-    trackViewArr:Array<TrackView>;
-    compInfo:CompositionInfo;
-
-    constructor(compInfo:CompositionInfo) {
-        this.compInfo = compInfo;
-        compInfo.add("delTrack", this.delTrack);
-        this.trackViewArr = [];
-    }
-
-    render():void {
-
-    }
-
-    newTrack() {
-        //this.trackArr.push(trackInfo);
-        var view = new TrackView(this.trackViewArr.length);
-        this.trackViewArr.push(view);
-        $("#composition").append(view.render());
-    }
-
-    delTrack() {
-        console.log("test view");
-    }
-
-}
+/// <reference path="model/ProjectInfo.ts"/>
+/// <reference path="view/CompositionView.ts"/>
 class AppModel extends EventDispatcher {
     projectInfo:ProjectInfo;
 
@@ -137,6 +28,7 @@ class AnimkView {
                 ins.onNewComp();
             }
         );
+        
         this.compViews = [];
         //jq
         var instance = this;
