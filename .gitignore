@@ -1,2 +1,4 @@
 build/
 .idea/
+src/ts/*.js
+src/ts/*.js.map
