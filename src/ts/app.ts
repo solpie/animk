@@ -40,13 +40,14 @@ class TrackInfo {
 }
 class BaseView {
 
-    el:HTMLElement;
-    $el:JQuery;
 
     constructor() {
     }
+
+    newEl(val:string) {
+        return $(val, true);
+    }
 }
-//class TrackView extends Backbone.View {
 class TrackView extends BaseView {
     trackInfo:TrackInfo;
 
@@ -56,17 +57,9 @@ class TrackView extends BaseView {
     }
 
     render() {
-        this.$el.html('<div class="track">track_' + this.trackInfo.idx + '</div>');
-        console.log(this, this.$el);
-        //var newTrack = document.createElement('<div class="track">track' + this.trackInfo.idx + '</div>');
-        //return newTrack;
-        return this;
-        //return '<div class="track">track' + this.trackInfo.idx + '</div>';
+        return this.newEl('<div class="track">track_' + this.trackInfo.idx + '</div>');
     }
 
-    html() {
-        return $('<div class="track">track_' + this.trackInfo.idx + '</div>', true);
-    }
 }
 class CompositionInfo {
     tracks:Array<TrackInfo>;
@@ -81,8 +74,7 @@ class CompositionInfo {
         trackInfo.idx = this.tracks.length;
         this.tracks.push(trackInfo);
         var view = new TrackView(trackInfo);
-        //$("#composition").append(view.render().el);
-        $("#composition").append(view.html());
+        $("#composition").append(view.render());
     }
 }
 
