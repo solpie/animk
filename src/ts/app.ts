@@ -1,3 +1,5 @@
+/// <reference path="BaseView.ts"/>
+
 interface JQuery {
     fadeIn(): JQuery;
     fadeOut(): JQuery;
@@ -23,7 +25,8 @@ declare var $:{
     (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
-class BaseModel {
+
+class EventDispatcher {
     _func:Object;
 
     constructor() {
@@ -46,13 +49,17 @@ class BaseModel {
 }
 
 
-class ProjectInfo {
+class ProjectInfo extends EventDispatcher {
     comps:Array<CompositionInfo>;
     curComp:CompositionInfo;
-
     constructor(options?) {
+        super();
         console.log("new project");
+    }
+
+    newComp():CompositionInfo {
         this.curComp = new CompositionInfo();
+        return this.curComp;
     }
 
 }
@@ -81,7 +88,7 @@ class TrackView implements IBaseView {
         }
         var instance = this;
         $(this.el).on("click", function () {
-            app.projectInfo.curComp.delTrack(instance.trackInfo.idx);
+            appModel.projectInfo.curComp.delTrack(instance.trackInfo.idx);
         });
         return this.el;
     }
@@ -92,7 +99,7 @@ class TrackView implements IBaseView {
     }
 
 }
-class CompositionInfo extends BaseModel {
+class CompositionInfo extends EventDispatcher {
     trackArr:Array<TrackInfo>;
     trackViewArr:Array<TrackView>;
 
@@ -113,8 +120,8 @@ class CompositionInfo extends BaseModel {
     delTrack(idx:number) {
         //this.trackArr.splice(idx, 1);
         //delete this.trackArr[idx];
-        app.projectInfo.curComp.dis("delTrack");
-        console.log("delete trackInfo", this.getTrackInfoArr().length);
+        this.dis("delTrack");
+        console.log("delete trackInfo", this, this.getTrackInfoArr().length);
         this.trackViewArr[idx].remove();
         delete this.trackViewArr[idx];
         //this.trackViewArr.splice(idx, 1);
@@ -131,8 +138,11 @@ class CompositionInfo extends BaseModel {
 }
 class CompositionView implements IBaseView {
     trackViewArr:Array<TrackView>;
+    compInfo:CompositionInfo;
 
-    constructor() {
+    constructor(compInfo:CompositionInfo) {
+        this.compInfo = compInfo;
+        compInfo.add("delTrack", this.delTrack);
         this.trackViewArr = [];
     }
 
@@ -147,34 +157,68 @@ class CompositionView implements IBaseView {
         $("#composition").append(view.render());
     }
 
+    delTrack() {
+        console.log("test view");
+    }
+
 }
-class AnimkView {
+class AppModel extends EventDispatcher {
     projectInfo:ProjectInfo;
 
     constructor() {
+        super();
+        this.projectInfo = new ProjectInfo;
+    }
+
+    test() {
+        this.projectInfo.dis("newComp");
+        console.log("test newComp");
+    }
+}
+class AnimkView {
+    projectInfo:ProjectInfo;
+    compViews:Array<CompositionView>;
+
+    constructor(project:ProjectInfo) {
+        //super();
+        this.projectInfo = project;
+        var ins = this;
+        this.projectInfo.add("newComp", function () {
+                ins.onNewComp();
+            }
+        );
+        this.compViews = [];
         //jq
         var instance = this;
         $("#newTrack").on("click", function () {
             instance.onNewTrack();
         });
-
-
-        this.projectInfo = new ProjectInfo();
-        this.projectInfo.curComp.add("delTrack", this.onDelTrack);
     }
-    onDelTrack(){
+
+    onNewComp() {
+        console.log("test CompositionView", this);
+
+        var view = new CompositionView(this.projectInfo.newComp());
+        this.compViews.push(view);
+    }
+
+    onDelTrack() {
         console.log("test event");
     }
+
     onNewTrack() {
         console.log("on click");
         this.projectInfo.curComp.newTrack();
     }
 }
-
+var appModel:AppModel;
 var app:AnimkView;
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
     // Finally, we kick things off by creating the **App**.
-    app = new AnimkView();
+    appModel = new AppModel();
+    app = new AnimkView(appModel.projectInfo);
+
+    appModel.test();
 });
 
