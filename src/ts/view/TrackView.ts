@@ -11,9 +11,13 @@ class TrackView implements IBaseView {
         this.trackInfo = trackInfo;
     }
 
-    render() {
+    render(fileArr:Array<string>) {
         if (!this.el) {
-            this.el = $('<div class="track">track_' + this.trackInfo.idx + '</div>').data('idx', this.trackInfo.idx);
+            var tf = "";
+            for (var i = 0; i < fileArr.length; i++) {
+                tf += '<img class="trackFrame" src="' + fileArr[i] + '"/>'
+            }
+            this.el = $('<div class="track">track_' + this.trackInfo.idx + tf + '</div>').data('idx', this.trackInfo.idx);
         }
         var self = this;
         $(this.el).on("click", function () {

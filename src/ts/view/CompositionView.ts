@@ -33,7 +33,7 @@ class CompositionView implements IBaseView {
 
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
-        $("#composition").append(view.render());
+        $("#composition").append(view.render(trackInfo.imgArr));
     }
 
     onDelTrackView(idx:number) {

@@ -14,18 +14,18 @@ class CompositionInfo extends EventDispatcher {
     }
 
     newTrack(path) {
-        walk(path);
-        var info = new TrackInfo();
-        info.idx = this.trackInfoArr.length;
-        this.trackInfoArr.push(info);
-        this.dis(ActEvent.NEW_TRACK, info);
-        console.log(this, "newTrack idx", info.idx);
+        var trackInfo = new TrackInfo();
+        trackInfo.imgArr = walk(path);
+        trackInfo.idx = this.trackInfoArr.length;
+        this.trackInfoArr.push(trackInfo);
+        this.dis(ActEvent.NEW_TRACK, trackInfo);
+        console.log(this, "newTrack idx", trackInfo.idx);
     }
 
     delTrack(idx:number) {
         //this.trackInfoArr.splice(idx, 1);
         delete this.trackInfoArr[idx];
-        console.log(this, "delTrack", idx+'');
+        console.log(this, "delTrack", idx + '');
         this.dis(ActEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
