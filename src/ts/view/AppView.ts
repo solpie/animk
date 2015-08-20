@@ -1,4 +1,6 @@
 /// <reference path="../model/AppInfo.ts"/>
+/// <reference path="../view/ProjectView.ts"/>
+/// <reference path="../view/TimelineView.ts"/>
 
 class AnimkView {
     appModel:AppInfo;

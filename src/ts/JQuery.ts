@@ -13,17 +13,21 @@ interface JQuery {
     append(el:HTMLElement): JQuery;
     val(): string;
     val(value:string): JQuery;
+    width(): string;
+    width(value:number): JQuery;
+    height(): string;
+    height(value:number): JQuery;
     unbind(value:string): JQuery;
     change(func:any): JQuery;
     trigger(type:any): JQuery;
     attr(attrName:string): string;
+    (selector:string): any;
 }
 
 
 declare var $:{
     (el:HTMLElement): JQuery;
     (selector:string): any;
-    (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
 

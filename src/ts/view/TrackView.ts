@@ -3,27 +3,39 @@
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
-class TrackView implements IBaseView {
+class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
     el:HTMLElement;
 
     constructor(trackInfo:TrackInfo) {
+        super();
         this.trackInfo = trackInfo;
     }
 
-    render(fileArr:Array<string>) {
-        if (!this.el) {
-            var tf = "";
-            for (var i = 0; i < fileArr.length; i++) {
-                tf += '<img class="trackFrame" src="' + fileArr[i] + '"/>'
-            }
-            this.el = $('<div class="track">track_' + this.trackInfo.idx + tf + '</div>').data('idx', this.trackInfo.idx);
+    render(fileArr:Array<string>):HTMLElement {
+        //if (!this.el) {
+        var track = $("<div class='Track'/>");
+        var nameLabel = $("<div class='Label'/>");
+        nameLabel.html("track#" + this.trackInfo.idx);
+        track.append(nameLabel);
+        var trackClip = $('<div class="TrackClip"/>');
+        var trackBar = $('<div class="Bar"/>');
+        trackClip.append(trackBar);
+        for (var i = 0; i < fileArr.length; i++) {
+            var trackFrame = $('<div class="trackFrame"/>');
+            var frameImg = $('<img src="' + fileArr[i] + '"/>');
+            trackFrame.append(frameImg);
+            trackClip.append(trackFrame);
         }
+        trackClip.width(fileArr.length * 40);
+        track.append(trackClip);
+        this.el = track;
         var self = this;
         $(this.el).on("click", function () {
             self.onDelTrack();
         });
-        return this.el;
+        //trackClip.width(1400);
+        return track;
     }
 
     onDelTrack() {

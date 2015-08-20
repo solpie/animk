@@ -6,6 +6,9 @@
 /// <reference path="../model/CompositionInfo.ts"/>
 
 class CompositionView implements IBaseView {
+    render():HTMLElement {
+        return undefined;
+    }
     trackViewArr:Array<TrackView>;
 
     compInfo:CompositionInfo;
@@ -23,9 +26,9 @@ class CompositionView implements IBaseView {
         this.trackViewArr = [];
     }
 
-    render():void {
-
-    }
+    //render():HTMLElement {
+    //    return 0;
+    //}
 
     onNewTrackView(trackInfo:TrackInfo) {
         //this.trackInfoArr.push(trackInfo);
@@ -33,11 +36,14 @@ class CompositionView implements IBaseView {
 
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
-        $("#composition").append(view.render(trackInfo.imgArr));
+        var trackEl = view.render(trackInfo.imgArr);
+        $("#composition").append(trackEl);
+        //var trackClip = $(trackEl)(".TrackClip");
+        //console.log(trackClip)
     }
 
     onDelTrackView(idx:number) {
-        console.log(this, "onDelTrackView", idx+'');
+        console.log(this, "onDelTrackView", idx + '');
 
         //this.trackInfoArr.splice(idx, 1);
         //delete this.trackInfoArr[idx];

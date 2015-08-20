@@ -1,6 +1,7 @@
 declare var require:{
     (val:string):any;
 };
+//import fs = require('fs');
 var fs = require('fs');
 //var data = fs.read('c:/test.xml');
 function walk(path):Array<string> {
