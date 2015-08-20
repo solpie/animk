@@ -13,7 +13,7 @@ class TrackView extends BaseView {
     }
 
     render() {
-        var newJade = jade.renderFile('ts/view/Track.jade',{
+        var newJade = jade.renderFile('jade/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             imgs: this.trackInfo.imgArr
