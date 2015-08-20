@@ -17,6 +17,7 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo = new TrackInfo();
         trackInfo.imgArr = walk(path);
         trackInfo.idx = this.trackInfoArr.length;
+        trackInfo.name = 'track#'+trackInfo.idx;
         this.trackInfoArr.push(trackInfo);
         this.dis(ActEvent.NEW_TRACK, trackInfo);
         console.log(this, "newTrack idx", trackInfo.idx);

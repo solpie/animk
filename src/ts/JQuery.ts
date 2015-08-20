@@ -30,6 +30,9 @@ declare var $:{
     (selector:string): any;
     (readyCallback:() => void): JQuery;
 };
+declare var Mustache:{
+    render(tpl:string,data:Object);
+};
 
 function chooseFile(name):JQuery {
     var chooser = $(name);

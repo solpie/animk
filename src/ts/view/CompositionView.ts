@@ -37,7 +37,7 @@ class CompositionView implements IBaseView {
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
         var trackEl = view.render(trackInfo.imgArr);
-        $("#composition").append(trackEl);
+        $("#composition").append(view.render1());
         //var trackClip = $(trackEl)(".TrackClip");
         //console.log(trackClip)
     }

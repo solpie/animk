@@ -15,14 +15,17 @@ class TrackView extends BaseView implements IBaseView {
     render(fileArr:Array<string>):HTMLElement {
         //if (!this.el) {
         var track = $("<div class='Track'/>");
+        var trackPanel = $('<div class="Panel"/>');
+        track.append(trackPanel);
         var nameLabel = $("<div class='Label'/>");
         nameLabel.html("track#" + this.trackInfo.idx);
-        track.append(nameLabel);
-        var trackClip = $('<div class="TrackClip"/>');
+        trackPanel.append(nameLabel);
+        var trackClip = $('<div class="Clip"/>');
         var trackBar = $('<div class="Bar"/>');
         trackClip.append(trackBar);
+        fileArr = this.trackInfo.imgArr;
         for (var i = 0; i < fileArr.length; i++) {
-            var trackFrame = $('<div class="trackFrame"/>');
+            var trackFrame = $('<div class="Frame"/>');
             var frameImg = $('<img src="' + fileArr[i] + '"/>');
             trackFrame.append(frameImg);
             trackClip.append(trackFrame);
@@ -36,6 +39,18 @@ class TrackView extends BaseView implements IBaseView {
         });
         //trackClip.width(1400);
         return track;
+    }
+
+    render1() {
+        var fileArr = this.trackInfo.imgArr;
+        var htmlArr = [];
+        for (var i = 0; i < fileArr.length; i++) {
+            var frameImg = '<img src="' + fileArr[i] + '"/>';
+            htmlArr.push(frameImg);
+        }
+        var template = $('.Track-tpl').html();
+        var newTrack = Mustache.render(template, {name: this.trackInfo.name, imgs: fileArr});
+        return newTrack;
     }
 
     onDelTrack() {
