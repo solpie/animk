@@ -3,7 +3,7 @@
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
-class TrackView extends BaseView implements IBaseView {
+class TrackView extends BaseView  {
     trackInfo:TrackInfo;
     el:HTMLElement;
 
@@ -42,14 +42,8 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     render1() {
-        var fileArr = this.trackInfo.imgArr;
-        var htmlArr = [];
-        for (var i = 0; i < fileArr.length; i++) {
-            var frameImg = '<img src="' + fileArr[i] + '"/>';
-            htmlArr.push(frameImg);
-        }
         var template = $('.Track-tpl').html();
-        var newTrack = Mustache.render(template, {name: this.trackInfo.name, imgs: fileArr});
+        var newTrack = Mustache.render(template, {name: this.trackInfo.name, imgs: this.trackInfo.imgArr});
         return newTrack;
     }
 

@@ -41,9 +41,9 @@ body {
 }
 
 .Track .Panel {
+    position: absolute;
     width: 200px;
-    height: 100%;
-    background: #292929;
+    height: 70px;
 }
 
 .Track .Clip {
@@ -51,6 +51,7 @@ body {
     position: relative;
     height: 65px;
     background: #00ff56;
+    font-size: 0;
 }
 
 .Track .Clip .Bar {
@@ -64,6 +65,7 @@ body {
     width: 40px;
     height: 40px;
     background: #ffffff;
+    -webkit-user-select: none;
 }
 
 .Frame img {
