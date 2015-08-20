@@ -29,7 +29,7 @@
 
 
     <script type="text/template" class="Track-tpl">
-        <div class="Track">
+        <div class="Track" id="{{idx}}">
             <div class="Panel">
                 <div class="Label"> {{name}}</div>
             </div>
@@ -49,13 +49,15 @@
 <input style="display:none;" id="fileDialog" type="file" accept="image/png"/>
 
 <div class="root" id="app">
-    <div class="title-bar"></div>
-    <div class="content">
-        <div class="viewport">
-            <div class="comp"></div>
+    <div class="TitleBar"></div>
+    <div class="Content">
+        <div class="Viewport">
+            <div class="Comp"></div>
+            <div class="HSplitter"></div>
             <div class="tools"></div>
         </div>
-        <div class="timeline">
+        <div class="VSplitter"></div>
+        <div class="Timeline">
             <button id="newTrack">newTrack</button>
             <div id="composition">
             </div>

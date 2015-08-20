@@ -5,6 +5,7 @@ interface JQuery {
     html(): string;
     html(val:string): JQuery;
     data(val:string):JQuery;
+    children(val:string):JQuery;
     show(): JQuery;
     addClass(className:string): JQuery;
     removeClass(className:string): JQuery;

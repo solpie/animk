@@ -2,25 +2,25 @@ body {
     background: #333333;
 }
 
-.title-bar {
+.TitleBar {
     width: 100%;
     height: 35px;
     border-bottom: 3px solid rgb(250, 240, 20);
     background: #222222;
 }
 
-.content {
+.Content {
     width: 100%;
     height: 100%;
     background: #444444;
 }
 
-.viewport {
+.Viewport {
     height: 300px;
     background: #555555;
 }
 
-.timeline {
+.Timeline {
     width: 100%;
     height: 300px;
     background: #5b2e66;
@@ -72,13 +72,13 @@ body {
     width: 100%;
 }
 
-.vsplitbar {
-    width: 5px;
+.VSplitter {
+    height: 5px;
     background: #aaa;
 }
 
-.hsplitbar {
-    height: 6px;
+.HSplitter {
+    width: 5px;
     background: #aaa;
 
 }

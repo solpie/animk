@@ -3,48 +3,38 @@
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
-class TrackView extends BaseView  {
+class TrackView extends BaseView {
     trackInfo:TrackInfo;
-    el:HTMLElement;
+    clip:HTMLElement;
 
     constructor(trackInfo:TrackInfo) {
         super();
         this.trackInfo = trackInfo;
     }
 
-    render(fileArr:Array<string>):HTMLElement {
-        //if (!this.el) {
-        var track = $("<div class='Track'/>");
-        var trackPanel = $('<div class="Panel"/>');
-        track.append(trackPanel);
-        var nameLabel = $("<div class='Label'/>");
-        nameLabel.html("track#" + this.trackInfo.idx);
-        trackPanel.append(nameLabel);
-        var trackClip = $('<div class="Clip"/>');
-        var trackBar = $('<div class="Bar"/>');
-        trackClip.append(trackBar);
-        fileArr = this.trackInfo.imgArr;
-        for (var i = 0; i < fileArr.length; i++) {
-            var trackFrame = $('<div class="Frame"/>');
-            var frameImg = $('<img src="' + fileArr[i] + '"/>');
-            trackFrame.append(frameImg);
-            trackClip.append(trackFrame);
-        }
-        trackClip.width(fileArr.length * 40);
-        track.append(trackClip);
-        this.el = track;
-        var self = this;
-        $(this.el).on("click", function () {
-            self.onDelTrack();
+    render() {
+        var template = $('.Track-tpl').html();
+        var newTrack = Mustache.render(template, {
+            idx: this.trackInfo.idx,
+            name: this.trackInfo.name,
+            imgs: this.trackInfo.imgArr
         });
-        //trackClip.width(1400);
-        return track;
+        return newTrack;
     }
 
-    render1() {
-        var template = $('.Track-tpl').html();
-        var newTrack = Mustache.render(template, {name: this.trackInfo.name, imgs: this.trackInfo.imgArr});
-        return newTrack;
+    setParent(parent:JQuery) {
+        var track$ = parent.append(this.render());
+        var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
+        var idx = this.trackInfo.idx;
+        this.el = $(".Track#" + idx)[0];
+        var clip = $(".Track#" + idx + " .Clip");
+        clip.width(clipWidth);
+        console.log(this, "setParent", track$, clip, clipWidth);
+
+        var self = this;
+        $(this.el).on('click', function () {
+            self.onDelTrack();
+        })
     }
 
     onDelTrack() {
@@ -52,7 +42,7 @@ class TrackView extends BaseView  {
     }
 
     remove() {
-        console.log(this, "remove1");
+        console.log(this, "remove track idx:", this.trackInfo.idx);
         $(this.el).remove();
     }
 

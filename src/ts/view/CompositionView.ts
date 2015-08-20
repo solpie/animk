@@ -26,20 +26,18 @@ class CompositionView implements IBaseView {
         this.trackViewArr = [];
     }
 
-    //render():HTMLElement {
-    //    return 0;
-    //}
-
     onNewTrackView(trackInfo:TrackInfo) {
         //this.trackInfoArr.push(trackInfo);
         console.log(this, "onNewTrackView");
 
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
-        var trackEl = view.render(trackInfo.imgArr);
-        $("#composition").append(view.render1());
-        //var trackClip = $(trackEl)(".TrackClip");
-        //console.log(trackClip)
+        //var trackEl = view.render(trackInfo.imgArr);
+        view.setParent($("#composition"));
+        //$("#composition").append(view.render());
+        //view.$el = $(".Track#" + trackInfo.idx)[0];
+        console.log('new TrackView',view.$el);
+
     }
 
     onDelTrackView(idx:number) {
