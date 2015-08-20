@@ -38,12 +38,21 @@ class TrackView extends BaseView implements IBaseView {
         this.el = $(".Track#" + idx)[0];
         var clip = $(".Track#" + idx + " .Clip");
         clip.width(clipWidth);
+        clip.on('mousemove', function (e) {
+            console.log("mousemove", e.clientX, e.clientY);
+        });
+        clip.on('mousedown', function (e) {
+            console.log("down", "");
+        });
+        clip.on('mouseup', function (e) {
+            console.log("mouseup", "");
+        });
         console.log(this, "setParent2", clip, clipWidth);
 
         var self = this;
-        $(this.el).on('click', function () {
-            self.onDelTrack();
-        })
+        //$(this.el).on('click', function () {
+        //    self.onDelTrack();
+        //})
     }
 
     onDelTrack() {
