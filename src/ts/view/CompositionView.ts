@@ -6,11 +6,19 @@
 
 class CompositionView implements IBaseView {
     trackViewArr:Array<TrackView>;
+
     compInfo:CompositionInfo;
 
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
-        compInfo.add("delTrack", this.delTrack);
+        this.trackViewArr = [];
+        var self = this;
+        this.compInfo.add("newTrack",function(trackInfo:TrackInfo){
+           self.newTrackView(trackInfo);
+        });
+        this.compInfo.add("delTrack",function(idx:number){
+           self.onDelTrackView(idx);
+        });
         this.trackViewArr = [];
     }
 
@@ -18,15 +26,23 @@ class CompositionView implements IBaseView {
 
     }
 
-    newTrack() {
-        //this.trackArr.push(trackInfo);
-        var view = new TrackView(this.trackViewArr.length);
+    newTrackView(trackInfo:TrackInfo) {
+        //this.trackInfoArr.push(trackInfo);
+        console.log(this,"newTrackView");
+
+        var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
         $("#composition").append(view.render());
     }
 
-    delTrack() {
-        console.log("test view");
+    onDelTrackView(idx:number) {
+        console.log(this,"onDelTrackView",idx);
+
+        //this.trackInfoArr.splice(idx, 1);
+        //delete this.trackInfoArr[idx];
+        this.trackViewArr[idx].remove();
+        delete this.trackViewArr[idx];
+        //this.trackViewArr.splice(idx, 1);
     }
 
 }

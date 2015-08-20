@@ -24,7 +24,7 @@ class ProjectView extends BaseView {
     onNewComp() {
         console.log("test CompositionView", this);
 
-        var view = new CompositionView(this.projectInfo.newComp());
+        var view = new CompositionView(this.projectInfo.curComp);
         this.compViews.push(view);
     }
 }

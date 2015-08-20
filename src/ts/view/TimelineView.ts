@@ -4,11 +4,9 @@ class TimelineView extends BaseView {
     constructor() {
         super();
 
-        this.setElement("#timeline");
-        var instance = this;
-
+        var self = this;
         $("#newTrack").on("click", function () {
-            instance.onNewTrack();
+            self.onNewTrack();
         });
     }
 

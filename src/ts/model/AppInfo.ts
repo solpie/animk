@@ -16,3 +16,5 @@ class AppInfo extends EventDispatcher {
         this.projectInfo.newComp();
     }
 }
+
+var appInfo = new AppInfo();

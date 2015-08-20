@@ -4,6 +4,7 @@
 class ProjectInfo extends EventDispatcher {
     comps:Array<CompositionInfo>;
     curComp:CompositionInfo;
+
     constructor(options?) {
         super();
         console.log("new project");
@@ -11,6 +12,7 @@ class ProjectInfo extends EventDispatcher {
 
     newComp():CompositionInfo {
         this.curComp = new CompositionInfo();
+        this.dis("newComp");
         return this.curComp;
     }
 

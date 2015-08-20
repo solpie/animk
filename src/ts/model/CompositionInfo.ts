@@ -1,41 +1,32 @@
 /// <reference path="../event/EventDispatcher.ts"/>
+/// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
 /// <reference path="../view/TrackView.ts"/>
+
 class CompositionInfo extends EventDispatcher {
-    trackArr:Array<TrackInfo>;
-    trackViewArr:Array<TrackView>;
+    trackInfoArr:Array<TrackInfo>;
 
     constructor() {
         super();
-        this.trackArr = [];
-        this.trackViewArr = [];
+        this.trackInfoArr = [];
         console.log("new CompInfo");
     }
 
     newTrack() {
-        //this.trackArr.push(trackInfo);
-        console.log(this,"newTrack");
-        var view = new TrackView(this.trackViewArr.length);
-        this.trackViewArr.push(view);
-        $("#composition").append(view.render());
+        var info = new TrackInfo();
+        info.idx = this.trackInfoArr.length;
+        this.trackInfoArr.push(info);
+        this.dis(ActEvent.NEW_TRACK, info);
+        console.log(this, "newTrack idx", info.idx);
+        //var view = new TrackView(this.trackViewArr.length);
+        //this.trackViewArr.push(view);
+        //$("#composition").append(view.render());
     }
 
     delTrack(idx:number) {
-        //this.trackArr.splice(idx, 1);
-        //delete this.trackArr[idx];
-        this.dis("delTrack");
-        console.log("delete trackInfo", this, this.getTrackInfoArr().length);
-        this.trackViewArr[idx].remove();
-        delete this.trackViewArr[idx];
+        //this.trackInfoArr.splice(idx, 1);
+        delete this.trackInfoArr[idx];
+        this.dis(ActEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
-    }
-
-    getTrackInfoArr():Array<TrackInfo> {
-        var a = [];
-        for (var i = 0; i < this.trackViewArr.length; ++i) {
-            if (this.trackViewArr[i])
-                a.push(this.trackViewArr[i].trackInfo);
-        }
-        return a;
     }
 }
