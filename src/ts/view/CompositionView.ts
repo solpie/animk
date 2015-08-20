@@ -1,5 +1,6 @@
 /// <reference path="BaseView.ts"/>
 /// <reference path="../event/EventDispatcher.ts"/>
+/// <reference path="../event/ActEvent.ts"/>
 /// <reference path="../JQuery.ts"/>
 /// <reference path="TrackView.ts"/>
 /// <reference path="../model/CompositionInfo.ts"/>
@@ -13,11 +14,11 @@ class CompositionView implements IBaseView {
         this.compInfo = compInfo;
         this.trackViewArr = [];
         var self = this;
-        this.compInfo.add("newTrack",function(trackInfo:TrackInfo){
-           self.newTrackView(trackInfo);
+        this.compInfo.add(ActEvent.NEW_TRACK, function (trackInfo:TrackInfo) {
+            self.onNewTrackView(trackInfo);
         });
-        this.compInfo.add("delTrack",function(idx:number){
-           self.onDelTrackView(idx);
+        this.compInfo.add(ActEvent.DEL_TRACK, function (idx:number) {
+            self.onDelTrackView(idx);
         });
         this.trackViewArr = [];
     }
@@ -26,9 +27,9 @@ class CompositionView implements IBaseView {
 
     }
 
-    newTrackView(trackInfo:TrackInfo) {
+    onNewTrackView(trackInfo:TrackInfo) {
         //this.trackInfoArr.push(trackInfo);
-        console.log(this,"newTrackView");
+        console.log(this, "onNewTrackView");
 
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
@@ -36,7 +37,7 @@ class CompositionView implements IBaseView {
     }
 
     onDelTrackView(idx:number) {
-        console.log(this,"onDelTrackView",idx);
+        console.log(this, "onDelTrackView", idx+'');
 
         //this.trackInfoArr.splice(idx, 1);
         //delete this.trackInfoArr[idx];

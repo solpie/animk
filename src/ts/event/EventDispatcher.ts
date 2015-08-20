@@ -15,10 +15,7 @@ class EventDispatcher {
         if (this._func[type])
             for (var i = 0; i < this._func[type].length; ++i) {
                 var f = this._func[type][i];
-                if (param)
-                    f(param);
-                else
-                    f();
+                f(param);
             }
     }
 }
