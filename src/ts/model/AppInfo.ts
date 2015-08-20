@@ -13,7 +13,7 @@ class AppInfo extends EventDispatcher {
 
     test() {
         this.newProject();
-        this.projectInfo.newComp().newTrack('D:/projects/linAnil/test/test10');
+        this.projectInfo.newComp().newTrack('D:/projects/animk/test/test10');
     }
 }
 

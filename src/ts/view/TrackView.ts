@@ -13,12 +13,20 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     render() {
-        var newJade = jade.renderFile('jade/Track.jade', {
+
+        var template = $('.Track-tpl').html();
+        var newTrack = Mustache.render(template, {
+            //var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             imgs: this.trackInfo.imgArr
         });
-        return newJade;
+        //var newJade = jade.renderFile('jade/Track.jade', {
+        //    idx: this.trackInfo.idx,
+        //    name: this.trackInfo.name,
+        //    imgs: this.trackInfo.imgArr
+        //});
+        return newTrack;
     }
 
     //use for add Child view to parent

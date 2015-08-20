@@ -2,7 +2,7 @@
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
 /// <reference path="../view/TrackView.ts"/>
-/// <reference path="../NodeJS.ts"/>
+/// <reference path="../Node.ts"/>
 
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;

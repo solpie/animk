@@ -1,15 +1,14 @@
 declare var require:{
     (val:string):any;
 };
-//import fs = require('fs');
 var fs = require('fs');
 //var data = fs.read('c:/test.xml');
 function walk(path):Array<string> {
     var fileArr = [];
-    var dirList = fs.readdirSync(path);
-    dirList.forEach(function (item) {
+    var dirArr = fs.readdirSync(path);
+    dirArr.forEach(function (item) {
         if (fs.statSync(path + '/' + item).isDirectory()) {
-            walk(path + '/' + item);
+            //walk(path + '/' + item);
         } else {
             var filename = path + '/' + item;
             fileArr.push(filename);
