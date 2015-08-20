@@ -32,13 +32,17 @@
             <div class="Panel">
                 <div class="Label"> {{name}}</div>
             </div>
-            <div class="Clip">
-                <div class="Bar"></div>
-                {{#imgs}}
-                <div class="Frame">
-                    <img src="{{.}}">
+
+
+            <div class="TrackArea">
+                <div class="Clip">
+                    <div class="Bar"></div>
+                    {{#imgs}}
+                    <div class="Frame">
+                        <img src="{{.}}">
+                    </div>
+                    {{/imgs}}
                 </div>
-                {{/imgs}}
             </div>
         </div>
     </script>

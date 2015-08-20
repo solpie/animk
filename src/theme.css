@@ -1,5 +1,7 @@
 body {
     background: #333333;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .TitleBar {
@@ -48,8 +50,18 @@ body {
     height: 70px;
 }
 
+.TrackArea {
+    left: 200px;
+    position: relative;
+
+    /*overflow-clip: ;*/
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: chocolate;
+}
+
 .Track .Clip {
-    left: 300px;
+    left: -20px;
     position: relative;
     height: 65px;
     background: #00ff56;
