@@ -16,8 +16,6 @@ class AnimkView {
         //super();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
-        //jq
-        $("#app").data("appModel", appModel);
     }
 
     onNewProject() {

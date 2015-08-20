@@ -1,4 +1,5 @@
 /// <reference path="BaseView.ts"/>
+/// <reference path="../Model/appInfo.ts"/>
 
 class TimelineView extends BaseView {
     constructor() {
@@ -26,8 +27,7 @@ class TimelineView extends BaseView {
         var a = reg.exec(filename);
         if (a.length > 1) {
             var folder = a[1];
-            var appModel = $("#app").data("appModel");
-            appModel.projectInfo.curComp.newTrack(folder);
+            appInfo.projectInfo.curComp.newTrack(folder);
             console.log(this, filename, a[0], a[1]);
         }
     }
