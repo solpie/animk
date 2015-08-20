@@ -3,7 +3,7 @@
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
-class TrackView extends BaseView {
+class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
     clip:HTMLElement;
 
@@ -13,7 +13,7 @@ class TrackView extends BaseView {
     }
 
     render() {
-        var newJade = jade.renderFile('jade/Track.jade',{
+        var newJade = jade.renderFile('jade/Track.jade', {
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             imgs: this.trackInfo.imgArr
@@ -21,14 +21,16 @@ class TrackView extends BaseView {
         return newJade;
     }
 
+    //use for add Child view to parent
     setParent(parent:JQuery) {
-        var track$ = parent.append(this.render());
+        super.setParent(parent);
+
         var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
         this.el = $(".Track#" + idx)[0];
         var clip = $(".Track#" + idx + " .Clip");
         clip.width(clipWidth);
-        console.log(this, "setParent", track$, clip, clipWidth);
+        console.log(this, "setParent2", clip, clipWidth);
 
         var self = this;
         $(this.el).on('click', function () {
