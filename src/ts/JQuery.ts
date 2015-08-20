@@ -13,6 +13,9 @@ interface JQuery {
     append(el:HTMLElement): JQuery;
     val(): string;
     val(value:string): JQuery;
+    unbind(value:string): JQuery;
+    change(func:any): JQuery;
+    trigger(type:any): JQuery;
     attr(attrName:string): string;
 }
 
@@ -23,3 +26,13 @@ declare var $:{
     (val:string, isNew:boolean): HTMLElement;
     (readyCallback:() => void): JQuery;
 };
+
+function chooseFile(name):JQuery {
+    var chooser = $(name);
+    chooser.unbind('change');
+    //chooser.change(function (evt) {
+    //
+    //});
+    chooser.trigger('click');
+    return chooser;
+}

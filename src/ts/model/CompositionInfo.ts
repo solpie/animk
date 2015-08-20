@@ -2,6 +2,7 @@
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
 /// <reference path="../view/TrackView.ts"/>
+/// <reference path="../NodeJS.ts"/>
 
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
@@ -12,7 +13,8 @@ class CompositionInfo extends EventDispatcher {
         console.log("new CompInfo");
     }
 
-    newTrack() {
+    newTrack(path) {
+        walk(path);
         var info = new TrackInfo();
         info.idx = this.trackInfoArr.length;
         this.trackInfoArr.push(info);
