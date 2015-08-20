@@ -1,4 +1,5 @@
 /// <reference path="../event/EventDispatcher.ts"/>
+/// <reference path="CompositionInfo.ts"/>
 
 class ProjectInfo extends EventDispatcher {
     comps:Array<CompositionInfo>;

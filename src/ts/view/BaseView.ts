@@ -1,15 +1,15 @@
-class BaseObj {
-    thisObj:BaseObj;
-
-    constructor() {
-        this.thisObj = this;
-    }
-}
+/// <reference path="../JQuery.ts"/>
 interface IBaseView {
     render():void;
 }
-class BaseView extends BaseObj {
+class BaseView {
+    el:HTMLElement;
+    self:BaseView;
     constructor() {
-        super();
+        this.self = this;
+    }
+
+    setElement(val:string):void {
+        this.el = $(val);
     }
 }

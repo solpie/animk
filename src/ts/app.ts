@@ -3,55 +3,47 @@
 /// <reference path="JQuery.ts"/>
 /// <reference path="model/ProjectInfo.ts"/>
 /// <reference path="view/CompositionView.ts"/>
+/// <reference path="view/ProjectView.ts"/>
+/// <reference path="view/TimelineView.ts"/>
 class AppModel extends EventDispatcher {
     projectInfo:ProjectInfo;
 
     constructor() {
         super();
-        this.projectInfo = new ProjectInfo;
+    }
+
+    newProject() {
+        this.projectInfo = new ProjectInfo();
+        this.dis("newProject");
     }
 
     test() {
-        this.projectInfo.dis("newComp");
-        console.log("test newComp");
+        this.newProject();
+        this.projectInfo.newComp();
     }
 }
 class AnimkView {
-    projectInfo:ProjectInfo;
-    compViews:Array<CompositionView>;
+    appModel:AppModel;
+    projectViewArr:Array<ProjectView>;
+    timelineView:TimelineView;
 
-    constructor(project:ProjectInfo) {
-        //super();
-        this.projectInfo = project;
+    constructor(appModel) {
+        this.appModel = appModel;
         var ins = this;
-        this.projectInfo.add("newComp", function () {
-                ins.onNewComp();
-            }
-        );
-
-        this.compViews = [];
-        //jq
-        var instance = this;
-        $("#root").data("app", this);
-        $("#newTrack").on("click", function () {
-            instance.onNewTrack();
+        this.appModel.add('newProject', function () {
+            ins.onNewProject();
         });
+        //super();
+        this.timelineView = new TimelineView();
+        this.projectViewArr = [];
+        //jq
+        $("#app").data("appModel", appModel);
     }
 
-    onNewComp() {
-        console.log("test CompositionView", this);
-
-        var view = new CompositionView(this.projectInfo.newComp());
-        this.compViews.push(view);
-    }
-
-    onDelTrack() {
-        console.log("test event");
-    }
-
-    onNewTrack() {
-        console.log("on click");
-        this.projectInfo.curComp.newTrack();
+    onNewProject() {
+        console.log(this, 'new project');
+        var view = new ProjectView(this.appModel.projectInfo);
+        this.projectViewArr.push(view);
     }
 }
 var appModel:AppModel;
@@ -60,8 +52,7 @@ var app:AnimkView;
 $(() => {
     // Finally, we kick things off by creating the **App**.
     appModel = new AppModel();
-    app = new AnimkView(appModel.projectInfo);
-
+    app = new AnimkView(appModel);
     appModel.test();
 });
 

@@ -1,4 +1,4 @@
-/// <reference path="../view/BaseView.ts"/>
+/// <reference path="BaseView.ts"/>
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="../JQuery.ts"/>
 /// <reference path="TrackView.ts"/>
