@@ -39,9 +39,10 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(".Track#" + idx + " .Clip");
         clip.width(clipWidth);
         clip.on('mousemove', function (e) {
-            console.log("mousemove", e.clientX, e.clientY);
+            console.log("mousemove", clip.position().left, e.clientY);
         });
         clip.on('mousedown', function (e) {
+            clip.css({left: 40});
             console.log("down", "");
         });
         clip.on('mouseup', function (e) {
