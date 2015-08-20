@@ -5,8 +5,6 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="theme.css">
     <script src="js/jquery/jquery-2.1.4.min.js"></script>
-    <script src="js/mustache/mustache.min.js"></script>
-
     <script src="ts/event/EventDispatcher.js"></script>
     <script src="ts/event/ActEvent.js"></script>
     <script src="ts/JQuery.js"></script>
@@ -26,23 +24,6 @@
     <script src="ts/model/TrackInfo.js"></script>
     <script src="ts/view/TrackView.js"></script>
     <script src="ts/main.js"></script>
-
-
-    <script type="text/template" class="Track-tpl">
-        <div class="Track" id="{{idx}}">
-            <div class="Panel">
-                <div class="Label"> {{name}}</div>
-            </div>
-            <div class="Clip">
-                <div class="Bar"></div>
-                {{#imgs}}
-                <div class="Frame">
-                    <img src="{{.}}">
-                </div>
-                {{/imgs}}
-            </div>
-        </div>
-    </script>
 </head>
 <body>
 
@@ -58,7 +39,8 @@
         </div>
         <div class="VSplitter"></div>
         <div class="Timeline">
-            <button id="newTrack">newTrack</button>
+            <button class="TrackToolButton" id="btnNewTrack">newTrack</button>
+            <button class="TrackToolButton" id="delTrack">del Track</button>
             <div id="composition">
             </div>
         </div>

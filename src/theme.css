@@ -26,7 +26,7 @@ body {
     background: #5b2e66;
 }
 
-#newTrack {
+.TrackToolButton {
     width: 80px;
     height: 30px;
 }
@@ -35,6 +35,8 @@ body {
     width: 100%;
     height: 70px;
     background: #e4f1d3;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .Track .Label {

@@ -5,7 +5,7 @@ class TimelineView extends BaseView {
         super();
 
         var self = this;
-        $("#newTrack").on("click", function () {
+        $("#btnNewTrack").on("click", function () {
             self.onNewTrack();
         });
     }

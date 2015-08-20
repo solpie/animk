@@ -13,13 +13,12 @@ class TrackView extends BaseView {
     }
 
     render() {
-        var template = $('.Track-tpl').html();
-        var newTrack = Mustache.render(template, {
+        var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             imgs: this.trackInfo.imgArr
         });
-        return newTrack;
+        return newJade;
     }
 
     setParent(parent:JQuery) {

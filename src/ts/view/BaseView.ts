@@ -1,4 +1,5 @@
 /// <reference path="../JQuery.ts"/>
+var jade = require("jade");
 interface IBaseView {
     render():HTMLElement;
 }

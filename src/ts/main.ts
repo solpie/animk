@@ -8,5 +8,6 @@ $(() => {
     // Finally, we kick things off by creating the **App**.
     app = new AnimkView(appInfo);
     appInfo.test();
+
 });
 
