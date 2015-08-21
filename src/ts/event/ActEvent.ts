@@ -5,5 +5,6 @@ class BaseEvent {
 }
 class ActEvent extends BaseEvent {
     static NEW_TRACK:string = "new track";
+    static SEL_TRACK:string = "select track";
     static DEL_TRACK:string = "delete track";
 }

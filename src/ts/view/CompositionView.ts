@@ -11,28 +11,28 @@ class CompositionView implements IBaseView {
     }
 
     trackViewArr:Array<TrackView>;
-
+    selectTrackView:TrackView;
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
+
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
         this.trackViewArr = [];
-        var self = this;
-        this.compInfo.add(ActEvent.NEW_TRACK, function (trackInfo:TrackInfo) {
-            self.onNewTrackView(trackInfo);
+        this.compInfo.add(ActEvent.NEW_TRACK, (trackInfo:TrackInfo) => {
+            this.onNewTrackView(trackInfo);
         });
-        this.compInfo.add(ActEvent.DEL_TRACK, function (idx:number) {
-            self.onDelTrackView(idx);
+
+        this.compInfo.add(ActEvent.DEL_TRACK, (idx:number)=> {
+            this.onDelTrackView(idx);
         });
         this.trackViewArr = [];
 
         this.setCompositionHeight(300);
         this.setTrackHeight(600);
-        $("#compositionHeight").on('scroll', function () {
+        $("#compositionHeight").on('scroll', () => {
             var top = $("#compositionHeight").scrollTop();
             $("#composition").scrollTop(top);
             console.log(this, 'scroll', top);
-
         });
 
     }
@@ -45,12 +45,30 @@ class CompositionView implements IBaseView {
         $("#compositionHeight").height(val);
     }
 
+    onSelTrackView(trackInfo:TrackInfo) {
+        var trackView:TrackView;
+        for (var i in this.trackViewArr) {
+            trackView = this.trackViewArr[i];
+            if (trackView) {
+                if (trackView.trackInfo == trackInfo) {
+                    trackView.setSelected(true);
+                }
+                else
+                    trackView.setSelected(false);
+            }
+            console.log(this, i);
+        }
+    }
+
     onNewTrackView(trackInfo:TrackInfo) {
         console.log(this, "onNewTrackView");
+        trackInfo.add(ActEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
+            this.onSelTrackView(trackInfo);
+        });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
         view.setParent($("#composition"));
-        this._trackHeight+=view.height();
+        this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         console.log('new TrackView', view.el);
     }

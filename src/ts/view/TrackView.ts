@@ -43,24 +43,6 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(this.id$ + " .Clip");
         clip.width(clipWidth);
 
-        //var timerId = window.setInterval(function () {
-        //    //clip.on('mousemove', function (e) {
-        //    //var e = window;
-        //    //window.pageXOffset
-        //    if (self._isPress) {
-        //        var dx = appInfo.mouseX - self._lastX;
-        //        if (dx > 30) {
-        //            self._lastX = appInfo.mouseX;
-        //            clip.css({left: clip.position().left + appInfo.projectInfo.frameWidth});
-        //        }
-        //        else if (dx < -30) {
-        //            self._lastX = appInfo.mouseX;
-        //            clip.css({left: clip.position().left - appInfo.projectInfo.frameWidth});
-        //        }
-        //        //console.log("mousemove", clip.position().left, appInfo.getMouseX());
-        //    }
-        //
-        //}, 200);
         clip.on('mousedown', function (e) {
             //clip.css({left: 40});
             self._isPress = true;
@@ -83,9 +65,18 @@ class TrackView extends BaseView implements IBaseView {
         this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
-        //$(this.el).on('click', function () {
-        //    self.onDelTrack();
-        //})
+        $(this.id$).on('click', ()=> {
+            this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
+        })
+    }
+
+    setSelected(val:boolean) {
+        this.trackInfo.isSelected = val;
+        if (val)
+            this.setColor("#666")
+        else
+            this.setColor("#444")
+        console.log(this, 'set selected ', val, this.trackInfo.idx);
     }
 
     startMoveTimer() {

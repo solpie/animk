@@ -6,7 +6,6 @@
 
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
-
     constructor() {
         super();
         this.trackInfoArr = [];
