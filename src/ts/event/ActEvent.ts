@@ -8,3 +8,10 @@ class ActEvent extends BaseEvent {
     static SEL_TRACK:string = "select track";
     static DEL_TRACK:string = "delete track";
 }
+
+class MouseEvt {
+    static CLICK:string = "click";
+    static UP:string = "mouseup";
+    static DOWN:string = "mousedown";
+    static LEAVE:string = "mouseleave";
+}

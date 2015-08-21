@@ -43,19 +43,19 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(this.id$ + " .Clip");
         clip.width(clipWidth);
 
-        clip.on('mousedown', function (e) {
+        clip.on(MouseEvt.DOWN, function (e) {
             //clip.css({left: 40});
             self._isPress = true;
             self._lastX = appInfo.mouseX;
             self.startMoveTimer();
             console.log("down", self._isPress);
         });
-        clip.on('mouseup', function (e) {
+        clip.on(MouseEvt.UP, function (e) {
             self._isPress = false;
             self.stopMoveTimer();
             //console.log("mouseup", "");
         });
-        clip.on('mouseleave', function (e) {
+        clip.on(MouseEvt.LEAVE, function (e) {
             //self._isPress = false;
             self.stopMoveTimer();
 
@@ -65,7 +65,7 @@ class TrackView extends BaseView implements IBaseView {
         this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
-        $(this.id$).on('click', ()=> {
+        $(this.id$).on(MouseEvt.CLICK, ()=> {
             this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
         })
     }
