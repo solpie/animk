@@ -1,6 +1,5 @@
 /// <reference path="BaseView.ts"/>
 /// <reference path="../model/TrackInfo.ts"/>
-/// <reference path="../JQuery.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
 class TrackView extends BaseView implements IBaseView {
@@ -70,6 +69,8 @@ class TrackView extends BaseView implements IBaseView {
             self._isPress = false;
             //console.log("mouseleave", "");
         });
+
+        this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
         //$(this.el).on('click', function () {
