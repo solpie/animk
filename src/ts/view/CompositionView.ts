@@ -13,7 +13,7 @@ class CompositionView implements IBaseView {
     trackViewArr:Array<TrackView>;
 
     compInfo:CompositionInfo;
-
+    _trackHeight:number = 0;
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
         this.trackViewArr = [];
@@ -53,10 +53,11 @@ class CompositionView implements IBaseView {
         this.trackViewArr.push(view);
         //var trackEl = view.render(trackInfo.imgArr);
         view.setParent($("#composition"));
+        this._trackHeight+=view.height();
+        this.setTrackHeight(this._trackHeight);
         //$("#composition").append(view.render());
         //view.$el = $(".Track#" + trackInfo.idx)[0];
         console.log('new TrackView', view.el);
-
     }
 
     onDelTrackView(idx:number) {

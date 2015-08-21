@@ -5,6 +5,8 @@ interface IBaseView {
 }
 class BaseView implements IBaseView {
     el:HTMLElement;
+    id$:string;
+    className:string;
 
     constructor() {
     }
@@ -20,7 +22,15 @@ class BaseView implements IBaseView {
     setParent(parent:JQuery) {
         parent.append(this.render())
     }
+
+    height() {
+        return $(this.id$).height();
+    }
+
+    width() {
+        return $(this.id$).width();
+    }
 }
-function setupDrag(el:JQuery){
+function setupDrag(el:JQuery) {
 
 }

@@ -11,11 +11,11 @@ class TrackView extends BaseView implements IBaseView {
 
     constructor(trackInfo:TrackInfo) {
         super();
+        this.className = "Track";
         this.trackInfo = trackInfo;
     }
 
     render() {
-
         var template = $('.Track-tpl').html();
         var newTrack = Mustache.render(template, {
             //var newJade = jade.renderFile('ts/view/Track.jade',{
@@ -38,8 +38,9 @@ class TrackView extends BaseView implements IBaseView {
 
         var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
-        this.el = $(".Track#" + idx)[0];
-        var clip = $(".Track#" + idx + " .Clip");
+        this.id$ = "." + this.className + "#" + idx;
+        this.el = $(this.id$)[0];
+        var clip = $(this.id$ + " .Clip");
         clip.width(clipWidth);
         clip.on('mousemove', function (e) {
             if (self._isPress) {
