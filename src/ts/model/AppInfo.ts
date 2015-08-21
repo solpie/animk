@@ -10,8 +10,10 @@ class AppInfo extends EventDispatcher {
         document.onmousemove = function (e) {
             self.mouseX = e.clientX;
             self.mouseY = e.clientY;
-        }
-
+        };
+        document.onmouseup = function(){
+            $("body").css("-webkit-app-region", "none");
+        };
     }
 
 

@@ -72,10 +72,10 @@ class TrackView extends BaseView implements IBaseView {
 
     setSelected(val:boolean) {
         this.trackInfo.isSelected = val;
-        if (val)
-            this.setColor("#666")
+        if (val)//todo light color
+            this.setColor("#666");
         else
-            this.setColor("#444")
+            this.setColor("#444");
         console.log(this, 'set selected ', val, this.trackInfo.idx);
     }
 

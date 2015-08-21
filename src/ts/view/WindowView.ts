@@ -6,6 +6,15 @@ class WindowView {
     isMaximize:boolean = false;
 
     constructor() {
+        //$("#titleBar").on("mouseup", function () {
+        //    $("body").css("-webkit-app-region", "none");
+        //    console.log(this);
+        //});
+        //$("#titleBar").on("mousedown", function () {
+        //    win.setPosition("");
+        //    $("body").css("-webkit-app-region", "drag");
+        //    console.log(this);
+        //});
         $("#btnClose").on("click", function () {
             console.log(win);
             win.close();

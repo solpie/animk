@@ -15,6 +15,7 @@ body {
 /*title button*/
 .TitleBarButton {
     float: right;
+    -webkit-app-region: no-drag;
 }
 
 .Content {

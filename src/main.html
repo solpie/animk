@@ -47,17 +47,17 @@
         </div>
     </script>
 </head>
-<body>
+<body style="-webkit-app-region:drag">
 <input style="display:none;" id="fileDialog" type="file" accept="image/png"/>
 
 <div class="root" id="app">
-    <div class="TitleBar">
+    <div class="TitleBar" id="titleBar">
         <button class="TitleBarButton" id="btnClose">X</button>
         <button class="TitleBarButton" id="btnMax">Max</button>
         <button class="TitleBarButton" id="btnMin">Min</button>
         <button class="TitleBarButton" id="btnDbg">Dbg</button>
     </div>
-    <div class="Content">
+    <div class="Content" style="-webkit-app-region: no-drag">
         <div class="Viewport">
             <div class="Comp"></div>
             <div class="HSplitter"></div>
