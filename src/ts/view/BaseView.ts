@@ -3,7 +3,7 @@
 interface IBaseView {
     render():HTMLElement;
 }
-class BaseView implements IBaseView{
+class BaseView implements IBaseView {
     el:HTMLElement;
 
     constructor() {
@@ -12,15 +12,15 @@ class BaseView implements IBaseView{
     setElement(val:string):void {
         this.el = $(val);
     }
-    render(){
+
+    render() {
         return undefined
     }
 
-    setParent(parent:JQuery){
+    setParent(parent:JQuery) {
         parent.append(this.render())
     }
+}
+function setupDrag(el:JQuery){
 
-    //render():HTMLElement {
-    //
-    //}
 }

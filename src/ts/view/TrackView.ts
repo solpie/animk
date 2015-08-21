@@ -6,6 +6,8 @@
 class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
     clip:HTMLElement;
+    _isPress:boolean;
+    _lastX:number;
 
     constructor(trackInfo:TrackInfo) {
         super();
@@ -32,6 +34,7 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
+        var self = this;
 
         var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
@@ -39,18 +42,35 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(".Track#" + idx + " .Clip");
         clip.width(clipWidth);
         clip.on('mousemove', function (e) {
-            console.log("mousemove", clip.position().left, e.clientY);
+            if (self._isPress) {
+                var dx = e.clientX - self._lastX;
+                if (dx > 30) {
+                    self._lastX = e.clientX;
+                    clip.css({left: clip.position().left + appInfo.projectInfo.frameWidth});
+                }
+                else if (dx < -30) {
+                    self._lastX = e.clientX;
+                    clip.css({left: clip.position().left - appInfo.projectInfo.frameWidth});
+                }
+                console.log("mousemove", clip.position().left, e.clientY);
+            }
         });
         clip.on('mousedown', function (e) {
-            clip.css({left: 40});
-            console.log("down", "");
+            //clip.css({left: 40});
+            self._isPress = true;
+            self._lastX = e.clientX;
+            //console.log("down", "");
         });
         clip.on('mouseup', function (e) {
-            console.log("mouseup", "");
+            self._isPress = false;
+            //console.log("mouseup", "");
+        });
+        clip.on('mouseleave', function (e) {
+            self._isPress = false;
+            //console.log("mouseleave", "");
         });
         console.log(this, "setParent2", clip, clipWidth);
 
-        var self = this;
         //$(this.el).on('click', function () {
         //    self.onDelTrack();
         //})
