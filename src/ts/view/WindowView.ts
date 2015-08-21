@@ -3,6 +3,8 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
 class WindowView {
+    isMaximize:boolean = false;
+
     constructor() {
         $("#btnClose").on("click", function () {
             console.log(win);
@@ -10,11 +12,19 @@ class WindowView {
         });
         $("#btnMin").on("click", function () {
             console.log(win);
+
             win.minimize();
         });
         $("#btnMax").on("click", function () {
             console.log(win);
-            win.maximize();
+            if (this.isMaximize) {
+                win.unmaximize();
+                this.isMaximize = false;
+            }
+            else {
+                win.maximize();
+                this.isMaximize = true;
+            }
         });
     }
 }
