@@ -13,7 +13,7 @@
 
     <script src="ts/view/BaseView.js"></script>
     <script src="ts/view/TimelineView.js"></script>
-    <script src="ts/view/TitleBarView.js"></script>
+    <script src="ts/view/WindowView.js"></script>
 
     <script src="ts/model/AppInfo.js"></script>
     <script src="ts/view/AppView.js"></script>
@@ -65,11 +65,21 @@
         </div>
         <div class="VSplitter"></div>
         <div class="Timeline" id="timeline">
-            <button class="TrackToolButton" id="btnNewTrack">newTrack</button>
-            <button class="TrackToolButton" id="delTrack">del Track</button>
+            <!--<div class="TimelineBar">-->
+            <div class="VScrollBar" id="compositionHeight">
+                <div id="trackHeight"></div>
+            </div>
+            <div class="TrackTool">
+                <button class="TrackToolButton" id="btnNewTrack">newTrack</button>
+                <button class="TrackToolButton" id="delTrack">del Track</button>
+            </div>
+            <div class="TimestampBar"></div>
+            <!--</div>-->
+
             <div id="composition">
             </div>
         </div>
+        <div class="BottomBar"></div>
     </div>
 </div>
 

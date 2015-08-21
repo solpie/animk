@@ -30,12 +30,70 @@ body {
 .Timeline {
     width: 100%;
     height: 300px;
-    background: #5b2e66;
+    background: #666666;
+}
+
+#composition {
+    /*width: 200px;*/
+    height: 270px;
+    position: relative;
+    overflow-y: hidden;
+}
+.VScrollBar{
+    position: absolute;
+    width: 200px;
+    /*height: 300px;*/
+    background: #92231a;
+    opacity: 0.5;
+    z-index: 999;
+    overflow-y: scroll;
+}
+#trackHeight {
+    height: 700px;
+}
+
+::-webkit-scrollbar {
+    position: relative;
+    left: 185px;
+    width: 15px;
+    background-color: #cccccc;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #999;
+    -webkit-border-radius: 4px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    height: 50px;
+    background-color: #9f9f9f;
+    -webkit-border-radius: 4px;
+}
+
+.TrackTool {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: 200px;
+    /*top: -8px;*/
+    background: #222222;
 }
 
 .TrackToolButton {
     width: 80px;
     height: 30px;
+}
+
+.TimestampBar {
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    background: #92231a;
 }
 
 .Track {
@@ -44,6 +102,7 @@ body {
     background: #e4f1d3;
     overflow-x: hidden;
     overflow-y: hidden;
+    border-bottom: 1px solid #222222;
 }
 
 .Track .Label {
@@ -57,7 +116,7 @@ body {
 
 .TrackArea {
     left: 200px;
-    position: relative;
+    position: absolute;
 
     /*overflow-clip: ;*/
     overflow-x: hidden;
@@ -98,6 +157,13 @@ body {
 
 .HSplitter {
     width: 5px;
+    background: #aaa;
+
+}
+
+.BottomBar {
+    width: 100%;
+    height: 35px;
     background: #aaa;
 
 }

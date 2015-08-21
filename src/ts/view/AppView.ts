@@ -1,7 +1,7 @@
 /// <reference path="../model/AppInfo.ts"/>
 /// <reference path="ProjectView.ts"/>
 /// <reference path="TimelineView.ts"/>
-/// <reference path="TitleBarView.ts"/>
+/// <reference path="WindowView.ts"/>
 
 class AnimkView {
     appModel:AppInfo;
@@ -15,7 +15,7 @@ class AnimkView {
             ins.onNewProject();
         });
         //super();
-        var titleBarView =new TitleBarView();
+        var titleBarView =new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
     }

@@ -1,6 +1,8 @@
 /// <reference path="../Node.ts"/>
 /// <reference path="../JQuery.ts"/>
-class TitleBarView {
+var gui = require('nw.gui');
+var win = gui.Window.get();
+class WindowView {
     constructor() {
         $("#btnClose").on("click", function () {
             console.log(win);

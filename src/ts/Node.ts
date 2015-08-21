@@ -31,5 +31,3 @@ function walk(path):Array<string> {
 
 
 ////////////// window
-var gui = require('nw.gui');
-var win = gui.Window.get();

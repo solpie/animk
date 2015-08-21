@@ -4,7 +4,7 @@
   "main": "main.html",
   "version": "0.1.0",
   "window": {
-    "frame": true,
+    "frame": false,
     "width": 1440,
     "height": 820,
     "show": true,
