@@ -2,6 +2,8 @@ body {
     background: #333333;
     overflow-x: hidden;
     overflow-y: hidden;
+    -webkit-user-select: none;
+
 }
 
 .TitleBar {
@@ -43,21 +45,23 @@ body {
 
 .VScrollBar {
     position: absolute;
-    width: 200px;
+    left: 193px;
+    width: 15px;
     /*height: 300px;*/
     background: #92231a;
-    opacity: 0.5;
     z-index: 999;
     overflow-y: scroll;
+    /*pointer-events: none;*/
+
 }
 
 #trackHeight {
     height: 700px;
+    /*pointer-events: none;*/
 }
 
 ::-webkit-scrollbar {
     position: relative;
-    left: 185px;
     width: 15px;
     background-color: #cccccc;
 }
@@ -105,11 +109,10 @@ body {
 .Track {
     width: 100%;
     height: 70px;
-    background: #e4f1d3;
+    background: #444;
     overflow-x: hidden;
     overflow-y: hidden;
-    border-bottom: 1px solid #222222;
-
+    border-bottom: 1px solid #111;
 }
 
 .Track .Label {
@@ -129,7 +132,6 @@ body {
     /*overflow-clip: ;*/
     overflow-x: hidden;
     overflow-y: hidden;
-    background: chocolate;
 }
 
 .Track .Clip {
