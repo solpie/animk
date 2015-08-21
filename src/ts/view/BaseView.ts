@@ -1,4 +1,4 @@
-
+/// <reference path="../Model/appInfo.ts"/>
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../Node.ts"/>
 /// <reference path="Theme.ts"/>

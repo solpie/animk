@@ -11,7 +11,6 @@ class CompositionView implements IBaseView {
     }
 
     trackViewArr:Array<TrackView>;
-    selectTrackView:TrackView;
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
 

@@ -1,16 +1,22 @@
 /// <reference path="BaseView.ts"/>
-/// <reference path="../Model/appInfo.ts"/>
 
 class TimelineView extends BaseView {
     constructor() {
         super();
         this.el = $("#timeline");
-        var self = this;
-        $("#btnNewTrack").on("click", function () {
-            self.onNewTrack();
+        $("#btnNewTrack").on(MouseEvt.CLICK, ()=> {
+            this.onNewTrack();
+        });
+        $("#btnDelTrack").on(MouseEvt.CLICK, ()=> {
+            this.onDelTrack();
         });
 
         this.initDrag();
+    }
+
+    onDelTrack() {
+        appInfo.projectInfo.curComp.delSelTrack();
+        console.log("onDelSelTrack ")
     }
 
     onNewTrack() {

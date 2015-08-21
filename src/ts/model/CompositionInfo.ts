@@ -6,6 +6,7 @@
 
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
+
     constructor() {
         super();
         this.trackInfoArr = [];
@@ -16,10 +17,23 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo = new TrackInfo();
         trackInfo.imgArr = walk(path);
         trackInfo.idx = this.trackInfoArr.length;
-        trackInfo.name = 'track#'+trackInfo.idx;
+        trackInfo.name = 'track#' + trackInfo.idx;
         this.trackInfoArr.push(trackInfo);
         this.dis(ActEvent.NEW_TRACK, trackInfo);
         console.log(this, "newTrack idx", trackInfo.idx);
+    }
+
+
+    delSelTrack() {
+        var trackInfo:TrackInfo;
+        for (var i in this.trackInfoArr) {
+            trackInfo = this.trackInfoArr[i];
+            if(trackInfo.isSelected)
+            {
+                this.delTrack(trackInfo.idx);
+                break;
+            }
+        }
     }
 
     delTrack(idx:number) {

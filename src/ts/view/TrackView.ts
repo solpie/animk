@@ -34,7 +34,6 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
-        var self = this;
 
         var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
@@ -43,23 +42,22 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(this.id$ + " .Clip");
         clip.width(clipWidth);
 
-        clip.on(MouseEvt.DOWN, function (e) {
-            //clip.css({left: 40});
-            self._isPress = true;
-            self._lastX = appInfo.mouseX;
-            self.startMoveTimer();
-            console.log("down", self._isPress);
+        clip.on(MouseEvt.DOWN, (e)=> {
+            this._isPress = true;
+            this._lastX = appInfo.mouseX;
+            this.startMoveTimer();
+            console.log("down", this._isPress);
         });
-        clip.on(MouseEvt.UP, function (e) {
-            self._isPress = false;
-            self.stopMoveTimer();
+        clip.on(MouseEvt.UP, (e)=> {
+            this._isPress = false;
+            this.stopMoveTimer();
             //console.log("mouseup", "");
         });
-        clip.on(MouseEvt.LEAVE, function (e) {
-            //self._isPress = false;
-            //self.stopMoveTimer();
-            //console.log("mouseleave", "");
-        });
+        //clip.on(MouseEvt.LEAVE, (e)=> {
+        //    //self._isPress = false;
+        //    //self.stopMoveTimer();
+        //    //console.log("mouseleave", "");
+        //});
 
         appInfo.add(MouseEvt.UP, ()=> {
             this._isPress = false;
