@@ -1,10 +1,19 @@
 /// <reference path="ProjectInfo.ts"/>
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
+    mouseX:number;
+    mouseY:number;
 
     constructor() {
         super();
+        var self = this;
+        document.onmousemove = function (e) {
+            self.mouseX = e.clientX;
+            self.mouseY = e.clientY;
+        }
+
     }
+
 
     newProject() {
         this.projectInfo = new ProjectInfo();

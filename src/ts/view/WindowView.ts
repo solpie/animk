@@ -10,6 +10,9 @@ class WindowView {
             console.log(win);
             win.close();
         });
+        $("#btnDbg").on("click", function () {
+            win.showDevTools('', true);
+        });
         $("#btnMin").on("click", function () {
             console.log(win);
 
