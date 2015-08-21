@@ -39,7 +39,8 @@ body {
     position: relative;
     overflow-y: hidden;
 }
-.VScrollBar{
+
+.VScrollBar {
     position: absolute;
     width: 200px;
     /*height: 300px;*/
@@ -48,6 +49,7 @@ body {
     z-index: 999;
     overflow-y: scroll;
 }
+
 #trackHeight {
     height: 700px;
 }
@@ -84,8 +86,11 @@ body {
 }
 
 .TrackToolButton {
-    width: 80px;
-    height: 30px;
+    width: 70px;
+    height: 18px;
+    top: 3px;
+    border-radius: 8px;
+    border: 2px solid #FAF014;
 }
 
 .TimestampBar {
