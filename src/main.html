@@ -14,6 +14,7 @@
     <script src="ts/view/BaseView.js"></script>
     <script src="ts/view/TimelineView.js"></script>
     <script src="ts/view/WindowView.js"></script>
+    <script src="ts/view/SplitterView.js"></script>
 
     <script src="ts/model/AppInfo.js"></script>
     <script src="ts/view/AppView.js"></script>
@@ -58,12 +59,12 @@
         <button class="TitleBarButton" id="btnDbg">Dbg</button>
     </div>
     <div class="Content" style="-webkit-app-region: no-drag">
-        <div class="Viewport">
+        <div class="Viewport" id="Viewport0">
             <div class="Comp"></div>
             <div class="HSplitter"></div>
             <div class="tools"></div>
         </div>
-        <div class="VSplitter"></div>
+        <div class="VSplitter" id="VSplitter0"></div>
         <div class="Timeline" id="timeline">
             <!--<div class="TimelineBar">-->
             <div class="VScrollBar" id="compositionHeight">

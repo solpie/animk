@@ -49,9 +49,8 @@ class CompositionView implements IBaseView {
         for (var i in this.trackViewArr) {
             trackView = this.trackViewArr[i];
             if (trackView) {
-                if (trackView.trackInfo == trackInfo) {
+                if (trackView.trackInfo == trackInfo)
                     trackView.setSelected(true);
-                }
                 else
                     trackView.setSelected(false);
             }
@@ -76,6 +75,8 @@ class CompositionView implements IBaseView {
         console.log(this, "onDelTrackView", idx + '');
         //this.trackInfoArr.splice(idx, 1);
         //delete this.trackInfoArr[idx];
+        this._trackHeight -= this.trackViewArr[idx].height();
+        this.setTrackHeight(this._trackHeight);
         this.trackViewArr[idx].remove();
         delete this.trackViewArr[idx];
         //this.trackViewArr.splice(idx, 1);

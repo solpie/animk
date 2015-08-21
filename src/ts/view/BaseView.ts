@@ -11,7 +11,8 @@ class BaseView implements IBaseView {
     id$:string;
     className:string;
 
-    constructor() {
+    constructor(id$?) {
+        this.id$ = id$;
     }
 
     setElement(val:string):void {

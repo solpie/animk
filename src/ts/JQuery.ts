@@ -22,6 +22,7 @@ interface JQuery {
     change(func:any): JQuery;
     trigger(type:any): JQuery;
     attr(attrName:string): string;
+    position():any;
     (selector:string): any;
 }
 

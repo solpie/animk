@@ -42,13 +42,14 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(this.id$ + " .Clip");
         clip.width(clipWidth);
 
-        clip.on(MouseEvt.DOWN, (e)=> {
+        clip.on(MouseEvt.DOWN, ()=> {
             this._isPress = true;
             this._lastX = appInfo.mouseX;
             this.startMoveTimer();
             console.log("down", this._isPress);
         });
-        clip.on(MouseEvt.UP, (e)=> {
+
+        clip.on(MouseEvt.UP, ()=> {
             this._isPress = false;
             this.stopMoveTimer();
             //console.log("mouseup", "");

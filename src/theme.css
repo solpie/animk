@@ -1,8 +1,9 @@
 body {
-    background: #333333;
+    background: #111;
     overflow-x: hidden;
     overflow-y: hidden;
     -webkit-user-select: none;
+    margin: 0;
 }
 
 .TitleBar {
@@ -32,7 +33,7 @@ body {
 .Timeline {
     width: 100%;
     height: 300px;
-    background: #666666;
+    background: #222;
 }
 
 #composition {
@@ -114,7 +115,6 @@ body {
     border-bottom: 1px solid #111;
 }
 
-
 .Track .Label {
 }
 
@@ -128,8 +128,6 @@ body {
     left: 200px;
     position: absolute;
     width: 100%;
-
-    /*overflow-clip: ;*/
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -144,7 +142,7 @@ body {
 .Track .Clip .Bar {
     width: 100%;
     height: 20px;
-    background: #535353;
+    background: #2f2f2f;
 }
 
 .Track .Clip .Frame {
@@ -156,10 +154,11 @@ body {
 
 .Frame img {
     width: 100%;
+    position: relative;
 }
 
 .VSplitter {
-    height: 5px;
+    height: 15px;
     background: #aaa;
 }
 
@@ -173,6 +172,5 @@ body {
     width: 100%;
     height: 35px;
     background: #aaa;
-
 }
 

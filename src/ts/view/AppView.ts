@@ -2,11 +2,13 @@
 /// <reference path="ProjectView.ts"/>
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
+/// <reference path="SplitterView.ts"/>
 
 class AnimkView {
     appModel:AppInfo;
     projectViewArr:Array<ProjectView>;
     timelineView:TimelineView;
+    vSplitter:SplitterView;
 
     constructor(appModel) {
         this.appModel = appModel;
@@ -32,5 +34,10 @@ class AnimkView {
         console.log(this, 'new project');
         var view = new ProjectView(this.appModel.projectInfo);
         this.projectViewArr.push(view);
+    }
+
+    onDomReay() {
+        this.vSplitter = new SplitterView(Direction.Vertical, "#VSplitter0");
+
     }
 }
