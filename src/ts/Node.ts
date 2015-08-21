@@ -28,3 +28,8 @@ function walk(path):Array<string> {
 //    }
 //});
 //console.log('main',data);
+
+
+////////////// window
+var gui = require('nw.gui');
+var win = gui.Window.get();
