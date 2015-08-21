@@ -25,8 +25,16 @@ class CompositionView implements IBaseView {
             self.onDelTrackView(idx);
         });
         this.trackViewArr = [];
+
         this.setCompositionHeight(300);
         this.setTrackHeight(600);
+        $("#compositionHeight").on('scroll', function () {
+            var top = $("#compositionHeight").scrollTop();
+            $("#composition").scrollTop(top);
+            console.log(this, 'scroll', top);
+
+        });
+
     }
 
     setTrackHeight(val:number) {
