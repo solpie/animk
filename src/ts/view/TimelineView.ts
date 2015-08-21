@@ -55,9 +55,11 @@ class TimelineView extends BaseView {
         var self = this;
         timeline.ondrop = function (e) {
             e.preventDefault();
-            var file:File = e.dataTransfer.files[0];
-            self.newTrackByFilename(file.path);
-            console.log(this, "ondrop", file);
+            var file = e.dataTransfer.files[0];
+            if (file.path) {
+                self.newTrackByFilename(file.path);
+                console.log(this, "ondrop", file.path);
+            }
             //reader = new FileReader();
             //reader.onload = function (event) {
             //    console.log(event.target);

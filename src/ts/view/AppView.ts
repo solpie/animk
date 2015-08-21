@@ -14,8 +14,16 @@ class AnimkView {
         this.appModel.add('newProject', function () {
             ins.onNewProject();
         });
+
+        document.onmousemove = (e)=> {
+            this.appModel.mouseX = e.clientX;
+            this.appModel.mouseY = e.clientY;
+        };
+        document.onmouseup = ()=> {
+            this.appModel.dis(MouseEvt.UP);
+        };
         //super();
-        var titleBarView =new WindowView();
+        var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
     }

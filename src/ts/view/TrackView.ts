@@ -57,16 +57,23 @@ class TrackView extends BaseView implements IBaseView {
         });
         clip.on(MouseEvt.LEAVE, function (e) {
             //self._isPress = false;
-            self.stopMoveTimer();
-
+            //self.stopMoveTimer();
             //console.log("mouseleave", "");
+        });
+
+        appInfo.add(MouseEvt.UP, ()=> {
+            this._isPress = false;
+            this.stopMoveTimer();
         });
 
         this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
-        $(this.id$).on(MouseEvt.CLICK, ()=> {
-            this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
+        $(this.id$).on(MouseEvt.DOWN, ()=> {
+            if (this.trackInfo.isSelected && !this._isPress)
+                this.setSelected(false);
+            else
+                this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
         })
     }
 
