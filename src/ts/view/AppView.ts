@@ -9,6 +9,7 @@ class AnimkView {
     projectViewArr:Array<ProjectView>;
     timelineView:TimelineView;
     vSplitter:SplitterView;
+    hSplitter:SplitterView;
 
     constructor(appModel) {
         this.appModel = appModel;
@@ -38,6 +39,9 @@ class AnimkView {
 
     onDomReay() {
         this.vSplitter = new SplitterView(Direction.Vertical, "#VSplitter0");
+        this.vSplitter.setChildren("#Viewport0", "#timeline");
 
+        this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
+        this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
     }
 }

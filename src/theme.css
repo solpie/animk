@@ -26,8 +26,30 @@ body {
 }
 
 .Viewport {
+    font-size: 0;
+    letter-spacing: 0;
+    word-spacing: 0;
+
     height: 300px;
-    background: #555555;
+    background: #555;
+}
+
+.Comp {
+    display: inline-block;
+    position: relative;
+    width: 300px;
+    height: 100%;
+    background: #550108;
+    -webkit-text-size-adjust:none;
+}
+
+.ToolShelf {
+    display: inline-block;
+    /*position: relative;*/
+    width: 300px;
+    height: 100%;
+    background: #554c0d;
+    -webkit-text-size-adjust:none;
 }
 
 .Timeline {
@@ -158,14 +180,18 @@ body {
 }
 
 .VSplitter {
-    height: 15px;
-    background: #aaa;
+    height: 8px;
+    background: #141414;
 }
 
 .HSplitter {
-    width: 5px;
-    background: #aaa;
-
+    -webkit-text-size-adjust:none;
+    display: inline-block;
+    left: 300px;
+    height: 100%;
+    /*position: absolute;*/
+    width: 8px;
+    background: #141414;
 }
 
 .BottomBar {
