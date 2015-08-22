@@ -58,7 +58,7 @@ body {
 
 #composition {
     /*width: 200px;*/
-    height: 252px;
+    height: 193px;
     position: relative;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -66,18 +66,13 @@ body {
 
 .VScrollBar {
     position: absolute;
-    top: 376px;
+    top: 796px;
     left: 184px;
     width: 15px;
-    height: 300px;
-    background: #92231a;
+    height: 50px;
+    /*background: #92231a;*/
     z-index: 999;
     overflow-y: scroll;
-}
-
-#trackHeight {
-    height: 700px;
-    /*pointer-events: none;*/
 }
 
 ::-webkit-scrollbar {

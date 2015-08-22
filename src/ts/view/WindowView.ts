@@ -30,5 +30,6 @@ class WindowView {
                 this.isMaximize = true;
             }
         });
+
     }
 }

@@ -28,6 +28,11 @@ class AnimkView {
         var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
+
+    }
+
+    resize(w, h) {
+        this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height()-29-$(BottomBarId$).height());
     }
 
     onNewProject() {
@@ -40,14 +45,15 @@ class AnimkView {
         this.vSplitter = new SplitterView(Direction.Vertical, VSplitterId$);
         this.vSplitter.setChildren(ViewportId$, TimelineId$);
         this.vSplitter.add(ViewEvent.CHANGED, (deltaVal:number)=> {
-            console.log(this, "V changed", deltaVal);
             //splitter.css({top: splitter.position().top + dy})
             this.timelineView.resize(-1, $(TimelineId$).height() - deltaVal);
 
         });
         this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
         this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
-        //$(ViewportId$).height(720);
-        //this.timelineView.resize(-1, 223);
+
+          win.on(ViewEvent.RESIZE, (w, h) => {
+            this.resize(w, h);
+        });
     }
 }

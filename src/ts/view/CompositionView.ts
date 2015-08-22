@@ -26,8 +26,7 @@ class CompositionView implements IBaseView {
         });
         this.trackViewArr = [];
 
-        this.setCompositionHeight(300);
-        this.setTrackHeight(600);
+        this.setCompositionHeight($(CompositionId$).height());
         $("#compositionHeight").on('scroll', () => {
             var top = $("#compositionHeight").scrollTop();
             $("#composition").scrollTop(top);
@@ -65,7 +64,7 @@ class CompositionView implements IBaseView {
         });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
-        view.setParent($("#composition"));
+        view.setParent($(CompositionId$));
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         console.log('new TrackView', view.el);

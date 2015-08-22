@@ -83,6 +83,8 @@ class TimelineView extends BaseView {
             var timeline = $(TimelineId$);
             timeline.height(h);
             var vScrollBar = $(VScrollBarId$);
+
+            //vScrollBar.css({top: $(ViewportId$).position().bottom + trackToolBarHeight});
             vScrollBar.css({top: timeline.position().top + trackToolBarHeight});
             var compositionHeight = h - trackToolBarHeight;
             vScrollBar.height(compositionHeight);
