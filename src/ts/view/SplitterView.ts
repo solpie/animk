@@ -47,6 +47,7 @@ class SplitterView extends BaseView {
                     var dy = appInfo.mouseY - this._lastPos;
                     this._lastPos = appInfo.mouseY;
                     child1.height(child1.height() + dy);
+                    this.dis(ViewEvent.CHANGED, dy);
                     //splitter.css({top: splitter.position().top + dy})
                 }
                 else if (this._dir == Direction.Horizontal) {
@@ -56,6 +57,7 @@ class SplitterView extends BaseView {
                     child1.width(child1.width() + dx);
                     var hs = $(this.id$);
                     hs.css({left: hs.position().left + dx});
+                    this.dis(ViewEvent.CHANGED, dx);
                     //var c2 = $(this._childId$2);
                     //c2.css({left: hs.width() +hs.position().left+ dx});
                 }

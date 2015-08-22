@@ -37,10 +37,15 @@ class AnimkView {
         this.projectViewArr.push(view);
     }
 
-    onDomReay() {
+    onDomReady() {
         this.vSplitter = new SplitterView(Direction.Vertical, "#VSplitter0");
         this.vSplitter.setChildren("#Viewport0", "#timeline");
-
+        this.vSplitter.add(ViewEvent.CHANGED, (deltaVal:number)=> {
+            console.log(this, "V changed", deltaVal);
+            //splitter.css({top: splitter.position().top + dy})
+            var vScrollBar = $("#compositionHeight");
+            vScrollBar.css({top: vScrollBar.position().top + deltaVal});
+        });
         this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
         this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
     }

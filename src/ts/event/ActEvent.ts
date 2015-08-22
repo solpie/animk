@@ -9,6 +9,11 @@ class ActEvent extends BaseEvent {
     static DEL_TRACK:string = "delete track";
 }
 
+class ViewEvent {
+    static CHANGED:string = "changed";
+
+}
+
 class MouseEvt {
     static CLICK:string = "click";
     static UP:string = "mouseup";

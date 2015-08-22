@@ -68,7 +68,8 @@ body {
 
 .VScrollBar {
     position: absolute;
-    left: 193px;
+    top: 376px;
+    left: 184px;
     width: 15px;
     /*height: 300px;*/
     background: #92231a;

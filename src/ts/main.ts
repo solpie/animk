@@ -7,7 +7,7 @@ var app:AnimkView;
 $(() => {
     // Finally, we kick things off by creating the **App**.
     app = new AnimkView(appInfo);
-    app.onDomReay();
+    app.onDomReady();
     appInfo.test();
 
 });
