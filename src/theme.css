@@ -58,18 +58,35 @@ body {
 
 .Cursor {
     left: 240px;
-    opacity: .3;
     position: absolute;
     width: 40px;
+    font-size: 0;
     height: 200px;
-    background: #e6e6e6;
+}
 
+.CursorHint {
+    display: inline-block;
+    position: relative;
+    top: 20px;
+    width: 100%;
+    height: 5px;
+    background: #fdfd23;
+}
+
+.CursorMask {
+    display: inline-block;
+    opacity: .3;
+    top: 30px;
+    width: 100%;
+    height: 200px;
+    position: relative;
+    background: #e6e6e6;
 }
 
 #composition {
     /*width: 200px;*/
-    height: 193px;
     position: relative;
+    height: 193px;
     overflow-y: hidden;
     overflow-x: hidden;
 }
