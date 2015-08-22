@@ -28,7 +28,7 @@ class CompositionView implements IBaseView {
 
         this.setCompositionHeight($(CompositionId$).height());
         $("#compositionHeight").on('scroll', () => {
-            var top = $("#compositionHeight").scrollTop();
+            var top = $(VScrollBarId$).scrollTop();
             $("#composition").scrollTop(top);
             console.log(this, 'scroll', top);
         });
@@ -40,7 +40,7 @@ class CompositionView implements IBaseView {
     }
 
     setCompositionHeight(val:number) {
-        $("#compositionHeight").height(val);
+        $(VScrollBarId$).height(val);
     }
 
     onSelTrackView(trackInfo:TrackInfo) {
