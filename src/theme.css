@@ -39,7 +39,7 @@ body {
     width: 1280px;
     height: 100%;
     background: #550108;
-    -webkit-text-size-adjust:none;
+    -webkit-text-size-adjust: none;
 }
 
 .ToolShelf {
@@ -48,12 +48,22 @@ body {
     width: 300px;
     height: 100%;
     background: #554c0d;
-    -webkit-text-size-adjust:none;
+    -webkit-text-size-adjust: none;
 }
 
 .Timeline {
     width: 100%;
     background: #222;
+}
+
+.Cursor {
+    left: 240px;
+    opacity: .3;
+    position: absolute;
+    width: 40px;
+    height: 200px;
+    background: #e6e6e6;
+
 }
 
 #composition {
@@ -175,7 +185,7 @@ body {
 }
 
 .HSplitter {
-    -webkit-text-size-adjust:none;
+    -webkit-text-size-adjust: none;
     display: inline-block;
     left: 300px;
     height: 100%;
