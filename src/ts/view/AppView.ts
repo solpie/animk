@@ -47,5 +47,7 @@ class AnimkView {
         });
         this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
         this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
+        //$(ViewportId$).height(720);
+        //this.timelineView.resize(-1, 223);
     }
 }

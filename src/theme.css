@@ -29,14 +29,14 @@ body {
     font-size: 0;
     letter-spacing: 0;
     word-spacing: 0;
-    height: 300px;
+    height: 720px;
     background: #555;
 }
 
 .Comp {
     display: inline-block;
     position: relative;
-    width: 300px;
+    width: 1280px;
     height: 100%;
     background: #550108;
     -webkit-text-size-adjust:none;
@@ -53,13 +53,12 @@ body {
 
 .Timeline {
     width: 100%;
-    height: 100%;
     background: #222;
 }
 
 #composition {
     /*width: 200px;*/
-    height: 270px;
+    height: 252px;
     position: relative;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -70,12 +69,10 @@ body {
     top: 376px;
     left: 184px;
     width: 15px;
-    /*height: 300px;*/
+    height: 300px;
     background: #92231a;
     z-index: 999;
     overflow-y: scroll;
-    /*pointer-events: none;*/
-
 }
 
 #trackHeight {

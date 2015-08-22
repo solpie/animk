@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "window": {
     "frame": false,
-    "width": 1440,
-    "height": 820,
+    "width": 1660,
+    "height": 1024,
     "show": true,
     "title": "Animk",
     "toolbar": false
