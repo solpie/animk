@@ -88,5 +88,25 @@ class SplitterView extends BaseView {
         }
     }
 
+    isHorizontal() {
+        return this._dir == Direction.Horizontal;
+    }
 
+    isVertical() {
+        return this._dir == Direction.Vertical;
+    }
+
+    getChild2Size() {
+        if (this.isVertical())
+            return $(this._childId$2).height();
+        else if (this.isHorizontal())
+            return $(this._childId$2).width();
+    }
+
+    getChild1Size() {
+        if (this.isVertical())
+            return $(this._childId$1).height();
+        else if (this.isHorizontal())
+            return $(this._childId$1).width();
+    }
 }

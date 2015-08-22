@@ -48,7 +48,7 @@ class TimelineView extends BaseView {
             return false
         };
 
-        var timeline = document.getElementById("timeline");
+        var timeline = document.getElementById(TimelineId);
         timeline.ondragover = function () {
             //this.className = 'hover';
             console.log(this, "dragOver");
@@ -75,5 +75,15 @@ class TimelineView extends BaseView {
             //
             //return false;
         };
+    }
+
+    resize(w:number, h:number) {
+        if (h != -1) {
+            var timeline = $(TimelineId$);
+            timeline.height(h);
+            var vScrollBar = $(VScrollBarId$);
+            vScrollBar.css({top: timeline.position().top + 30});
+            vScrollBar.height(h - 30);
+        }
     }
 }

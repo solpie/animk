@@ -3,7 +3,6 @@
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
 /// <reference path="SplitterView.ts"/>
-
 class AnimkView {
     appModel:AppInfo;
     projectViewArr:Array<ProjectView>;
@@ -38,13 +37,13 @@ class AnimkView {
     }
 
     onDomReady() {
-        this.vSplitter = new SplitterView(Direction.Vertical, "#VSplitter0");
-        this.vSplitter.setChildren("#Viewport0", "#timeline");
+        this.vSplitter = new SplitterView(Direction.Vertical, VSplitterId$);
+        this.vSplitter.setChildren(ViewportId$, TimelineId$);
         this.vSplitter.add(ViewEvent.CHANGED, (deltaVal:number)=> {
             console.log(this, "V changed", deltaVal);
             //splitter.css({top: splitter.position().top + dy})
-            var vScrollBar = $("#compositionHeight");
-            vScrollBar.css({top: vScrollBar.position().top + deltaVal});
+            this.timelineView.resize(-1, $(TimelineId$).height() - deltaVal);
+
         });
         this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
         this.hSplitter.setChildren("#Comp0", "#ToolShelf0");

@@ -3,6 +3,7 @@
 /// <reference path="../Node.ts"/>
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="Theme.ts"/>
+/// <reference path="ViewId.ts"/>
 
 interface IBaseView {
     render():HTMLElement;
