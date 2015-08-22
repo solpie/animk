@@ -54,7 +54,7 @@ body {
 
 .Timeline {
     width: 100%;
-    height: 300px;
+    height: 100%;
     background: #222;
 }
 
@@ -195,6 +195,8 @@ body {
 }
 
 .BottomBar {
+    bottom: 0;
+    position: absolute;
     width: 100%;
     height: 35px;
     background: #aaa;
