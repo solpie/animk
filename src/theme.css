@@ -70,8 +70,6 @@ body {
     left: 184px;
     width: 15px;
     height: 50px;
-    /*background: #92231a;*/
-    z-index: 999;
     overflow-y: scroll;
 }
 

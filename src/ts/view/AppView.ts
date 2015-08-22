@@ -29,10 +29,17 @@ class AnimkView {
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
 
+        this.initZIndex();
+    }
+
+    initZIndex() {
+        for (var i in ZIdx) {
+            $(ZIdx[i]).css({"z-index": 1000 + i});
+        }
     }
 
     resize(w, h) {
-        this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height()-29-$(BottomBarId$).height());
+        this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height() - 29 - $(BottomBarId$).height());
     }
 
     onNewProject() {
@@ -52,7 +59,7 @@ class AnimkView {
         this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
         this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
 
-          win.on(ViewEvent.RESIZE, (w, h) => {
+        win.on(ViewEvent.RESIZE, (w, h) => {
             this.resize(w, h);
         });
     }

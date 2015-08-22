@@ -7,3 +7,5 @@ var VScrollBarId$ = "#compositionHeight";
 var TrackToolId$ = "#TrackTool0";
 var TitleBarId$ = "#titleBar";
 var BottomBarId$ = "#BottomBar0";
+
+var ZIdx = [VScrollBarId$];
