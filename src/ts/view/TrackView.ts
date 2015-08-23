@@ -84,7 +84,6 @@ class TrackView extends BaseView implements IBaseView {
             var frameWidth = appInfo.projectInfo.curComp.frameWidth;
             var frame$ = $(this.getFrameId$(i));
             frame$.css({left: i * frameWidth});
-
             var frameImg$ = $(this.getFrameId$(i) + " img");
             frameImg$.attr("src", this.trackInfo.getImgs()[i]);
             console.log(this, "pick frames", frameImg$);
@@ -93,8 +92,10 @@ class TrackView extends BaseView implements IBaseView {
             var frameWidth = appInfo.projectInfo.curComp.frameWidth;
             var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
             frame$.width(frame$.width() + frameWidth);
+            var clip = $(this.id$ + " " + ElmClass$.Clip);
+            clip.width(clip.width() + frameWidth);
             for (var i = pickFrame.getIdx() + 1; i < this.trackInfo.getImgs().length; i++) {
-                var nextframe$ = $(this.getFrameId$(i + 1));
+                var nextframe$ = $(this.getFrameId$(i));
                 nextframe$.css({left: nextframe$.position().left + frameWidth});
             }
         });
