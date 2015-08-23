@@ -85,10 +85,12 @@ class TrackView extends BaseView implements IBaseView {
                 var dx = appInfo.mouseX - this._lastX;
                 if (dx > 30) {
                     this._lastX = appInfo.mouseX;
+                    this.trackInfo.setStartFrame(this.trackInfo.getStartFrame() + 1);
                     clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
                 }
                 else if (dx < -30) {
                     this._lastX = appInfo.mouseX;
+                    this.trackInfo.setStartFrame(this.trackInfo.getStartFrame() - 1);
                     clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());
