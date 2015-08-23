@@ -79,16 +79,29 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     initFrame() {
-        //set img src
+        //set img src position
         for (var i = 0; i < this.trackInfo.getImgs().length; i++) {
-            var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (i + 1) + " img");
-            frame$.attr("src", this.trackInfo.getImgs()[i]);
-            console.log(this, "pick frames", frame$);
+            var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+            var frame$ = $(this.getFrameId$(i));
+            frame$.css({left: i * frameWidth});
+
+            var frameImg$ = $(this.getFrameId$(i) + " img");
+            frameImg$.attr("src", this.trackInfo.getImgs()[i]);
+            console.log(this, "pick frames", frameImg$);
         }
         this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {
-            var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (pickFrame.getIdx() + 1) + " img");
-            frame$.width(frame$.width() + appInfo.projectInfo.curComp.frameWidth);
+            var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+            var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
+            frame$.width(frame$.width() + frameWidth);
+            for (var i = pickFrame.getIdx() + 1; i < this.trackInfo.getImgs().length; i++) {
+                var nextframe$ = $(this.getFrameId$(i + 1));
+                nextframe$.css({left: nextframe$.position().left + frameWidth});
+            }
         });
+    }
+
+    getFrameId$(idx) {
+        return "#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (idx + 1)
     }
 
     onUp() {
