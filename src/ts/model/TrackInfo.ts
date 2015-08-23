@@ -60,10 +60,12 @@ class TrackInfo extends EventDispatcher {
 
     R2R(handleFrame:FrameInfo) {
         handleFrame.setHold(handleFrame.getHold() + 1);
+        console.log(this, "R2R pick idx:", handleFrame.getIdx(), "hold:", handleFrame.getHold());
         var nextFrame;
-        for (var i = handleFrame.getIdx(); i < this.frameInfoArr.length; ++i) {
+        for (var i = handleFrame.getIdx()+1; i < this.frameInfoArr.length; ++i) {
             nextFrame = this.frameInfoArr[i];
             nextFrame.setStart(nextFrame.getStart() + 1);
+            console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
         }
         //todo updateContentEndFrame
     }

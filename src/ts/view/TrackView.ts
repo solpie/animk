@@ -9,6 +9,7 @@ class TrackView extends BaseView implements IBaseView {
     _isPressClip:boolean;
     _lastX:number;
     timerId:number;
+    _pickFrame:FrameInfo = null;
 
     constructor(trackInfo:TrackInfo) {
         super();
@@ -47,6 +48,7 @@ class TrackView extends BaseView implements IBaseView {
             else {
                 var mouseX = e.clientX - clip.offset().left;
                 var frameInfo = this.trackInfo.getFrameInfo(mouseX);
+                this._pickFrame = frameInfo;
                 console.log("Pick frame", e.clientX, mouseX, frameInfo, frameInfo.getIdx());
             }
             this.startMoveTimer();
@@ -77,6 +79,7 @@ class TrackView extends BaseView implements IBaseView {
     onUp() {
         this._isPressBar = false;
         this._isPressClip = false;
+        this._pickFrame = null;
         this.stopMoveTimer();
     }
 
@@ -92,17 +95,23 @@ class TrackView extends BaseView implements IBaseView {
     startMoveTimer() {
         this.timerId = window.setInterval(()=> {
             var clip = $(this.id$ + " " + ElmClass$.Clip);
-            if (this._isPressBar) {
+            if (this._isPressClip) {
                 var dx = appInfo.mouseX - this._lastX;
                 if (dx > 30) {
                     this._lastX = appInfo.mouseX;
-                    this.trackInfo.setStart(this.trackInfo.getStart() + 1);
-                    clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
+                    if (this._isPressBar) {
+                        this.trackInfo.setStart(this.trackInfo.getStart() + 1);
+                        clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
+                    } else if (this._pickFrame) {
+                        this.trackInfo.R2R(this._pickFrame);
+                    }
                 }
                 else if (dx < -30) {
                     this._lastX = appInfo.mouseX;
-                    this.trackInfo.setStart(this.trackInfo.getStart() - 1);
-                    clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
+                    if (this._isPressBar) {
+                        this.trackInfo.setStart(this.trackInfo.getStart() - 1);
+                        clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
+                    }
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());
             }

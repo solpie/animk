@@ -13,6 +13,7 @@ class FrameInfo extends EventDispatcher {
         this.imageInfo = new ImageInfo(filename);
     }
 
+    //idx in array
     getIdx() {
         return this._idx;
     }

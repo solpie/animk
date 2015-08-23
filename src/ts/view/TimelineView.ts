@@ -51,7 +51,7 @@ class TimelineView extends BaseView {
         var timeline = document.getElementById(TimelineId);
         timeline.ondragover = function () {
             //this.className = 'hover';
-            console.log(this, "dragOver");
+            //console.log(this, "dragOver");
             return false;
         };
         timeline.ondragleave = function () {
