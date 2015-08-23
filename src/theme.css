@@ -107,8 +107,8 @@ body {
 
 .VScrollBar {
     position: absolute;
-    top: 796px;
-    left: 184px;
+    top: 30px;
+    left: -15px;
     width: 15px;
     overflow-y: scroll;
 }
@@ -144,7 +144,7 @@ background-color: #9f9f9f;
 }
 
 .TrackToolButton {
-    width: 70px;
+    width: 40px;
     height: 18px;
     top: 3px;
     border-radius: 8px;
