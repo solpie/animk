@@ -1,6 +1,7 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
+/// <reference path="FrameInfo.ts"/>
 /// <reference path="../view/TrackView.ts"/>
 /// <reference path="../Node.ts"/>
 
@@ -44,4 +45,6 @@ class CompositionInfo extends EventDispatcher {
         this.dis(ActEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
+
+
 }

@@ -5,7 +5,8 @@
 class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
     clip:HTMLElement;
-    _isPress:boolean;
+    _isPressBar:boolean;
+    _isPressClip:boolean;
     _lastX:number;
     timerId:number;
 
@@ -28,45 +29,55 @@ class TrackView extends BaseView implements IBaseView {
     setParent(parent:JQuery) {
         super.setParent(parent);
 
-        var clipWidth = this.trackInfo.imgInfoArr.length * appInfo.projectInfo.frameWidth;
+        var clipWidth = this.trackInfo.getEnd() * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
+        var barHeight = $(this.id$ + " " + ElmClass$.Bar).height();
         clip.width(clipWidth);
 
-        clip.on(MouseEvt.DOWN, ()=> {
-            this._isPress = true;
+        clip.on(MouseEvt.DOWN, (e)=> {
             this._lastX = appInfo.mouseX;
+            var mouseY = e.clientY - $(this.id$).offset().top;
+            this._isPressClip = true;
+            if (mouseY < barHeight) {
+                this._isPressBar = true;
+            }
+            else {
+                var mouseX = e.clientX - clip.offset().left;
+                var frameInfo = this.trackInfo.getFrameInfo(mouseX);
+                console.log("Pick frame", e.clientX, mouseX, frameInfo, frameInfo.getIdx());
+            }
             this.startMoveTimer();
-            console.log("down", this._isPress);
+            console.log("down", this._isPressBar, mouseY, barHeight);
         });
 
-        clip.on(MouseEvt.UP, ()=> {
-            this._isPress = false;
-            this.stopMoveTimer();
-            //console.log("mouseup", "");
-        });
         //clip.on(MouseEvt.LEAVE, (e)=> {
-        //    //self._isPress = false;
+        //    //self._isPressBar = false;
         //    //self.stopMoveTimer();
         //    //console.log("mouseleave", "");
         //});
 
         appInfo.add(MouseEvt.UP, ()=> {
-            this._isPress = false;
-            this.stopMoveTimer();
+            this.onUp();
         });
 
         this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
         $(this.id$).on(MouseEvt.DOWN, ()=> {
-            if (this.trackInfo.isSelected && !this._isPress)
+            if (this.trackInfo.isSelected && !this._isPressClip)
                 this.setSelected(false);
             else
                 this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
         })
+    }
+
+    onUp() {
+        this._isPressBar = false;
+        this._isPressClip = false;
+        this.stopMoveTimer();
     }
 
     setSelected(val:boolean) {
@@ -81,16 +92,16 @@ class TrackView extends BaseView implements IBaseView {
     startMoveTimer() {
         this.timerId = window.setInterval(()=> {
             var clip = $(this.id$ + " " + ElmClass$.Clip);
-            if (this._isPress) {
+            if (this._isPressBar) {
                 var dx = appInfo.mouseX - this._lastX;
                 if (dx > 30) {
                     this._lastX = appInfo.mouseX;
-                    this.trackInfo.setStartFrame(this.trackInfo.getStartFrame() + 1);
+                    this.trackInfo.setStart(this.trackInfo.getStart() + 1);
                     clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
                 }
                 else if (dx < -30) {
                     this._lastX = appInfo.mouseX;
-                    this.trackInfo.setStartFrame(this.trackInfo.getStartFrame() - 1);
+                    this.trackInfo.setStart(this.trackInfo.getStart() - 1);
                     clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());

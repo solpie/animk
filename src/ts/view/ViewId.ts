@@ -17,6 +17,7 @@ var ElmClass$ = {
     Track: ".Track",
     TrackArea: ".TrackArea",
     Clip: ".Clip",
+    Bar: ".Bar",
 };
 
 var ZIdx = [ElmId$.Cursor, VScrollBarId$];

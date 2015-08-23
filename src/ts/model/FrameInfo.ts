@@ -3,13 +3,14 @@
 class FrameInfo extends EventDispatcher {
 
     _idx = -1;
-    _start = 1;
+    _start:number = 1;
     _end = 1;
     _hold = 1;
     imageInfo:ImageInfo;
 
-    constructor() {
+    constructor(filename) {
         super();
+        this.imageInfo = new ImageInfo(filename);
     }
 
     getIdx() {
