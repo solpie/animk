@@ -94,7 +94,7 @@ body {
 .HScrollBar {
     position: absolute;
     height: 16px;
-    width: 800px;
+    width: 1460px;
     background: #FF0000;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -102,7 +102,6 @@ body {
 
 #trackWidth {
     height: 1px;
-    width: 3000px;
 }
 
 .VScrollBar {

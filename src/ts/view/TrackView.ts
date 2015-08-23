@@ -86,18 +86,17 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     startMoveTimer() {
-        var self = this;
-        self.timerId = window.setInterval(function () {
-            var clip = $(self.id$ + " .Clip");
-            if (self._isPress) {
-                var dx = appInfo.mouseX - self._lastX;
+        this.timerId = window.setInterval( ()=> {
+            var clip = $(this.id$ + " .Clip");
+            if (this._isPress) {
+                var dx = appInfo.mouseX - this._lastX;
                 if (dx > 30) {
-                    self._lastX = appInfo.mouseX;
-                    clip.css({left: clip.position().left + appInfo.projectInfo.frameWidth});
+                    this._lastX = appInfo.mouseX;
+                    clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
                 }
                 else if (dx < -30) {
-                    self._lastX = appInfo.mouseX;
-                    clip.css({left: clip.position().left - appInfo.projectInfo.frameWidth});
+                    this._lastX = appInfo.mouseX;
+                    clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());
             }

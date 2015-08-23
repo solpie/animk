@@ -6,6 +6,7 @@
 
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
+    frameWidth:number = 40;
 
     constructor() {
         super();

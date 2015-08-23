@@ -14,6 +14,7 @@ class CompositionView implements IBaseView {
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
     _hScrollVal:number = 0;
+
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
         this.trackViewArr = [];
@@ -36,7 +37,8 @@ class CompositionView implements IBaseView {
         $(HScrollBarId$).on(ViewEvent.SCROLL, () => {
             var left = $(HScrollBarId$).scrollLeft();
             this._hScrollVal = left;
-            $(ElmClass$.TrackArea).scrollLeft(left);
+
+            $(ElmClass$.Clip).css({left: -left});
         });
         $(TrackHeightId$).width(1);
     }
@@ -74,7 +76,8 @@ class CompositionView implements IBaseView {
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
-        console.log('new TrackView', view.el);
+        $(ElmId$.TrackWidth).width(trackInfo.imgArr.length * appInfo.projectInfo.curComp.frameWidth);
+        console.log('new TrackView', view.el, view.width());
     }
 
     onDelTrackView(idx:number) {
