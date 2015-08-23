@@ -20,7 +20,7 @@ class TrackView extends BaseView implements IBaseView {
             //var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
-            imgs: this.trackInfo.imgArr
+            imgs: this.trackInfo.getImgs()
         });
     }
 
@@ -28,7 +28,7 @@ class TrackView extends BaseView implements IBaseView {
     setParent(parent:JQuery) {
         super.setParent(parent);
 
-        var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
+        var clipWidth = this.trackInfo.imgInfoArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];

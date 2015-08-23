@@ -78,7 +78,7 @@ class CompositionView implements IBaseView {
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
-        var newTrackWidth = (trackInfo.imgArr.length + 4) * appInfo.projectInfo.curComp.frameWidth;
+        var newTrackWidth = (trackInfo.imgInfoArr.length + 4) * appInfo.projectInfo.curComp.frameWidth;
         if (this._maxTrackWidth < newTrackWidth) {
             this._maxTrackWidth = newTrackWidth;
             $(ElmId$.TrackWidth).width(newTrackWidth);
