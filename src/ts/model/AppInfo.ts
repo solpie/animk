@@ -16,11 +16,12 @@ class AppInfo extends EventDispatcher {
 
     test() {
         this.newProject();
+        $("#btnTest").on(MouseEvt.CLICK, ()=> {
+            this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
+            console.log(this, "test");
+        });
         this.projectInfo.newComp().newTrack('D:/projects/animk/test/test10');
-        //this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
-        //this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
-        //this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
-        //this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
+        this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
     }
 }
 
