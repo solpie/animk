@@ -75,6 +75,10 @@ class TrackView extends BaseView implements IBaseView {
             else
                 this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
         });
+        this.initFrame();
+    }
+
+    initFrame() {
         //set img src
         for (var i = 0; i < this.trackInfo.getImgs().length; i++) {
             var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (i + 1) + " img");
@@ -85,7 +89,6 @@ class TrackView extends BaseView implements IBaseView {
             var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (pickFrame.getIdx() + 1) + " img");
             frame$.width(frame$.width() + appInfo.projectInfo.curComp.frameWidth);
         });
-        //console.log(this, "pick frames", a);
     }
 
     onUp() {
