@@ -18,6 +18,8 @@ interface JQuery {
     width(value:number): JQuery;
     height(): string;
     height(value:number): JQuery;
+    scrollTop(value:number): JQuery;
+    scrollLeft(value:number): JQuery;
     unbind(value:string): JQuery;
     change(func:any): JQuery;
     trigger(type:any): JQuery;

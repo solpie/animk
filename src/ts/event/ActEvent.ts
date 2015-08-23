@@ -12,6 +12,7 @@ class ActEvent extends BaseEvent {
 class ViewEvent {
     static CHANGED:string = "changed";
     static RESIZE:string = "resize";
+    static SCROLL:string = "scroll";
 
 }
 

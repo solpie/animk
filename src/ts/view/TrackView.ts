@@ -123,4 +123,7 @@ class TrackView extends BaseView implements IBaseView {
         $(this.el).remove();
     }
 
+    hScrollTo(val:number) {
+        $(this.id$ + " " + ElmClass$.TrackArea).scrollLeft(val);
+    }
 }

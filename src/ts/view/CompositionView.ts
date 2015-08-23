@@ -13,7 +13,7 @@ class CompositionView implements IBaseView {
     trackViewArr:Array<TrackView>;
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
-
+    _hScrollVal:number = 0;
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
         this.trackViewArr = [];
@@ -27,16 +27,22 @@ class CompositionView implements IBaseView {
         this.trackViewArr = [];
 
         this.setCompositionHeight($(CompositionId$).height());
-        $("#compositionHeight").on('scroll', () => {
+        $(VScrollBarId$).on(ViewEvent.SCROLL, () => {
             var top = $(VScrollBarId$).scrollTop();
-            $("#composition").scrollTop(top);
+            $(CompositionId$).scrollTop(top);
             console.log(this, 'scroll', top);
         });
 
+        $(HScrollBarId$).on(ViewEvent.SCROLL, () => {
+            var left = $(HScrollBarId$).scrollLeft();
+            this._hScrollVal = left;
+            $(ElmClass$.TrackArea).scrollLeft(left);
+        });
+        $(TrackHeightId$).width(1);
     }
 
     setTrackHeight(val:number) {
-        $("#trackHeight").height(val);
+        $(TrackHeightId$).height(val);
     }
 
     setCompositionHeight(val:number) {
@@ -67,6 +73,7 @@ class CompositionView implements IBaseView {
         view.setParent($(CompositionId$));
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
+        view.hScrollTo(this._hScrollVal);
         console.log('new TrackView', view.el);
     }
 
