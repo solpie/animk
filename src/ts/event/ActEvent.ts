@@ -13,12 +13,17 @@ class ViewEvent {
     static CHANGED:string = "changed";
     static RESIZE:string = "resize";
     static SCROLL:string = "scroll";
-
 }
+
 
 class MouseEvt {
     static CLICK:string = "click";
     static UP:string = "mouseup";
     static DOWN:string = "mousedown";
     static LEAVE:string = "mouseleave";
+}
+
+class TrackInfoEvent{
+    static UPDATE_HOLD:string = "UPDATE_HOLD";
+
 }

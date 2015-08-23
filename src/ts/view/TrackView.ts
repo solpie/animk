@@ -81,6 +81,10 @@ class TrackView extends BaseView implements IBaseView {
             frame$.attr("src", this.trackInfo.getImgs()[i]);
             console.log(this, "pick frames", frame$);
         }
+        this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {
+            var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (pickFrame.getIdx() + 1) + " img");
+            frame$.width(frame$.width() + appInfo.projectInfo.curComp.frameWidth);
+        });
         //console.log(this, "pick frames", a);
     }
 

@@ -1,4 +1,5 @@
 /// <reference path="../event/EventDispatcher.ts"/>
+/// <reference path="../event/ActEvent.ts"/>
 /// <reference path="ImageInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
 class TrackInfo extends EventDispatcher {
@@ -75,6 +76,7 @@ class TrackInfo extends EventDispatcher {
             nextFrame.setStart(nextFrame.getStart() + 1);
             console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
         }
+        this.dis(TrackInfoEvent.UPDATE_HOLD, handleFrame);
         //todo updateContentEndFrame
     }
 }
