@@ -11,24 +11,17 @@ class TrackView extends BaseView implements IBaseView {
 
     constructor(trackInfo:TrackInfo) {
         super();
-        this.className = "Track";
         this.trackInfo = trackInfo;
     }
 
     render() {
         var template = $('.Track-tpl').html();
-        var newTrack = Mustache.render(template, {
+        return Mustache.render(template, {
             //var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             imgs: this.trackInfo.imgArr
         });
-        //var newJade = jade.renderFile('jade/Track.jade', {
-        //    idx: this.trackInfo.idx,
-        //    name: this.trackInfo.name,
-        //    imgs: this.trackInfo.imgArr
-        //});
-        return newTrack;
     }
 
     //use for add Child view to parent
@@ -37,9 +30,9 @@ class TrackView extends BaseView implements IBaseView {
 
         var clipWidth = this.trackInfo.imgArr.length * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
-        this.id$ = "." + this.className + "#" + idx;
+        this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];
-        var clip = $(this.id$ + " .Clip");
+        var clip = $(this.id$ + " " + ElmClass$.Clip);
         clip.width(clipWidth);
 
         clip.on(MouseEvt.DOWN, ()=> {
@@ -86,8 +79,8 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     startMoveTimer() {
-        this.timerId = window.setInterval( ()=> {
-            var clip = $(this.id$ + " .Clip");
+        this.timerId = window.setInterval(()=> {
+            var clip = $(this.id$ + " " + ElmClass$.Clip);
             if (this._isPress) {
                 var dx = appInfo.mouseX - this._lastX;
                 if (dx > 30) {

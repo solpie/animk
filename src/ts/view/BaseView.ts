@@ -11,7 +11,6 @@ interface IBaseView {
 class BaseView extends EventDispatcher implements IBaseView {
     el:HTMLElement;
     id$:string;
-    className:string;
 
     constructor(id$?) {
         super();

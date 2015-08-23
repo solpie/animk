@@ -14,6 +14,7 @@ var ElmId$ = {
     BottomBar: "#BottomBar0",
 };
 var ElmClass$ = {
+    Track: ".Track",
     TrackArea: ".TrackArea",
     Clip: ".Clip",
 };

@@ -6,6 +6,8 @@
 /// <reference path="../model/CompositionInfo.ts"/>
 
 class CompositionView implements IBaseView {
+    _maxTrackWidth:number;
+
     render():HTMLElement {
         return undefined;
     }
@@ -76,8 +78,12 @@ class CompositionView implements IBaseView {
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
-        $(ElmId$.TrackWidth).width(trackInfo.imgArr.length * appInfo.projectInfo.curComp.frameWidth);
-        console.log('new TrackView', view.el, view.width());
+        var newTrackWidth = trackInfo.imgArr.length * appInfo.projectInfo.curComp.frameWidth;
+        if (this._maxTrackWidth < newTrackWidth) {
+            this._maxTrackWidth = newTrackWidth;
+            $(ElmId$.TrackWidth).width(newTrackWidth);
+        }
+        console.log('new TrackView', view.el);
     }
 
     onDelTrackView(idx:number) {
