@@ -41,11 +41,11 @@
             <div class="TrackArea">
                 <div class="Clip">
                     <div class="Bar"></div>
-                    {{#imgs}}
-                    <div class="Frame">
-                        <img src="{{.}}" draggable="false">
+                    {{#frameIdxArr}}
+                    <div class="Frame" id="{{.}}">
+                        <img src="" draggable="false">
                     </div>
-                    {{/imgs}}
+                    {{/frameIdxArr}}
                 </div>
             </div>
         </div>

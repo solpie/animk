@@ -15,8 +15,10 @@ var ElmId$ = {
 };
 var ElmClass$ = {
     Track: ".Track",
+    TrackCls: "Track",
     TrackArea: ".TrackArea",
     Clip: ".Clip",
+    Frame: "Frame",
     Bar: ".Bar",
 };
 

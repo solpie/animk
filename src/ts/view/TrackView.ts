@@ -22,7 +22,8 @@ class TrackView extends BaseView implements IBaseView {
             //var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
-            imgs: this.trackInfo.getImgs()
+            frameIdxArr: this.trackInfo.getIdxArr(),
+            //imgs: this.trackInfo.getImgs()
         });
     }
 
@@ -73,7 +74,14 @@ class TrackView extends BaseView implements IBaseView {
                 this.setSelected(false);
             else
                 this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
-        })
+        });
+        //set img src
+        for (var i = 0; i < this.trackInfo.getImgs().length; i++) {
+            var frame$ = $("#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (i + 1) + " img");
+            frame$.attr("src", this.trackInfo.getImgs()[i]);
+            console.log(this, "pick frames", frame$);
+        }
+        //console.log(this, "pick frames", a);
     }
 
     onUp() {

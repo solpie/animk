@@ -40,6 +40,14 @@ class TrackInfo extends EventDispatcher {
         return this._imgArr;
     }
 
+    getIdxArr() {
+        var a = [];
+        for (var i = 0; i < this._imgArr.length; i++) {
+            a.push(ElmClass$.TrackCls + this.idx + ElmClass$.Frame + (i + 1));
+        }
+        return a;
+    }
+
     getEnd() {
         return this._end;
     }
@@ -62,7 +70,7 @@ class TrackInfo extends EventDispatcher {
         handleFrame.setHold(handleFrame.getHold() + 1);
         console.log(this, "R2R pick idx:", handleFrame.getIdx(), "hold:", handleFrame.getHold());
         var nextFrame;
-        for (var i = handleFrame.getIdx()+1; i < this.frameInfoArr.length; ++i) {
+        for (var i = handleFrame.getIdx() + 1; i < this.frameInfoArr.length; ++i) {
             nextFrame = this.frameInfoArr[i];
             nextFrame.setStart(nextFrame.getStart() + 1);
             console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
