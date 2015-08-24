@@ -88,11 +88,12 @@ class TimelineView extends BaseView {
             var compositionHeight = h - trackToolBarHeight;
             vScrollBar.height(compositionHeight);
             $(CompositionId$).height(compositionHeight);
+            $(ElmId$.CursorMask).height(compositionHeight + trackToolBarHeight);
         }
-        if(w!=-1)
-        {
+        if (w != -1) {
             var trackToolBarWidth = $(TrackToolId$).width();
             $(HScrollBarId$).width(w - 200);
+            $(ElmId$.CursorMask).width(w);
         }
     }
 }
