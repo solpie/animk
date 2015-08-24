@@ -103,7 +103,7 @@ class TrackView extends BaseView implements IBaseView {
     updateClip(updateIdx:number) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        clip.css({left: this.trackInfo.getStart() * frameWidth-appInfo.projectInfo.curComp.hScollVal});
+        clip.css({left: this.trackInfo.getStart() * frameWidth-appInfo.projectInfo.curComp.hScrollVal});
         clip.width((this.trackInfo.getHold()) * frameWidth);
         for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
             var nextFrameInfo = this.trackInfo.frameInfoArr[i];

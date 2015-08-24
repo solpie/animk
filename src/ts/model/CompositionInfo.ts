@@ -2,6 +2,7 @@
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
+/// <reference path="FrameTimer.ts"/>
 /// <reference path="../view/TrackView.ts"/>
 /// <reference path="../Node.ts"/>
 
@@ -9,12 +10,37 @@ class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
     _cursorPos:number = 1;
-    hScollVal:number = 0;
+    hScrollVal:number = 0;
+    _frameTimer:FrameTimer;
 
     constructor() {
         super();
         this.trackInfoArr = [];
         console.log("new CompInfo");
+
+        this._frameTimer = new FrameTimer(24);
+        this._frameTimer.add(FrameTimerEvent.TICK, ()=>{
+            this.onFrameTimerTick();
+        });
+    }
+
+    onFrameTimerTick() {
+        this.forward();
+    }
+
+    play() {
+        this._frameTimer.start();
+    }
+
+    pause() {
+        this._frameTimer.stop();
+    }
+
+    toggle() {
+        if (this._frameTimer.isBusy())
+            this.pause();
+        else
+            this.play();
     }
 
     setCursor(framePos) {
@@ -67,6 +93,4 @@ class CompositionInfo extends EventDispatcher {
         this.dis(CompInfoEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
-
-
 }

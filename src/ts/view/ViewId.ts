@@ -20,6 +20,9 @@ var ElmId$ = {
     btnDelTrack: "#btnDelTrack",
     timestampBar: "#TimestampBar0",
     compCanvas: "#Canvas0",
+    hSplitter: "#HSplitter0",
+    comp: "#Comp0",
+    toolShelf: "#ToolShelf0",
 };
 var ElmClass$ = {
     Track: ".Track",

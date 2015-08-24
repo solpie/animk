@@ -4,10 +4,10 @@
 /// <reference path="../JQuery.ts"/>
 /// <reference path="TrackView.ts"/>
 /// <reference path="../model/CompositionInfo.ts"/>
+/// <reference path="../model/FrameTimer.ts"/>
 
 class CompositionView implements IBaseView {
     _maxTrackWidth:number = 0;
-
     render():HTMLElement {
         return undefined;
     }
@@ -50,17 +50,20 @@ class CompositionView implements IBaseView {
         });
 
         $(TrackHeightId$).width(1);
+
+
     }
+
 
     onClkTimestampBar(e) {
         var mouseX = e.clientX - $(ElmId$.timestampBar).offset().left;
-        var cursorIdx = Math.floor((mouseX + this.compInfo.hScollVal) / this.compInfo.frameWidth);
+        var cursorIdx = Math.floor((mouseX + this.compInfo.hScrollVal) / this.compInfo.frameWidth);
         this.onUpdateCursor(cursorIdx);
     }
 
     onHScroll() {
         this._hScrollVal = $(HScrollBarId$).scrollLeft();
-        this.compInfo.hScollVal = this._hScrollVal;
+        this.compInfo.hScrollVal = this._hScrollVal;
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clip$;
         for (var i = 0; i < this.compInfo.trackInfoArr.length; i++) {

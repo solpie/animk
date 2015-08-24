@@ -29,3 +29,7 @@ class TrackInfoEvent {
     static UPDATE_START:string = "UPDATE_START";
     static UPDATE_TRACK_START:string = "UPDATE_TRACK_START";
 }
+class FrameTimerEvent{
+    static TICK:string = "TICK";
+
+}

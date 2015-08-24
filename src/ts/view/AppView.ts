@@ -59,7 +59,7 @@ class AnimkView {
             appInfo.projectInfo.curComp.backward()
         }
         else if (Keys.Space(key)) {//Space
-            appInfo.projectInfo.curComp.backward()
+            appInfo.projectInfo.curComp.toggle();
         }
         else if (Keys.Char(key, "\r")) {//enter
             appInfo.projectInfo.curComp.backward()
@@ -85,8 +85,8 @@ class AnimkView {
             this.timelineView.resize(-1, $(TimelineId$).height() - deltaVal);
 
         });
-        this.hSplitter = new SplitterView(Direction.Horizontal, "#HSplitter0");
-        this.hSplitter.setChildren("#Comp0", "#ToolShelf0");
+        this.hSplitter = new SplitterView(Direction.Horizontal, ElmId$.hSplitter);
+        this.hSplitter.setChildren(ElmId$.comp, ElmId$.toolShelf);
 
         win.on(ViewEvent.RESIZE, (w, h) => {
             this.resize(w, h);
