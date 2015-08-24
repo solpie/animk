@@ -4,7 +4,6 @@
 class ProjectInfo extends EventDispatcher {
     comps:Array<CompositionInfo>;
     curComp:CompositionInfo;
-    frameWidth:number = 40;
     constructor(options?) {
         super();
         console.log("new project");

@@ -8,11 +8,21 @@
 class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
+    _cursorPos:number = 1;
 
     constructor() {
         super();
         this.trackInfoArr = [];
         console.log("new CompInfo");
+    }
+
+    setCursor(framePos) {
+        this._cursorPos = framePos;
+        this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+    }
+
+    getCursor() {
+        return this._cursorPos;
     }
 
     newTrack(path) {
@@ -21,7 +31,7 @@ class CompositionInfo extends EventDispatcher {
         trackInfo.idx = this.trackInfoArr.length;
         trackInfo.name = 'track#' + trackInfo.idx;
         this.trackInfoArr.push(trackInfo);
-        this.dis(ActEvent.NEW_TRACK, trackInfo);
+        this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
         console.log(this, "newTrack idx", trackInfo.idx);
     }
 
@@ -30,8 +40,7 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo;
         for (var i in this.trackInfoArr) {
             trackInfo = this.trackInfoArr[i];
-            if(trackInfo.isSelected)
-            {
+            if (trackInfo.isSelected) {
                 this.delTrack(trackInfo.idx);
                 break;
             }
@@ -42,7 +51,7 @@ class CompositionInfo extends EventDispatcher {
         //this.trackInfoArr.splice(idx, 1);
         delete this.trackInfoArr[idx];
         console.log(this, "delTrack", idx + '');
-        this.dis(ActEvent.DEL_TRACK, idx);
+        this.dis(CompInfoEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
 

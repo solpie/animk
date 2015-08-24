@@ -29,14 +29,13 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
-
-        var clipWidth = this.trackInfo.getHold() * appInfo.projectInfo.frameWidth;
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var clipWidth = this.trackInfo.getHold() * frameWidth;
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        clip.width(clipWidth);
-
+        this.updateClip(0);
         clip.on(MouseEvt.DOWN, (e)=> {
             this.onMouseDown(e);
         });
@@ -60,7 +59,7 @@ class TrackView extends BaseView implements IBaseView {
             if (this.trackInfo.isSelected && !this._isPressClip)
                 this.setSelected(false);
             else
-                this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
+                this.trackInfo.dis(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
     }
@@ -101,12 +100,10 @@ class TrackView extends BaseView implements IBaseView {
         });
     }
 
-
-    onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
+    updateClip(updateIdx:number) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
-        var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
-        frame$.width(pickFrame.getHold() * frameWidth);
         var clip = $(this.id$ + " " + ElmClass$.Clip);
+        clip.css({left: this.trackInfo.getStart() * frameWidth});
         clip.width((this.trackInfo.getHold()) * frameWidth);
         for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
             var nextFrameInfo = this.trackInfo.frameInfoArr[i];
@@ -115,6 +112,13 @@ class TrackView extends BaseView implements IBaseView {
                 nextframe$.css({left: (nextFrameInfo.getStart() - 1) * frameWidth});
             }
         }
+    }
+
+    onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
+        frame$.width(pickFrame.getHold() * frameWidth);
+        this.updateClip(updateIdx);
         //todo update composition max width
     }
 
