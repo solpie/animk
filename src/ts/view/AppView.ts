@@ -3,6 +3,9 @@
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
 /// <reference path="SplitterView.ts"/>
+var __Key = function (key, c) {
+    return key == c.charCodeAt(0);
+};
 class AnimkView {
     appModel:AppInfo;
     projectViewArr:Array<ProjectView>;
@@ -24,6 +27,7 @@ class AnimkView {
         document.onmouseup = ()=> {
             this.appModel.dis(MouseEvt.UP);
         };
+        document.onkeydown = this.onKeyDown;
         //super();
         var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
@@ -36,6 +40,20 @@ class AnimkView {
         for (var i in ZIdx) {
             $(ZIdx[i]).css({"z-index": 1000 + i});
         }
+    }
+
+    onKeyDown(e) {
+        var key = e.keyCode;
+        var isCtrl = e.ctrlKey;
+        var isShift = e.shiftKey;
+        var isAlt = e.altKey;
+        if (__Key(key, "F")) {
+            appInfo.projectInfo.curComp.forward()
+        }
+        else if (__Key(key, "D")) {
+            appInfo.projectInfo.curComp.backward()
+        }
+        //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
 
     resize(w, h) {

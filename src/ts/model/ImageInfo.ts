@@ -1,3 +1,6 @@
+interface Image {
+    src:string;
+}
 class ImageInfo {
     _id;
     path;
@@ -5,6 +8,7 @@ class ImageInfo {
     width;
     height;
     img:Image;
+
     constructor(filename?) {
         this.filename = filename;
         this.img = new Image();

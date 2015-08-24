@@ -10,6 +10,7 @@ class CompositionInfo extends EventDispatcher {
     frameWidth:number = 40;
     _cursorPos:number = 1;
     hScollVal:number = 0;
+
     constructor() {
         super();
         this.trackInfoArr = [];
@@ -19,6 +20,18 @@ class CompositionInfo extends EventDispatcher {
     setCursor(framePos) {
         this._cursorPos = framePos;
         this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+    }
+
+    forward() {
+        this._cursorPos++;
+        this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+    }
+
+    backward() {
+        if (this._cursorPos > 1) {
+            this._cursorPos--;
+            this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+        }
     }
 
     getCursor() {

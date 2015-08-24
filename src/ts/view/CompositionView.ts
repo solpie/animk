@@ -144,6 +144,7 @@ class CompositionView implements IBaseView {
         view.hScrollTo(this._hScrollVal);
         var newTrackWidth = (trackInfo.frameInfoArr.length) * appInfo.projectInfo.curComp.frameWidth;
         this.updateMaxTrackWidth(newTrackWidth);
+        this.onUpdateCursor(0);
     }
 
     updateMaxTrackWidth(newTrackWidth) {
