@@ -1,9 +1,10 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="../event/ActEvent.ts"/>
+/// <reference path="../view/ViewId.ts"/>
 /// <reference path="ImageInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
 enum TrackLoopType{
-    HOLD, REPEAT
+    NONE,HOLD, REPEAT
 }
 class TrackInfo extends EventDispatcher {
     idx:number;

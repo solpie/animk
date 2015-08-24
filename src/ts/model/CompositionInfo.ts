@@ -11,6 +11,7 @@ class CompositionInfo extends EventDispatcher {
     frameWidth:number = 40;
     hScrollVal:number = 0;
     _cursorPos:number = 1;
+    _stayBack;
     _frameTimer:FrameTimer;
 
     constructor() {
@@ -19,7 +20,7 @@ class CompositionInfo extends EventDispatcher {
         console.log("new CompInfo");
 
         this._frameTimer = new FrameTimer(24);
-        this._frameTimer.add(FrameTimerEvent.TICK, ()=>{
+        this._frameTimer.add(FrameTimerEvent.TICK, ()=> {
             this.onFrameTimerTick();
         });
     }
@@ -29,6 +30,7 @@ class CompositionInfo extends EventDispatcher {
     }
 
     play() {
+        this._stayBack = this._cursorPos;
         this._frameTimer.start();
     }
 
@@ -41,6 +43,19 @@ class CompositionInfo extends EventDispatcher {
             this.pause();
         else
             this.play();
+    }
+
+    stayBack() {
+        if (this._stayBack > 0) {
+            this.pause();
+            this.setCursor(this._stayBack);
+            this._stayBack = 0;
+        }
+        else if (this._stayBack == 0) {
+            this.setCursor(1);
+            this._stayBack = -1;
+        }
+
     }
 
     setCursor(framePos) {

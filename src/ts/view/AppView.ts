@@ -5,7 +5,10 @@
 /// <reference path="SplitterView.ts"/>
 var Keys = {
     Space: function (k) {
-        return k == 32
+        return k == 32;
+    },
+    ESC: function (k) {
+        return k == 27;
     },
     Char: function (key, c) {
         return key == c.charCodeAt(0);
@@ -60,6 +63,9 @@ class AnimkView {
         }
         else if (Keys.Space(key)) {//Space
             appInfo.projectInfo.curComp.toggle();
+        }
+        else if (Keys.ESC(key)) {//Space
+            appInfo.projectInfo.curComp.stayBack();
         }
         else if (Keys.Char(key, "\r")) {//enter
             appInfo.projectInfo.curComp.backward()
