@@ -1,5 +1,7 @@
 /// <reference path="BaseView.ts"/>
-
+interface File{
+    path:string;
+}
 class TimelineView extends BaseView {
     constructor() {
         super();
@@ -61,7 +63,7 @@ class TimelineView extends BaseView {
         var self = this;
         timeline.ondrop = function (e) {
             e.preventDefault();
-            var file = e.dataTransfer.files[0];
+            var file:File = e.dataTransfer.files[0];
             if (file.path) {
                 self.newTrackByFilename(file.path);
                 console.log(this, "ondrop", file.path);

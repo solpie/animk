@@ -2,6 +2,9 @@
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="ImageInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
+enum TrackLoopType{
+    HOLD, REPEAT
+}
 class TrackInfo extends EventDispatcher {
     idx:number;
     name:string;
@@ -10,6 +13,7 @@ class TrackInfo extends EventDispatcher {
     isSelected:boolean;
     _start:number = 1;
     _hold:number = 1;
+    _loopType = TrackLoopType.HOLD;
     frameInfoArr:Array<FrameInfo>;
 
     constructor() {
@@ -39,12 +43,15 @@ class TrackInfo extends EventDispatcher {
     }
 
     getCurImg(frameIdx:number):Image {
-        frameIdx -= this._start-1;
+        frameIdx -= this._start - 1;
         for (var i = 0; i < this.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.frameInfoArr[i];
             if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
                 return frameInfo.imageInfo.img;
             }
+        }
+        if (this._loopType == TrackLoopType.HOLD) {
+            return frameInfo.imageInfo.img;
         }
     }
 
