@@ -1,5 +1,9 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="ImageInfo.ts"/>
+enum  PressFlag{
+    L = 1,
+    R = 2
+}
 class FrameInfo extends EventDispatcher {
 
     _idx = -1;
@@ -7,6 +11,7 @@ class FrameInfo extends EventDispatcher {
     _end = 1;
     _hold = 1;
     imageInfo:ImageInfo;
+    pressFlag = 0;
 
     constructor(filename) {
         super();

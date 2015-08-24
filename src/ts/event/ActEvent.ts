@@ -25,5 +25,6 @@ class MouseEvt {
 
 class TrackInfoEvent{
     static UPDATE_HOLD:string = "UPDATE_HOLD";
+    static UPDATE_START:string = "UPDATE_START";
 
 }

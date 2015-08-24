@@ -79,7 +79,7 @@ class TrackView extends BaseView implements IBaseView {
             var mouseX = e.clientX - clip.offset().left;
             var frameInfo = this.trackInfo.getFrameInfo(mouseX);
             this._pickFrame = frameInfo;
-            console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx());
+            console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx(), "Left", frameInfo.pressFlag);
         }
         this.startMoveTimer();
     }
@@ -95,20 +95,26 @@ class TrackView extends BaseView implements IBaseView {
             console.log(this, "pick frames", frameImg$);
         }
         this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {
-            this.onUpdateHold(pickFrame);
+            this.onUpdateFrame(pickFrame, pickFrame.getIdx() + 1);
+        });
+        this.trackInfo.add(TrackInfoEvent.UPDATE_START, (pickFrame:FrameInfo)=> {
+            this.onUpdateFrame(pickFrame, pickFrame.getIdx() - 1);
         });
     }
 
-    onUpdateHold(pickFrame:FrameInfo) {
+
+    onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
         frame$.width(pickFrame.getHold() * frameWidth);
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         clip.width((this.trackInfo.getEnd()) * frameWidth);
-        for (var i = pickFrame.getIdx() + 1; i < this.trackInfo.frameInfoArr.length; i++) {
+        for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
             var nextFrameInfo = this.trackInfo.frameInfoArr[i];
-            var nextframe$ = $(this.getFrameId$(i));
-            nextframe$.css({left: (nextFrameInfo.getStart() - 1) * frameWidth});
+            if (nextFrameInfo) {
+                var nextframe$ = $(this.getFrameId$(i));
+                nextframe$.css({left: (nextFrameInfo.getStart() - 1) * frameWidth});
+            }
         }
         //todo update composition max width
     }
@@ -120,6 +126,8 @@ class TrackView extends BaseView implements IBaseView {
     onUp() {
         this._isPressBar = false;
         this._isPressClip = false;
+        if (this._pickFrame)
+            this._pickFrame.pressFlag = 0;
         this._pickFrame = null;
         this.stopMoveTimer();
     }
@@ -143,7 +151,10 @@ class TrackView extends BaseView implements IBaseView {
                         this.trackInfo.setStart(this.trackInfo.getStart() + 1);
                         clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
                     } else if (this._pickFrame) {
-                        this.trackInfo.R2R(this._pickFrame);
+                        if (this._pickFrame.pressFlag == PressFlag.R)
+                            this.trackInfo.R2R(this._pickFrame);
+                        else if (this._pickFrame.pressFlag == PressFlag.L)
+                            this.trackInfo.L2R(this._pickFrame);
                     }
                 }
                 else if (dx < -30) {
@@ -152,7 +163,10 @@ class TrackView extends BaseView implements IBaseView {
                         this.trackInfo.setStart(this.trackInfo.getStart() - 1);
                         clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
                     } else if (this._pickFrame) {
-                        this.trackInfo.R2L(this._pickFrame);
+                        if (this._pickFrame.pressFlag == PressFlag.R)
+                            this.trackInfo.R2L(this._pickFrame);
+                        else if (this._pickFrame.pressFlag == PressFlag.L)
+                            this.trackInfo.L2L(this._pickFrame);
                     }
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());

@@ -56,12 +56,21 @@ class TrackInfo extends EventDispatcher {
     getFrameInfo(mouseX) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         //var idxX = Math.ceil(mouseX / appInfo.projectInfo.curComp.frameWidth);
-        var nextFrame;
+        var pickFrame;
         for (var i = 0; i < this.frameInfoArr.length; ++i) {
-            nextFrame = this.frameInfoArr[i];
-            if (nextFrame && (nextFrame.getStart() - 1) * frameWidth <= mouseX
-                && (nextFrame.getEnd()) * frameWidth >= mouseX) {
-                return nextFrame;
+            pickFrame = this.frameInfoArr[i];
+            var startX = (pickFrame.getStart() - 1) * frameWidth;
+            var endX = (pickFrame.getEnd()) * frameWidth;
+            if (pickFrame && startX <= mouseX
+                && endX >= mouseX) {
+                var frameX = mouseX - startX;
+                if (frameX < (endX - startX) / 2) {
+                    pickFrame.pressFlag = PressFlag.L;
+                }
+                else {
+                    pickFrame.pressFlag = PressFlag.R;
+                }
+                return pickFrame;
             }
             else {
                 //console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getEnd());
@@ -91,5 +100,38 @@ class TrackInfo extends EventDispatcher {
         }
         this._end--;
         this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+    }
+
+    L2L(pickFrame:FrameInfo) {
+        //if (handleTrackFrame->pre) {
+        //    int preHoldFrame = handleTrackFrame->pre->getHoldFrame();
+        //    if (preHoldFrame > 1)
+        //            handleTrackFrame->pre->setHoldFrame(handleTrackFrame->pre->getHoldFrame() - 1);
+        //    else
+        //        removeTrackFrameInfo(handleTrackFrame->pre, trackInfo);
+        //}
+        //    handleTrackFrame->setStartFrame(handleTrackFrame->getStartFrame() - 1);
+        //    handleTrackFrame->setHoldFrame(handleTrackFrame->getHoldFrame() + 1);
+        //
+        //dumpTrackFrameIdx(trackInfo);
+        if (pickFrame.getIdx() > 0) {
+            var preFrame = this.frameInfoArr[pickFrame.getIdx() - 1];
+            var preHold = preFrame.getHold();
+            if (preHold > 1) {
+                preFrame.setHold(preFrame.getHold() - 1);
+            }
+            else
+                this.removeFrame(preFrame);
+        }
+        pickFrame.setStart(pickFrame.getStart() - 1);
+        pickFrame.setHold(pickFrame.getHold() + 1);
+        this.dis(TrackInfoEvent.UPDATE_START, pickFrame);
+    }
+
+    L2R(pickFrame:FrameInfo) {
+
+    }
+
+    removeFrame(frame) {
     }
 }
