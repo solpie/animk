@@ -139,7 +139,6 @@ class CompositionView implements IBaseView {
         var trackIdx = selArr[0];
         var frameIdx = selArr[1];
         for (var i = 0; i < this.trackViewArr.length; i++) {
-
             var trackView:TrackView = this.trackViewArr[i];
             if (trackView) {
                 if (i != trackIdx)

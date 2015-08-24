@@ -230,6 +230,7 @@ body {
     width: 40px;
     top: 41px;
     background: #FAF014;
+    display: none;
 }
 
 .VSplitter {
