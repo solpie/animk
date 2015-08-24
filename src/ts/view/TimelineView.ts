@@ -4,10 +4,10 @@ class TimelineView extends BaseView {
     constructor() {
         super();
         this.el = $("#timeline");
-        $("#btnNewTrack").on(MouseEvt.CLICK, ()=> {
+        $(ElmId$.btnNewTrack).on(MouseEvt.CLICK, ()=> {
             this.onNewTrack();
         });
-        $("#btnDelTrack").on(MouseEvt.CLICK, ()=> {
+        $(ElmId$.btnDelTrack).on(MouseEvt.CLICK, ()=> {
             this.onDelTrack();
         });
 

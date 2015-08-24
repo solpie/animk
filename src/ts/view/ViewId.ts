@@ -16,6 +16,8 @@ var ElmId$ = {
     TrackWidth: "#trackWidth",
     BottomBar: "#BottomBar0",
     CursorMask: "#CursorMask",
+    btnNewTrack: "#btnNewTrack",
+    btnDelTrack: "#btnDelTrack",
 };
 var ElmClass$ = {
     Track: ".Track",
