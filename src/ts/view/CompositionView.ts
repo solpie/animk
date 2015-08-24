@@ -8,6 +8,7 @@
 
 class CompositionView implements IBaseView {
     _maxTrackWidth:number = 0;
+
     render():HTMLElement {
         return undefined;
     }
@@ -17,6 +18,7 @@ class CompositionView implements IBaseView {
     _trackHeight:number = 0;
     _hScrollVal:number = 0;
     _cursorPos = 1;
+    _selectFrame:Array;//[trkIdx,frameIdx]
 
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
@@ -132,6 +134,23 @@ class CompositionView implements IBaseView {
 
     }
 
+    onSelectFrame(selArr) {
+        this._selectFrame = selArr;
+        var trackIdx = selArr[0];
+        var frameIdx = selArr[1];
+        for (var i = 0; i < this.trackViewArr.length; i++) {
+
+            var trackView:TrackView = this.trackViewArr[i];
+            if (trackView) {
+                if (i != trackIdx)
+                    trackView.setActFrame(0);
+                else
+                    trackView.setActFrame(frameIdx);
+            }
+
+        }
+    }
+
     onNewTrackView(trackInfo:TrackInfo) {
         console.log(this, "onNewTrackView");
         trackInfo.add(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
@@ -139,6 +158,10 @@ class CompositionView implements IBaseView {
         });
         trackInfo.add(TrackInfoEvent.UPDATE_TRACK_START, (trackInfo:TrackInfo) => {
             this.onUpdateTrackStart(trackInfo);
+        });
+
+        trackInfo.add(TrackInfoEvent.SEL_FRAME, (selArr)=> {
+            this.onSelectFrame(selArr);
         });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);

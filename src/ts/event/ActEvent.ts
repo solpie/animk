@@ -25,6 +25,7 @@ class CompInfoEvent {
 }
 class TrackInfoEvent {
     static SEL_TRACK:string = "select track";
+    static SEL_FRAME:string = "select frame";
     static UPDATE_HOLD:string = "UPDATE_HOLD";
     static UPDATE_START:string = "UPDATE_START";
     static UPDATE_TRACK_START:string = "UPDATE_TRACK_START";

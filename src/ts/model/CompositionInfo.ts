@@ -79,12 +79,16 @@ class CompositionInfo extends EventDispatcher {
         return this._cursorPos;
     }
 
+
+
     newTrack(path) {
         var trackInfo = new TrackInfo();
         trackInfo.newImage(walk(path));
+
         trackInfo.idx = this.trackInfoArr.length;
         trackInfo.name = 'track#' + trackInfo.idx;
         this.trackInfoArr.push(trackInfo);
+
         this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
         console.log(this, "newTrack idx", trackInfo.idx);
     }

@@ -224,6 +224,14 @@ body {
     width: 40px;
 }
 
+.ActHint {
+    position: relative;
+    height: 2px;
+    width: 40px;
+    top: 41px;
+    background: #FAF014;
+}
+
 .VSplitter {
     height: 8px;
     background: #141414;
