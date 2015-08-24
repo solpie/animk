@@ -89,7 +89,6 @@ class CompositionView implements IBaseView {
     }
 
     onUpdateCursor(frameIdx?) {
-        var tpWidth = 200;
         var fpos;
         if (frameIdx) {
             fpos = frameIdx;
@@ -97,7 +96,7 @@ class CompositionView implements IBaseView {
         }
         else
             fpos = this._cursorPos;
-        $(ElmId$.Cursor).css({left: tpWidth + fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
+        $(ElmId$.Cursor).css({left: fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
     }
 
     onNewTrackView(trackInfo:TrackInfo) {

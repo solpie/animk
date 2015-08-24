@@ -9,12 +9,13 @@ var HScrollBarId$ = "#HScrollBar0";
 var TrackToolId$ = "#TrackTool0";
 var TitleBarId$ = "#titleBar";
 var ElmData = {
-    Start:"start",
+    Start: "start",
 };
 var ElmId$ = {
     Cursor: "#Cursor0",
     TrackWidth: "#trackWidth",
     BottomBar: "#BottomBar0",
+    CursorMask: "#CursorMask",
 };
 var ElmClass$ = {
     Track: ".Track",
@@ -25,4 +26,4 @@ var ElmClass$ = {
     Bar: ".Bar",
 };
 
-var ZIdx = [ElmId$.Cursor, VScrollBarId$];
+var ZIdx = [ElmId$.Cursor, ElmId$.CursorMask, VScrollBarId$];
