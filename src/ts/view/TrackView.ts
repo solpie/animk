@@ -103,7 +103,7 @@ class TrackView extends BaseView implements IBaseView {
     updateClip(updateIdx:number) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        clip.css({left: this.trackInfo.getStart() * frameWidth});
+        clip.css({left: this.trackInfo.getStart() * frameWidth-appInfo.projectInfo.curComp.hScollVal});
         clip.width((this.trackInfo.getHold()) * frameWidth);
         for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
             var nextFrameInfo = this.trackInfo.frameInfoArr[i];
@@ -154,7 +154,6 @@ class TrackView extends BaseView implements IBaseView {
                     if (this._isPressBar) {
                         this.trackInfo.setStart(this.trackInfo.getStart() + 1);
                         clip.css({left: clip.position().left + frameWidth});
-                        clip.data(ElmData.Start, (this.trackInfo.getStart() - 1) * frameWidth);
                     } else if (this._pickFrame) {
                         if (this._pickFrame.pressFlag == PressFlag.R)
                             this.trackInfo.R2R(this._pickFrame);
@@ -167,7 +166,6 @@ class TrackView extends BaseView implements IBaseView {
                     if (this._isPressBar) {
                         this.trackInfo.setStart(this.trackInfo.getStart() - 1);
                         clip.css({left: clip.position().left - frameWidth});
-                        clip.data(ElmData.Start, (this.trackInfo.getStart() - 1) * frameWidth);
                     } else if (this._pickFrame) {
                         if (this._pickFrame.pressFlag == PressFlag.R)
                             this.trackInfo.R2L(this._pickFrame);

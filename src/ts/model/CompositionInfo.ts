@@ -9,7 +9,7 @@ class CompositionInfo extends EventDispatcher {
     trackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
     _cursorPos:number = 1;
-
+    hScollVal:number = 0;
     constructor() {
         super();
         this.trackInfoArr = [];

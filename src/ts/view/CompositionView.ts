@@ -16,10 +16,12 @@ class CompositionView implements IBaseView {
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
     _hScrollVal:number = 0;
+    _cursorPos = 1;
 
     constructor(compInfo:CompositionInfo) {
         this.compInfo = compInfo;
         this.trackViewArr = [];
+
         this.compInfo.add(CompInfoEvent.UPDATE_CURSOR, (frameIdx) => {
             this.onUpdateCursor(frameIdx);
         });
@@ -46,10 +48,18 @@ class CompositionView implements IBaseView {
     }
 
     onHScroll() {
-        var left = $(HScrollBarId$).scrollLeft();
-        this._hScrollVal = left;
-        var clip$ = $(ElmClass$.Clip);
-        clip$.css({left: clip$.data(ElmData.Start) - left});
+        this._hScrollVal = $(HScrollBarId$).scrollLeft();
+        this.compInfo.hScollVal = this._hScrollVal;
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var clip$;
+        for (var i = 0; i < this.compInfo.trackInfoArr.length; i++) {
+            var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
+            var trackId$ = ElmClass$.Track + "#" + trackInfo.idx;
+            clip$ = $(trackId$ + " " + ElmClass$.Clip);
+            clip$.css({left: trackInfo.getStart()*frameWidth - this._hScrollVal});
+            console.log(this, clip$);
+        }
+        this.onUpdateCursor();
     }
 
     setTrackHeight(val:number) {
@@ -78,8 +88,16 @@ class CompositionView implements IBaseView {
         }
     }
 
-    onUpdateCursor(frameIdx) {
-        $(ElmId$).css({left:frameIdx*appInfo.projectInfo.curComp.frameWidth})
+    onUpdateCursor(frameIdx?) {
+        var tpWidth = 200;
+        var fpos;
+        if (frameIdx) {
+            fpos = frameIdx;
+            this._cursorPos = fpos;
+        }
+        else
+            fpos = this._cursorPos;
+        $(ElmId$.Cursor).css({left: tpWidth + fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
     }
 
     onNewTrackView(trackInfo:TrackInfo) {
