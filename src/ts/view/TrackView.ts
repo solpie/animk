@@ -36,23 +36,10 @@ class TrackView extends BaseView implements IBaseView {
         this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        var barHeight = $(this.id$ + " " + ElmClass$.Bar).height();
         clip.width(clipWidth);
 
         clip.on(MouseEvt.DOWN, (e)=> {
-            this._lastX = appInfo.mouseX;
-            var mouseY = e.clientY - $(this.id$).offset().top;
-            this._isPressClip = true;
-            if (mouseY < barHeight) {
-                this._isPressBar = true;
-            }
-            else {
-                var mouseX = e.clientX - clip.offset().left;
-                var frameInfo = this.trackInfo.getFrameInfo(mouseX);
-                this._pickFrame = frameInfo;
-                console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx());
-            }
-            this.startMoveTimer();
+            this.onMouseDown(e);
         });
 
         //clip.on(MouseEvt.LEAVE, (e)=> {
@@ -68,6 +55,8 @@ class TrackView extends BaseView implements IBaseView {
         this.setColor('#444');
         console.log(this, "setParent2", clip, clipWidth);
 
+
+        //todo MouseDown is duplicate
         $(this.id$).on(MouseEvt.DOWN, ()=> {
             if (this.trackInfo.isSelected && !this._isPressClip)
                 this.setSelected(false);
@@ -75,6 +64,24 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.dis(ActEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
+    }
+
+    onMouseDown(e) {
+        var clip = $(this.id$ + " " + ElmClass$.Clip);
+        var barHeight = $(this.id$ + " " + ElmClass$.Bar).height();
+        this._lastX = appInfo.mouseX;
+        var mouseY = e.clientY - $(this.id$).offset().top;
+        this._isPressClip = true;
+        if (mouseY < barHeight) {
+            this._isPressBar = true;
+        }
+        else {
+            var mouseX = e.clientX - clip.offset().left;
+            var frameInfo = this.trackInfo.getFrameInfo(mouseX);
+            this._pickFrame = frameInfo;
+            console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx());
+        }
+        this.startMoveTimer();
     }
 
     initFrame() {
