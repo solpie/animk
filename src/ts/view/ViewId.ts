@@ -12,12 +12,13 @@ var ElmData = {
     Start: "start",
 };
 var ElmId$ = {
-    Cursor: "#Cursor0",
-    TrackWidth: "#trackWidth",
-    BottomBar: "#BottomBar0",
-    CursorMask: "#CursorMask",
+    cursor: "#Cursor0",
+    trackWidth: "#trackWidth",
+    bottomBar: "#BottomBar0",
+    cursorMask: "#cursorMask",
     btnNewTrack: "#btnNewTrack",
     btnDelTrack: "#btnDelTrack",
+    timestampBar: "#TimestampBar0",
 };
 var ElmClass$ = {
     Track: ".Track",
@@ -28,4 +29,4 @@ var ElmClass$ = {
     Bar: ".Bar",
 };
 
-var ZIdx = [ElmId$.Cursor, ElmId$.CursorMask, VScrollBarId$];
+var ZIdx = [ElmId$.cursor, ElmId$.cursorMask, VScrollBarId$];

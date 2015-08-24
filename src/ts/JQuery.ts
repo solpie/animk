@@ -12,6 +12,7 @@ interface JQuery {
     on(type:string, func):JQuery;
     remove();
     append(el:HTMLElement): JQuery;
+    offset(): any;
     val(): string;
     val(value:string): JQuery;
     width(): string;

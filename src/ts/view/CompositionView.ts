@@ -44,7 +44,18 @@ class CompositionView implements IBaseView {
         $(HScrollBarId$).on(ViewEvent.SCROLL, () => {
             this.onHScroll();
         });
+
+        $(ElmId$.timestampBar).on(MouseEvt.CLICK, (e)=> {
+            this.onClkTimestampBar(e);
+        });
+
         $(TrackHeightId$).width(1);
+    }
+
+    onClkTimestampBar(e) {
+        var mouseX = e.clientX - $(ElmId$.timestampBar).offset().left;
+        var cursorIdx = Math.floor((mouseX + this.compInfo.hScollVal) / this.compInfo.frameWidth);
+        this.onUpdateCursor(cursorIdx);
     }
 
     onHScroll() {
@@ -56,7 +67,7 @@ class CompositionView implements IBaseView {
             var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
             var trackId$ = ElmClass$.Track + "#" + trackInfo.idx;
             clip$ = $(trackId$ + " " + ElmClass$.Clip);
-            clip$.css({left: trackInfo.getStart()*frameWidth - this._hScrollVal});
+            clip$.css({left: trackInfo.getStart() * frameWidth - this._hScrollVal});
             console.log(this, clip$);
         }
         this.onUpdateCursor();
@@ -96,7 +107,7 @@ class CompositionView implements IBaseView {
         }
         else
             fpos = this._cursorPos;
-        $(ElmId$.Cursor).css({left: fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
+        $(ElmId$.cursor).css({left: fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
     }
 
     onNewTrackView(trackInfo:TrackInfo) {
@@ -120,7 +131,7 @@ class CompositionView implements IBaseView {
     updateMaxTrackWidth(newTrackWidth) {
         if (this._maxTrackWidth < newTrackWidth) {
             this._maxTrackWidth = newTrackWidth;
-            $(ElmId$.TrackWidth).width(newTrackWidth + 4 * appInfo.projectInfo.curComp.frameWidth);
+            $(ElmId$.trackWidth).width(newTrackWidth + 4 * appInfo.projectInfo.curComp.frameWidth);
             console.log('new TrackView', newTrackWidth);
         }
     }

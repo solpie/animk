@@ -39,7 +39,7 @@ class AnimkView {
     }
 
     resize(w, h) {
-        this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height() - 29 - $(ElmId$.BottomBar).height());
+        this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height() - 29 - $(ElmId$.bottomBar).height());
     }
 
     onNewProject() {

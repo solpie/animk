@@ -198,6 +198,7 @@ body {
 }
 
 .Track .Clip {
+    top: 1px;
     position: relative;
     height: 65px;
     background: #000000;
