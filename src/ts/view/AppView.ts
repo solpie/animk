@@ -3,8 +3,13 @@
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
 /// <reference path="SplitterView.ts"/>
-var __Key = function (key, c) {
-    return key == c.charCodeAt(0);
+var Keys = {
+    Space: function (k) {
+        return k == 32
+    },
+    Char: function (key, c) {
+        return key == c.charCodeAt(0);
+    },
 };
 class AnimkView {
     appModel:AppInfo;
@@ -47,10 +52,16 @@ class AnimkView {
         var isCtrl = e.ctrlKey;
         var isShift = e.shiftKey;
         var isAlt = e.altKey;
-        if (__Key(key, "F")) {
+        if (Keys.Char(key, "F")) {
             appInfo.projectInfo.curComp.forward()
         }
-        else if (__Key(key, "D")) {
+        else if (Keys.Char(key, "D")) {
+            appInfo.projectInfo.curComp.backward()
+        }
+        else if (Keys.Space(key)) {//Space
+            appInfo.projectInfo.curComp.backward()
+        }
+        else if (Keys.Char(key, "\r")) {//enter
             appInfo.projectInfo.curComp.backward()
         }
         //console.log(this, e, key, isCtrl, isShift,isAlt);

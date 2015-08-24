@@ -39,6 +39,7 @@ class TrackInfo extends EventDispatcher {
     }
 
     getCurImg(frameIdx:number):Image {
+        frameIdx -= this._start-1;
         for (var i = 0; i < this.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.frameInfoArr[i];
             if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {

@@ -83,6 +83,7 @@ class CompositionView implements IBaseView {
 
     onUpdateTrackStart(trackInfo:TrackInfo) {
         this.updateMaxTrackWidth(trackInfo.getEnd() * appInfo.projectInfo.curComp.frameWidth);
+        this.onUpdateCursor(0);
     }
 
     onSelTrackView(trackInfo:TrackInfo) {
@@ -113,8 +114,8 @@ class CompositionView implements IBaseView {
 
     updateCanvas() {
         var c:HTMLElement = document.getElementById("Canvas0");
-        c.setAttribute("width", 1280);
-        c.setAttribute("height", 720);
+        c.setAttribute("width", 1280 + "");
+        c.setAttribute("height", 720 + "");
         var cxt = c.getContext("2d");
         for (var i = this.compInfo.trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
