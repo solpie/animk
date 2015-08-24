@@ -8,7 +8,7 @@ class TrackView extends BaseView implements IBaseView {
     _isPressBar:boolean;
     _isPressClip:boolean;
     _lastX:number;
-    timerId:number;
+    _timerId:number;
     _pickFrame:FrameInfo = null;
 
     constructor(trackInfo:TrackInfo) {
@@ -19,7 +19,6 @@ class TrackView extends BaseView implements IBaseView {
     render() {
         var template = $('.Track-tpl').html();
         return Mustache.render(template, {
-            //var newJade = jade.renderFile('ts/view/Track.jade',{
             idx: this.trackInfo.idx,
             name: this.trackInfo.name,
             frameIdxArr: this.trackInfo.getIdxArr(),
@@ -31,7 +30,7 @@ class TrackView extends BaseView implements IBaseView {
     setParent(parent:JQuery) {
         super.setParent(parent);
 
-        var clipWidth = this.trackInfo.getEnd() * appInfo.projectInfo.frameWidth;
+        var clipWidth = this.trackInfo.getHold() * appInfo.projectInfo.frameWidth;
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
         this.el = $(this.id$)[0];
@@ -108,7 +107,7 @@ class TrackView extends BaseView implements IBaseView {
         var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
         frame$.width(pickFrame.getHold() * frameWidth);
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        clip.width((this.trackInfo.getEnd()) * frameWidth);
+        clip.width((this.trackInfo.getHold()) * frameWidth);
         for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
             var nextFrameInfo = this.trackInfo.frameInfoArr[i];
             if (nextFrameInfo) {
@@ -141,15 +140,17 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     startMoveTimer() {
-        this.timerId = window.setInterval(()=> {
+        this._timerId = window.setInterval(()=> {
             var clip = $(this.id$ + " " + ElmClass$.Clip);
             if (this._isPressClip) {
+                var frameWidth = appInfo.projectInfo.curComp.frameWidth;
                 var dx = appInfo.mouseX - this._lastX;
-                if (dx > 30) {
+                if (dx > frameWidth) {
                     this._lastX = appInfo.mouseX;
                     if (this._isPressBar) {
                         this.trackInfo.setStart(this.trackInfo.getStart() + 1);
-                        clip.css({left: clip.position().left + appInfo.projectInfo.curComp.frameWidth});
+                        clip.css({left: clip.position().left + frameWidth});
+                        clip.data(ElmData.Start, (this.trackInfo.getStart() - 1) * frameWidth);
                     } else if (this._pickFrame) {
                         if (this._pickFrame.pressFlag == PressFlag.R)
                             this.trackInfo.R2R(this._pickFrame);
@@ -157,11 +158,12 @@ class TrackView extends BaseView implements IBaseView {
                             this.trackInfo.L2R(this._pickFrame);
                     }
                 }
-                else if (dx < -30) {
+                else if (dx < -frameWidth) {
                     this._lastX = appInfo.mouseX;
                     if (this._isPressBar) {
                         this.trackInfo.setStart(this.trackInfo.getStart() - 1);
-                        clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
+                        clip.css({left: clip.position().left - frameWidth});
+                        clip.data(ElmData.Start, (this.trackInfo.getStart() - 1) * frameWidth);
                     } else if (this._pickFrame) {
                         if (this._pickFrame.pressFlag == PressFlag.R)
                             this.trackInfo.R2L(this._pickFrame);
@@ -171,16 +173,16 @@ class TrackView extends BaseView implements IBaseView {
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());
             }
-            //console.log(this, "startMoveTimer", self.timerId);
+            //console.log(this, "startMoveTimer", self._timerId);
 
         }, 20);
     }
 
     stopMoveTimer() {
-        if (this.timerId) {
-            window.clearInterval(this.timerId);
-            //console.log(this, "stopMoveTimer", this.timerId);
-            this.timerId = 0;
+        if (this._timerId) {
+            window.clearInterval(this._timerId);
+            //console.log(this, "stopMoveTimer", this._timerId);
+            this._timerId = 0;
         }
     }
 

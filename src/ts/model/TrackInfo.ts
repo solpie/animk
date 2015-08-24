@@ -9,7 +9,7 @@ class TrackInfo extends EventDispatcher {
     _imgArr:Array<string>;
     isSelected:boolean;
     _start:number = 1;
-    _end:number = 1;
+    _hold:number = 1;
     frameInfoArr:Array<FrameInfo>;
 
     constructor() {
@@ -19,6 +19,7 @@ class TrackInfo extends EventDispatcher {
 
     setStart(val) {
         this._start = val;
+        this.dis(TrackInfoEvent.UPDATE_TRACK_START, this)
     }
 
     getStart() {
@@ -34,7 +35,7 @@ class TrackInfo extends EventDispatcher {
             this.frameInfoArr.push(newFrame);
         }
         this._imgArr = imgs;
-        this._end = imgs.length;
+        this._hold = imgs.length;
     }
 
     getImgs() {
@@ -49,8 +50,12 @@ class TrackInfo extends EventDispatcher {
         return a;
     }
 
-    getEnd() {
-        return this._end;
+    getHold() {
+        return this._hold ;
+    }
+    getEnd()
+    {
+        return this._start + this._hold - 1;
     }
 
     getFrameInfo(mouseX) {
@@ -73,7 +78,7 @@ class TrackInfo extends EventDispatcher {
                 return pickFrame;
             }
             else {
-                //console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getEnd());
+                //console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getHold());
             }
         }
     }
@@ -87,7 +92,7 @@ class TrackInfo extends EventDispatcher {
             nextFrame.setStart(nextFrame.getStart() + 1);
             console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
         }
-        this._end++;
+        this._hold++;
         this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
     }
 
@@ -98,7 +103,7 @@ class TrackInfo extends EventDispatcher {
             nextFrame = this.frameInfoArr[i];
             nextFrame.setStart(nextFrame.getStart() - 1);
         }
-        this._end--;
+        this._hold--;
         this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
     }
 

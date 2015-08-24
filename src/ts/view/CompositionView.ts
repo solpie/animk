@@ -37,12 +37,16 @@ class CompositionView implements IBaseView {
         });
 
         $(HScrollBarId$).on(ViewEvent.SCROLL, () => {
-            var left = $(HScrollBarId$).scrollLeft();
-            this._hScrollVal = left;
-
-            $(ElmClass$.Clip).css({left: -left});
+            this.onHScroll();
         });
         $(TrackHeightId$).width(1);
+    }
+
+    onHScroll() {
+        var left = $(HScrollBarId$).scrollLeft();
+        this._hScrollVal = left;
+        var clip$ = $(ElmClass$.Clip);
+        clip$.css({left: clip$.data(ElmData.Start) - left});
     }
 
     setTrackHeight(val:number) {
@@ -51,6 +55,10 @@ class CompositionView implements IBaseView {
 
     setCompositionHeight(val:number) {
         $(VScrollBarId$).height(val);
+    }
+
+    onUpdateTrackStart(trackInfo:TrackInfo) {
+        this.updateMaxTrackWidth(trackInfo.getEnd() * appInfo.projectInfo.curComp.frameWidth);
     }
 
     onSelTrackView(trackInfo:TrackInfo) {
@@ -72,18 +80,24 @@ class CompositionView implements IBaseView {
         trackInfo.add(ActEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
             this.onSelTrackView(trackInfo);
         });
+        trackInfo.add(TrackInfoEvent.UPDATE_TRACK_START, (trackInfo:TrackInfo) => {
+            this.onUpdateTrackStart(trackInfo);
+        });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
         view.setParent($(CompositionId$));
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
-        var newTrackWidth = (trackInfo.frameInfoArr.length + 4) * appInfo.projectInfo.curComp.frameWidth;
+        var newTrackWidth = (trackInfo.frameInfoArr.length) * appInfo.projectInfo.curComp.frameWidth;
+        this.updateMaxTrackWidth(newTrackWidth);
+    }
+
+    updateMaxTrackWidth(newTrackWidth) {
         if (this._maxTrackWidth < newTrackWidth) {
             this._maxTrackWidth = newTrackWidth;
-            $(ElmId$.TrackWidth).width(newTrackWidth);
-            console.log('new TrackView', view.el, newTrackWidth);
-
+            $(ElmId$.TrackWidth).width(newTrackWidth + 4 * appInfo.projectInfo.curComp.frameWidth);
+            console.log('new TrackView', newTrackWidth);
         }
     }
 

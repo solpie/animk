@@ -8,6 +8,9 @@ var TrackHeightId$ = "#trackHeight";
 var HScrollBarId$ = "#HScrollBar0";
 var TrackToolId$ = "#TrackTool0";
 var TitleBarId$ = "#titleBar";
+var ElmData = {
+    Start:"start",
+};
 var ElmId$ = {
     Cursor: "#Cursor0",
     TrackWidth: "#trackWidth",

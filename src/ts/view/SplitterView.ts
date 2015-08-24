@@ -68,7 +68,7 @@ class SplitterView extends BaseView {
     stopMoveTimer() {
         if (this._timerId) {
             window.clearInterval(this._timerId);
-            //console.log(this, "stopMoveTimer", this.timerId);
+            //console.log(this, "stopMoveTimer", this._timerId);
             this._timerId = 0;
         }
     }
