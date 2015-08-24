@@ -95,16 +95,22 @@ class TrackView extends BaseView implements IBaseView {
             console.log(this, "pick frames", frameImg$);
         }
         this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {
-            var frameWidth = appInfo.projectInfo.curComp.frameWidth;
-            var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
-            frame$.width(frame$.width() + frameWidth);
-            var clip = $(this.id$ + " " + ElmClass$.Clip);
-            clip.width(clip.width() + frameWidth);
-            for (var i = pickFrame.getIdx() + 1; i < this.trackInfo.getImgs().length; i++) {
-                var nextframe$ = $(this.getFrameId$(i));
-                nextframe$.css({left: nextframe$.position().left + frameWidth});
-            }
+            this.onUpdateHold(pickFrame);
         });
+    }
+
+    onUpdateHold(pickFrame:FrameInfo) {
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
+        frame$.width(pickFrame.getHold() * frameWidth);
+        var clip = $(this.id$ + " " + ElmClass$.Clip);
+        clip.width((this.trackInfo.getEnd()) * frameWidth);
+        for (var i = pickFrame.getIdx() + 1; i < this.trackInfo.frameInfoArr.length; i++) {
+            var nextFrameInfo = this.trackInfo.frameInfoArr[i];
+            var nextframe$ = $(this.getFrameId$(i));
+            nextframe$.css({left: (nextFrameInfo.getStart() - 1) * frameWidth});
+        }
+        //todo update composition max width
     }
 
     getFrameId$(idx) {
@@ -145,6 +151,8 @@ class TrackView extends BaseView implements IBaseView {
                     if (this._isPressBar) {
                         this.trackInfo.setStart(this.trackInfo.getStart() - 1);
                         clip.css({left: clip.position().left - appInfo.projectInfo.curComp.frameWidth});
+                    } else if (this._pickFrame) {
+                        this.trackInfo.R2L(this._pickFrame);
                     }
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());

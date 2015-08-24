@@ -69,16 +69,27 @@ class TrackInfo extends EventDispatcher {
         }
     }
 
-    R2R(handleFrame:FrameInfo) {
-        handleFrame.setHold(handleFrame.getHold() + 1);
-        console.log(this, "R2R pick idx:", handleFrame.getIdx(), "hold:", handleFrame.getHold());
+    R2R(pickFrame:FrameInfo) {
+        pickFrame.setHold(pickFrame.getHold() + 1);
+        console.log(this, "R2R pick idx:", pickFrame.getIdx(), "hold:", pickFrame.getHold());
         var nextFrame;
-        for (var i = handleFrame.getIdx() + 1; i < this.frameInfoArr.length; ++i) {
+        for (var i = pickFrame.getIdx() + 1; i < this.frameInfoArr.length; ++i) {
             nextFrame = this.frameInfoArr[i];
             nextFrame.setStart(nextFrame.getStart() + 1);
             console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
         }
-        this.dis(TrackInfoEvent.UPDATE_HOLD, handleFrame);
-        //todo updateContentEndFrame
+        this._end++;
+        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+    }
+
+    R2L(pickFrame:FrameInfo) {
+        pickFrame.setHold(pickFrame.getHold() - 1);
+        var nextFrame;
+        for (var i = pickFrame.getIdx() + 1; i < this.frameInfoArr.length; ++i) {
+            nextFrame = this.frameInfoArr[i];
+            nextFrame.setStart(nextFrame.getStart() - 1);
+        }
+        this._end--;
+        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
     }
 }
