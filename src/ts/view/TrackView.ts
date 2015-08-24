@@ -50,10 +50,9 @@ class TrackView extends BaseView implements IBaseView {
                 var mouseX = e.clientX - clip.offset().left;
                 var frameInfo = this.trackInfo.getFrameInfo(mouseX);
                 this._pickFrame = frameInfo;
-                console.log("Pick frame", e.clientX, mouseX, frameInfo, frameInfo.getIdx());
+                console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx());
             }
             this.startMoveTimer();
-            console.log("down", this._isPressBar, mouseY, barHeight);
         });
 
         //clip.on(MouseEvt.LEAVE, (e)=> {
@@ -118,7 +117,6 @@ class TrackView extends BaseView implements IBaseView {
             this.setColor("#666");
         else
             this.setColor("#444");
-        console.log(this, 'set selected ', val, this.trackInfo.idx);
     }
 
     startMoveTimer() {

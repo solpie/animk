@@ -54,15 +54,17 @@ class TrackInfo extends EventDispatcher {
     }
 
     getFrameInfo(mouseX) {
-        var idxX = Math.ceil(mouseX / appInfo.projectInfo.curComp.frameWidth);
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        //var idxX = Math.ceil(mouseX / appInfo.projectInfo.curComp.frameWidth);
         var nextFrame;
-        for (var i = idxX - 1; i < this.frameInfoArr.length; ++i) {
+        for (var i = 0; i < this.frameInfoArr.length; ++i) {
             nextFrame = this.frameInfoArr[i];
-            if (nextFrame && nextFrame.getStart() <= idxX && nextFrame.getEnd() >= idxX) {
+            if (nextFrame && (nextFrame.getStart() - 1) * frameWidth <= mouseX
+                && (nextFrame.getEnd()) * frameWidth >= mouseX) {
                 return nextFrame;
             }
             else {
-                console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getEnd());
+                //console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getEnd());
             }
         }
     }
