@@ -108,6 +108,24 @@ class CompositionView implements IBaseView {
         else
             fpos = this._cursorPos;
         $(ElmId$.cursor).css({left: fpos * appInfo.projectInfo.curComp.frameWidth - this._hScrollVal})
+        this.updateCanvas();
+    }
+
+    updateCanvas() {
+        var c:HTMLElement = document.getElementById("Canvas0");
+        c.setAttribute("width", 1280);
+        c.setAttribute("height", 720);
+        var cxt = c.getContext("2d");
+        for (var i = this.compInfo.trackInfoArr.length - 1; i > -1; i--) {
+            var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
+            if (trackInfo) {
+                var img = trackInfo.getCurImg(this._cursorPos);
+                if (img) {
+                    cxt.drawImage(img, 0, 0);
+                }
+            }
+        }
+
     }
 
     onNewTrackView(trackInfo:TrackInfo) {

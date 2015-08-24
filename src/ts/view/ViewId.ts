@@ -19,6 +19,7 @@ var ElmId$ = {
     btnNewTrack: "#btnNewTrack",
     btnDelTrack: "#btnDelTrack",
     timestampBar: "#TimestampBar0",
+    compCanvas: "#Canvas0",
 };
 var ElmClass$ = {
     Track: ".Track",

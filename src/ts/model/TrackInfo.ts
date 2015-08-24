@@ -38,6 +38,15 @@ class TrackInfo extends EventDispatcher {
         this._hold = imgs.length;
     }
 
+    getCurImg(frameIdx:number):Image {
+        for (var i = 0; i < this.frameInfoArr.length; i++) {
+            var frameInfo:FrameInfo = this.frameInfoArr[i];
+            if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
+                return frameInfo.imageInfo.img;
+            }
+        }
+    }
+
     getImgs() {
         return this._imgArr;
     }
@@ -51,10 +60,10 @@ class TrackInfo extends EventDispatcher {
     }
 
     getHold() {
-        return this._hold ;
+        return this._hold;
     }
-    getEnd()
-    {
+
+    getEnd() {
         return this._start + this._hold - 1;
     }
 
