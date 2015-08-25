@@ -21,7 +21,6 @@ class CompInfoEvent {
     static NEW_TRACK:string = "new track";
     static DEL_TRACK:string = "delete track";
     static UPDATE_CURSOR:string = "UPDATE_Cursor";
-
 }
 class TrackInfoEvent {
     static SEL_TRACK:string = "select track";
@@ -30,7 +29,11 @@ class TrackInfoEvent {
     static UPDATE_START:string = "UPDATE_START";
     static UPDATE_TRACK_START:string = "UPDATE_TRACK_START";
 }
-class FrameTimerEvent{
+class FrameTimerEvent {
     static TICK:string = "TICK";
+}
+class TheMachineEvent {
+    static UPDATE_IMG:string = "UPDATE_IMG";
+    static ADD_IMG:string = "ADD_IMG";
 
 }

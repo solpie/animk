@@ -3,6 +3,7 @@
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
 /// <reference path="SplitterView.ts"/>
+/// <reference path="CanvasView.ts"/>
 var Keys = {
     Space: function (k) {
         return k == 32;
@@ -15,32 +16,36 @@ var Keys = {
     },
 };
 class AnimkView {
-    appModel:AppInfo;
+    appInfo:AppInfo;
     projectViewArr:Array<ProjectView>;
+    canvasView:CanvasView;
     timelineView:TimelineView;
     vSplitter:SplitterView;
     hSplitter:SplitterView;
 
     constructor(appModel) {
-        this.appModel = appModel;
-        var ins = this;
-        this.appModel.add('newProject', function () {
-            ins.onNewProject();
+        this.appInfo = appModel;
+
+        this.appInfo.add('newProject', ()=> {
+            this.onNewProject();
+        });
+        this.appInfo.add(TheMachineEvent.UPDATE_IMG, ()=> {
+            this.canvasView.updateComp();
         });
 
         document.onmousemove = (e)=> {
-            this.appModel.mouseX = e.clientX;
-            this.appModel.mouseY = e.clientY;
+            this.appInfo.mouseX = e.clientX;
+            this.appInfo.mouseY = e.clientY;
         };
         document.onmouseup = ()=> {
-            this.appModel.dis(MouseEvt.UP);
+            this.appInfo.dis(MouseEvt.UP);
         };
         document.onkeydown = this.onKeyDown;
         //super();
         var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
-
+        this.canvasView = new CanvasView();
         this.initZIndex();
     }
 
@@ -79,7 +84,7 @@ class AnimkView {
 
     onNewProject() {
         console.log(this, 'new project');
-        var view = new ProjectView(this.appModel.projectInfo);
+        var view = new ProjectView(this.appInfo.projectInfo);
         this.projectViewArr.push(view);
     }
 
@@ -97,5 +102,7 @@ class AnimkView {
         win.on(ViewEvent.RESIZE, (w, h) => {
             this.resize(w, h);
         });
+
+        this.canvasView.init();
     }
 }
