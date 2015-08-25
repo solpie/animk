@@ -33,6 +33,7 @@ class TrackView extends BaseView implements IBaseView {
             actHint.css({display: "block"});
             actHint.css({left: frameIdx * appInfo.frameWidth()});
             appInfo.tm.actImg = this.trackInfo.frameInfoArr[frameIdx].imageInfo.filename;
+            appInfo.tm.ActFrameInfo = this.trackInfo.frameInfoArr[frameIdx];
         }
         else {
             actHint.css({display: "none"})
@@ -97,12 +98,15 @@ class TrackView extends BaseView implements IBaseView {
 
     initFrame() {
         //set img src position
-        for (var i = 0; i < this.trackInfo.getImgs().length; i++) {
+        for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
+            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
+            frameInfo.id$ = this.getFrameId$(i) + " img";
+
             var frameWidth = appInfo.projectInfo.curComp.frameWidth;
             var frame$ = $(this.getFrameId$(i));
             frame$.css({left: i * frameWidth});
-            var frameImg$ = $(this.getFrameId$(i) + " img");
-            frameImg$.attr("src", this.trackInfo.getImgs()[i]);
+            var frameImg$ = $(frameInfo.id$);
+            frameImg$.attr("src", frameInfo.imageInfo.filename);
             console.log(this, "pick frames", frameImg$);
         }
         this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {

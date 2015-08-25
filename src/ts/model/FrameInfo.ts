@@ -5,11 +5,11 @@ enum  PressFlag{
     R = 2
 }
 class FrameInfo extends EventDispatcher {
-
     _idx = -1;
     _start:number = 1;
     _end = 1;
     _hold = 1;
+    id$:string;
     imageInfo:ImageInfo;
     pressFlag = 0;
 

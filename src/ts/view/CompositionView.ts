@@ -125,8 +125,9 @@ class CompositionView implements IBaseView {
         for (var i = this.compInfo.trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
             if (trackInfo) {
-                var img = trackInfo.getCurImg(this._cursorPos);
+                var img:Image = trackInfo.getCurImg(this._cursorPos);
                 if (img) {
+                    console.log(this, "comp", img.src);
                     cxt.drawImage(img, 0, 0);
                 }
             }

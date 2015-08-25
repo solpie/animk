@@ -1,5 +1,5 @@
 /// <reference path="BaseView.ts"/>
-interface File{
+interface File {
     path:string;
 }
 class TimelineView extends BaseView {
@@ -12,8 +12,15 @@ class TimelineView extends BaseView {
         $(ElmId$.btnDelTrack).on(MouseEvt.CLICK, ()=> {
             this.onDelTrack();
         });
+        $(ElmId$.btnUpdate).on(MouseEvt.CLICK, ()=> {
+            this.updateImg();
+        });
 
         this.initDrag();
+    }
+
+    updateImg() {
+        appInfo.tm.updateWatchArr();
     }
 
     onDelTrack() {

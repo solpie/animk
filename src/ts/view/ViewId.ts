@@ -18,6 +18,7 @@ var ElmId$ = {
     cursorMask: "#cursorMask",
     btnNewTrack: "#btnNewTrack",
     btnDelTrack: "#btnDelTrack",
+    btnUpdate: "#btnUpdate",
     timestampBar: "#TimestampBar0",
     compCanvas: "#Canvas0",
     hSplitter: "#HSplitter0",
