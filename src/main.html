@@ -26,6 +26,7 @@
     <script src="ts/model/CompositionInfo.js"></script>
     <script src="ts/view/CompositionView.js"></script>
     <script src="ts/view/CanvasView.js"></script>
+    <script src="ts/view/FrameView.js"></script>
 
     <script src="ts/model/TrackInfo.js"></script>
     <script src="ts/view/TrackView.js"></script>
@@ -44,11 +45,7 @@
             <div class="TrackArea">
                 <div class="Clip">
                     <div class="Bar"></div>
-                    {{#frameIdxArr}}
-                    <div class="Frame" id="{{.}}">
-                        <img src="" draggable="false">
-                    </div>
-                    {{/frameIdxArr}}
+                    <canvas class="FrameCanvas" id="FrameCanvas{{idx}}"></canvas>
                     <div class="ActHint"></div>
                 </div>
             </div>

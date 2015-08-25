@@ -1,4 +1,5 @@
 /// <reference path="BaseView.ts"/>
+/// <reference path="FrameView.ts"/>
 /// <reference path="../model/TrackInfo.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
 
@@ -10,6 +11,7 @@ class TrackView extends BaseView implements IBaseView {
     _lastX:number;
     _timerId:number;
     _pickFrame:FrameInfo = null;
+    _frameView:FrameView;
 
     constructor(trackInfo:TrackInfo) {
         super();
@@ -94,15 +96,17 @@ class TrackView extends BaseView implements IBaseView {
             console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx(), "Left", frameInfo.pressFlag);
         }
         this.startMoveTimer();
+        if (this._frameView)
+            this._frameView.updateFrame(this.trackInfo.frameInfoArr);
     }
 
     initFrame() {
         //set img src position
+        var frameWidth = appInfo.frameWidth();
         for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
             frameInfo.id$ = this.getFrameId$(i) + " img";
 
-            var frameWidth = appInfo.projectInfo.curComp.frameWidth;
             var frame$ = $(this.getFrameId$(i));
             frame$.css({left: i * frameWidth});
             var frameImg$ = $(frameInfo.id$);
@@ -118,6 +122,9 @@ class TrackView extends BaseView implements IBaseView {
         this.trackInfo.add(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
         });
+        this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx + "");
+        this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth);
+        this._frameView.updateFrame(this.trackInfo.frameInfoArr);
     }
 
     updateClip(updateIdx:number) {
@@ -132,6 +139,8 @@ class TrackView extends BaseView implements IBaseView {
                 nextframe$.css({left: (frameInfo.getStart() - 1) * frameWidth});
             }
         }
+
+
     }
 
     onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
@@ -151,7 +160,7 @@ class TrackView extends BaseView implements IBaseView {
             var frame$ = $(this.getFrameId$(idx));
             if (frame$) {
                 console.log(this, "delFrame", frame$.attr("id"));
-                frame$.attr("id", this.getFrameId$(idx-1));
+                frame$.attr("id", this.getFrameId$(idx - 1));
                 console.log(this, "delFrame", frame$.attr("id"));
                 idx++;
                 if (idx == 10)

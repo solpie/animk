@@ -32,6 +32,7 @@ var ElmClass$ = {
     Clip: ".Clip",
     ActHint: ".ActHint",
     Frame: "Frame",
+    FrameCanvas$: "FrameCanvas",
     Bar: ".Bar",
 };
 
