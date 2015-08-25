@@ -88,7 +88,7 @@ class CompositionView implements IBaseView {
 
     onUpdateTrackStart(trackInfo:TrackInfo) {
         this.updateMaxTrackWidth(trackInfo.getEnd() * appInfo.projectInfo.curComp.frameWidth);
-        this.onUpdateCursor(0);
+        this.onUpdateCursor(-1);
     }
 
     onSelTrackView(trackInfo:TrackInfo) {
@@ -107,7 +107,7 @@ class CompositionView implements IBaseView {
 
     onUpdateCursor(frameIdx?) {
         var fpos;
-        if (frameIdx) {
+        if (frameIdx != -1) {
             fpos = frameIdx;
             this._cursorPos = fpos;
         }
@@ -171,7 +171,7 @@ class CompositionView implements IBaseView {
         view.hScrollTo(this._hScrollVal);
         var newTrackWidth = (trackInfo.frameInfoArr.length) * appInfo.projectInfo.curComp.frameWidth;
         this.updateMaxTrackWidth(newTrackWidth);
-        this.onUpdateCursor(0);
+        this.onUpdateCursor(-1);
     }
 
     updateMaxTrackWidth(newTrackWidth) {
