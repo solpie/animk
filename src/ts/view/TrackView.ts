@@ -115,6 +115,9 @@ class TrackView extends BaseView implements IBaseView {
         this.trackInfo.add(TrackInfoEvent.UPDATE_START, (pickFrame:FrameInfo)=> {
             this.onUpdateFrame(pickFrame, pickFrame.getIdx() - 1);
         });
+        this.trackInfo.add(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
+            this.onDelFrame(delFrame);
+        });
     }
 
     updateClip(updateIdx:number) {
@@ -123,10 +126,10 @@ class TrackView extends BaseView implements IBaseView {
         clip.css({left: this.trackInfo.getStart() * frameWidth - appInfo.projectInfo.curComp.hScrollVal});
         clip.width((this.trackInfo.getHold()) * frameWidth);
         for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
-            var nextFrameInfo = this.trackInfo.frameInfoArr[i];
-            if (nextFrameInfo) {
+            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
+            if (frameInfo) {
                 var nextframe$ = $(this.getFrameId$(i));
-                nextframe$.css({left: (nextFrameInfo.getStart() - 1) * frameWidth});
+                nextframe$.css({left: (frameInfo.getStart() - 1) * frameWidth});
             }
         }
     }
@@ -137,6 +140,27 @@ class TrackView extends BaseView implements IBaseView {
         frame$.width(pickFrame.getHold() * frameWidth);
         this.updateClip(updateIdx);
         //todo update composition max width
+    }
+
+    onDelFrame(delFrame:FrameInfo) {
+
+        $(this.getFrameId$(delFrame.getIdx())).remove();
+        var isEnd = false;
+        var idx = delFrame.getIdx();
+        while (!isEnd) {
+            var frame$ = $(this.getFrameId$(idx));
+            if (frame$) {
+                console.log(this, "delFrame", frame$.attr("id"));
+                frame$.attr("id", this.getFrameId$(idx-1));
+                console.log(this, "delFrame", frame$.attr("id"));
+                idx++;
+                if (idx == 10)
+                    isEnd = true;
+            }
+            else
+                isEnd = true;
+        }
+        this.updateClip(0);
     }
 
     getFrameId$(idx) {

@@ -4,6 +4,7 @@
 class CanvasView extends BaseView {
     canvasEl:HTMLElement;
     ctx:any;
+
     constructor() {
         super()
     }
@@ -23,8 +24,11 @@ class CanvasView extends BaseView {
             if (trackInfo) {
                 var img:Image = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (img) {
-                    console.log(this, "comp", img.src);
+                    //console.log(this, "comp", img.src);
                     this.ctx.drawImage(img, 0, 0);
+                }
+                else {
+                    console.log(this, "can not comp trk ", i);
                 }
             }
         }

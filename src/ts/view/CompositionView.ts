@@ -87,7 +87,8 @@ class CompositionView implements IBaseView {
 
     onUpdateTrackStart(trackInfo:TrackInfo) {
         this.updateMaxTrackWidth(trackInfo.getEnd() * appInfo.frameWidth());
-        this.updateCursor(-1);
+        appInfo.dis(TheMachineEvent.UPDATE_IMG);
+        //this.updateCursor(-1);
     }
 
     onSelTrackView(trackInfo:TrackInfo) {
@@ -115,27 +116,8 @@ class CompositionView implements IBaseView {
         $(ElmId$.cursor).css({
             left: fpos * appInfo.frameWidth() - this._hScrollVal
         });
-        this.updateCanvas();
-    }
-
-    updateCanvas() {
         appInfo.dis(TheMachineEvent.UPDATE_IMG);
-        //var c:HTMLElement = document.getElementById("Canvas0");
-        //c.setAttribute("width", 1280 + "");
-        //c.setAttribute("height", 720 + "");
-        //var cxt = c.getContext("2d");
-        //for (var i = this.compInfo.trackInfoArr.length - 1; i > -1; i--) {
-        //    var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
-        //    if (trackInfo) {
-        //        var img:Image = trackInfo.getCurImg(this._cursorPos);
-        //        if (img) {
-        //            console.log(this, "comp", img.src);
-        //            cxt.drawImage(img, 0, 0);
-        //        }
-        //    }
-        //}
     }
-
 
     onSelectFrame(selArr) {
         this._selectFrame = selArr;
@@ -173,7 +155,7 @@ class CompositionView implements IBaseView {
         view.hScrollTo(this._hScrollVal);
         var newTrackWidth = (trackInfo.frameInfoArr.length) * appInfo.projectInfo.curComp.frameWidth;
         this.updateMaxTrackWidth(newTrackWidth);
-        this.updateCursor(-1);
+        appInfo.dis(TheMachineEvent.UPDATE_IMG);
     }
 
     updateMaxTrackWidth(newTrackWidth) {

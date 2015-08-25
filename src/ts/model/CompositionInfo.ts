@@ -64,10 +64,6 @@ class CompositionInfo extends EventDispatcher {
         this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
     }
 
-    updateCur() {
-        this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
-    }
-
     forward() {
         this._cursorPos++;
         this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
