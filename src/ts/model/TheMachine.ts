@@ -1,11 +1,22 @@
 var exec = require('child_process').exec;
+
 class TheMachine {
+    actImg:string;
+
     constructor() {
 
     }
 
+    watchAct() {
+        if (this.actImg) {
+            this.watch(this.actImg);
+        }
+    }
+
     watch(path:string) {
-        exec('"D:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" g:\\1.jpg', function (error, stdout, stderr) {
+        path = path.replace("/", "\\");
+        console.log(this, "watch:", path);
+        exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
             if (stdout) {
                 console.log('stdout: ' + stdout);
             }

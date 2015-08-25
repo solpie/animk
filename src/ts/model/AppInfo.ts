@@ -1,6 +1,8 @@
 /// <reference path="ProjectInfo.ts"/>
+/// <reference path="TheMachine.ts"/>
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
+    tm:TheMachine;
     mouseX:number;
     mouseY:number;
 
@@ -12,6 +14,7 @@ class AppInfo extends EventDispatcher {
     newProject() {
         this.projectInfo = new ProjectInfo();
         this.dis("newProject");
+        this.tm = new TheMachine();
     }
 
     test() {
@@ -23,6 +26,11 @@ class AppInfo extends EventDispatcher {
         this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
         this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
         this.projectInfo.curComp.setCursor(2);
+    }
+
+
+    frameWidth(){
+        return this.projectInfo.curComp.frameWidth
     }
 }
 

@@ -14,6 +14,7 @@ class CompositionInfo extends EventDispatcher {
     _stayBack;
     _frameTimer:FrameTimer;
 
+
     constructor() {
         super();
         this.trackInfoArr = [];

@@ -10,6 +10,7 @@ class TrackView extends BaseView implements IBaseView {
     _lastX:number;
     _timerId:number;
     _pickFrame:FrameInfo = null;
+
     constructor(trackInfo:TrackInfo) {
         super();
         this.trackInfo = trackInfo;
@@ -30,7 +31,8 @@ class TrackView extends BaseView implements IBaseView {
         var actHint = $(this.id$ + " " + ElmClass$.ActHint);
         if (frameIdx) {
             actHint.css({display: "block"});
-            actHint.css({left: frameIdx * appInfo.projectInfo.curComp.frameWidth})
+            actHint.css({left: frameIdx * appInfo.frameWidth()});
+            appInfo.tm.actImg = this.trackInfo.frameInfoArr[frameIdx].imageInfo.filename;
         }
         else {
             actHint.css({display: "none"})
@@ -140,8 +142,7 @@ class TrackView extends BaseView implements IBaseView {
     onUp() {
         this._isPressBar = false;
         this._isPressClip = false;
-        if (this._pickFrame)
-        {
+        if (this._pickFrame) {
             this.trackInfo.dis(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
             this._pickFrame.pressFlag = 0;
         }

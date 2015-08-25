@@ -68,7 +68,7 @@ class AnimkView {
             appInfo.projectInfo.curComp.stayBack();
         }
         else if (Keys.Char(key, "\r")) {//enter
-            appInfo.projectInfo.curComp.backward()
+            appInfo.tm.watchAct();
         }
         //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
