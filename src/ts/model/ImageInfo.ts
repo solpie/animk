@@ -1,5 +1,6 @@
 interface Image {
     src:string;
+    onload:any;
 }
 class ImageInfo {
     _id;
@@ -13,10 +14,9 @@ class ImageInfo {
     constructor(filename?) {
         this.filename = filename;
         this.img = new Image();
-        this.updateImg();
     }
 
-    updateImg() {
+    reloadImg() {
         if (this.filename) {
             this.updateCount++;
             this.img.src = this.filename+"?c="+this.updateCount;

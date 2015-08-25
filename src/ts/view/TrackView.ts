@@ -96,25 +96,16 @@ class TrackView extends BaseView implements IBaseView {
             console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx(), "Left", frameInfo.pressFlag);
         }
         this.startMoveTimer();
-        if (this._frameView)
-            this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+
     }
 
     initFrame() {
-        //set img src position
-        var frameWidth = appInfo.frameWidth();
-        for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
-            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
-            frameInfo.id$ = this.getFrameId$(i) + " img";
-
-            var frame$ = $(this.getFrameId$(i));
-            frame$.css({left: i * frameWidth});
-            var frameImg$ = $(frameInfo.id$);
-            frameImg$.attr("src", frameInfo.imageInfo.filename);
-            console.log(this, "pick frames", frameImg$);
-        }
         this.trackInfo.add(TrackInfoEvent.UPDATE_HOLD, (pickFrame:FrameInfo)=> {
             this.onUpdateFrame(pickFrame, pickFrame.getIdx() + 1);
+        });
+        this.trackInfo.add(TrackInfoEvent.LOADED, ()=> {
+            this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+            appInfo.dis(TheMachineEvent.UPDATE_IMG);
         });
         this.trackInfo.add(TrackInfoEvent.UPDATE_START, (pickFrame:FrameInfo)=> {
             this.onUpdateFrame(pickFrame, pickFrame.getIdx() - 1);
@@ -122,9 +113,13 @@ class TrackView extends BaseView implements IBaseView {
         this.trackInfo.add(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
         });
+        var frameWidth = appInfo.frameWidth();
         this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx + "");
         this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth);
-        this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+        for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
+            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
+            frameInfo.imageInfo.reloadImg();
+        }
     }
 
     updateClip(updateIdx:number) {
@@ -139,8 +134,6 @@ class TrackView extends BaseView implements IBaseView {
                 nextframe$.css({left: (frameInfo.getStart() - 1) * frameWidth});
             }
         }
-
-
     }
 
     onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
@@ -152,7 +145,6 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onDelFrame(delFrame:FrameInfo) {
-
         $(this.getFrameId$(delFrame.getIdx())).remove();
         var isEnd = false;
         var idx = delFrame.getIdx();
@@ -207,8 +199,10 @@ class TrackView extends BaseView implements IBaseView {
                         this.trackInfo.setStart(this.trackInfo.getStart() + 1);
                         clip.css({left: clip.position().left + frameWidth});
                     } else if (this._pickFrame) {
-                        if (this._pickFrame.pressFlag == PressFlag.R)
+                        if (this._pickFrame.pressFlag == PressFlag.R) {
                             this.trackInfo.R2R(this._pickFrame);
+                            this._frameView.updateFrame(this.trackInfo.frameInfoArr, 1);
+                        }
                         else if (this._pickFrame.pressFlag == PressFlag.L)
                             this.trackInfo.L2R(this._pickFrame);
                         //this.trackInfo.dis(TrackInfoEvent.SEL_FRAME,[this.trackInfo.idx,this._pickFrame.getIdx()])
@@ -221,9 +215,13 @@ class TrackView extends BaseView implements IBaseView {
                         clip.css({left: clip.position().left - frameWidth});
                     } else if (this._pickFrame) {
                         if (this._pickFrame.pressFlag == PressFlag.R)
+                        {
                             this.trackInfo.R2L(this._pickFrame);
+                            this._frameView.updateFrame(this.trackInfo.frameInfoArr, -1);
+                        }
                         else if (this._pickFrame.pressFlag == PressFlag.L)
                             this.trackInfo.L2L(this._pickFrame);
+                        this._frameView.updateFrame(this.trackInfo.frameInfoArr);
                     }
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());

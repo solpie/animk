@@ -18,7 +18,7 @@ class TheMachine extends EventDispatcher {
         this._updateCount++;
         for (var i = 0; i < this.watchArr.length; i++) {
             var frameInfo:FrameInfo = this.watchArr[i];
-            frameInfo.imageInfo.updateImg();
+            frameInfo.imageInfo.reloadImg();
             $(frameInfo.id$).attr("src", frameInfo.imageInfo.filename + "?fc=" + this._updateCount);
         }
         appInfo.dis(TheMachineEvent.UPDATE_IMG);

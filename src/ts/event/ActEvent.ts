@@ -23,6 +23,7 @@ class CompInfoEvent {
     static UPDATE_CURSOR:string = "UPDATE_Cursor";
 }
 class TrackInfoEvent {
+    static LOADED:string = "load all imgs";
     static SEL_TRACK:string = "select track";
     static SEL_FRAME:string = "select frame";
     static DEL_FRAME:string = "delete frame";
