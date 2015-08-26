@@ -17,7 +17,6 @@ class CompositionView implements IBaseView {
     compInfo:CompositionInfo;
     _trackHeight:number = 0;
     _hScrollVal:number = 0;
-    _cursorPos = 1;
     _selectFrame:Array<any>;//[trkIdx,frameIdx]
 
     constructor(compInfo:CompositionInfo) {
@@ -59,7 +58,7 @@ class CompositionView implements IBaseView {
     onClkTimestampBar(e) {
         var mouseX = e.clientX - $(ElmId$.timestampBar).offset().left;
         var cursorIdx = Math.floor((mouseX + this.compInfo.hScrollVal) / this.compInfo.frameWidth);
-        this.updateCursor(cursorIdx);
+        this.compInfo.setCursor(cursorIdx);
     }
 
     onHScroll() {
@@ -109,10 +108,9 @@ class CompositionView implements IBaseView {
         var fpos;
         if (frameIdx != -1) {
             fpos = frameIdx;
-            this._cursorPos = fpos;
         }
         else
-            fpos = this._cursorPos;
+            fpos = this.compInfo.getCursor();
         $(ElmId$.cursor).css({
             left: fpos * appInfo.frameWidth() - this._hScrollVal
         });
