@@ -174,7 +174,7 @@ body {
 
 .Track {
     width: 100%;
-    height: 70px;
+    height: 60px;
     overflow-x: hidden;
     overflow-y: hidden;
     border-bottom: 1px solid #111;
@@ -186,7 +186,7 @@ body {
 .Track .Panel {
     position: absolute;
     width: 200px;
-    height: 70px;
+    height: 60px;
 }
 
 .TrackArea {
@@ -200,28 +200,15 @@ body {
 .Track .Clip {
     top: 1px;
     position: relative;
-    height: 65px;
+    /*height: 60px;*/
     background: #000000;
     font-size: 0;
 }
 
 .Track .Clip .Bar {
     width: 100%;
-    height: 20px;
+    height: 15px;
     background: #2f2f2f;
-}
-
-.Track .Clip .Frame {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background: #ffffff;
-    position: absolute;
-}
-
-.Frame img {
-    height: 40px;
-    width: 40px;
 }
 
 .ActHint {
