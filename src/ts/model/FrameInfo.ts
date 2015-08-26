@@ -22,13 +22,19 @@ class FrameInfo extends EventDispatcher {
     getIdx() {
         return this._idx;
     }
-
+    dtIdx(deltaVal){
+        this.setIdx(this._idx + deltaVal);
+    }
     setIdx(v) {
         this._idx = v;
     }
 
     getStart() {
         return this._start;
+    }
+
+    dtStart(deltaVal) {
+        this.setStart(this._start + deltaVal);
     }
 
     setStart(v) {
@@ -38,6 +44,10 @@ class FrameInfo extends EventDispatcher {
 
     getHold() {
         return this._hold;
+    }
+
+    dtHold(deltaVal) {
+        this.setHold(this._hold + deltaVal);
     }
 
     setHold(v) {

@@ -127,19 +127,9 @@ class TrackView extends BaseView implements IBaseView {
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         clip.css({left: this.trackInfo.getStart() * frameWidth - appInfo.projectInfo.curComp.hScrollVal});
         clip.width((this.trackInfo.getHold()) * frameWidth);
-        for (var i = updateIdx; i < this.trackInfo.frameInfoArr.length; i++) {
-            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
-            if (frameInfo) {
-                var nextframe$ = $(this.getFrameId$(i));
-                nextframe$.css({left: (frameInfo.getStart() - 1) * frameWidth});
-            }
-        }
     }
 
     onUpdateFrame(pickFrame:FrameInfo, updateIdx:number) {
-        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
-        var frame$ = $(this.getFrameId$(pickFrame.getIdx()));
-        frame$.width(pickFrame.getHold() * frameWidth);
         this.updateClip(updateIdx);
         //todo update composition max width
     }
@@ -176,6 +166,7 @@ class TrackView extends BaseView implements IBaseView {
             this._pickFrame.pressFlag = 0;
         }
         this._pickFrame = null;
+        this.trackInfo.clearRemoveFrame();
         this.stopMoveTimer();
     }
 
@@ -185,6 +176,28 @@ class TrackView extends BaseView implements IBaseView {
             this.setColor("#666");
         else
             this.setColor("#444");
+    }
+
+    onPickFrame(isRight) {
+        if (isRight) {
+            if (this._pickFrame.pressFlag == PressFlag.R) {
+                this.trackInfo.R2R(this._pickFrame);
+                this._frameView.updateFrame(this.trackInfo.frameInfoArr, 1);
+            }
+            else if (this._pickFrame.pressFlag == PressFlag.L) {
+                this.trackInfo.L2R(this._pickFrame);
+                this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+            }
+        }
+        else {
+            if (this._pickFrame.pressFlag == PressFlag.R) {
+                this.trackInfo.R2L(this._pickFrame);
+                this._frameView.updateFrame(this.trackInfo.frameInfoArr, -1);
+            }
+            else if (this._pickFrame.pressFlag == PressFlag.L)
+                this.trackInfo.L2L(this._pickFrame);
+            this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+        }
     }
 
     startMoveTimer() {
@@ -199,13 +212,7 @@ class TrackView extends BaseView implements IBaseView {
                         this.trackInfo.setStart(this.trackInfo.getStart() + 1);
                         clip.css({left: clip.position().left + frameWidth});
                     } else if (this._pickFrame) {
-                        if (this._pickFrame.pressFlag == PressFlag.R) {
-                            this.trackInfo.R2R(this._pickFrame);
-                            this._frameView.updateFrame(this.trackInfo.frameInfoArr, 1);
-                        }
-                        else if (this._pickFrame.pressFlag == PressFlag.L)
-                            this.trackInfo.L2R(this._pickFrame);
-                        //this.trackInfo.dis(TrackInfoEvent.SEL_FRAME,[this.trackInfo.idx,this._pickFrame.getIdx()])
+                        this.onPickFrame(true);
                     }
                 }
                 else if (dx < -frameWidth) {
@@ -214,14 +221,7 @@ class TrackView extends BaseView implements IBaseView {
                         this.trackInfo.setStart(this.trackInfo.getStart() - 1);
                         clip.css({left: clip.position().left - frameWidth});
                     } else if (this._pickFrame) {
-                        if (this._pickFrame.pressFlag == PressFlag.R)
-                        {
-                            this.trackInfo.R2L(this._pickFrame);
-                            this._frameView.updateFrame(this.trackInfo.frameInfoArr, -1);
-                        }
-                        else if (this._pickFrame.pressFlag == PressFlag.L)
-                            this.trackInfo.L2L(this._pickFrame);
-                        this._frameView.updateFrame(this.trackInfo.frameInfoArr);
+                        this.onPickFrame(false);
                     }
                 }
                 //console.log("mousemove", clip.position().left, appInfo.getMouseX());

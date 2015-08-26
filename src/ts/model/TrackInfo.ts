@@ -16,6 +16,7 @@ class TrackInfo extends EventDispatcher {
     _hold:number = 1;
     _loopType = TrackLoopType.HOLD;
     frameInfoArr:Array<FrameInfo>;
+    removedFrameArr:Array<FrameInfo>;
 
     constructor() {
         super();
@@ -157,50 +158,49 @@ class TrackInfo extends EventDispatcher {
         this.dis(TrackInfoEvent.UPDATE_START, pickFrame);
     }
 
+    clearRemoveFrame() {
+        this.removedFrameArr.length = 0;
+    }
+
     L2R(pickFrame:FrameInfo) {
-        //    if (!_trackFrameInfotoRemoves->empty()) {
-        //        TrackFrameInfo *delTfi = _trackFrameInfotoRemoves->back();
-        //            _trackFrameInfotoRemoves->pop_back();
-        //
-        //        //insert
-        //            delTfi->setPre(handleTrackFrame->pre);
-        //            handleTrackFrame->setPre(delTfi);
-        //            _trackInfoHead->trackFrameInfos->insert(_trackInfoHead->trackFrameInfos->begin() + delTfi->getIdx(),
-        //            delTfi);
-        //            handleTrackFrame->foreach([](TrackFrameInfo *tfiBackward) {
-        //                tfiBackward->setIdx(tfiBackward->getIdx() + 1);
-        //        }, handleTrackFrame);
-        //        ///////////////////
-        //        cout << typeid(this).name() << " recover: " << delTfi->getIdx() << endl;
-        //    }
-        //else {
-        //        if (handleTrackFrame->pre) {
-        //                handleTrackFrame->pre->setHoldFrame(handleTrackFrame->pre->getHoldFrame() + 1);
-        //        }
-        //    }
-        //
-        //    if (handleTrackFrame->getHoldFrame() > 1) {
-        //            handleTrackFrame->setStartFrame(handleTrackFrame->getStartFrame() + 1);
-        //            handleTrackFrame->setHoldFrame(handleTrackFrame->getHoldFrame() - 1);
-        //    }
-        //    else {
-        //        removeTrackFrameInfo(handleTrackFrame, trackInfo);
-        //    }
+        if (this.removedFrameArr.length) {
+            var delFrame:FrameInfo = this.removedFrameArr.pop();
+            //this.frameInfoArr
+            for (var i = delFrame.getIdx(); i < this.frameInfoArr.length; i++) {
+                var frameInfo:FrameInfo = this.frameInfoArr[i];
+                frameInfo.dtIdx(1);
+            }
+            this.frameInfoArr.splice(delFrame.getIdx(), 0, delFrame);
+        }
+        else {
+            if (pickFrame.getIdx() > 0) {
+                this.frameInfoArr[pickFrame.getIdx()-1].dtHold(1);
+            }
+        }
+        if (pickFrame.getHold() > 1) {
+            pickFrame.dtStart(1);
+            pickFrame.dtHold(-1);
+        }
+        else {
+            this.removeFrame(pickFrame)
+        }
+        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+
+
         //    updateContentEndFrame();
         //    dumpTrackFrameIdx(trackInfo);
     }
 
-    removedFrameArr:Array<FrameInfo>;
 
     removeFrame(frame:FrameInfo) {
-        console.log(this, "removeFrame", this.frameInfoArr.length);
+        console.log(this, "removeFrame idx",frame.getIdx(),'len:', this.frameInfoArr.length);
         var removeIdx = frame.getIdx();
         this.removedFrameArr.push(frame);
         this.frameInfoArr.splice(removeIdx, 1);
         console.log(this, "removeFrame length", this.frameInfoArr.length);
         for (var i = removeIdx; i < this.frameInfoArr.length; i++) {
             var frameBack = this.frameInfoArr[i];
-            frameBack.setIdx(frameBack.getIdx() - 1);
+            frameBack.dtIdx(-1);
         }
         this.dis(TrackInfoEvent.DEL_FRAME, frame);
     }
