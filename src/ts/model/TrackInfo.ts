@@ -34,16 +34,15 @@ class TrackInfo extends EventDispatcher {
     }
 
     _loadCount;
-
     newImage(imgs:Array<string>) {
         var newFrame;
         this._loadCount = imgs.length;
         for (var i = 0; i < imgs.length; i++) {
             newFrame = new FrameInfo(imgs[i]);
             //todo delete img listener
-            newFrame.imageInfo.img.onload = ()=> {
+            newFrame.imageInfo.img.addEventListener("load",()=> {
                 this.onImgLoaded();
-            };
+            });
             newFrame.setStart(i + 1);
             newFrame.setIdx(this.frameInfoArr.length);
             this.frameInfoArr.push(newFrame);
@@ -52,7 +51,9 @@ class TrackInfo extends EventDispatcher {
         this._hold = imgs.length;
     }
 
-    onImgLoaded() {
+    onImgLoaded(img) {
+        //console.log(this, "load test");
+        //img.removeEventListener("load", this._onLoadFunc);
         this._loadCount--;
         if (this._loadCount > 0) {
         }
