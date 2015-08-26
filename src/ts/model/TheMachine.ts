@@ -2,6 +2,8 @@
 /// <reference path="AppInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
 /// <reference path="../JQuery.ts"/>
+
+//the government has a secret system a machine,spies on you every hour of every day.
 var exec = require('child_process').exec;
 
 class TheMachine extends EventDispatcher {
