@@ -11,6 +11,7 @@ class CompositionInfo extends EventDispatcher {
     frameWidth:number = 40;
     hScrollVal:number = 0;
     _cursorPos:number = 1;
+    _maxPos:number;
     _stayBack;
     _frameTimer:FrameTimer;
 
@@ -65,14 +66,15 @@ class CompositionInfo extends EventDispatcher {
     }
 
     forward() {
-        this._cursorPos++;
-        this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+        if (this._cursorPos >= this._maxPos)
+            this.setCursor(1);
+        else
+            this.setCursor(this._cursorPos + 1);
     }
 
     backward() {
         if (this._cursorPos > 1) {
-            this._cursorPos--;
-            this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+            this.setCursor(this._cursorPos - 1);
         }
     }
 
@@ -111,5 +113,9 @@ class CompositionInfo extends EventDispatcher {
         console.log(this, "delTrack", idx + '');
         this.dis(CompInfoEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
+    }
+
+    setMaxSize(maxWidth) {
+        this._maxPos = Math.ceil(maxWidth / this.frameWidth);
     }
 }

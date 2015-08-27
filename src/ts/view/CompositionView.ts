@@ -68,10 +68,12 @@ class CompositionView implements IBaseView {
         var clip$;
         for (var i = 0; i < this.compInfo.trackInfoArr.length; i++) {
             var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
-            var trackId$ = ElmClass$.Track + "#" + trackInfo.idx;
-            clip$ = $(trackId$ + " " + ElmClass$.Clip);
-            clip$.css({left: trackInfo.getStart() * frameWidth - this._hScrollVal});
-            console.log(this, clip$);
+            if (trackInfo) {
+                var trackId$ = ElmClass$.Track + "#" + trackInfo.idx;
+                clip$ = $(trackId$ + " " + ElmClass$.Clip);
+                clip$.css({left: trackInfo.getStart() * frameWidth - this._hScrollVal});
+                console.log(this, clip$);
+            }
         }
         this.updateCursor();
     }
@@ -159,6 +161,7 @@ class CompositionView implements IBaseView {
     updateMaxTrackWidth(newTrackWidth) {
         if (this._maxTrackWidth < newTrackWidth) {
             this._maxTrackWidth = newTrackWidth;
+            this.compInfo.setMaxSize(newTrackWidth);
             $(ElmId$.trackWidth).width(newTrackWidth + 4 * appInfo.projectInfo.curComp.frameWidth);
             console.log('new TrackView', newTrackWidth);
         }
