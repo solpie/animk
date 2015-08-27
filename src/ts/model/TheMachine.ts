@@ -42,7 +42,7 @@ class TheMachine extends EventDispatcher {
     open(path:string) {
         path = path.replace("/", "\\");
         console.log(this, "open:", path);
-        exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
+        exec('"D:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
             if (stdout) {
                 console.log('stdout: ' + stdout);
             }
