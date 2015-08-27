@@ -34,7 +34,13 @@ class CanvasView extends BaseView {
                 var img:Image = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (img) {
                     //console.log(this, "comp", img.src);
+                    //this.ctx.save();
+                    if (i == 1)
+                        this.ctx.globalAlpha = 0.4;
+                    else
+                        this.ctx.globalAlpha = 1;
                     this.ctx.drawImage(img, 0, 0);
+                    //this.ctx.restore();
                 }
                 else {
                     console.log(this, "can not comp trk ", i);

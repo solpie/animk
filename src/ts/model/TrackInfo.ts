@@ -17,11 +17,14 @@ class TrackInfo extends EventDispatcher {
     _loopType = TrackLoopType.HOLD;
     frameInfoArr:Array<FrameInfo>;
     removedFrameArr:Array<FrameInfo>;
-
+    opacity:number;
+    visible:boolean;
     constructor() {
         super();
         this.frameInfoArr = [];
         this.removedFrameArr = [];
+        this.opacity = 1;
+        this.visible = true;
     }
 
     setStart(val) {

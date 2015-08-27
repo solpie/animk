@@ -1,10 +1,12 @@
-/// <reference path="BaseView.ts"/>
+/// <reference path="../view/BaseView.ts"/>
+/// <reference path="BaseWidget.ts"/>
 enum Direction  {
     Horizontal = 1,
     Vertical
 }
 
-class SplitterView extends BaseView {
+class SplitterView extends BaseWidget{
+//class SplitterView extends BaseView {
     _dir:number;
     _childId$1:string;
     _childId$2:string;

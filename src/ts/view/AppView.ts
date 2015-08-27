@@ -2,7 +2,7 @@
 /// <reference path="ProjectView.ts"/>
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
-/// <reference path="SplitterView.ts"/>
+/// <reference path="../widget/Splitter.ts"/>
 /// <reference path="CanvasView.ts"/>
 var Keys = {
     Space: function (k) {
