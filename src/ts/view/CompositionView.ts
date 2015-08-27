@@ -159,12 +159,14 @@ class CompositionView implements IBaseView {
     }
 
     updateMaxTrackWidth(newTrackWidth) {
-        if (this._maxTrackWidth < newTrackWidth) {
-            this._maxTrackWidth = newTrackWidth;
-            this.compInfo.setMaxSize(newTrackWidth);
-            $(ElmId$.trackWidth).width(newTrackWidth + 4 * appInfo.projectInfo.curComp.frameWidth);
-            console.log('new TrackView', newTrackWidth);
-        }
+        var frameWidth = appInfo.frameWidth();
+        var compMaxWidth:number = (this.compInfo.getMaxSize()+4) * frameWidth;
+        $(ElmId$.trackWidth).width(compMaxWidth);
+
+        //if (compMaxWidth < newTrackWidth) {
+        //    this.compInfo.setMaxSize(newTrackWidth);
+        //    console.log('new TrackView', newTrackWidth);
+        //}
     }
 
     onDelTrackView(idx:number) {

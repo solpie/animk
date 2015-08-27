@@ -100,7 +100,7 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo;
         for (var i in this.trackInfoArr) {
             trackInfo = this.trackInfoArr[i];
-            if (trackInfo.isSelected) {
+            if (trackInfo && trackInfo.isSelected) {
                 this.delTrack(trackInfo.idx);
                 break;
             }
@@ -111,11 +111,23 @@ class CompositionInfo extends EventDispatcher {
         //this.trackInfoArr.splice(idx, 1);
         delete this.trackInfoArr[idx];
         console.log(this, "delTrack", idx + '');
+        this.getMaxSize();
         this.dis(CompInfoEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
 
-    setMaxSize(maxWidth) {
-        this._maxPos = Math.ceil(maxWidth / this.frameWidth);
+    getMaxSize() {
+        var maxFrame = 0;
+        var trackEnd;
+        for (var i = 0; i < this.trackInfoArr.length; i++) {
+            var trackInfo:TrackInfo = this.trackInfoArr[i];
+            if (trackInfo) {
+                trackEnd = trackInfo.getEnd();
+                if (maxFrame < trackEnd)
+                    maxFrame = trackEnd;
+            }
+        }
+        this._maxPos = maxFrame;
+        return maxFrame
     }
 }
