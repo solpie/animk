@@ -41,7 +41,6 @@ body {
     height: 100%;
     /*background: #550108;*/
     -webkit-text-size-adjust: none;
-
 }
 
 .ToolShelf {
@@ -179,6 +178,24 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
     border-bottom: 1px solid #111;
+}
+
+.Track .Slider {
+    display: inline-block;
+    width: 80px;
+    height: 15px;
+    background: #222;
+}
+
+.Slider .Bar {
+    height: 100%;
+    width: 50px;
+    background: #555;
+}
+
+.Slider .Label {
+    top: -20px;
+    position: relative;
 }
 
 .Track .Label {

@@ -19,6 +19,7 @@ class TrackInfo extends EventDispatcher {
     removedFrameArr:Array<FrameInfo>;
     opacity:number;
     visible:boolean;
+
     constructor() {
         super();
         this.frameInfoArr = [];
@@ -37,13 +38,14 @@ class TrackInfo extends EventDispatcher {
     }
 
     _loadCount;
+
     newImage(imgs:Array<string>) {
         var newFrame;
         this._loadCount = imgs.length;
         for (var i = 0; i < imgs.length; i++) {
             newFrame = new FrameInfo(imgs[i]);
             //todo delete img listener
-            newFrame.imageInfo.img.addEventListener("load",()=> {
+            newFrame.imageInfo.img.addEventListener("load", ()=> {
                 this.onImgLoaded();
             });
             newFrame.setStart(i + 1);
@@ -54,7 +56,7 @@ class TrackInfo extends EventDispatcher {
         this._hold = imgs.length;
     }
 
-    onImgLoaded(img) {
+    onImgLoaded() {
         //console.log(this, "load test");
         //img.removeEventListener("load", this._onLoadFunc);
         this._loadCount--;
@@ -73,7 +75,7 @@ class TrackInfo extends EventDispatcher {
                 return frameInfo.imageInfo.img;
             }
         }
-        if (this._loopType == TrackLoopType.HOLD) {
+        if (frameIdx > frameInfo.getEnd() && this._loopType == TrackLoopType.HOLD) {
             return frameInfo.imageInfo.img;
         }
     }
@@ -178,7 +180,7 @@ class TrackInfo extends EventDispatcher {
         }
         else {
             if (pickFrame.getIdx() > 0) {
-                this.frameInfoArr[pickFrame.getIdx()-1].dtHold(1);
+                this.frameInfoArr[pickFrame.getIdx() - 1].dtHold(1);
             }
         }
         if (pickFrame.getHold() > 1) {
@@ -197,7 +199,7 @@ class TrackInfo extends EventDispatcher {
 
 
     removeFrame(frame:FrameInfo) {
-        console.log(this, "removeFrame idx",frame.getIdx(),'len:', this.frameInfoArr.length);
+        console.log(this, "removeFrame idx", frame.getIdx(), 'len:', this.frameInfoArr.length);
         var removeIdx = frame.getIdx();
         this.removedFrameArr.push(frame);
         this.frameInfoArr.splice(removeIdx, 1);

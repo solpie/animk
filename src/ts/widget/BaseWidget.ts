@@ -1,10 +1,11 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 
-class BaseWidget extends EventDispatcher{
+class BaseWidget extends EventDispatcher {
     id$:string;
 
-    constructor(id$) {
+    constructor(id$?) {
         super();
-        this.id$ = id$;
+        if (id$)
+            this.id$ = id$;
     }
 }
