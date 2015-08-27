@@ -3,6 +3,7 @@
 /// <reference path="../event/ActEvent.ts"/>
 class Slider extends BaseWidget {
     _isPress:Boolean;
+    _timerId:number = 0;
 
     constructor(id$) {
         super(id$);
@@ -15,9 +16,27 @@ class Slider extends BaseWidget {
         });
     }
 
+    startMoveTimer() {
+        this._timerId = setInterval(()=> {
+            var barWidth = appInfo.mouseX - $(this.id$).position().left;
+            if(barWidth>$(this.id$).width())
+                barWidth = $(this.id$).width();
+            $(this.id$ + " " + ".Bar").width(barWidth);
+            console.log(this, "barWidth", barWidth);
+        }, 20);
+    }
+
+    stopMoveTimer() {
+        if (this._timerId) {
+            clearInterval(this._timerId);
+            this._timerId = 0;
+        }
+    }
+
     onUp() {
         if (this._isPress) {
             this._isPress = false;
+            this.stopMoveTimer();
         }
     }
 
@@ -28,6 +47,7 @@ class Slider extends BaseWidget {
     onDown() {
         this._isPress = true;
         this.updateValueByPos();
+        this.startMoveTimer();
     }
 
     updateValueByPos() {

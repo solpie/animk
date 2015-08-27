@@ -2,6 +2,7 @@
 /// <reference path="FrameView.ts"/>
 /// <reference path="../model/TrackInfo.ts"/>
 /// <reference path="../model/AppInfo.ts"/>
+/// <reference path="../widget/Slider.ts"/>
 
 class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
@@ -12,6 +13,7 @@ class TrackView extends BaseView implements IBaseView {
     _timerId:number;
     _pickFrame:FrameInfo = null;
     _frameView:FrameView;
+    _slider:Slider;
 
     constructor(trackInfo:TrackInfo) {
         super();
@@ -52,6 +54,7 @@ class TrackView extends BaseView implements IBaseView {
         this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         this.updateClip(0);
+        this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
         clip.on(MouseEvt.DOWN, (e)=> {
             this.onMouseDown(e);
         });

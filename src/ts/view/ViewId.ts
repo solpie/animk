@@ -30,6 +30,7 @@ var ElmClass$ = {
     TrackCls: "Track",
     TrackArea: ".TrackArea",
     Clip: ".Clip",
+    Slider: ".Slider",
     ActHint: ".ActHint",
     Frame: "Frame",
     FrameCanvas$: "FrameCanvas",
