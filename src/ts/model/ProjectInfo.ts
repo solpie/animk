@@ -28,14 +28,13 @@ class ProjectInfo extends EventDispatcher {
             this.version = projData.linAnil.version;
 
             for (var i = 0; i < projData.linAnil.composition.length; i++) {
-                var compData = projData.linAnil.composition[i];
+                var compData:CompositionData = projData.linAnil.composition[i];
                 var compInfo:CompositionInfo = this.newComp(compData.width, compData.height, compData.framerate);
                 for (var j = 0; j < compData.tracks.length; j++) {
-                    var trackData = compData.tracks[j];
-                    var frameArr = [];
+                    var trackData:TrackData = compData.tracks[j];
                     var path = trackData.path;
                     for (var k = 0; k < trackData.frames.length; k++) {
-                        var frameData = trackData.frames[k];
+                        var frameData:FrameData = trackData.frames[k];
                         frameData.filename = M_path.join(path, frameData.filename);
                     }
                     compInfo.newTrackByTrackData(trackData.frames, path, trackData.name)
@@ -58,7 +57,7 @@ class ProjectInfo extends EventDispatcher {
             var compInfo:CompositionInfo = this.comps[i];
             if (!compInfo)
                 continue;
-            var compData = {
+            var compData:CompositionData = {
                 name: compInfo.name,
                 framerate: compInfo.framerate,
                 framewidth: compInfo.frameWidth,
@@ -71,7 +70,7 @@ class ProjectInfo extends EventDispatcher {
                 var trackInfo:TrackInfo = compInfo.trackInfoArr[j];
                 if (!trackInfo)
                     continue;
-                var trackData = {
+                var trackData:TrackData = {
                     name: trackInfo.name,
                     opacity: trackInfo.opacity,
                     enable: trackInfo.enable,
@@ -86,7 +85,7 @@ class ProjectInfo extends EventDispatcher {
                     var frameInfo:FrameInfo = trackInfo.frameInfoArr[k];
                     if (!frameInfo)
                         continue;
-                    var frameData = {
+                    var frameData:FrameData = {
                         start: frameInfo.getStart(),
                         hold: frameInfo.getHold(),
                         filename: M_path.basename(frameInfo.imageInfo.filename),

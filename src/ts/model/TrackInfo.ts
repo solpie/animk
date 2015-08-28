@@ -11,6 +11,16 @@ enum TrackType{
     COMP,
     AUDIO,
 }
+class TrackData {
+    name:string;
+    opacity:number;
+    enable:boolean;
+    start:number;
+    loopType:number;
+    end:number;
+    path:string;
+    frames:Array<FrameData>;
+}
 class TrackInfo extends EventDispatcher {
     idx:number;
     name:string;

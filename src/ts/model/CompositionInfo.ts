@@ -6,6 +6,14 @@
 /// <reference path="../view/TrackView.ts"/>
 /// <reference path="../Node.ts"/>
 
+class CompositionData {
+    name:string;
+    framerate:number;
+    framewidth:number;
+    height:number;
+    width:number;
+    tracks:Array<TrackData>;
+}
 class CompositionInfo extends EventDispatcher {
     name:string;
     framerate:number = 24;
