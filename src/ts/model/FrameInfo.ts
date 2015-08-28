@@ -4,6 +4,11 @@ enum  PressFlag{
     L = 1,
     R = 2
 }
+class FrameData {
+    start:number;
+    hold:number;
+    filename:number;
+}
 class FrameInfo extends EventDispatcher {
     _idx = -1;
     _start:number = 1;
@@ -22,9 +27,11 @@ class FrameInfo extends EventDispatcher {
     getIdx() {
         return this._idx;
     }
-    dtIdx(deltaVal){
+
+    dtIdx(deltaVal) {
         this.setIdx(this._idx + deltaVal);
     }
+
     setIdx(v) {
         this._idx = v;
     }

@@ -10,13 +10,13 @@ class AppInfo extends EventDispatcher {
 
     constructor() {
         super();
+        this.tm = new TheMachine();
     }
 
 
     newProject() {
         this.projectInfo = new ProjectInfo();
         this.dis(ProjectInfoEvent.NEW_PROJ);
-        this.tm = new TheMachine();
 
     }
 

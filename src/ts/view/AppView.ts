@@ -75,6 +75,10 @@ class AnimkView {
         else if (Keys.Char(key, "\r")) {//enter
             appInfo.tm.watchAct();
         }
+        /// project open save
+        else if (Keys.Char(key, "S") && isCtrl) {//enter
+            appInfo.projectInfo.save("../test/data.json");
+        }
         //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
 

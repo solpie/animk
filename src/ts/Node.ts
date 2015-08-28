@@ -11,7 +11,7 @@ function walk(path):Array<string> {
             //walk(path + '/' + item);
         } else {
             var filename = path + '/' + item;
-            fileArr.push(filename);
+            fileArr.push({filename: filename});
             console.log("file:", filename);
         }
     });

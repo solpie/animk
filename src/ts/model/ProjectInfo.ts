@@ -20,6 +20,7 @@ class ProjectInfo extends EventDispatcher {
         return this.curComp;
     }
 
+    /////////////////////// open project
     open(path) {
         console.log(this, "open project", path);
         jsonfile.readFile(path, (err, projData)=> {
@@ -31,14 +32,13 @@ class ProjectInfo extends EventDispatcher {
                 var compInfo:CompositionInfo = this.newComp(compData.width, compData.height, compData.framerate);
                 for (var j = 0; j < compData.tracks.length; j++) {
                     var trackData = compData.tracks[j];
-                    var imgs = [];
+                    var frameArr = [];
                     var path = trackData.path;
                     for (var k = 0; k < trackData.frames.length; k++) {
                         var frameData = trackData.frames[k];
-                        console.log(this, "frame filename:", M_path.join(path, frameData.filename));
-                        imgs.push(M_path.join(path, frameData.filename))
+                        frameData.filename = M_path.join(path, frameData.filename);
                     }
-                    compInfo.newTrackByTrackData(imgs, path, trackData.name)
+                    compInfo.newTrackByTrackData(trackData.frames, path, trackData.name)
                 }
             }
         });
@@ -76,6 +76,7 @@ class ProjectInfo extends EventDispatcher {
                     opacity: trackInfo.opacity,
                     enable: trackInfo.enable,
                     start: trackInfo.getStart(),
+                    loopType: trackInfo.loopType,
                     end: trackInfo.getEnd(),
                     path: trackInfo.path,
                     frames: [],

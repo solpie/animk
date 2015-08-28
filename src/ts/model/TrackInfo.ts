@@ -47,20 +47,31 @@ class TrackInfo extends EventDispatcher {
 
     _loadCount;
 
-    newImage(imgs:Array<string>) {
+    setFrameInfoArr(frameInfoArr:Array<FrameInfo>) {
+
+    }
+
+    newImage(imgs:Array<FrameData>) {
         var newFrame;
         this._loadCount = imgs.length;
         for (var i = 0; i < imgs.length; i++) {
-            newFrame = new FrameInfo(imgs[i]);
+            var frameData:FrameData = imgs[i];
+            newFrame = new FrameInfo(frameData.filename);
             //todo delete img listener
             newFrame.imageInfo.img.addEventListener("load", ()=> {
                 this.onImgLoaded();
             });
-            newFrame.setStart(i + 1);
+            if (frameData.start) {
+                newFrame.setStart(frameData.start);
+                newFrame.setHold(frameData.hold);
+            }
+            else {
+                newFrame.setStart(i + 1);
+                newFrame.setHold(1);
+            }
             newFrame.setIdx(this.frameInfoArr.length);
             this.frameInfoArr.push(newFrame);
         }
-        this._imgArr = imgs;
         this._hold = imgs.length;
     }
 
@@ -88,13 +99,10 @@ class TrackInfo extends EventDispatcher {
         }
     }
 
-    getImgs() {
-        return this._imgArr;
-    }
 
     getIdxArr() {
         var a = [];
-        for (var i = 0; i < this._imgArr.length; i++) {
+        for (var i = 0; i < this.frameInfoArr.length; i++) {
             a.push(ElmClass$.TrackCls + this.idx + ElmClass$.Frame + (i + 1));
         }
         return a;

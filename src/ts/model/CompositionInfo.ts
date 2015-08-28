@@ -104,9 +104,10 @@ class CompositionInfo extends EventDispatcher {
         this.newTrackByTrackData(walk(path), path, 'track#' + this.trackInfoArr.length);
     }
 
-    newTrackByTrackData(imgs,path,name) {
+    newTrackByTrackData(frameDataArr, path, name) {
         var trackInfo:TrackInfo = new TrackInfo();
-        trackInfo.newImage(imgs);
+        trackInfo.newImage(frameDataArr);
+
         trackInfo.path = path;
         trackInfo.name = name;
         trackInfo.idx = this.trackInfoArr.length;
