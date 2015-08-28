@@ -29,6 +29,8 @@ class AppInfo extends EventDispatcher {
         this.projectInfo.newComp().newTrack('D:/projects/animk/test/test30');
         this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
         this.projectInfo.curComp.setCursor(1);
+
+        this.projectInfo.save('D:/projects/animk/test/data.json')
     }
 
 

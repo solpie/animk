@@ -58,7 +58,7 @@ class TrackView extends BaseView implements IBaseView {
         });
 
         //////// visible checkbox
-        $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.UP, ()=> {
+        $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
             this.onVisible();
         });
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
@@ -96,13 +96,15 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onVisible() {
-        this.trackInfo.visible = !this.trackInfo.visible;
+        this.trackInfo.enable = !this.trackInfo.enable;
+        this._isPressClip = true;
         appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     onSlider(val) {
         this.trackInfo.opacity = val;
         this._isPressSlider = true;
+        this._isPressClip = true;
         appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 

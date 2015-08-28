@@ -18,6 +18,7 @@ class ViewEvent {
 }
 ///   model  events
 class CompInfoEvent {
+    static NEW_COMP:string = "new comp";
     static NEW_TRACK:string = "new track";
     static DEL_TRACK:string = "delete track";
     static UPDATE_CURSOR:string = "UPDATE_Cursor";

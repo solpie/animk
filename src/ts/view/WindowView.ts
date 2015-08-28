@@ -8,19 +8,16 @@ class WindowView {
 
     constructor() {
         $("#btnClose").on(MouseEvt.CLICK, function () {
-            console.log(win);
             win.close();
         });
         $("#btnDbg").on(MouseEvt.CLICK, function () {
             win.showDevTools('', true);
         });
         $("#btnMin").on(MouseEvt.CLICK, function () {
-            console.log(win);
 
             win.minimize();
         });
         $("#btnMax").on(MouseEvt.CLICK, function () {
-            console.log(win);
             if (this.isMaximize) {
                 win.unmaximize();
                 this.isMaximize = false;

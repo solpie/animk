@@ -6,9 +6,15 @@
 enum TrackLoopType{
     NONE, HOLD, REPEAT
 }
+enum TrackType{
+    IMAGE = 1,
+    COMP,
+    AUDIO,
+}
 class TrackInfo extends EventDispatcher {
     idx:number;
     name:string;
+    type:number;
     isRomve:boolean;
     _imgArr:Array<string>;
     isSelected:boolean;
@@ -18,14 +24,14 @@ class TrackInfo extends EventDispatcher {
     frameInfoArr:Array<FrameInfo>;
     removedFrameArr:Array<FrameInfo>;
     opacity:number;
-    visible:boolean;
+    enable:boolean;
 
     constructor() {
         super();
         this.frameInfoArr = [];
         this.removedFrameArr = [];
         this.opacity = 1;
-        this.visible = true;
+        this.enable = true;
     }
 
     setStart(val) {

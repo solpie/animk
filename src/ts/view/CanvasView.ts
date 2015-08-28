@@ -30,7 +30,7 @@ class CanvasView extends BaseView {
         var trackInfoArr = appInfo.projectInfo.curComp.trackInfoArr;
         for (var i = trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = trackInfoArr[i];
-            if (trackInfo && trackInfo.visible) {
+            if (trackInfo && trackInfo.enable) {
                 var img:Image = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (img) {
                     //console.log(this, "comp", img.src);

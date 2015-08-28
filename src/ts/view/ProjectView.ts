@@ -16,7 +16,7 @@ class ProjectView extends BaseView {
         //this.projectInfo.add("newComp", this.onNewComp);
         var ins = this;
 
-        this.projectInfo.add("newComp", function () {
+        this.projectInfo.add(CompInfoEvent.NEW_COMP, function () {
             ins.onNewComp();
         });
     }

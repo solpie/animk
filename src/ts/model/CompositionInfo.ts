@@ -7,6 +7,7 @@
 /// <reference path="../Node.ts"/>
 
 class CompositionInfo extends EventDispatcher {
+    name:string;
     trackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
     hScrollVal:number = 0;
