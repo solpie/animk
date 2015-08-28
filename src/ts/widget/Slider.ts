@@ -4,6 +4,11 @@
 class Slider extends BaseWidget {
     _isPress:Boolean;
     _timerId:number = 0;
+    _minVal:number = 0;
+    _maxVal:number = 1;
+    _width:number;
+    _value:number;
+    _rangeVal:number = 1;
 
     constructor(id$) {
         super(id$);
@@ -14,15 +19,22 @@ class Slider extends BaseWidget {
         appInfo.add(MouseEvt.UP, ()=> {
             this.onUp();
         });
+
+        this._width = $(this.id$).width();
     }
 
     startMoveTimer() {
         this._timerId = setInterval(()=> {
             var barWidth = appInfo.mouseX - $(this.id$).position().left;
-            if(barWidth>$(this.id$).width())
-                barWidth = $(this.id$).width();
+            if (barWidth > this._width)
+                barWidth = this._width;
+            if (barWidth < 0)
+                barWidth = 0;
+            this._value = barWidth / this._width * this._rangeVal;
             $(this.id$ + " " + ".Bar").width(barWidth);
-            console.log(this, "barWidth", barWidth);
+            $(this.id$ + " " + ".Label").html(parseInt(this._value*100)+"%");
+            this.dis(ViewEvent.CHANGED, this._value);
+            //console.log(this, "barWidth", barWidth, "value", this._value);
         }, 20);
     }
 
@@ -37,6 +49,7 @@ class Slider extends BaseWidget {
         if (this._isPress) {
             this._isPress = false;
             this.stopMoveTimer();
+            $(this.id$ + " " + ".Label").css({display:"none"});
         }
     }
 
@@ -44,13 +57,17 @@ class Slider extends BaseWidget {
 
     }
 
+    setRange(min:number, max:number) {
+        this._maxVal = max;
+        this._minVal = min;
+        this._rangeVal = max - min;
+    }
+
     onDown() {
         this._isPress = true;
-        this.updateValueByPos();
+        $(this.id$ + " " + ".Label").css({display:"block"});
+
         this.startMoveTimer();
     }
 
-    updateValueByPos() {
-
-    }
 }

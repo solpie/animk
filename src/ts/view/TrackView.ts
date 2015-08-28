@@ -9,6 +9,7 @@ class TrackView extends BaseView implements IBaseView {
     clip:HTMLElement;
     _isPressBar:boolean;
     _isPressClip:boolean;
+    _isPressSlider:boolean;
     _lastX:number;
     _timerId:number;
     _pickFrame:FrameInfo = null;
@@ -54,7 +55,11 @@ class TrackView extends BaseView implements IBaseView {
         this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         this.updateClip(0);
+        //////// opacity slider
         this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
+        this._slider.add(ViewEvent.CHANGED, (val)=> {
+            this.onSlider(val);
+        });
         clip.on(MouseEvt.DOWN, (e)=> {
             this.onMouseDown(e);
         });
@@ -81,6 +86,12 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.dis(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
+    }
+
+    onSlider(val) {
+        this.trackInfo.opacity = val;
+        this._isPressSlider = true;
+        appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     onMouseDown(e) {
@@ -162,6 +173,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onUp() {
+        this._isPressSlider = false;
         this._isPressBar = false;
         this._isPressClip = false;
         if (this._pickFrame) {

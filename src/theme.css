@@ -184,18 +184,33 @@ body {
     display: inline-block;
     width: 80px;
     height: 15px;
+    position: absolute;
+    top: 30px;
+    left: 100px;
     background: #222;
 }
 
 .Slider .Bar {
     height: 100%;
-    width: 50px;
+    width: 100%;
     background: #555;
 }
 
 .Slider .Label {
-    top: -20px;
+    display: none;
+    top: -25px;
+    left: 5px;
     position: relative;
+}
+
+.Track .CheckBox {
+    top: 5px;
+    left: 160px;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    position: absolute;
+    background: #fff;
 }
 
 .Track .Label {

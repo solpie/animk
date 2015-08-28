@@ -35,10 +35,7 @@ class CanvasView extends BaseView {
                 if (img) {
                     //console.log(this, "comp", img.src);
                     //this.ctx.save();
-                    if (i == 1)
-                        this.ctx.globalAlpha = 0.4;
-                    else
-                        this.ctx.globalAlpha = 1;
+                    this.ctx.globalAlpha = trackInfo.opacity;
                     this.ctx.drawImage(img, 0, 0);
                     //this.ctx.restore();
                 }
