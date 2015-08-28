@@ -13,11 +13,13 @@ class ProjectInfo extends EventDispatcher {
 
 
     newComp(width, height, framerate):CompositionInfo {
-        this.curComp = new CompositionInfo(width, height, framerate);
-        this.comps.push(this.curComp);
-        this.curComp.name = "Comp" + this.comps.length;
-        this.dis(CompInfoEvent.NEW_COMP, this.curComp);
-        return this.curComp;
+        var compInfo:CompositionInfo = new CompositionInfo(width, height, framerate);
+        this.curComp = compInfo;
+        this.comps.push(compInfo);
+        compInfo.name = "Comp" + this.comps.length;
+        console.log(this,"new CompInfo");
+        this.dis(CompInfoEvent.NEW_COMP, compInfo);
+        return compInfo;
     }
 
     /////////////////////// open project
@@ -30,6 +32,7 @@ class ProjectInfo extends EventDispatcher {
             for (var i = 0; i < projData.linAnil.composition.length; i++) {
                 var compData:CompositionData = projData.linAnil.composition[i];
                 var compInfo:CompositionInfo = this.newComp(compData.width, compData.height, compData.framerate);
+
                 for (var j = 0; j < compData.tracks.length; j++) {
                     var trackData:TrackData = compData.tracks[j];
                     var path = trackData.path;
@@ -41,8 +44,6 @@ class ProjectInfo extends EventDispatcher {
                 }
             }
         });
-
-
     }
 
     save(path) {

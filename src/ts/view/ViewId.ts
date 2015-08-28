@@ -24,6 +24,8 @@ var ElmId$ = {
     hSplitter: "#HSplitter0",
     comp: "#Comp0",
     toolShelf: "#ToolShelf0",
+    saveAsDialog: "#saveAsDialog",
+    openFileDialog: "#openProjDialog",
 };
 var ElmClass$ = {
     Track: ".Track",

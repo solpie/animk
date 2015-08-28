@@ -56,11 +56,6 @@ class TrackInfo extends EventDispatcher {
     }
 
     _loadCount;
-
-    setFrameInfoArr(frameInfoArr:Array<FrameInfo>) {
-
-    }
-
     newImage(imgs:Array<FrameData>) {
         var newFrame;
         this._loadCount = imgs.length;

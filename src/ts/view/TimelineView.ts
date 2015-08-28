@@ -30,7 +30,7 @@ class TimelineView extends BaseView {
 
     onNewTrack() {
         var self = this;
-        chooseFile('#fileDialog').change(function (e) {
+        chooseFile('#openFileDialog').change(function (e) {
             self.newTrackByFilename($(this).val());
         });
         console.log(this, "onNewTrack");

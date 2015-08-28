@@ -35,7 +35,6 @@ class CompositionInfo extends EventDispatcher {
         this.height = height;
         this.framerate = framerate;
         this.trackInfoArr = [];
-        console.log("new CompInfo");
 
         this._frameTimer = new FrameTimer(framerate);
         this._frameTimer.add(FrameTimerEvent.TICK, ()=> {

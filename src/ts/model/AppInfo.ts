@@ -17,7 +17,13 @@ class AppInfo extends EventDispatcher {
     newProject() {
         this.projectInfo = new ProjectInfo();
         this.dis(ProjectInfoEvent.NEW_PROJ);
+    }
 
+    openProject(path) {
+        this.projectInfo = new ProjectInfo();
+        this.dis(ProjectInfoEvent.NEW_PROJ);
+        this.projectInfo.open(path);
+        //this.projectInfo.curComp.setCursor(1);
     }
 
     test() {
@@ -30,9 +36,9 @@ class AppInfo extends EventDispatcher {
         //this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
         //this.projectInfo.curComp.setCursor(1);
 
-        this.projectInfo = new ProjectInfo();
-        this.dis(ProjectInfoEvent.NEW_PROJ);
-        this.projectInfo.open('../test/data.json');
+        //this.projectInfo = new ProjectInfo();
+        //this.dis(ProjectInfoEvent.NEW_PROJ);
+        //this.projectInfo.open('../test/data.json');
 
         //this.projectInfo.save('D:/projects/animk/test/data.json')
     }

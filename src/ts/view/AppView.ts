@@ -76,8 +76,19 @@ class AnimkView {
             appInfo.tm.watchAct();
         }
         /// project open save
+        else if (Keys.Char(key, "O") && isCtrl) {//enter
+            chooseFile(ElmId$.openFileDialog).change(()=> {
+                var filename = $(ElmId$.openFileDialog).val();
+                console.log(this, "open project file", filename);
+                appInfo.openProject(filename);
+            });
+        }
         else if (Keys.Char(key, "S") && isCtrl) {//enter
-            appInfo.projectInfo.save("../test/data.json");
+            chooseFile(ElmId$.saveAsDialog).change(()=> {
+                var filename = $(ElmId$.saveAsDialog).val();
+                console.log(this, "save as", filename);
+                appInfo.projectInfo.save(filename);
+            });
         }
         //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
