@@ -48,18 +48,25 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
-        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
-        var clipWidth = this.trackInfo.getHold() * frameWidth;
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
-        this.el = $(this.id$)[0];
-        var clip = $(this.id$ + " " + ElmClass$.Clip);
-        this.updateClip(0);
+
         //////// opacity slider
         this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
         this._slider.add(ViewEvent.CHANGED, (val)=> {
             this.onSlider(val);
         });
+
+        //////// visible checkbox
+        $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.UP, ()=> {
+            this.onVisible();
+        });
+        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var clipWidth = this.trackInfo.getHold() * frameWidth;
+        this.el = $(this.id$)[0];
+        var clip = $(this.id$ + " " + ElmClass$.Clip);
+        this.updateClip(0);
+
         clip.on(MouseEvt.DOWN, (e)=> {
             this.onMouseDown(e);
         });
@@ -86,6 +93,11 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.dis(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
+    }
+
+    onVisible() {
+        this.trackInfo.visible = !this.trackInfo.visible;
+        appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     onSlider(val) {

@@ -206,11 +206,44 @@ body {
 .Track .CheckBox {
     top: 5px;
     left: 160px;
+    /*width: 15px;*/
+    /*height: 15px;*/
+    /*border-radius: 15px;*/
+    position: absolute;
+    /*background: #fff;*/
+
     width: 15px;
     height: 15px;
-    border-radius: 15px;
+    background: #eee;
+
+    border-radius: 100%;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    /*box-shadow: 0px 1px 3px rgba(0,0,0,0.5);*/
+}
+.Track .CheckBox input {
+    display: none;
+}
+.Track .CheckBox label {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 100%;
+
+    -webkit-transition: all .2s ease;
+    /*transition: all .2s ease;*/
+    cursor: pointer;
     position: absolute;
-    background: #fff;
+    top: 2px;
+    left: 2px;
+    z-index: 1;
+    background: #FAF014;
+
+    -webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.Track .CheckBox input[type=checkbox]:checked + label {
+    background: #333;
 }
 
 .Track .Label {
