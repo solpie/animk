@@ -54,6 +54,12 @@ class CompositionView implements IBaseView {
 
     }
 
+    setCompInfo(compInfo:CompositionInfo) {
+        if (!compInfo.isInit) {
+            this.compInfo = compInfo;
+            this.compInfo.isInit = true;
+        }
+    }
 
     onClkTimestampBar(e) {
         var mouseX = e.clientX - $(ElmId$.timestampBar).offset().left;
@@ -160,7 +166,7 @@ class CompositionView implements IBaseView {
 
     updateMaxTrackWidth(newTrackWidth) {
         var frameWidth = appInfo.frameWidth();
-        var compMaxWidth:number = (this.compInfo.getMaxSize()+4) * frameWidth;
+        var compMaxWidth:number = (this.compInfo.getMaxSize() + 4) * frameWidth;
         $(ElmId$.trackWidth).width(compMaxWidth);
 
         //if (compMaxWidth < newTrackWidth) {

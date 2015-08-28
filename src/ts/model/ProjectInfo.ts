@@ -9,45 +9,90 @@ class ProjectInfo extends EventDispatcher {
 
     constructor(options?) {
         super();
-        console.log("new project");
     }
 
 
-    newComp():CompositionInfo {
-        this.curComp = new CompositionInfo();
+    newComp(width, height, framerate):CompositionInfo {
+        this.curComp = new CompositionInfo(width, height, framerate);
         this.comps.push(this.curComp);
         this.curComp.name = "Comp" + this.comps.length;
-        this.dis(CompInfoEvent.NEW_COMP);
+        this.dis(CompInfoEvent.NEW_COMP, this.curComp);
         return this.curComp;
+    }
+
+    open(path) {
+        console.log(this, "open project", path);
+        jsonfile.readFile(path, (err, projData)=> {
+            console.log(this, "open project ver:", projData.linAnil.version);
+            this.version = projData.linAnil.version;
+
+            for (var i = 0; i < projData.linAnil.composition.length; i++) {
+                var compData = projData.linAnil.composition[i];
+                var compInfo:CompositionInfo = this.newComp(compData.width, compData.height, compData.framerate);
+                for (var j = 0; j < compData.tracks.length; j++) {
+                    var trackData = compData.tracks[j];
+                    var imgs = [];
+                    var path = trackData.path;
+                    for (var k = 0; k < trackData.frames.length; k++) {
+                        var frameData = trackData.frames[k];
+                        console.log(this, "frame filename:", M_path.join(path, frameData.filename));
+                        imgs.push(M_path.join(path, frameData.filename))
+                    }
+                    compInfo.newTrackByTrackData(imgs, path, trackData.name)
+                }
+            }
+        });
+
+
     }
 
     save(path) {
         var projData = {
-            linanil: {
+            linAnil: {
                 version: this.version,
                 setting: {},
                 composition: []
             }
         };
-        //console.log(this, "save", projData);
         for (var i = 0; i < this.comps.length; i++) {
             var compInfo:CompositionInfo = this.comps[i];
-            var compData = {};
-            compData.name = compInfo.name;
-            compData.tracks = [];
+            if (!compInfo)
+                continue;
+            var compData = {
+                name: compInfo.name,
+                framerate: compInfo.framerate,
+                framewidth: compInfo.frameWidth,
+                height: compInfo.height,
+                width: compInfo.width,
+                tracks: []
+            };
+            projData.linAnil.composition.push(compData);
             for (var j = 0; j < compInfo.trackInfoArr.length; j++) {
                 var trackInfo:TrackInfo = compInfo.trackInfoArr[j];
-                if (trackInfo) {
-                    var trackData = {};
-                    trackData.name = trackInfo.name;
-                    trackData.opacity = trackInfo.opacity;
-                    trackData.enable = trackInfo.enable;
-                    trackData.start = trackInfo.getStart();
-                    trackData.end = trackInfo.getEnd();
-                    compData.tracks.push(trackData);
+                if (!trackInfo)
+                    continue;
+                var trackData = {
+                    name: trackInfo.name,
+                    opacity: trackInfo.opacity,
+                    enable: trackInfo.enable,
+                    start: trackInfo.getStart(),
+                    end: trackInfo.getEnd(),
+                    path: trackInfo.path,
+                    frames: [],
+                };
+                compData.tracks.push(trackData);
+                for (var k = 0; k < trackInfo.frameInfoArr.length; k++) {
+                    var frameInfo:FrameInfo = trackInfo.frameInfoArr[k];
+                    if (!frameInfo)
+                        continue;
+                    var frameData = {
+                        start: frameInfo.getStart(),
+                        hold: frameInfo.getHold(),
+                        filename: M_path.basename(frameInfo.imageInfo.filename),
+                    };
+                    trackData.frames.push(frameData)
                 }
             }
-            projData.linanil.composition.push(compData);
         }
 
         jsonfile.writeFile(path, projData, function (err) {

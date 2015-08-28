@@ -26,7 +26,7 @@ class AnimkView {
     constructor(appModel) {
         this.appInfo = appModel;
 
-        this.appInfo.add('newProject', ()=> {
+        this.appInfo.add(ProjectInfoEvent.NEW_PROJ, ()=> {
             this.onNewProject();
         });
         this.appInfo.add(TheMachineEvent.UPDATE_IMG, ()=> {

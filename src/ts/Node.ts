@@ -30,4 +30,6 @@ function walk(path):Array<string> {
 //console.log('main',data);
 
 
-////////////// window
+////////////// path
+var M_path = require("path");
+

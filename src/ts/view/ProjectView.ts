@@ -11,20 +11,19 @@ class ProjectView extends BaseView {
         this.compViews = [];
         if (projectInfo)
             this.projectInfo = projectInfo;
-        else
-            this.projectInfo = new ProjectInfo();
+        else {
+            throw "null project";
+        }
         //this.projectInfo.add("newComp", this.onNewComp);
-        var ins = this;
 
-        this.projectInfo.add(CompInfoEvent.NEW_COMP, function () {
-            ins.onNewComp();
+        this.projectInfo.add(CompInfoEvent.NEW_COMP, (compInfo)=> {
+            this.onNewComp(compInfo);
         });
     }
 
-    onNewComp() {
-        console.log("test CompositionView", this);
-
-        var view = new CompositionView(this.projectInfo.curComp);
+    onNewComp(compInfo:CompositionInfo) {
+        console.log(this, "onNewComp");
+        var view = new CompositionView(compInfo);
         this.compViews.push(view);
     }
 }

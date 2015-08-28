@@ -8,21 +8,28 @@
 
 class CompositionInfo extends EventDispatcher {
     name:string;
+    framerate:number = 24;
     trackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
+    width:number;
+    height:number;
     hScrollVal:number = 0;
     _cursorPos:number = 1;
     _maxPos:number;
     _stayBack;
     _frameTimer:FrameTimer;
+    isInit:boolean = false;
 
 
-    constructor() {
+    constructor(width, height, framerate) {
         super();
+        this.width = width;
+        this.height = height;
+        this.framerate = framerate;
         this.trackInfoArr = [];
         console.log("new CompInfo");
 
-        this._frameTimer = new FrameTimer(24);
+        this._frameTimer = new FrameTimer(framerate);
         this._frameTimer.add(FrameTimerEvent.TICK, ()=> {
             this.onFrameTimerTick();
         });
@@ -85,15 +92,26 @@ class CompositionInfo extends EventDispatcher {
 
 
     newTrack(path) {
-        var trackInfo = new TrackInfo();
-        trackInfo.newImage(walk(path));
+        //var trackInfo = new TrackInfo();
+        //trackInfo.newImage(walk(path));
+        //trackInfo.path = path;
+        //trackInfo.idx = this.trackInfoArr.length;
+        //this.trackInfoArr.push(trackInfo);
+        //trackInfo.name = 'track#' + trackInfo.idx;
+        //
+        //this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
+        //console.log(this, "newTrack idx", trackInfo.idx);
+        this.newTrackByTrackData(walk(path), path, 'track#' + this.trackInfoArr.length);
+    }
 
+    newTrackByTrackData(imgs,path,name) {
+        var trackInfo:TrackInfo = new TrackInfo();
+        trackInfo.newImage(imgs);
+        trackInfo.path = path;
+        trackInfo.name = name;
         trackInfo.idx = this.trackInfoArr.length;
-        trackInfo.name = 'track#' + trackInfo.idx;
         this.trackInfoArr.push(trackInfo);
-
         this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
-        console.log(this, "newTrack idx", trackInfo.idx);
     }
 
 

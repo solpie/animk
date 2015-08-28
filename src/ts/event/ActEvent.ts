@@ -17,6 +17,10 @@ class ViewEvent {
     static SCROLL:string = "scroll";
 }
 ///   model  events
+class ProjectInfoEvent {
+    static NEW_PROJ:string = "NEW_PROJ";
+
+}
 class CompInfoEvent {
     static NEW_COMP:string = "new comp";
     static NEW_TRACK:string = "new track";

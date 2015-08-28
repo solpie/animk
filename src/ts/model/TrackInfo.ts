@@ -15,16 +15,18 @@ class TrackInfo extends EventDispatcher {
     idx:number;
     name:string;
     type:number;
+    path:string;
+    loopType = TrackLoopType.HOLD;
+    opacity:number;
+    enable:boolean;
+    frameInfoArr:Array<FrameInfo>;
+    /////// save data;
     isRomve:boolean;
     _imgArr:Array<string>;
     isSelected:boolean;
     _start:number = 1;
     _hold:number = 1;
-    _loopType = TrackLoopType.HOLD;
-    frameInfoArr:Array<FrameInfo>;
     removedFrameArr:Array<FrameInfo>;
-    opacity:number;
-    enable:boolean;
 
     constructor() {
         super();
@@ -81,7 +83,7 @@ class TrackInfo extends EventDispatcher {
                 return frameInfo.imageInfo.img;
             }
         }
-        if (frameIdx > frameInfo.getEnd() && this._loopType == TrackLoopType.HOLD) {
+        if (frameIdx > frameInfo.getEnd() && this.loopType == TrackLoopType.HOLD) {
             return frameInfo.imageInfo.img;
         }
     }
