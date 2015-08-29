@@ -5,10 +5,12 @@ class FrameView extends BaseView {
     ctx:any;
     _height;
     _width;
+
     constructor(frameCanvasId:string) {
         super();
         this.canvasEl = document.getElementById(frameCanvasId);
         this.ctx = this.canvasEl.getContext("2d");
+
     }
 
     resize(w, h) {
@@ -21,7 +23,7 @@ class FrameView extends BaseView {
 
     updateFrame(frameInfoArr, changeCount?) {
         var frameWidth = appInfo.frameWidth();
-        if(changeCount)
+        if (changeCount)
             this.resize(this._width + changeCount * frameWidth, this._height);
         console.log(this, "updateFrame");
 
@@ -32,8 +34,14 @@ class FrameView extends BaseView {
                 var frameX = (frameInfo.getStart() - 1) * frameWidth;
                 var holdWidth = frameWidth * frameInfo.getHold();
                 //console.log(this, "Frame", frameX, holdWidth, img.src);
-                this.ctx.clearRect(frameX, 0, holdWidth,frameWidth);
+                this.ctx.clearRect(frameX, 0, holdWidth, frameWidth);
                 this.ctx.drawImage(img, frameX, 0, frameWidth, frameWidth);
+                if (frameInfo.getHold() > 1) {
+                    this.ctx.font = '14px serif';
+                    this.ctx.fillStyle = '#FFF';
+                    this.ctx.textAlign = "right";
+                    this.ctx.fillText(frameInfo.getHold(), frameX + holdWidth - 10, 15);
+                }
             }
             else {
                 console.log(this, "can not comp trk ", i);
