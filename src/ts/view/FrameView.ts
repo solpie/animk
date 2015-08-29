@@ -35,13 +35,21 @@ class FrameView extends BaseView {
                 var holdWidth = frameWidth * frameInfo.getHold();
                 //console.log(this, "Frame", frameX, holdWidth, img.src);
                 this.ctx.clearRect(frameX, 0, holdWidth, frameWidth);
-                this.ctx.drawImage(img, frameX, 0, frameWidth, frameWidth);
+                this.ctx.drawImage(img, frameX + 1, 0, frameWidth - 1, frameWidth - 1);
                 if (frameInfo.getHold() > 1) {
                     this.ctx.font = '14px serif';
                     this.ctx.fillStyle = '#FFF';
                     this.ctx.textAlign = "right";
                     this.ctx.fillText(frameInfo.getHold(), frameX + holdWidth - 10, 15);
                 }
+                /////// draw idx
+                this.ctx.fillStyle = "#333";
+                this.ctx.fillRect(frameX, 25, 15, 15);
+
+                this.ctx.font = '10px serif';
+                this.ctx.fillStyle = '#FFF';
+                this.ctx.textAlign = "left";
+                this.ctx.fillText(frameInfo.getIdx()+1, frameX + 2, 36);
             }
             else {
                 console.log(this, "can not comp trk ", i);

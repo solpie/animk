@@ -217,12 +217,14 @@ body {
     background: #eee;
 
     border-radius: 100%;
-    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
     /*box-shadow: 0px 1px 3px rgba(0,0,0,0.5);*/
 }
+
 .Track .CheckBox input {
     display: none;
 }
+
 .Track .CheckBox label {
     display: block;
     width: 11px;
@@ -238,8 +240,8 @@ body {
     z-index: 1;
     background: #FAF014;
 
-    -webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-    box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .Track .CheckBox input[type=checkbox]:checked + label {
@@ -269,6 +271,12 @@ body {
     /*height: 60px;*/
     background: #000000;
     font-size: 0;
+}
+
+.Track .Clip  .FrameCanvas {
+    /*position: absolute;*/
+    /*left: 0px;*/
+    /*top: 0px;*/
 }
 
 .Track .Clip .Bar {
