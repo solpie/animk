@@ -1,5 +1,7 @@
 interface Image {
     src:string;
+    width:number;
+    height:number;
     onload:any;
 }
 class ImageInfo {
@@ -9,7 +11,7 @@ class ImageInfo {
     width;
     height;
     img:Image;
-    updateCount:number=0;
+    updateCount:number = 0;
 
     constructor(filename?) {
         this.filename = filename;
@@ -19,7 +21,7 @@ class ImageInfo {
     reloadImg() {
         if (this.filename) {
             this.updateCount++;
-            this.img.src = this.filename+"?c="+this.updateCount;
+            this.img.src = this.filename + "?c=" + this.updateCount;
         }
     }
 }

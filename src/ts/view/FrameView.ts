@@ -35,7 +35,14 @@ class FrameView extends BaseView {
                 var holdWidth = frameWidth * frameInfo.getHold();
                 //console.log(this, "Frame", frameX, holdWidth, img.src);
                 this.ctx.clearRect(frameX, 0, holdWidth, frameWidth);
-                this.ctx.drawImage(img, frameX + 1, 0, frameWidth - 1, frameWidth - 1);
+
+                var thumbWidth = frameWidth - 1;
+                var thumbHeight = thumbWidth / img.width * img.height;
+                this.ctx.fillStyle = "#fff";
+                this.ctx.fillRect(frameX + 1, 0, thumbWidth, thumbWidth);
+                var thumbY = (thumbWidth - thumbHeight) * .5;
+                this.ctx.drawImage(img, frameX + 1, thumbY, thumbWidth, thumbHeight);
+
                 if (frameInfo.getHold() > 1) {
                     this.ctx.font = '14px serif';
                     this.ctx.fillStyle = '#FFF';
@@ -43,13 +50,16 @@ class FrameView extends BaseView {
                     this.ctx.fillText(frameInfo.getHold(), frameX + holdWidth - 10, 15);
                 }
                 /////// draw idx
+                this.ctx.globalAlpha = 0.6;
                 this.ctx.fillStyle = "#333";
-                this.ctx.fillRect(frameX, 25, 15, 15);
-
+                this.ctx.fillRect(frameX, 27, frameWidth, 13);
+                this.ctx.fillStyle = "#ddd";
+                this.ctx.fillRect(frameX, 28, frameWidth, 1);
+                this.ctx.globalAlpha = 1;
                 this.ctx.font = '10px serif';
                 this.ctx.fillStyle = '#FFF';
-                this.ctx.textAlign = "left";
-                this.ctx.fillText(frameInfo.getIdx()+1, frameX + 2, 36);
+                this.ctx.textAlign = "center";
+                this.ctx.fillText(frameInfo.getIdx() + 1, frameX + frameWidth*.5, 37);
             }
             else {
                 console.log(this, "can not comp trk ", i);
