@@ -15,10 +15,12 @@ class FrameView extends BaseView {
     }
 
     resize(w, h) {
-        this._height = h;
-        this._width = w;
-        this.canvasEl.setAttribute("width", w + "");
-        this.canvasEl.setAttribute("height", h + "");
+        if (w != -1)
+            this._width = w;
+        if (h != -1)
+            this._height = h;
+        this.canvasEl.setAttribute("width", this._width + "");
+        this.canvasEl.setAttribute("height", this._height + "");
     }
 
 
@@ -33,7 +35,7 @@ class FrameView extends BaseView {
             if (img) {
                 var frameX = (frameInfo.getStart() - 1) * frameWidth;
                 var holdWidth = frameWidth * frameInfo.getHold();
-                //console.log(this, "Frame", frameX, holdWidth, img.src);
+                console.log(this, "Frame idx", frameInfo.getIdx(), "hold", frameInfo.getHold(), img.src);
                 this.ctx.clearRect(frameX, this.barHeight, holdWidth, frameWidth);
 
                 var thumbWidth = frameWidth - 1;
