@@ -30,12 +30,12 @@ class CanvasView extends BaseView {
         var trackInfoArr = appInfo.projectInfo.curComp.trackInfoArr;
         for (var i = trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = trackInfoArr[i];
-            if (trackInfo && trackInfo.enable) {
+            if (trackInfo && trackInfo.getEnable()) {
                 var img:Image = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (img) {
                     //console.log(this, "comp", img.src);
                     //this.ctx.save();
-                    this.ctx.globalAlpha = trackInfo.opacity;
+                    this.ctx.globalAlpha = trackInfo.getOpacity();
                     this.ctx.drawImage(img, 0, 0);
                     //this.ctx.restore();
                 }

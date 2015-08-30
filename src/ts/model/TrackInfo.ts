@@ -11,13 +11,13 @@ enum TrackType{
     COMP,
     AUDIO,
 }
-class TrackData {
+class TrackData {//for save
     name:string;
     opacity:number;
-    enable:boolean;
-    start:number;
+    enable:boolean = true;
+    start:number = 1;
     loopType:number;
-    end:number;
+    end:number = 1;
     path:string;
     frames:Array<FrameData>;
 }
@@ -27,9 +27,9 @@ class TrackInfo extends EventDispatcher {
     type:number;
     path:string;
     loopType = TrackLoopType.HOLD;
-    opacity:number;
     enable:boolean;
     frameInfoArr:Array<FrameInfo>;
+    _trackData:TrackData;
     /////// save data;
     isRomve:boolean;
     _imgArr:Array<string>;
@@ -38,12 +38,38 @@ class TrackInfo extends EventDispatcher {
     _hold:number = 1;
     removedFrameArr:Array<FrameInfo>;
 
-    constructor() {
+    constructor(trackData:TrackData) {
         super();
+        this._trackData = trackData;
         this.frameInfoArr = [];
         this.removedFrameArr = [];
-        this.opacity = 1;
-        this.enable = true;
+    }
+
+    getName() {
+        return this._trackData.name;
+    }
+
+    setOpacity(val) {
+        this._trackData.opacity = val;
+        this.dis(TrackInfoEvent.SET_OPACITY);
+        appInfo.dis(TheMachineEvent.UPDATE_IMG)
+    }
+
+    getOpacity() {
+        return this._trackData.opacity;
+    }
+
+    getEnable() {
+        return this._trackData.enable;
+    }
+
+    setEnable(val) {
+        this._trackData.enable = val;
+        appInfo.dis(TheMachineEvent.UPDATE_IMG)
+    }
+
+    getPath() {
+        return this._trackData.path;
     }
 
     setStart(val) {

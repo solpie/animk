@@ -32,6 +32,7 @@ class TrackInfoEvent {
     static SEL_TRACK:string = "select track";
     static SEL_FRAME:string = "select frame";
     static DEL_FRAME:string = "delete frame";
+    static SET_OPACITY:string = "set track opacity";
     static UPDATE_TRACK_START:string = "UPDATE_TRACK_START";
 }
 class FrameTimerEvent {

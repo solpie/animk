@@ -25,7 +25,7 @@ class TrackView extends BaseView implements IBaseView {
         var template = $('.Track-tpl').html();
         return Mustache.render(template, {
             idx: this.trackInfo.idx,
-            name: this.trackInfo.name,
+            name: this.trackInfo.getName(),
             frameIdxArr: this.trackInfo.getIdxArr(),
             //imgs: this.trackInfo.getImgs()
         });
@@ -100,16 +100,14 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onVisible() {
-        this.trackInfo.enable = !this.trackInfo.enable;
+        this.trackInfo.setEnable(!this.trackInfo.enable);
         this._isPressClip = true;
-        appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     onSlider(val) {
-        this.trackInfo.opacity = val;
+        this.trackInfo.setOpacity(val);
         this._isPressSlider = true;
         this._isPressClip = true;
-        appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     onMouseDown(e) {
@@ -149,6 +147,14 @@ class TrackView extends BaseView implements IBaseView {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
             frameInfo.imageInfo.reloadImg();
         }
+        ///  trackInfo event
+        this.trackInfo.add(TrackInfoEvent.SET_OPACITY, ()=> {
+            this.onSetOpacity();
+        });
+    }
+
+    onSetOpacity() {
+        this._slider.setBarWidth(this.trackInfo.getOpacity())
     }
 
     updateClip() {

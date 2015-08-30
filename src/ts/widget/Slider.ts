@@ -32,7 +32,7 @@ class Slider extends BaseWidget {
                 barWidth = 0;
             this._value = barWidth / this._width * this._rangeVal;
             $(this.id$ + " " + ".Bar").width(barWidth);
-            $(this.id$ + " " + ".Label").html(parseInt(this._value*100)+"%");
+            $(this.id$ + " " + ".Label").html(parseInt(this._value * 100) + "%");
             this.dis(ViewEvent.CHANGED, this._value);
             //console.log(this, "barWidth", barWidth, "value", this._value);
         }, 20);
@@ -49,12 +49,14 @@ class Slider extends BaseWidget {
         if (this._isPress) {
             this._isPress = false;
             this.stopMoveTimer();
-            $(this.id$ + " " + ".Label").css({display:"none"});
+            $(this.id$ + " " + ".Label").css({display: "none"});
         }
     }
 
     setBarWidth(val) {
-
+        var barWidth = this._rangeVal * val * this._width;
+        console.log(this, "set bar width", barWidth);
+        $(this.id$ + " " + ".Bar").width(barWidth);
     }
 
     setRange(min:number, max:number) {
@@ -65,7 +67,7 @@ class Slider extends BaseWidget {
 
     onDown() {
         this._isPress = true;
-        $(this.id$ + " " + ".Label").css({display:"block"});
+        $(this.id$ + " " + ".Label").css({display: "block"});
 
         this.startMoveTimer();
     }
