@@ -273,18 +273,6 @@ body {
     font-size: 0;
 }
 
-.Track .Clip  .FrameCanvas {
-    /*position: absolute;*/
-    /*left: 0px;*/
-    /*top: 0px;*/
-}
-
-.Track .Clip .Bar {
-    width: 100%;
-    height: 15px;
-    background: #2f2f2f;
-}
-
 .ActHint {
     position: relative;
     height: 2px;
@@ -294,6 +282,9 @@ body {
     display: none;
 }
 
+.VSplitter:hover {
+    background: #444;
+}
 .VSplitter {
     height: 8px;
     background: #141414;

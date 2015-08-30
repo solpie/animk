@@ -143,7 +143,7 @@ class TrackView extends BaseView implements IBaseView {
         });
         var frameWidth = appInfo.frameWidth();
         this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx + "");
-        this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth);
+        this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth+15);
         for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
             frameInfo.imageInfo.reloadImg();
