@@ -40,7 +40,7 @@ class ProjectInfo extends EventDispatcher {
                         var frameData:FrameData = trackData.frames[k];
                         frameData.filename = M_path.join(path, frameData.filename);
                     }
-                    compInfo.newTrackByTrackData(trackData.frames, path, trackData.name)
+                    compInfo.newTrackByTrackData(trackData)
                 }
             }
         });

@@ -97,31 +97,40 @@ class CompositionInfo extends EventDispatcher {
         return this._cursorPos;
     }
 
-
-    newTrack(path) {
-        //var trackInfo = new TrackInfo();
-        //trackInfo.newImage(walk(path));
-        //trackInfo.path = path;
-        //trackInfo.idx = this.trackInfoArr.length;
-        //this.trackInfoArr.push(trackInfo);
-        //trackInfo.name = 'track#' + trackInfo.idx;
-        //
-        //this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
-        //console.log(this, "newTrack idx", trackInfo.idx);
-        this.newTrackByTrackData(walk(path), path, 'track#' + this.trackInfoArr.length);
+    walk(path):Array<string> {
+        var fileArr = [];
+        var dirArr = fs.readdirSync(path);
+        dirArr.forEach(function (item) {
+            if (fs.statSync(path + '/' + item).isDirectory()) {
+                //walk(path + '/' + item);
+            } else {
+                var filename = path + '/' + item;
+                fileArr.push({filename: filename});
+                console.log("file:", filename);
+            }
+        });
+        return fileArr;
     }
 
-    newTrackByTrackData(frameDataArr, path, name) {
-        var trackInfo:TrackInfo = new TrackInfo();
-        trackInfo.newImage(frameDataArr);
+    newTrack(path) {
+        var trackData:TrackData = new TrackData();
+        trackData.frames = this.walk(path);
+        trackData.name = 'track#' + this.trackInfoArr.length;
+        trackData.path = path;
+        trackData.start = 1;
+        this.newTrackByTrackData(trackData);
+    }
 
-        trackInfo.path = path;
-        trackInfo.name = name;
+    newTrackByTrackData(trackData:TrackData) {
+        var trackInfo:TrackInfo = new TrackInfo();
+        trackInfo.newImage(trackData.frames);
+        trackInfo.path = trackData.path;
+        trackInfo.name = trackData.name;
+        trackInfo.setStart(trackData.start);
         trackInfo.idx = this.trackInfoArr.length;
         this.trackInfoArr.push(trackInfo);
         this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
     }
-
 
     delSelTrack() {
         var trackInfo:TrackInfo;
