@@ -31,15 +31,18 @@ class TrackView extends BaseView implements IBaseView {
         });
     }
 
-    setActFrame(frameStart) {
-        console.log(this, "SEL_FRAME", frameStart, this.id$);
+    setActFrame(frameIdx) {
+        console.log(this, "SEL_FRAME", frameIdx, this.id$);
         var actHint = $(this.id$ + " " + ElmClass$.ActHint);
-        if (frameStart) {
-            actHint.css({display: "block"});
-            actHint.css({left: (frameStart - 1) * appInfo.frameWidth()});
+        if (frameIdx) {
+            var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[frameIdx];
             //actHint.css({top: 65});
-            appInfo.tm.actImg = this.trackInfo.frameInfoArr[frameStart].imageInfo.filename;
-            appInfo.tm.ActFrameInfo = this.trackInfo.frameInfoArr[frameStart];
+            if (frameInfo) {
+                actHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
+                actHint.css({display: "block"});
+                appInfo.tm.actImg = frameInfo.imageInfo.filename;
+                appInfo.tm.ActFrameInfo = frameInfo;
+            }
         }
         else {
             actHint.css({display: "none"})
@@ -182,7 +185,7 @@ class TrackView extends BaseView implements IBaseView {
         this._isPressBar = false;
         this._isPressClip = false;
         if (this._pickFrame) {
-            this.trackInfo.dis(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getStart()]);
+            this.trackInfo.dis(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
             this._pickFrame.pressFlag = 0;
         }
         this._pickFrame = null;
