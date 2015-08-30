@@ -268,16 +268,17 @@ body {
 .Track .Clip {
     top: 1px;
     position: relative;
-    /*height: 60px;*/
-    background: #000000;
+    height: 60px;
+    /*background: #000000;*/
     font-size: 0;
 }
 
 .ActHint {
-    position: relative;
+    -webkit-transition: left .2s ease;
+    position: absolute;
     height: 2px;
     width: 40px;
-    top: 41px;
+    top: 55px;
     background: #FAF014;
     display: none;
 }
@@ -285,6 +286,7 @@ body {
 .VSplitter:hover {
     background: #444;
 }
+
 .VSplitter {
     height: 8px;
     background: #141414;

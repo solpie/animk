@@ -56,6 +56,7 @@ class TrackInfo extends EventDispatcher {
     }
 
     _loadCount;
+
     newImage(imgs:Array<FrameData>) {
         var newFrame;
         this._loadCount = imgs.length;
@@ -121,7 +122,7 @@ class TrackInfo extends EventDispatcher {
         return this._start + this._hold - 1;
     }
 
-    getFrameInfo(mouseX) {
+    getPickFrameInfo(mouseX) {
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         //var idxX = Math.ceil(mouseX / appInfo.projectInfo.curComp.frameWidth);
         var pickFrame;
@@ -141,9 +142,9 @@ class TrackInfo extends EventDispatcher {
                 return pickFrame;
             }
             else {
-                //console.log(this, "?Frame", nextFrame.getStart(), nextFrame.getHold());
             }
         }
+        //console.log(this, "?Frame");
     }
 
     R2R(pickFrame:FrameInfo) {
@@ -156,7 +157,7 @@ class TrackInfo extends EventDispatcher {
             console.log(this, "R2R idx:", nextFrame.getIdx(), "start:", nextFrame.getStart())
         }
         this._hold++;
-        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+        //this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
     }
 
     R2L(pickFrame:FrameInfo) {
@@ -167,7 +168,7 @@ class TrackInfo extends EventDispatcher {
             nextFrame.setStart(nextFrame.getStart() - 1);
         }
         this._hold--;
-        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+        //this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
     }
 
     L2L(pickFrame:FrameInfo) {
@@ -182,7 +183,6 @@ class TrackInfo extends EventDispatcher {
         }
         pickFrame.setStart(pickFrame.getStart() - 1);
         pickFrame.setHold(pickFrame.getHold() + 1);
-        this.dis(TrackInfoEvent.UPDATE_START, pickFrame);
     }
 
     clearRemoveFrame() {
@@ -190,6 +190,7 @@ class TrackInfo extends EventDispatcher {
     }
 
     L2R(pickFrame:FrameInfo) {
+        //fixme
         if (this.removedFrameArr.length) {
             var delFrame:FrameInfo = this.removedFrameArr.pop();
             //this.frameInfoArr
@@ -211,7 +212,7 @@ class TrackInfo extends EventDispatcher {
         else {
             this.removeFrame(pickFrame)
         }
-        this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
+        //this.dis(TrackInfoEvent.UPDATE_HOLD, pickFrame);
 
 
         //    updateContentEndFrame();
