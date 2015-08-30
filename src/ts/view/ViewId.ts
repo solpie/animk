@@ -24,6 +24,7 @@ var ElmId$ = {
     hSplitter: "#HSplitter0",
     comp: "#Comp0",
     toolShelf: "#ToolShelf0",
+    newTrackDialog: "#fileDialog",
     saveAsDialog: "#saveAsDialog",
     openFileDialog: "#openProjDialog",
 };

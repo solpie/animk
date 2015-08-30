@@ -29,9 +29,12 @@ class TimelineView extends BaseView {
     }
 
     onNewTrack() {
-        var self = this;
-        chooseFile('#openFileDialog').change(function (e) {
-            self.newTrackByFilename($(this).val());
+        chooseFile(ElmId$.newTrackDialog).change(()=> {
+            var val = $(ElmId$.newTrackDialog).val();
+            if (val) {
+                this.newTrackByFilename(val);
+                $(ElmId$.newTrackDialog).val("")
+            }
         });
         console.log(this, "onNewTrack");
     }
@@ -67,12 +70,11 @@ class TimelineView extends BaseView {
             //this.className = '';
             return false;
         };
-        var self = this;
-        timeline.ondrop = function (e) {
+        timeline.ondrop = (e)=> {
             e.preventDefault();
             var file:File = e.dataTransfer.files[0];
             if (file.path) {
-                self.newTrackByFilename(file.path);
+                this.newTrackByFilename(file.path);
                 console.log(this, "ondrop", file.path);
             }
             //reader = new FileReader();

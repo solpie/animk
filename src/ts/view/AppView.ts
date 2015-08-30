@@ -119,5 +119,7 @@ class AnimkView {
         });
 
         this.canvasView.init();
+
+        appInfo.newProject();
     }
 }
