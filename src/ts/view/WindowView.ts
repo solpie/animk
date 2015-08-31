@@ -14,7 +14,6 @@ class WindowView {
             win.showDevTools('', true);
         });
         $("#btnMin").on(MouseEvt.CLICK, function () {
-
             win.minimize();
         });
         $("#btnMax").on(MouseEvt.CLICK, function () {

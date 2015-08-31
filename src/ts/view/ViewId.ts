@@ -27,8 +27,10 @@ var ElmId$ = {
     newTrackDialog: "#fileDialog",
     saveAsDialog: "#saveAsDialog",
     openFileDialog: "#openProjDialog",
-    fileMenu: "#FileMenu0",
+
+    menuBtnFile: "#MenuBtnFile",
     //file menu
+    fileMenu: "#FileMenu0",
     fileMenuNew: "#FileMenuNew",
     fileMenuOpen: "#FileMenuOpen",
     fileMenuSave: "#FileMenuSave",

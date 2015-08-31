@@ -96,24 +96,36 @@ class AnimkView {
     }
 
     initFileMenu() {
-        $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
+        var isShow:boolean = false;
+        $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
+            isShow = !isShow;
+            if (isShow)
+                $(ElmId$.fileMenu).css({display: "block"});
+            else
+                $(ElmId$.fileMenu).css({display: "none"});
+        });
 
+        $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
+            $(ElmId$.fileMenu).css({display: "none"})
         });
 
         $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
             this.fileMenuOpen();
+            $(ElmId$.fileMenu).css({display: "none"})
         });
 
         $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
             if (appInfo.projectInfo.saveFilename)
                 this.fileMenuSave(appInfo.projectInfo.saveFilename);
             else
-                this.fileMenuSave()
-
+                this.fileMenuSave();
+            $(ElmId$.fileMenu).css({display: "none"})
         });
 
         $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
-            this.fileMenuSave()
+            this.fileMenuSave();
+            $(ElmId$.fileMenu).css({display: "none"})
+
         });
     }
 
