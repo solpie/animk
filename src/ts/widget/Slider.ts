@@ -67,7 +67,7 @@ class Slider extends BaseWidget {
     onDown() {
         this._isPress = true;
         $(this.id$ + " " + ".Label").css({display: "block"});
-
+        this.dis(ViewEvent.CHANGED, this._value);
         this.startMoveTimer();
     }
 

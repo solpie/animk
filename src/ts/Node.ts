@@ -33,3 +33,9 @@ function walk(path):Array<string> {
 ////////////// path
 var M_path = require("path");
 
+
+////////////// macro
+var isdef = function (val) {
+    return val != undefined
+};
+

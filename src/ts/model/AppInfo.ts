@@ -31,7 +31,7 @@ class AppInfo extends EventDispatcher {
     }
 
 
-    test() {
+    test(test?) {
         //$("#btnTest").on(MouseEvt.CLICK, ()=> {
         //    this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
         //    console.log(this, "test");

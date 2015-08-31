@@ -8,8 +8,7 @@ class TrackView extends BaseView implements IBaseView {
     trackInfo:TrackInfo;
     clip:HTMLElement;
     _isPressBar:boolean;
-    _isPressClip:boolean;
-    _isPressSlider:boolean;
+    _isPressWidget:boolean;
     _lastX:number;
     _timerId:number;
     _pickFrame:FrameInfo = null;
@@ -25,7 +24,7 @@ class TrackView extends BaseView implements IBaseView {
         var template = $('.Track-tpl').html();
         return Mustache.render(template, {
             idx: this.trackInfo.idx,
-            name: this.trackInfo.getName(),
+            name: this.trackInfo.Name(),
             frameIdxArr: this.trackInfo.getIdxArr(),
             //imgs: this.trackInfo.getImgs()
         });
@@ -54,17 +53,25 @@ class TrackView extends BaseView implements IBaseView {
         super.setParent(parent);
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
-
+        ///  trackInfo event
         //////// opacity slider
+        this.trackInfo.add(TrackInfoEvent.SET_OPACITY, ()=> {
+            this.onSetOpacity();
+        });
+
         this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
         this._slider.add(ViewEvent.CHANGED, (val)=> {
             this.onSlider(val);
         });
 
         //////// visible checkbox
-        $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
+        this.trackInfo.add(TrackInfoEvent.SET_ENABLE, ()=> {
             this.onVisible();
         });
+        $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
+            this.trackInfo.enable(!this.trackInfo.enable());
+        });
+        ///
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clipWidth = this.trackInfo.getHold() * frameWidth;
         this.el = $(this.id$)[0];
@@ -75,23 +82,16 @@ class TrackView extends BaseView implements IBaseView {
             this.onMouseDown(e);
         });
 
-        //clip.on(MouseEvt.LEAVE, (e)=> {
-        //    //self._isPressBar = false;
-        //    //self.stopMoveTimer();
-        //    //console.log("mouseleave", "");
-        //});
-
         appInfo.add(MouseEvt.UP, ()=> {
             this.onUp();
         });
 
         this.setColor('#444');
-        console.log(this, "setParent2", clip, clipWidth);
-
+        console.log(this, "setParent", clip, clipWidth);
 
         //todo MouseDown is duplicate
         $(this.id$).on(MouseEvt.DOWN, ()=> {
-            if (this.trackInfo.isSelected && !this._isPressClip)
+            if (this.trackInfo.isSelected && !this._isPressWidget)
                 this.setSelected(false);
             else
                 this.trackInfo.dis(TrackInfoEvent.SEL_TRACK, this.trackInfo);
@@ -100,14 +100,16 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onVisible() {
-        this.trackInfo.setEnable(!this.trackInfo.enable);
-        this._isPressClip = true;
+        if (this.trackInfo.enable())
+            $(this.id$ + " " + ElmClass$.visibleCheckBox).css({background: "#FAF014"});
+        else
+            $(this.id$ + " " + ElmClass$.visibleCheckBox).css({background: "#333"});
+        this._isPressWidget = true;
     }
 
     onSlider(val) {
         this.trackInfo.opacity(val);
-        this._isPressSlider = true;
-        this._isPressClip = true;
+        this._isPressWidget = true;
     }
 
     onMouseDown(e) {
@@ -115,7 +117,7 @@ class TrackView extends BaseView implements IBaseView {
         var barHeight = $(this.id$ + " " + ElmClass$.Bar).height();
         this._lastX = appInfo.mouseX;
         var mouseY = e.clientY - $(this.id$).offset().top;
-        this._isPressClip = true;
+        this._isPressWidget = true;
         if (mouseY < barHeight) {
             this._isPressBar = true;
         }
@@ -147,14 +149,12 @@ class TrackView extends BaseView implements IBaseView {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
             frameInfo.imageInfo.reloadImg();
         }
-        ///  trackInfo event
-        this.trackInfo.add(TrackInfoEvent.SET_OPACITY, ()=> {
-            this.onSetOpacity();
-        });
+
     }
 
     onSetOpacity() {
-        this._slider.setBarWidth(this.trackInfo.opacity())
+        this._slider.setBarWidth(this.trackInfo.opacity());
+        appInfo.dis(TheMachineEvent.UPDATE_IMG)
     }
 
     updateClip() {
@@ -189,9 +189,8 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onUp() {
-        this._isPressSlider = false;
         this._isPressBar = false;
-        this._isPressClip = false;
+        this._isPressWidget = false;
         if (this._pickFrame) {
             this.trackInfo.dis(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
             this._pickFrame.pressFlag = 0;
@@ -229,13 +228,12 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.L2L(this._pickFrame);
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
         }
-        //this._pickFrame.pressFlag = 0;
     }
 
     startMoveTimer() {
         this._timerId = window.setInterval(()=> {
             var clip = $(this.id$ + " " + ElmClass$.Clip);
-            if (this._isPressClip) {
+            if (this._isPressWidget) {
                 var frameWidth = appInfo.projectInfo.curComp.frameWidth;
                 var dx = appInfo.mouseX - this._lastX;
                 if (dx > frameWidth) {

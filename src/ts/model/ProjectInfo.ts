@@ -72,9 +72,9 @@ class ProjectInfo extends EventDispatcher {
                 if (!trackInfo)
                     continue;
                 var trackData:TrackData = {
-                    name: trackInfo.getName(),
+                    name: trackInfo.Name(),
                     opacity: trackInfo.opacity(),
-                    enable: trackInfo.getEnable(),
+                    enable: trackInfo.enable(),
                     start: trackInfo.getStart(),
                     loopType: trackInfo.loopType,
                     end: trackInfo.getEnd(),

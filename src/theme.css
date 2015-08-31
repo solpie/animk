@@ -238,14 +238,10 @@ body {
     top: 2px;
     left: 2px;
     z-index: 1;
-    background: #FAF014;
+    background: #333;
 
     -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.Track .CheckBox input[type=checkbox]:checked + label {
-    background: #333;
 }
 
 .Track .Label {

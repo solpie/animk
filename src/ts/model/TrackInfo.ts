@@ -27,7 +27,6 @@ class TrackInfo extends EventDispatcher {
     type:number;
     path:string;
     loopType = TrackLoopType.HOLD;
-    enable:boolean;
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
     /////// save data;
@@ -45,28 +44,33 @@ class TrackInfo extends EventDispatcher {
         this.removedFrameArr = [];
     }
 
-    getName() {
-        return this._trackData.name;
+    Name(val) {
+        if (isdef(val)) {
+            this._trackData.name = val;
+            this.dis(TrackInfoEvent.SET_NAME);
+        }
+        else
+            return this._trackData.name;
     }
 
 
     opacity(val?) {
-        if (val>-1) {
+        if (isdef(val)) {
             this._trackData.opacity = val;
             this.dis(TrackInfoEvent.SET_OPACITY);
-            appInfo.dis(TheMachineEvent.UPDATE_IMG)
         }
         else
             return this._trackData.opacity;
     }
 
-    getEnable() {
-        return this._trackData.enable;
-    }
-
-    setEnable(val) {
-        this._trackData.enable = val;
-        appInfo.dis(TheMachineEvent.UPDATE_IMG)
+    enable(val?) {
+        if (isdef(val)) {
+            this._trackData.enable = val;
+            this.dis(TrackInfoEvent.SET_ENABLE);
+            appInfo.dis(TheMachineEvent.UPDATE_IMG)
+        }
+        else
+            return this._trackData.enable;
     }
 
     getPath() {
