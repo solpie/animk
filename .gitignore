@@ -1,7 +1,8 @@
 build/
 .idea/
-src/ts/*.js
-src/ts/*.js.map
-src/ts/*/*.js
-src/ts/*/*.js.map
+/src/ts/*.js
+/src/ts/*.js.map
+/src/ts/*/*.js
+/src/ts/*/*.js.map
+/src/css/*.css
 *.png

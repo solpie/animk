@@ -27,6 +27,7 @@ var ElmId$ = {
     newTrackDialog: "#fileDialog",
     saveAsDialog: "#saveAsDialog",
     openFileDialog: "#openProjDialog",
+    fileMenu: "#FileMenu0",
 };
 var ElmClass$ = {
     Track: ".Track",
@@ -44,4 +45,7 @@ var ElmClass$ = {
     Bar: ".Bar",
 };
 
-var ZIdx = [ElmId$.cursor, ElmId$.cursorMask, VScrollBarId$];
+var ZIdx = [ElmId$.cursor,
+    ElmId$.cursorMask,
+    VScrollBarId$,
+    ElmId$.fileMenu];
