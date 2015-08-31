@@ -36,12 +36,12 @@ class AppInfo extends EventDispatcher {
         //    this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
         //    console.log(this, "test");
         //});
-        //{//test project
-        //    this.newProject();
-        //    this.projectInfo.newComp(1280, 720, 24).newTrack('D:/projects/animk/test/test30');
-        //    this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
-        //    this.projectInfo.curComp.setCursor(1);
-        //}
+        {//test project
+            this.newProject();
+            this.projectInfo.newComp(1280, 720, 24).newTrack('D:/projects/animk/test/test30');
+            this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
+            this.projectInfo.curComp.setCursor(1);
+        }
 
         //this.projectInfo = new ProjectInfo();
         //this.dis(ProjectInfoEvent.NEW_PROJ);

@@ -37,7 +37,9 @@ var ElmClass$ = {
     Slider: ".Slider",
     ActHint: ".ActHint",
     Frame: "Frame",
-    visibleCheckBox: ".VisibleCheckBox",
+    VisibleCheckBox: ".VisibleCheckBox",
+    Text: ".Text",
+    Input: "input",
     FrameCanvas$: "FrameCanvas",
     Bar: ".Bar",
 };

@@ -245,6 +245,18 @@ body {
 }
 
 .Track .Label {
+    position: absolute;
+    left: 15px;
+    top: 5px;
+}
+
+.Track .Label input {
+    position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
+    /*top: 25px;*/
+    width: 165px;
 }
 
 .Track .Panel {

@@ -44,9 +44,11 @@
         <div class="Track" id="{{idx}}">
             <div class="Panel">
                 <div class="Hint" style="width: 5px;height: 95%;background: #FAF014;display: inline-block;"></div>
-                <div class="Label" style="display: inline-block;"> {{name}}</div>
+                <div class="Label" style="display: inline-block;">
+                    <div class="Text">{{name}}</div>
+                    <input type="text"/>
+                </div>
                 <div class="CheckBox">
-                    <!--<input type="checkbox" value="0" id="VisibleCheckBox{{idx}}"/>-->
                     <label class="VisibleCheckBox"></label>
                 </div>
                 <div class="Slider">

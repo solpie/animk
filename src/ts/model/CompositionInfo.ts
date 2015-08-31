@@ -125,7 +125,7 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo = new TrackInfo(trackData);
         trackInfo.newImage(trackData.frames);
         trackInfo.path = trackData.path;
-        trackInfo.name = trackData.name;
+        trackInfo.name(trackData.name);
         trackInfo.setStart(trackData.start);
         trackInfo.idx = this.trackInfoArr.length;
         this.trackInfoArr.push(trackInfo);

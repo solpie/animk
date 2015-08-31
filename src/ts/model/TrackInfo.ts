@@ -23,7 +23,7 @@ class TrackData {//for save
 }
 class TrackInfo extends EventDispatcher {
     idx:number;
-    name:string;
+    //name:string;
     type:number;
     path:string;
     loopType = TrackLoopType.HOLD;
@@ -44,10 +44,10 @@ class TrackInfo extends EventDispatcher {
         this.removedFrameArr = [];
     }
 
-    Name(val) {
+    name(val) {
         if (isdef(val)) {
             this._trackData.name = val;
-            this.dis(TrackInfoEvent.SET_NAME);
+            this.dis(TrackInfoEvent.SET_NAME,val);
         }
         else
             return this._trackData.name;

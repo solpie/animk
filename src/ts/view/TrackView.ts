@@ -24,7 +24,7 @@ class TrackView extends BaseView implements IBaseView {
         var template = $('.Track-tpl').html();
         return Mustache.render(template, {
             idx: this.trackInfo.idx,
-            name: this.trackInfo.Name(),
+            name: this.trackInfo.name(),
             frameIdxArr: this.trackInfo.getIdxArr(),
             //imgs: this.trackInfo.getImgs()
         });
@@ -71,7 +71,29 @@ class TrackView extends BaseView implements IBaseView {
         $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
             this.trackInfo.enable(!this.trackInfo.enable());
         });
-        ///
+        ///////  track name input
+        var trackName$ = $(this.id$ + " " + ElmClass$.Text);
+        var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
+        this.trackInfo.add(TrackInfoEvent.SET_NAME, (name)=> {
+            trackName$.html(name);
+        });
+
+        trackInput$.on(ViewEvent.CHANGED, ()=> {
+            var newName = trackInput$.val();
+            this.trackInfo.name(newName);
+        });
+        trackName$.on(MouseEvt.DBLCLICK, ()=> {
+            trackInput$.val(this.trackInfo.name());
+            trackInput$.css({display: "block"});
+            trackInput$.focus();
+            trackInput$.on(KeyEvt.DOWN, (e)=> {
+                if (Keys.Char(e.keyCode, "\r")) {
+                    trackInput$.css({display: "none"});
+                    trackInput$.unbind(KeyEvt.DOWN);
+                }
+            });
+        });
+        //////////////////
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clipWidth = this.trackInfo.getHold() * frameWidth;
         this.el = $(this.id$)[0];
@@ -101,9 +123,9 @@ class TrackView extends BaseView implements IBaseView {
 
     onVisible() {
         if (this.trackInfo.enable())
-            $(this.id$ + " " + ElmClass$.visibleCheckBox).css({background: "#FAF014"});
+            $(this.id$ + " " + ElmClass$.VisibleCheckBox).css({background: "#FAF014"});
         else
-            $(this.id$ + " " + ElmClass$.visibleCheckBox).css({background: "#333"});
+            $(this.id$ + " " + ElmClass$.VisibleCheckBox).css({background: "#333"});
         this._isPressWidget = true;
     }
 
