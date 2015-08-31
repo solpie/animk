@@ -44,7 +44,7 @@ class TrackInfo extends EventDispatcher {
         this.removedFrameArr = [];
     }
 
-    name(val) {
+    name(val?) {
         if (isdef(val)) {
             this._trackData.name = val;
             this.dis(TrackInfoEvent.SET_NAME,val);

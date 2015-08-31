@@ -35,8 +35,12 @@ declare var $:{
     (selector:string): any;
     (readyCallback:() => void): JQuery;
 };
+
+interface HTMLElement {
+    getContext(val:string):any;
+}
 declare var Mustache:{
-    render(tpl:string,data:Object);
+    render(tpl:string, data:Object);
 };
 
 function chooseFile(name):JQuery {

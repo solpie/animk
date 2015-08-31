@@ -7,6 +7,7 @@ class ProjectInfo extends EventDispatcher {
     curComp:CompositionInfo;
     version:string = '0.1.0';
     saveFilename:string;
+
     constructor(options?) {
         super();
     }
@@ -17,7 +18,7 @@ class ProjectInfo extends EventDispatcher {
         this.curComp = compInfo;
         this.comps.push(compInfo);
         compInfo.name = "Comp" + this.comps.length;
-        console.log(this,"new CompInfo");
+        console.log(this, "new CompInfo");
         this.dis(CompInfoEvent.NEW_COMP, compInfo);
         return compInfo;
     }
@@ -25,7 +26,7 @@ class ProjectInfo extends EventDispatcher {
     /////////////////////// open project
     open(path) {
         console.log(this, "open project", path);
-        jsonfile.readFile(path, (err, projData)=> {
+        jsonfile.readFile(path, null, (err, projData)=> {
             console.log(this, "open project ver:", projData.linAnil.version);
             this.version = projData.linAnil.version;
 
@@ -97,7 +98,7 @@ class ProjectInfo extends EventDispatcher {
             }
         }
 
-        jsonfile.writeFile(path, projData, function (err) {
+        jsonfile.writeFile(path, projData,null, function (err) {
             //console.error(err)
         });
 

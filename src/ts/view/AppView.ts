@@ -40,7 +40,10 @@ class AnimkView {
         document.onmouseup = ()=> {
             this.appInfo.dis(MouseEvt.UP);
         };
-        document.onkeydown = this.onKeyDown;
+        document.onkeydown = (e)=> {
+            this.onKeyDown(e);
+        };
+
         //super();
         var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
