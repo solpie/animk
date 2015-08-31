@@ -47,7 +47,6 @@ function chooseFile(name):JQuery {
     var chooser = $(name);
     chooser.unbind('change');
     //chooser.change(function (evt) {
-    //
     //});
     chooser.trigger('click');
     return chooser;

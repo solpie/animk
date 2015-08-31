@@ -55,7 +55,7 @@ class Slider extends BaseWidget {
 
     setBarWidth(val) {
         $(this.id$ + " " + ".Bar").width(this._width * val);
-        $(this.id$ + " " + ".Label").html(parseInt(this._value * 100 + "") + "%");
+        $(this.id$ + " " + ".Label").html(Math.floor(this._value * 100) + "%");
     }
 
     setRange(min:number, max:number) {

@@ -9,6 +9,4 @@ $(() => {
     app = new AnimkView(appInfo);
     app.onDomReady();
     appInfo.test(false);
-
 });
-
