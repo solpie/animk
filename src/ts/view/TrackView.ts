@@ -71,13 +71,12 @@ class TrackView extends BaseView implements IBaseView {
         $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
             this.trackInfo.enable(!this.trackInfo.enable());
         });
-        ///////  track name input
+        ////////////////     track name input
         var trackName$ = $(this.id$ + " " + ElmClass$.Text);
         var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
         this.trackInfo.add(TrackInfoEvent.SET_NAME, (name)=> {
             trackName$.html(name);
         });
-
         trackInput$.on(ViewEvent.CHANGED, ()=> {
             var newName = trackInput$.val();
             this.trackInfo.name(newName);
@@ -93,7 +92,7 @@ class TrackView extends BaseView implements IBaseView {
                 }
             });
         });
-        //////////////////
+        //////////////////////////////////////////////
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clipWidth = this.trackInfo.getHold() * frameWidth;
         this.el = $(this.id$)[0];
@@ -151,7 +150,6 @@ class TrackView extends BaseView implements IBaseView {
                 console.log("Pick frame", mouseX, frameInfo, frameInfo.getIdx(), "Left", frameInfo.pressFlag);
         }
         this.startMoveTimer();
-
     }
 
     initFrame() {

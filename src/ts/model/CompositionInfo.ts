@@ -97,7 +97,7 @@ class CompositionInfo extends EventDispatcher {
         return this._cursorPos;
     }
 
-    walk(path):Array<string> {
+    walk(path):Array<FrameData> {
         var fileArr = [];
         var dirArr = fs.readdirSync(path);
         dirArr.forEach(function (item) {
@@ -125,7 +125,6 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo = new TrackInfo(trackData);
         trackInfo.newImage(trackData.frames);
         trackInfo.path = trackData.path;
-        trackInfo.name(trackData.name);
         trackInfo.setStart(trackData.start);
         trackInfo.idx = this.trackInfoArr.length;
         this.trackInfoArr.push(trackInfo);
