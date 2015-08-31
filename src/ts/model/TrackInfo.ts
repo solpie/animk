@@ -49,14 +49,15 @@ class TrackInfo extends EventDispatcher {
         return this._trackData.name;
     }
 
-    setOpacity(val) {
-        this._trackData.opacity = val;
-        this.dis(TrackInfoEvent.SET_OPACITY);
-        appInfo.dis(TheMachineEvent.UPDATE_IMG)
-    }
 
-    getOpacity() {
-        return this._trackData.opacity;
+    opacity(val?) {
+        if (val>-1) {
+            this._trackData.opacity = val;
+            this.dis(TrackInfoEvent.SET_OPACITY);
+            appInfo.dis(TheMachineEvent.UPDATE_IMG)
+        }
+        else
+            return this._trackData.opacity;
     }
 
     getEnable() {

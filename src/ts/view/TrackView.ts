@@ -105,7 +105,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onSlider(val) {
-        this.trackInfo.setOpacity(val);
+        this.trackInfo.opacity(val);
         this._isPressSlider = true;
         this._isPressClip = true;
     }
@@ -154,7 +154,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onSetOpacity() {
-        this._slider.setBarWidth(this.trackInfo.getOpacity())
+        this._slider.setBarWidth(this.trackInfo.opacity())
     }
 
     updateClip() {

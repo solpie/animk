@@ -156,6 +156,8 @@ class CompositionView implements IBaseView {
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
         view.setParent($(CompositionId$));
+
+        trackInfo.opacity(trackInfo.opacity());
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
