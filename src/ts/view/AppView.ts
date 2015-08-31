@@ -77,18 +77,10 @@ class AnimkView {
         }
         /// project open save
         else if (Keys.Char(key, "O") && isCtrl) {//enter
-            chooseFile(ElmId$.openFileDialog).change(()=> {
-                var filename = $(ElmId$.openFileDialog).val();
-                console.log(this, "open project file", filename);
-                appInfo.openProject(filename);
-            });
+            this.fileMenuOpen();
         }
         else if (Keys.Char(key, "S") && isCtrl) {//enter
-            chooseFile(ElmId$.saveAsDialog).change(()=> {
-                var filename = $(ElmId$.saveAsDialog).val();
-                console.log(this, "save as", filename);
-                appInfo.projectInfo.save(filename);
-            });
+            this.fileMenuSave();
         }
         //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
@@ -101,6 +93,49 @@ class AnimkView {
         console.log(this, 'new project');
         var view = new ProjectView(this.appInfo.projectInfo);
         this.projectViewArr.push(view);
+    }
+
+    initFileMenu() {
+        $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
+
+        });
+
+        $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
+            this.fileMenuOpen();
+        });
+
+        $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
+            if (appInfo.projectInfo.saveFilename)
+                this.fileMenuSave(appInfo.projectInfo.saveFilename);
+            else
+                this.fileMenuSave()
+
+        });
+
+        $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
+            this.fileMenuSave()
+        });
+    }
+
+    fileMenuOpen() {
+        chooseFile(ElmId$.openFileDialog).change(()=> {
+            var filename = $(ElmId$.openFileDialog).val();
+            console.log(this, "open project file", filename);
+            appInfo.openProject(filename);
+        });
+    }
+
+    fileMenuSave(path?) {
+        if (isdef(path)) {
+            appInfo.projectInfo.save(path)
+        }
+        else {
+            chooseFile(ElmId$.saveAsDialog).change(()=> {
+                var filename = $(ElmId$.saveAsDialog).val();
+                console.log(this, "save as", filename);
+                appInfo.projectInfo.save(filename);
+            });
+        }
     }
 
     onDomReady() {
@@ -119,7 +154,7 @@ class AnimkView {
         });
 
         this.canvasView.init();
-
+        this.initFileMenu();
         appInfo.newProject();
     }
 }

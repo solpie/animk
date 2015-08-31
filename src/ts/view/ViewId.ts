@@ -28,6 +28,11 @@ var ElmId$ = {
     saveAsDialog: "#saveAsDialog",
     openFileDialog: "#openProjDialog",
     fileMenu: "#FileMenu0",
+    //file menu
+    fileMenuNew: "#FileMenuNew",
+    fileMenuOpen: "#FileMenuOpen",
+    fileMenuSave: "#FileMenuSave",
+    fileMenuSaveAs: "#FileMenuSaveAs",
 };
 var ElmClass$ = {
     Track: ".Track",

@@ -1,3 +1,5 @@
+@import "lib";
+
 .FileMenu {
   position: absolute;
   width: 480px;
@@ -10,7 +12,16 @@
       display: inline-block;
       width: 150px;
       height: 100%;
-      border-right: #141414 1px solid;
+      border-right: @Theme-Border;
+      .Item {
+        color: @Theme-Font-Color-Light;
+        &:hover {
+          color: @Theme-Font-Color-Dark;
+          background: @Theme-Color-Light;
+        }
+        height: 30px;
+        width: 100%;
+      }
     }
     .Right {
       display: inline-block;
@@ -21,7 +32,7 @@
       .Top {
         width: 100%;
         height: 40px;
-        border-bottom: #141414 1px solid;
+        border-bottom: @Theme-Border;
       }
       .Bottom {
         background: #554c0d;
@@ -31,7 +42,7 @@
   .Bottom {
     width: 100%;
     height: 40px;
-    background: #FAF014;
+    background: @Theme-Color-Light;
     div {
       display: inline-block;
     }

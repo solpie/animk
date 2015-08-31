@@ -4,7 +4,6 @@ body {
     overflow-y: hidden;
     -webkit-user-select: none;
     margin: 0;
-
 }
 
 .TitleBar {
@@ -145,27 +144,6 @@ body {
     overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
-    position: relative;
-    width: 15px;
-    background-color: #cccccc;
-}
-
-::-webkit-scrollbar-thumb {
-    height: 50px;
-    background-color: #999;
-    -webkit-border-radius: 4px;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
-    border: 2px solid #fff;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    height: 50px;
-    background-color: #9f9f9f;
-    -webkit-border-radius: 4px;
-}
-
 .TrackTool {
     display: inline-block;
     position: relative;
@@ -192,124 +170,6 @@ body {
     background: #2f2f2f;
 }
 
-.Track {
-    width: 100%;
-    height: 60px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    border-bottom: 1px solid #111;
-}
-
-.Track .Slider {
-    display: inline-block;
-    width: 80px;
-    height: 15px;
-    position: absolute;
-    top: 30px;
-    left: 100px;
-    background: #222;
-}
-
-.Slider .Bar {
-    height: 100%;
-    width: 100%;
-    background: #555;
-}
-
-.Slider .Label {
-    display: none;
-    top: -25px;
-    left: 5px;
-    position: relative;
-}
-
-.Track .CheckBox {
-    top: 5px;
-    left: 160px;
-    /*width: 15px;*/
-    /*height: 15px;*/
-    /*border-radius: 15px;*/
-    position: absolute;
-    /*background: #fff;*/
-
-    width: 15px;
-    height: 15px;
-    background: #eee;
-
-    border-radius: 100%;
-    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
-    /*box-shadow: 0px 1px 3px rgba(0,0,0,0.5);*/
-}
-
-.Track .CheckBox input {
-    display: none;
-}
-
-.Track .CheckBox label {
-    display: block;
-    width: 11px;
-    height: 11px;
-    border-radius: 100%;
-
-    -webkit-transition: all .2s ease;
-    /*transition: all .2s ease;*/
-    cursor: pointer;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    z-index: 1;
-    background: #333;
-
-    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.Track .Label {
-    position: absolute;
-    left: 15px;
-    top: 5px;
-}
-
-.Track .Label input {
-    position: absolute;
-    display: none;
-    left: 0;
-    top: 0;
-    /*top: 25px;*/
-    width: 165px;
-}
-
-.Track .Panel {
-    position: absolute;
-    width: 200px;
-    height: 60px;
-}
-
-.TrackArea {
-    left: 200px;
-    position: absolute;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
-.Track .Clip {
-    top: 1px;
-    position: relative;
-    height: 60px;
-    /*background: #000000;*/
-    font-size: 0;
-}
-
-.ActHint {
-    -webkit-transition: left .2s ease;
-    position: absolute;
-    height: 2px;
-    width: 40px;
-    top: 55px;
-    background: #FAF014;
-    display: none;
-}
 
 .VSplitter:hover {
     background: #444;
@@ -329,12 +189,3 @@ body {
     width: 8px;
     background: #141414;
 }
-
-.BottomBar {
-    bottom: 0;
-    position: absolute;
-    width: 100%;
-    height: 35px;
-    background: #aaa;
-}
-

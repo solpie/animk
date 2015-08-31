@@ -6,7 +6,7 @@ class ProjectInfo extends EventDispatcher {
     comps:Array<CompositionInfo> = [];
     curComp:CompositionInfo;
     version:string = '0.1.0';
-
+    saveFilename:string;
     constructor(options?) {
         super();
     }
@@ -47,6 +47,7 @@ class ProjectInfo extends EventDispatcher {
     }
 
     save(path) {
+        this.saveFilename = path;
         var projData = {
             linAnil: {
                 version: this.version,
