@@ -4,6 +4,7 @@
 /// <reference path="WindowView.ts"/>
 /// <reference path="../widget/Splitter.ts"/>
 /// <reference path="CanvasView.ts"/>
+/// <reference path="SettingView.ts"/>
 var Keys = {
     Space: function (k) {
         return k == 32;
@@ -22,6 +23,7 @@ class AnimkView {
     timelineView:TimelineView;
     vSplitter:SplitterView;
     hSplitter:SplitterView;
+    settingView:SettingView;
 
     constructor(appModel) {
         this.appInfo = appModel;
@@ -49,6 +51,7 @@ class AnimkView {
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
+        this.settingView = new SettingView();
         this.initZIndex();
     }
 

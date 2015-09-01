@@ -35,6 +35,15 @@ var ElmId$ = {
     fileMenuOpen: "#FileMenuOpen",
     fileMenuSave: "#FileMenuSave",
     fileMenuSaveAs: "#FileMenuSaveAs",
+    //popup layer
+    popupLayer: "#PopupLayer0",
+    //
+    tabButton0: "#TabButton0",
+    tabPage0: "#TabPage0",
+    tabButton1: "#TabButton1",
+    tabPage1: "#TabPage1",
+    tabButton2: "#TabButton2",
+    tabPage2: "#TabPage2",
 };
 var ElmClass$ = {
     Track: ".Track",
@@ -55,4 +64,6 @@ var ElmClass$ = {
 var ZIdx = [ElmId$.cursor,
     ElmId$.cursorMask,
     VScrollBarId$,
-    ElmId$.fileMenu];
+    ElmId$.fileMenu,
+    ElmId$.popupLayer
+];
