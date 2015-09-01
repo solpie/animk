@@ -7,6 +7,7 @@ interface JQuery {
     data(val:string):JQuery;
     css(val):JQuery;
     show(): JQuery;
+    hide(): JQuery;
     addClass(className:string): JQuery;
     removeClass(className:string): JQuery;
     on(type:string, func):JQuery;

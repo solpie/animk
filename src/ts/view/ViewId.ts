@@ -38,6 +38,8 @@ var ElmId$ = {
     //popup layer
     popupLayer: "#PopupLayer0",
     //
+    btnCloseSetting: "#BtnCloseSetting0",
+    settingWin: "#SettingWin0",
     tabButton0: "#TabButton0",
     tabPage0: "#TabPage0",
     tabButton1: "#TabButton1",

@@ -15,11 +15,11 @@ class SettingView extends BaseView {
                 var btn$ = $(btnToPage[0]);
                 var page$ = $(btnToPage[1]);
                 if (btn$.attr("id") == btnTarget$.attr("id")) {
-                    page$.css({display: "block"});
+                    page$.hide();
                     btn$.css({background: "#555"});
                 }
                 else {
-                    page$.css({display: "none"});
+                    page$.show();
                     btn$.css({background: "#222"});
                 }
             }
@@ -29,6 +29,11 @@ class SettingView extends BaseView {
             $(btnToPage[0]).on(MouseEvt.CLICK, onClickBtn);
         }
 
+
+        $(ElmId$.btnCloseSetting).on(MouseEvt.CLICK, ()=> {
+            $(ElmId$.settingWin).hide();
+            $(ElmId$.popupLayer).hide();
+        });
     }
 
     setPage(idx:number) {
