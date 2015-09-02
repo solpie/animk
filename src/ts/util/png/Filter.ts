@@ -1,5 +1,4 @@
-/// <reference path="ChunkStream.ts"/>
-class Filter extends ChunkStream {
+class Filter extends Stream {
     _width;
     _height;
     _depthInBytes;
@@ -11,7 +10,6 @@ class Filter extends ChunkStream {
 
     constructor(width, height, depthInBytes, Bpp, data, options) {
         super();
-
         this._width = width;
         this._height = height;
         this._depthInBytes = depthInBytes;
