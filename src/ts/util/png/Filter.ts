@@ -2,7 +2,7 @@ class Filter extends Stream {
     _width;
     _height;
     _depthInBytes;
-    _Bpp;
+    //_Bpp;
     _data;
     _options;
     _line;
@@ -13,7 +13,7 @@ class Filter extends Stream {
         this._width = width;
         this._height = height;
         this._depthInBytes = depthInBytes;
-        this._Bpp = Bpp;
+        //this._Bpp = Bpp;
         this._data = data;
         this._options = options;
 
@@ -35,12 +35,10 @@ class Filter extends Stream {
     }
 
     filter() {
-
         var pxData = this._data,
             rawData = new Buffer(((this._width << (2 + this._depthInBytes - 1)) + 1) * this._height);
-
+        //rawData.fill(0);
         for (var y = 0; y < this._height; y++) {
-
             // find best filter for this line (with lowest sum of values)
             var filterTypes = this._options.filterType,
                 min = Infinity,
@@ -60,7 +58,6 @@ class Filter extends Stream {
     }
 
     _filterNone(pxData, y, rawData) {
-
         var pxRowLength = this._width << (2 + this._depthInBytes - 1),
             rawRowLength = pxRowLength + 1,
             sum = 0;
@@ -73,7 +70,6 @@ class Filter extends Stream {
             rawData[y * rawRowLength] = 0;
             pxData.copy(rawData, rawRowLength * y + 1, pxRowLength * y, pxRowLength * (y + 1));
         }
-
         return sum;
     }
 }

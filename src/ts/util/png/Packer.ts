@@ -37,16 +37,16 @@ class Packer extends Stream {
         }
     }
 
-    pack(data, width, height, depthInBytes) {
+    pack(pixelData, width, height, depthInBytes) {
 
         // Signature
         this.emit('data', new Buffer(this.PNG_SIGNATURE));
         this.emit('data', this._packIHDR(width, height, depthInBytes));
 
         // filter pixel data
-        var filter = new Filter(width, height, depthInBytes, 4, data, this._options); //UNDO : feed image depth
+        var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
         var dataFilter = filter.filter();
-
+        //console.log(this, "dataFilter len", dataFilter.length);
         // compress it
         var deflate = zlib.createDeflate({
             chunkSize: this._options.deflateChunkSize,
@@ -65,6 +65,7 @@ class Packer extends Stream {
         }.bind(this));
 
         deflate.end(dataFilter);
+        //deflate.end(pixelData);
         return this;
     }
 
