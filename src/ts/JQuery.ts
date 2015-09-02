@@ -32,6 +32,7 @@ interface JQuery {
 
 
 declare var $:{
+    get(val:string, func:any);
     (el:HTMLElement): JQuery;
     (selector:string): any;
     (readyCallback:() => void): JQuery;

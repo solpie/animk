@@ -50,6 +50,11 @@ class AppInfo extends EventDispatcher {
         //this.projectInfo.open('../test/data.json');
 
         //this.projectInfo.save('D:/projects/animk/test/data.json')
+
+
+        //function loadUser() {
+
+        //}
     }
 
 

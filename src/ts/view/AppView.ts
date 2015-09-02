@@ -5,6 +5,8 @@
 /// <reference path="../widget/Splitter.ts"/>
 /// <reference path="CanvasView.ts"/>
 /// <reference path="SettingView.ts"/>
+/// <reference path="../JQuery.ts"/>
+
 var Keys = {
     Space: function (k) {
         return k == 32;
@@ -51,8 +53,16 @@ class AnimkView {
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
-        this.settingView = new SettingView();
-        this.initZIndex();
+        this.initSettingView();
+        this.initFileMenu();
+    }
+
+    initSettingView() {
+        $.get('template/SettingWin.html', function (template) {
+            var rendered = Mustache.render(template);
+            $(ElmId$.popupLayer).html(rendered);
+            this.settingView = new SettingView();
+        });
     }
 
     initZIndex() {
@@ -102,37 +112,42 @@ class AnimkView {
     }
 
     initFileMenu() {
-        var isShow:boolean = false;
-        $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
-            isShow = !isShow;
-            if (isShow)
-                $(ElmId$.fileMenu).css({display: "block"});
-            else
-                $(ElmId$.fileMenu).css({display: "none"});
-        });
+        $.get('template/TitleMenu.html', (template)=> {
+            var rendered = Mustache.render(template);
+            $(ElmId$.titleMenu).html(rendered);
 
-        $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
-            $(ElmId$.fileMenu).css({display: "none"})
-        });
+            var isShow:boolean = false;
+            $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
+                isShow = !isShow;
+                if (isShow)
+                    $(ElmId$.fileMenu).css({display: "block"});
+                else
+                    $(ElmId$.fileMenu).css({display: "none"});
+            });
 
-        $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
-            this.fileMenuOpen();
-            $(ElmId$.fileMenu).css({display: "none"})
-        });
+            $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
+                $(ElmId$.fileMenu).css({display: "none"})
+            });
 
-        $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
-            if (appInfo.projectInfo.saveFilename)
-                this.fileMenuSave(appInfo.projectInfo.saveFilename);
-            else
+            $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
+                this.fileMenuOpen();
+                $(ElmId$.fileMenu).css({display: "none"})
+            });
+
+            $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
+                if (appInfo.projectInfo.saveFilename)
+                    this.fileMenuSave(appInfo.projectInfo.saveFilename);
+                else
+                    this.fileMenuSave();
+                $(ElmId$.fileMenu).css({display: "none"})
+            });
+
+            $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
                 this.fileMenuSave();
-            $(ElmId$.fileMenu).css({display: "none"})
+                $(ElmId$.fileMenu).css({display: "none"})
+            });
         });
 
-        $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
-            this.fileMenuSave();
-            $(ElmId$.fileMenu).css({display: "none"})
-
-        });
     }
 
     fileMenuOpen() {
@@ -172,7 +187,7 @@ class AnimkView {
         });
 
         this.canvasView.init();
-        this.initFileMenu();
+        this.initZIndex();
         appInfo.newProject();
     }
 }

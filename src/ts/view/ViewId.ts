@@ -29,6 +29,9 @@ var ElmId$ = {
     openFileDialog: "#openProjDialog",
 
     menuBtnFile: "#MenuBtnFile",
+    titleBar$: "#titleBar",
+    titleMenu: "#TitleMenu0",
+
     //file menu
     fileMenu: "#FileMenu0",
     fileMenuNew: "#FileMenuNew",
@@ -62,10 +65,11 @@ var ElmClass$ = {
     FrameCanvas$: "FrameCanvas",
     Bar: ".Bar",
 };
-
+//back is top
 var ZIdx = [ElmId$.cursor,
     ElmId$.cursorMask,
     VScrollBarId$,
     ElmId$.fileMenu,
+    ElmId$.titleMenu,
     ElmId$.popupLayer
 ];
