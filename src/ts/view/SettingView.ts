@@ -15,17 +15,18 @@ class SettingView extends BaseView {
                 var btn$ = $(btnToPage[0]);
                 var page$ = $(btnToPage[1]);
                 if (btn$.attr("id") == btnTarget$.attr("id")) {
-                    page$.hide();
+                    page$.show();
                     btn$.css({background: "#555"});
                 }
                 else {
-                    page$.show();
+                    page$.hide();
                     btn$.css({background: "#222"});
                 }
             }
         };
         for (var i = 0; i < btnToPageArr.length; i++) {
             var btnToPage = btnToPageArr[i];
+            $(btnToPage[1]).hide();
             $(btnToPage[0]).on(MouseEvt.CLICK, onClickBtn);
         }
 

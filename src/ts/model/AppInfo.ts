@@ -1,7 +1,7 @@
 /// <reference path="ProjectInfo.ts"/>
 /// <reference path="TheMachine.ts"/>
 /// <reference path="../event/ActEvent.ts"/>
-
+/// <reference path="../util/png/PngMaker.ts"/>
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
     tm:TheMachine;
@@ -43,7 +43,8 @@ class AppInfo extends EventDispatcher {
             }
         });
 
-
+        var pnglib = new PngMaker();
+        pnglib.createPng(300, 300);
         //this.projectInfo = new ProjectInfo();
         //this.dis(ProjectInfoEvent.NEW_PROJ);
         //this.projectInfo.open('../test/data.json');

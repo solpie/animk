@@ -2,6 +2,8 @@ declare var require:{
     (val:string):any;
 };
 var fs = require('fs');
+var Stream = require('stream');
+var zlib = require('zlib');
 //var data = fs.read('c:/test.xml');
 function walk(path):Array<string> {
     var fileArr = [];

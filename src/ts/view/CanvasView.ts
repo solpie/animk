@@ -38,11 +38,29 @@ class CanvasView extends BaseView {
                     this.ctx.globalAlpha = trackInfo.opacity();
                     this.ctx.drawImage(img, 0, 0);
                     //this.ctx.restore();
+                    this.savePng();
                 }
                 else {
                     console.log(this, "can not comp trk ", i);
                 }
             }
         }
+    }
+
+    savePng() {
+        //var dataURL = this.canvasEl.toDataURL('image/png');
+        //console.log(this, dataURL);
+        ////dataURL = dataURL.replace("image/png", "image/octet-stream");
+        //var dataBuffer = new Buffer(dataURL, 'base64');
+        //fs.writeFile("test.png", dataBuffer, function (err) {
+        //    if (err) {
+        //        //response.write(err);
+        //        console.log(this, "err", err);
+        //
+        //    } else {
+        //        console.log(this, "sus");
+        //        //response.write("±£´æ³É¹¦£¡");
+        //    }
+        //});
     }
 }

@@ -66,6 +66,8 @@ class FrameView extends BaseView {
         }
     }
 
+
+
     fillRect(col, x, y, w, h, a?) {
         if (a)
             this.ctx.globalAlpha = a;
