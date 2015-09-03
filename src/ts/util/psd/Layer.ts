@@ -12,6 +12,7 @@ class Layer {
 
     constructor() {
         //this.name = "te12343s";
+
     }
 
     /**
