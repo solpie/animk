@@ -1,0 +1,388 @@
+.Track {
+  width: 100%;
+  height: 60px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-bottom: 1px solid #111;
+}
+.Track .Panel {
+  position: absolute;
+  width: 200px;
+  height: 60px;
+}
+.Track .Panel .Label {
+  position: absolute;
+  left: 15px;
+  top: 5px;
+}
+.Track .Panel .Label input {
+  position: absolute;
+  display: none;
+  left: 0;
+  top: 0;
+  /*top: 25px;*/
+  width: 165px;
+}
+.Track .Panel .Slider {
+  display: inline-block;
+  width: 80px;
+  height: 15px;
+  position: absolute;
+  top: 30px;
+  left: 100px;
+  background: #222;
+}
+.Track .Panel .Slider .Bar {
+  height: 100%;
+  width: 100%;
+  background: #555;
+}
+.Track .Panel .Slider .Label {
+  display: none;
+  top: -25px;
+  left: 5px;
+  position: relative;
+}
+.Track .Panel .CheckBox {
+  top: 5px;
+  left: 160px;
+  /*width: 15px;*/
+  /*height: 15px;*/
+  /*border-radius: 15px;*/
+  position: absolute;
+  /*background: #fff;*/
+  width: 15px;
+  height: 15px;
+  background: #eee;
+  border-radius: 100%;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+  /*box-shadow: 0px 1px 3px rgba(0,0,0,0.5);*/
+}
+.Track .Panel .CheckBox label {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 100%;
+  -webkit-transition: all .2s ease;
+  /*transition: all .2s ease;*/
+  cursor: pointer;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 1;
+  background: #333;
+  -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.Track .TrackArea {
+  left: 200px;
+  position: absolute;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.Track .TrackArea .Clip {
+  top: 1px;
+  position: relative;
+  height: 60px;
+  /*background: #000000;*/
+  font-size: 0;
+}
+.Track .TrackArea .Clip .ActHint {
+  -webkit-transition: left .2s ease;
+  position: absolute;
+  height: 2px;
+  width: 40px;
+  top: 55px;
+  background: #FAF014;
+  display: none;
+}
+.FileMenu {
+  position: absolute;
+  width: 480px;
+  height: 300px;
+  background: #222;
+  display: none;
+}
+.FileMenu .Top {
+  width: 100%;
+  height: 250px;
+}
+.FileMenu .Top .Left {
+  display: inline-block;
+  width: 150px;
+  height: 100%;
+  border-right: #141414 1px solid;
+}
+.FileMenu .Top .Left .Item {
+  color: #dddddd;
+  height: 30px;
+  width: 100%;
+}
+.FileMenu .Top .Left .Item:hover {
+  color: #222222;
+  background: #faf014;
+}
+.FileMenu .Top .Right {
+  display: inline-block;
+  position: absolute;
+  left: 150px;
+  width: 320px;
+  height: 100%;
+}
+.FileMenu .Top .Right .Top {
+  width: 100%;
+  height: 40px;
+  border-bottom: #141414 1px solid;
+}
+.FileMenu .Top .Right .Bottom {
+  background: #554c0d;
+}
+.FileMenu .Bottom {
+  width: 100%;
+  height: 40px;
+  background: #faf014;
+}
+.FileMenu .Bottom div {
+  display: inline-block;
+}
+.BottomBar {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 35px;
+  background: #aaa;
+}
+::-webkit-scrollbar {
+  position: relative;
+  width: 15px;
+  background-color: #cccccc;
+}
+::-webkit-scrollbar-thumb {
+  height: 50px;
+  background-color: #999;
+  -webkit-border-radius: 4px;
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  border: 2px solid #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+  height: 50px;
+  background-color: #9f9f9f;
+  -webkit-border-radius: 4px;
+}
+.TitleBar {
+  width: 100%;
+  height: 35px;
+  border-bottom: 3px solid #FAF014;
+  background: #222222;
+}
+.TitleBar .TitleMenu {
+  position: absolute;
+  /*display: inline-block;*/
+  left: 200px;
+  /*float: left;*/
+  top: 10px;
+}
+.TitleBar .TitleMenu .MenuBtn {
+  display: inline-block;
+  font-size: 18px;
+  font-family: sans-serif;
+  width: 80px;
+  height: 25px;
+  color: #ddd;
+  background: #333;
+  text-align: center;
+  cursor: hand;
+  -webkit-app-region: no-drag;
+}
+.TitleBar .TitleBarButton {
+  float: right;
+  -webkit-app-region: no-drag;
+}
+.PopupLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1660px;
+  height: 1024px;
+}
+.PopupLayer .SettingWin {
+  position: absolute;
+  width: 648px;
+  height: 500px;
+  left: 200px;
+  top: 200px;
+  border: #141414 2px solid;
+  background: #222222;
+}
+.PopupLayer .SettingWin .Title {
+  width: 100%;
+  height: 30px;
+  background: #faf014;
+}
+.PopupLayer .SettingWin .Title button {
+  float: right;
+}
+.PopupLayer .SettingWin .Tab .Bar {
+  position: absolute;
+  top: 32px;
+  height: 30px;
+}
+.PopupLayer .SettingWin .Tab .Bar .Button {
+  top: 8px;
+  height: 22px;
+  background: #222222;
+  text-align: center;
+  display: inline-block;
+  border: #141414 1px solid;
+}
+.PopupLayer .SettingWin .Tab .Content {
+  position: absolute;
+  top: 64px;
+  height: 436px;
+  width: 100%;
+  background: #333333;
+  overflow-y: scroll;
+}
+.PopupLayer .SettingWin .Tab .Content .Page {
+  height: 438px;
+}
+body {
+  background: #111;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-user-select: none;
+  margin: 0;
+}
+.Content {
+  width: 100%;
+  height: 100%;
+  background: #444444;
+}
+.Viewport {
+  font-size: 0;
+  letter-spacing: 0;
+  word-spacing: 0;
+  height: 720px;
+  background: #555;
+}
+.Comp {
+  display: inline-block;
+  position: relative;
+  width: 1280px;
+  height: 100%;
+  /*background: #550108;*/
+  -webkit-text-size-adjust: none;
+}
+.ToolShelf {
+  display: inline-block;
+  /*position: relative;*/
+  width: 300px;
+  height: 100%;
+  background: #554c0d;
+  -webkit-text-size-adjust: none;
+}
+.Timeline {
+  width: 100%;
+  background: #222;
+}
+.CursorFocus {
+  display: inline-block;
+  opacity: .3;
+  top: 30px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: -webkit-gradient(linear, left top, right top, from(#ffffff), color-stop(0.2, rgba(0, 0, 0, 0)), color-stop(0.8, rgba(0, 0, 0, 0)), to(#ffffff));
+}
+#CursorMask {
+  left: 200px;
+  width: 2000px;
+  height: 1000px;
+  /*background: #92231a;*/
+  /*opacity: 0.5;*/
+  pointer-events: none;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.Cursor {
+  position: absolute;
+  width: 40px;
+  font-size: 0;
+  height: 100%;
+  pointer-events: none;
+}
+.CursorHint {
+  display: inline-block;
+  position: relative;
+  top: 20px;
+  width: 100%;
+  height: 5px;
+  background: #fdfd23;
+}
+#composition {
+  /*width: 200px;*/
+  position: relative;
+  height: 193px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.HScrollBar {
+  position: absolute;
+  height: 16px;
+  width: 1460px;
+  background: #FF0000;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+#trackWidth {
+  height: 1px;
+}
+.VScrollBar {
+  position: absolute;
+  top: 30px;
+  left: -15px;
+  width: 15px;
+  overflow-y: scroll;
+}
+.TrackTool {
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  width: 200px;
+  /*top: -8px;*/
+  background: #222222;
+}
+.TrackToolButton {
+  width: 40px;
+  height: 18px;
+  top: 3px;
+  border-radius: 8px;
+  border: 2px solid #FAF014;
+}
+.TimestampBar {
+  font-size: 0;
+  display: inline-block;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  background: #2f2f2f;
+}
+.VSplitter:hover {
+  background: #444;
+}
+.VSplitter {
+  height: 8px;
+  background: #141414;
+}
+.HSplitter {
+  -webkit-text-size-adjust: none;
+  display: inline-block;
+  left: 300px;
+  height: 100%;
+  /*position: absolute;*/
+  width: 8px;
+  background: #141414;
+}
