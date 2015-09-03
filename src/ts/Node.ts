@@ -20,7 +20,6 @@ function walk(path):Array<string> {
     return fileArr;
 }
 
-
 //walk('D:/projects/linAnil/test/test10');
 //fs.mkdir("c:a", function (err) {
 //    if (!err) {

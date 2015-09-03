@@ -1,7 +1,7 @@
 /// <reference path="Filter.ts"/>
 /// <reference path="../../Node.ts"/>
 
-class Packer extends Stream {
+class Packer {
     _options;
     PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
     TYPE_IHDR = 0x49484452;
@@ -10,15 +10,11 @@ class Packer extends Stream {
     crcTable;
 
     constructor(options) {
-        super();
-
         this._options = options;
-
         options.deflateChunkSize = options.deflateChunkSize || 32 * 1024;
         options.deflateLevel = options.deflateLevel || 9;
         options.deflateStrategy = options.deflateStrategy || 3;
 
-        this.readable = true;
         this.initCrc();
     }
 
@@ -38,36 +34,63 @@ class Packer extends Stream {
     }
 
     pack(pixelData, width, height, depthInBytes) {
-
-        // Signature
-        this.emit('data', new Buffer(this.PNG_SIGNATURE));
-        this.emit('data', this._packIHDR(width, height, depthInBytes));
-
-        // filter pixel data
+        var bufs = [];
+        bufs.push(new Buffer(this.PNG_SIGNATURE));
+        bufs.push(this._packIHDR(width, height, depthInBytes));
         var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
         var dataFilter = filter.filter();
-        //console.log(this, "dataFilter len", dataFilter.length);
-        // compress it
+
         var deflate = zlib.createDeflate({
             chunkSize: this._options.deflateChunkSize,
             level: this._options.deflateLevel,
             strategy: this._options.deflateStrategy
         });
-        deflate.on('error', this.emit.bind(this, 'error'));
+        //deflate.on('error', this.emit.bind(this, 'error'));
 
-        deflate.on('data', function (data) {
-            this.emit('data', this._packIDAT(data));
-        }.bind(this));
+        deflate.on('data', (data)=> {
+            bufs.push(this._packIDAT(data));
+        });
 
-        deflate.on('end', function () {
-            this.emit('data', this._packIEND());
-            this.emit('end');
-        }.bind(this));
+        deflate.on('end', ()=> {
+            bufs.push(this._packIEND());
+            var stream2 = fs.createWriteStream('../test/test2.png');
+            stream2.write(Buffer.concat(bufs));
+            stream2.close();
+        });
 
         deflate.end(dataFilter);
-        //deflate.end(pixelData);
-        return this;
     }
+
+    //pack(pixelData, width, height, depthInBytes) {
+    //    // Signature
+    //    this.emit('data', new Buffer(this.PNG_SIGNATURE));
+    //    this.emit('data', this._packIHDR(width, height, depthInBytes));
+    //
+    //    // filter pixel data
+    //    var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
+    //    var dataFilter = filter.filter();
+    //    //console.log(this, "dataFilter len", dataFilter.length);
+    //    // compress it
+    //    var deflate = zlib.createDeflate({
+    //        chunkSize: this._options.deflateChunkSize,
+    //        level: this._options.deflateLevel,
+    //        strategy: this._options.deflateStrategy
+    //    });
+    //    //deflate.on('error', this.emit.bind(this, 'error'));
+    //
+    //    deflate.on('data', function (data) {
+    //        this.emit('data', this._packIDAT(data));
+    //    }.bind(this));
+    //
+    //    deflate.on('end', function () {
+    //        this.emit('data', this._packIEND());
+    //        this.emit('end');
+    //    }.bind(this));
+    //
+    //    deflate.end(dataFilter);
+    //    //deflate.end(pixelData);
+    //    return this;
+    //}
 
     _packIHDR(width, height, depthInBytes) {
         var buf = new Buffer(13);

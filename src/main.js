@@ -1396,10 +1396,9 @@ var TheMachine = (function (_super) {
     };
     return TheMachine;
 })(EventDispatcher);
-var Filter = (function (_super) {
-    __extends(Filter, _super);
+/// <reference path="../../node.d.ts"/>
+var Filter = (function () {
     function Filter(width, height, depthInBytes, Bpp, data, options) {
-        _super.call(this);
         this._width = width;
         this._height = height;
         this._depthInBytes = depthInBytes;
@@ -1447,13 +1446,11 @@ var Filter = (function (_super) {
         return sum;
     };
     return Filter;
-})(Stream);
+})();
 /// <reference path="Filter.ts"/>
 /// <reference path="../../Node.ts"/>
-var Packer = (function (_super) {
-    __extends(Packer, _super);
+var Packer = (function () {
     function Packer(options) {
-        _super.call(this);
         this.PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
         this.TYPE_IHDR = 0x49484452;
         this.TYPE_IDAT = 0x49444154;
@@ -1462,7 +1459,6 @@ var Packer = (function (_super) {
         options.deflateChunkSize = options.deflateChunkSize || 32 * 1024;
         options.deflateLevel = options.deflateLevel || 9;
         options.deflateStrategy = options.deflateStrategy || 3;
-        this.readable = true;
         this.initCrc();
     }
     Packer.prototype.initCrc = function () {
@@ -1480,32 +1476,60 @@ var Packer = (function (_super) {
             this.crcTable[i] = c;
         }
     };
-    Packer.prototype.pack = function (pixelData, width, height, depthInBytes) {
-        // Signature
-        this.emit('data', new Buffer(this.PNG_SIGNATURE));
-        this.emit('data', this._packIHDR(width, height, depthInBytes));
-        // filter pixel data
+    Packer.prototype.pack2 = function (pixelData, width, height, depthInBytes) {
+        var _this = this;
+        var bufs = [];
+        bufs.push(new Buffer(this.PNG_SIGNATURE));
+        bufs.push(this._packIHDR(width, height, depthInBytes));
         var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
         var dataFilter = filter.filter();
-        //console.log(this, "dataFilter len", dataFilter.length);
-        // compress it
         var deflate = zlib.createDeflate({
             chunkSize: this._options.deflateChunkSize,
             level: this._options.deflateLevel,
             strategy: this._options.deflateStrategy
         });
-        deflate.on('error', this.emit.bind(this, 'error'));
+        //deflate.on('error', this.emit.bind(this, 'error'));
         deflate.on('data', function (data) {
-            this.emit('data', this._packIDAT(data));
-        }.bind(this));
+            bufs.push(_this._packIDAT(data));
+        });
         deflate.on('end', function () {
-            this.emit('data', this._packIEND());
-            this.emit('end');
-        }.bind(this));
+            bufs.push(_this._packIEND());
+            var stream2 = fs.createWriteStream('../test/test2.png');
+            stream2.write(Buffer.concat(bufs));
+            stream2.close();
+        });
         deflate.end(dataFilter);
-        //deflate.end(pixelData);
-        return this;
     };
+    //pack(pixelData, width, height, depthInBytes) {
+    //    // Signature
+    //    this.emit('data', new Buffer(this.PNG_SIGNATURE));
+    //    this.emit('data', this._packIHDR(width, height, depthInBytes));
+    //
+    //    // filter pixel data
+    //    var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
+    //    var dataFilter = filter.filter();
+    //    //console.log(this, "dataFilter len", dataFilter.length);
+    //    // compress it
+    //    var deflate = zlib.createDeflate({
+    //        chunkSize: this._options.deflateChunkSize,
+    //        level: this._options.deflateLevel,
+    //        strategy: this._options.deflateStrategy
+    //    });
+    //    //deflate.on('error', this.emit.bind(this, 'error'));
+    //
+    //    deflate.on('data', function (data) {
+    //        this.emit('data', this._packIDAT(data));
+    //    }.bind(this));
+    //
+    //    deflate.on('end', function () {
+    //        this.emit('data', this._packIEND());
+    //        this.emit('end');
+    //    }.bind(this));
+    //
+    //    deflate.end(dataFilter);
+    //    //deflate.end(pixelData);
+    //    return this;
+    //}
     Packer.prototype._packIHDR = function (width, height, depthInBytes) {
         var buf = new Buffer(13);
         buf.writeUInt32BE(width, 0);
@@ -1540,7 +1564,7 @@ var Packer = (function (_super) {
         return crc ^ -1;
     };
     return Packer;
-})(Stream);
+})();
 /// <reference path="Packer.ts"/>
 var PngMaker = (function () {
     function PngMaker() {
@@ -1563,19 +1587,21 @@ var PngMaker = (function () {
                 pixeldata[idx + 3] = 0;
             }
         }
-        var buffers = [];
-        packer.on('data', function (buffer) {
-            buffers.push(buffer);
-            console.log(this, 'push buffer');
-        });
-        packer.on('end', function () {
-            var buffer = Buffer.concat(buffers);
-            var stream = fs.createWriteStream('../test/test.png');
-            stream.write(buffer);
-            stream.close();
-        });
+        //var buffers = [];
+        //packer.on('data', function (buffer) {
+        //    buffers.push(buffer);
+        //    console.log(this, 'push buffer');
+        //});
+        //packer.on('end', ()=> {
+        //    var buffer = Buffer.concat(buffers);
+        //    var stream = fs.createWriteStream('../test/test.png');
+        //    stream.write(buffer);
+        //    stream.close();
+        //});
         //packer.on('error', dataStream.emit.bind(dataStream, 'error'));
-        packer.pack(pixeldata, w, h, 1);
+        //packer.pack(pixeldata, w, h, 1);
+        /// new
+        packer.pack2(pixeldata, w, h, 1);
     };
     return PngMaker;
 })();

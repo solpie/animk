@@ -21,18 +21,20 @@ class PngMaker {
                 pixeldata[idx + 3] = 0;
             }
         }
-        var buffers = [];
-        packer.on('data', function (buffer) {
-            buffers.push(buffer);
-            console.log(this, 'push buffer');
-        });
-        packer.on('end', ()=> {
-            var buffer = Buffer.concat(buffers);
-            var stream = fs.createWriteStream('../test/test.png');
-            stream.write(buffer);
-            stream.close();
-        });
+        //var buffers = [];
+        //packer.on('data', function (buffer) {
+        //    buffers.push(buffer);
+        //    console.log(this, 'push buffer');
+        //});
+        //packer.on('end', ()=> {
+        //    var buffer = Buffer.concat(buffers);
+        //    var stream = fs.createWriteStream('../test/test.png');
+        //    stream.write(buffer);
+        //    stream.close();
+        //});
         //packer.on('error', dataStream.emit.bind(dataStream, 'error'));
+        //packer.pack(pixeldata, w, h, 1);
+        /// new
         packer.pack(pixeldata, w, h, 1);
     }
 

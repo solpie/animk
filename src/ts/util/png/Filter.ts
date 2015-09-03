@@ -1,4 +1,6 @@
-class Filter extends Stream {
+/// <reference path="../../node.d.ts"/>
+
+class Filter {
     _width;
     _height;
     _depthInBytes;
@@ -9,7 +11,6 @@ class Filter extends Stream {
     _filters;
 
     constructor(width, height, depthInBytes, Bpp, data, options) {
-        super();
         this._width = width;
         this._height = height;
         this._depthInBytes = depthInBytes;
