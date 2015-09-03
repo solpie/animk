@@ -15,6 +15,7 @@ var runNw = function () {
 };
 gulp.task('ts', function () {
     run('tsc --out src/main.js src/ts/main.ts').exec();
+    //run('tsc --out src/main.js src/ts/main.ts --module commonjs').exec();
 });
 gulp.task("less", function () {
     if (isDev)

@@ -19,6 +19,20 @@ function walk(path):Array<string> {
     });
     return fileArr;
 }
+declare class Buffer {
+    constructor(val?);
+
+    static concat(val?);
+
+    fill(val);
+
+    length:number;
+    writeUInt16BE(val1,val2);
+    writeUInt32BE(val1,val2);
+    writeInt32BE(val1,val2);
+    slice(val1,val2);
+}
+
 
 //walk('D:/projects/linAnil/test/test10');
 //fs.mkdir("c:a", function (err) {

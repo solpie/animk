@@ -276,7 +276,8 @@ var ImageInfo = (function () {
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="ImageInfo.ts"/>
@@ -1396,7 +1397,7 @@ var TheMachine = (function (_super) {
     };
     return TheMachine;
 })(EventDispatcher);
-/// <reference path="../../node.d.ts"/>
+/// <reference path="../../Node.ts"/>
 var Filter = (function () {
     function Filter(width, height, depthInBytes, Bpp, data, options) {
         this._width = width;
@@ -1476,7 +1477,7 @@ var Packer = (function () {
             this.crcTable[i] = c;
         }
     };
-    Packer.prototype.pack2 = function (pixelData, width, height, depthInBytes) {
+    Packer.prototype.pack = function (pixelData, width, height, depthInBytes) {
         var _this = this;
         var bufs = [];
         bufs.push(new Buffer(this.PNG_SIGNATURE));
@@ -1565,7 +1566,456 @@ var Packer = (function () {
     };
     return Packer;
 })();
+var jDataView = require('jdataview');
+var Layer = (function () {
+    function Layer() {
+        this.top = 0;
+        this.left = 0;
+        this.width = 0;
+        this.height = 0;
+        this.blendmode = 'norm';
+        this.opacity = 1;
+        this.name = '';
+        this.hasAlpha = true;
+        this.channels = [];
+    }
+    /**
+     * draw image
+     * @param image {ImageData} image data
+     */
+    Layer.prototype.drawImage = function (image) {
+        this.width = image.width;
+        this.height = image.height;
+        this.hasAlpha = image.hasAlpha;
+        this.channels = image.channels;
+    };
+    Layer.prototype.getChannelImageBinary = function () {
+        var that = this;
+        var channelImageData = Buffer.concat(that.channels.map(function (channel) {
+            return channel.toBinary().buffer;
+        }));
+        return new jDataView(channelImageData);
+    };
+    /**
+     * return layer record binary data
+     * @return {jDataView} layer record binary data
+     */
+    Layer.prototype.toBinary = function () {
+        var that = this;
+        // Layer record
+        var numChannel = this.channels.length;
+        var layerRecordSize = 34 + 4 + 4 + 4 + (6 * numChannel);
+        var layerRecord = new jDataView(layerRecordSize);
+        // rectangle
+        layerRecord.writeUint32(this.top); // top
+        layerRecord.writeUint32(this.left); // left
+        layerRecord.writeUint32(this.top + this.height); // bottom
+        layerRecord.writeUint32(this.left + this.width); // right
+        // number of channels in the layer
+        layerRecord.writeUint16(numChannel);
+        // channnel infomation
+        this.channels.forEach(function (channel, index) {
+            // id
+            var id = (that.hasAlpha && index === numChannel - 1) ? -1 : index;
+            layerRecord.writeInt16(id);
+            // length
+            var channelByteLength = channel.toBinary().byteLength;
+            layerRecord.writeUint32(channelByteLength);
+        });
+        // blend mode signature
+        layerRecord.writeString('8BIM');
+        // blend mode key
+        layerRecord.writeString(this.blendmode);
+        // opacity
+        layerRecord.writeUint8(Math.round(this.opacity * 255));
+        // clipping
+        layerRecord.writeUint8(0); // base
+        // flags
+        layerRecord.writeUint8(parseInt('00001000', 2));
+        // filler (zero)
+        layerRecord.writeUint8(0);
+        // length of the extra data field
+        layerRecord.writeUint32(4 + 4 + 4);
+        // layer mask data
+        layerRecord.writeUint32(0);
+        // layer blending ranges data
+        layerRecord.writeUint32(0); // length
+        // Layer name: Pascal string, padded to a multiple of 4 bytes.
+        layerRecord.writeUint8(3);
+        layerRecord.writeUint8('P'.charCodeAt(0));
+        layerRecord.writeUint8('N'.charCodeAt(0));
+        layerRecord.writeUint8('G'.charCodeAt(0));
+        return layerRecord;
+    };
+    return Layer;
+})();
+var ChImageData = (function () {
+    function ChImageData(width, height, pixels) {
+        this.width = width;
+        this.height = height;
+        this.pixels = pixels;
+    }
+    ChImageData.prototype.compressRLE = function () {
+        // RLE compress
+        var width = this.width;
+        var height = this.height;
+        var compressedLines = [];
+        var byteCounts = new jDataView(new Buffer(this.height * 2));
+        byteCounts.buffer.fill(0);
+        for (var i = 0; i < height; i++) {
+            // read line data
+            var start = i * width;
+            var end = start + width;
+            var compressedLine = this.encodeRLE(this.pixels.buffer.slice(start, end));
+            compressedLines.push(compressedLine);
+            byteCounts.writeUint16(compressedLine.length);
+        }
+        return {
+            byteCounts: byteCounts,
+            image: new jDataView(Buffer.concat(compressedLines))
+        };
+    };
+    ChImageData.prototype.encodeRLE = function (data) {
+        var result = [];
+        if (data.length === 0) {
+            throw new Error('buffer length is 0');
+        }
+        if (data.length === 1) {
+            result.push(0x00);
+            result.push(data[0]);
+            return new Buffer(result);
+        }
+        var buf = [];
+        var pos = 0;
+        var repeatCount = 0;
+        var MAX_LENGTH = 127;
+        // we can safely start with RAW sa empty RAW sequences
+        // are handled by finishRAW()
+        var state = 'RAW';
+        function finishRAW() {
+            if (buf.length === 0) {
+                return;
+            }
+            result.push(buf.length - 1);
+            result = result.concat(buf);
+            buf = [];
+        }
+        function finishRLE() {
+            result.push(256 - (repeatCount - 1));
+            result.push(data[pos]);
+        }
+        while (pos < data.length - 1) {
+            var currentByte = data[pos];
+            if (data[pos] === data[pos + 1]) {
+                if (state === 'RAW') {
+                    // end of RAW data
+                    finishRAW();
+                    state = 'RLE';
+                    repeatCount = 1;
+                }
+                else if (state === 'RLE') {
+                    if (repeatCount === MAX_LENGTH) {
+                        // restart the encoding
+                        finishRLE();
+                        repeatCount = 0;
+                    }
+                    // move to next byte
+                    repeatCount += 1;
+                }
+            }
+            else {
+                if (state === 'RLE') {
+                    repeatCount += 1;
+                    finishRLE();
+                    state = 'RAW';
+                    repeatCount = 0;
+                }
+                else if (state === 'RAW') {
+                    if (buf.length === MAX_LENGTH) {
+                        // restart the encoding
+                        finishRAW();
+                    }
+                    buf.push(currentByte);
+                }
+            }
+            pos += 1;
+        }
+        if (state === 'RAW') {
+            buf.push(data[pos]);
+            finishRAW();
+        }
+        else if (state === 'RLE') {
+            repeatCount += 1;
+            finishRLE();
+        }
+        return new Buffer(result);
+    };
+    ChImageData.prototype.toBinary = function () {
+        // set compression type
+        var compType = new Buffer(2);
+        compType.writeUInt16BE(1, 0); // RLE
+        // get RLE compressed data
+        var compressedData = this.compressRLE();
+        return new jDataView(Buffer.concat([
+            compType,
+            compressedData.byteCounts.buffer,
+            compressedData.image.buffer // RLE compressed data
+        ]));
+    };
+    return ChImageData;
+})();
+/// <reference path="ChImageData.ts"/>
+/// <reference path="../../Node.ts"/>
+jDataView = require('jdataview');
+var PsdImage = (function () {
+    function PsdImage(width, height, colorSpace, pixcels) {
+        // init params
+        this.width = (typeof width === 'number') ? width : 0;
+        this.height = (typeof height === 'number') ? height : 0;
+        this.colorSpace = colorSpace.match(/^(gray|rgb)a?$/) ? colorSpace : 'rgba';
+        this.colorMode = this.colorSpace.match(/^graya?$/) ? 'gray' : 'rgb';
+        this.hasAlpha = (this.colorSpace === this.colorMode + 'a');
+        this.pixcels = pixcels;
+        this.numChannel = (this.colorMode === 'rgb') ? 3 : 1;
+        this.numChannel += this.hasAlpha ? 1 : 0;
+        this.numPixcels = this.numChannel * this.width * this.height;
+        this.channels = [];
+        if (this.pixcels.byteLength !== this.numPixcels) {
+            throw new Error('mismatch number of pixcels.');
+        }
+        // init channels
+        var that = this;
+        var channels = [];
+        for (var i = 0; i < this.numChannel; i++) {
+            channels.push([]);
+        }
+        for (i = 0; i < this.numPixcels; i += this.numChannel) {
+            for (var index = 0; index < this.numChannel; index++) {
+                channels[index].push(this.pixcels.getUint8(i + index));
+            }
+        }
+        this.channels = channels.map(function (channel) {
+            var pixcels = new jDataView(channel);
+            return new ChImageData(that.width, that.height, pixcels);
+        });
+    }
+    PsdImage.prototype.toBinary = function () {
+        // set compression type
+        var compType = new Buffer(2);
+        compType.writeUInt16BE(1, 0); // RLE
+        // get compressed image data
+        var byteCounts = [];
+        var compressedImages = [];
+        this.channels.forEach(function (channel) {
+            var comp = channel.compressRLE();
+            byteCounts.push(comp.byteCounts.buffer);
+            compressedImages.push(comp.image.buffer);
+        });
+        // return binary buffer
+        return new jDataView(Buffer.concat([
+            compType,
+            Buffer.concat(byteCounts),
+            Buffer.concat(compressedImages)
+        ]));
+    };
+    return PsdImage;
+})();
+/// <reference path="Layer.ts"/>
+/// <reference path="PsdImage.ts"/>
+var jDataView = require('jdataview');
+var PsdFile = (function () {
+    function PsdFile(width, height, colorSpace) {
+        this.COLOR_MODE = { gray: 1, rgb: 3 };
+        // init params
+        this.width = (typeof width === 'number') ? width : 0;
+        this.height = (typeof height === 'number') ? height : 0;
+        this.colorSpace = colorSpace.match(/^(gray|rgb)a?$/) ? colorSpace : 'rgba';
+        this.colorMode = this.colorSpace.match(/^graya?$/) ? 'gray' : 'rgb';
+        this.hasAlpha = (this.colorSpace === this.colorMode + 'a');
+        this.numChannel = (this.colorMode === 'rgb') ? 3 : 1;
+        this.numChannel += this.hasAlpha ? 1 : 0;
+        this.imageData = null;
+        // init layer
+        this.layers = [];
+    }
+    PsdFile.prototype.appendLayer = function (layer) {
+        //if (layer instanceof Layer) {
+        this.layers.push(layer);
+        //}
+        return this;
+    };
+    PsdFile.prototype.toBinary = function () {
+        // header
+        var header = this._getHeaderBinary(this);
+        // Color Mode Data Block
+        var colorModeData = new jDataView(4);
+        colorModeData.writeUint32(0);
+        // Image Resources Block
+        var imageResources = new jDataView(4);
+        imageResources.writeUint32(0);
+        // Layer Block
+        var layer = this._createLayerBlockBuffer(this);
+        // Image Data Block
+        var imageData = this.imageData.toBinary();
+        // return buffer
+        var data = Buffer.concat([
+            header.buffer,
+            colorModeData.buffer,
+            imageResources.buffer,
+            layer.buffer,
+            imageData.buffer
+        ]);
+        return data;
+    };
+    PsdFile.prototype._getHeaderBinary = function (psd) {
+        var header = new jDataView(new Buffer(26));
+        header.buffer.fill(0);
+        header.writeString('8BPS'); // Signature
+        header.writeUint16(1); // Version 1
+        header.writeUint16(0); // Reserved
+        header.writeUint16(0); // Reserved
+        header.writeUint16(0); // Reserved
+        header.writeUint16(psd.numChannel); // number of color chunnel
+        header.writeUint32(psd.height); // rows
+        header.writeUint32(psd.width); // columns
+        header.writeUint16(8); // Depth
+        header.writeUint16(psd.COLOR_MODE[psd.colorMode]); // color mode
+        return header;
+    };
+    PsdFile.prototype._createLayerBlockBuffer = function (psd) {
+        if (psd.layers.length === 0) {
+            var nullLayer = new jDataView(4);
+            nullLayer.writeUint32(0);
+            return nullLayer;
+        }
+        // layer records
+        var layerRecords = Buffer.concat(psd.layers.map(function (layer) {
+            return layer.toBinary().buffer;
+        }));
+        // layer channel image data
+        var layerChannnelImageData = Buffer.concat(psd.layers.map(function (layer) {
+            return layer.getChannelImageBinary().buffer;
+        }));
+        // layer info length
+        var layerInfoLength = 4 + 2 + layerRecords.length +
+            layerChannnelImageData.length;
+        // layer padding
+        var layerInfoPadding = new Buffer(layerInfoLength % 2);
+        layerInfoPadding.fill(0);
+        layerInfoLength += layerInfoPadding.length;
+        // layer info header
+        var layerInfoHeader = new jDataView(4 + 2);
+        layerInfoHeader.writeUint32(layerInfoLength - 4); // Length of the layers info
+        var layerCount = psd.layers.length;
+        layerInfoHeader.writeInt16(layerCount); // Layer count
+        // layer info
+        var layerInfo = Buffer.concat([
+            layerInfoHeader.buffer,
+            layerRecords,
+            layerChannnelImageData,
+            layerInfoPadding
+        ]);
+        // Global layer mask info
+        var globalLayerMaskInfoSize = 4 + 2 + 8 + 2 + 1 + 1;
+        var globalLayerMaskInfo = new jDataView(new Buffer(globalLayerMaskInfoSize));
+        globalLayerMaskInfo.writeUint32(globalLayerMaskInfoSize - 4); // length
+        globalLayerMaskInfo.writeUint16(0); // Overlay color space
+        globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
+        globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
+        globalLayerMaskInfo.writeUint16(0); // Opacity
+        globalLayerMaskInfo.writeUint8(0); // kind
+        globalLayerMaskInfo.writeUint8(0); // Filler: zeros
+        // layer block
+        var layerHedaer = new jDataView(4);
+        var layerLength = layerInfo.length + globalLayerMaskInfoSize;
+        layerHedaer.writeUint32(layerLength); // Length of the layer section
+        // layer
+        var layer = new jDataView(Buffer.concat([
+            layerHedaer.buffer,
+            layerInfo,
+            globalLayerMaskInfo.buffer
+        ]));
+        return layer;
+    };
+    return PsdFile;
+})();
+/// <reference path="PsdFile.ts"/>
+/// <reference path="PsdImage.ts"/>
+var PNGDecoder = require('png-stream').Decoder;
+var concat = require('concat-frames');
+var PsdMaker = (function () {
+    function PsdMaker() {
+        var _this = this;
+        var pngFilePath = "../test/test.png";
+        var psdFilePath = "../test/test2.psd";
+        fs.createReadStream(pngFilePath)
+            .pipe(new PNGDecoder())
+            .pipe(concat(function (frames) {
+            console.log(_this, frames);
+            var image = frames[0];
+            _this.convertPNG2PSD(image, function (psdFileBuffer) {
+                //callback(psdFileBuffer);
+                fs.writeFile(psdFilePath, psdFileBuffer, function (err) {
+                    if (err)
+                        throw err;
+                });
+            });
+        }));
+    }
+    /**
+     * convertPNG2PSD
+     * @param image {png} png image data
+     * @param callback {function} function(psdBuffer)
+     */
+    PsdMaker.prototype.convertPNG2PSD = function (png, callback) {
+        // create psd data
+        var psd = new PsdFile(png.width, png.height, png.colorSpace);
+        // append layer
+        var image = new PsdImage(png.width, png.height, png.colorSpace, new jDataView(png.pixels));
+        var layer = new Layer();
+        layer.drawImage(image);
+        psd.appendLayer(layer);
+        layer = new Layer();
+        layer.drawImage(image);
+        psd.appendLayer(layer);
+        // create merged image data
+        psd.imageData = new PsdImage(png.width, png.height, png.colorSpace, new jDataView(png.pixels));
+        // alpha blend whth white background
+        if (psd.hasAlpha) {
+            var channels = psd.imageData.channels;
+            var alphaPixels = channels[channels.length - 1].pixels;
+            for (var i = 0, l = channels.length - 1; i < l; i++) {
+                var pixels = channels[i].pixels;
+                for (var index = 0; index < pixels.byteLength; index++) {
+                    var color = pixels.getUint8(index);
+                    var alpha = alphaPixels.getUint8(index);
+                    var blendedColor = this.alphaBlendWithWhite(color, alpha);
+                    pixels.setUint8(index, blendedColor);
+                }
+            }
+        }
+        callback(psd.toBinary());
+    };
+    /**
+     * Alpha blend with white background
+     * @param srcColor {number} source color (0-255)
+     * @param srcAlpha {number} source alpha (0-255)
+     * @return {number} alpha blended color (0-255)
+     */
+    PsdMaker.prototype.alphaBlendWithWhite = function (srcColor, srcAlpha) {
+        var MAX = 255, MIN = 0, ALPHA_MAX = 1, WHITE = 255;
+        if (srcAlpha === MAX)
+            return srcColor;
+        if (srcAlpha === MIN)
+            return MAX;
+        var alpha = srcAlpha / MAX;
+        return Math.round((srcColor * alpha) + (WHITE * (ALPHA_MAX - alpha)));
+    };
+    return PsdMaker;
+})();
 /// <reference path="Packer.ts"/>
+/// <reference path="../../Node.ts"/>
+/// <reference path="../psd/PsdMaker.ts"/>
 var PngMaker = (function () {
     function PngMaker() {
     }
@@ -1587,21 +2037,8 @@ var PngMaker = (function () {
                 pixeldata[idx + 3] = 0;
             }
         }
-        //var buffers = [];
-        //packer.on('data', function (buffer) {
-        //    buffers.push(buffer);
-        //    console.log(this, 'push buffer');
-        //});
-        //packer.on('end', ()=> {
-        //    var buffer = Buffer.concat(buffers);
-        //    var stream = fs.createWriteStream('../test/test.png');
-        //    stream.write(buffer);
-        //    stream.close();
-        //});
-        //packer.on('error', dataStream.emit.bind(dataStream, 'error'));
-        //packer.pack(pixeldata, w, h, 1);
-        /// new
-        packer.pack2(pixeldata, w, h, 1);
+        packer.pack(pixeldata, w, h, 1);
+        var psd = new PsdMaker();
     };
     return PngMaker;
 })();

@@ -1,4 +1,4 @@
-/// <reference path="../../node.d.ts"/>
+/// <reference path="../../Node.ts"/>
 
 class Filter {
     _width;
