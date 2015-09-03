@@ -16,7 +16,7 @@ class PsdMaker {
                 var image = frames[0];
                 this.convertPNG2PSD(image, function (psdFileBuffer) {
                     //callback(psdFileBuffer);
-                    fs.writeFile(psdFilePath, psdFileBuffer, function(err) {
+                    fs.writeFile(psdFilePath, psdFileBuffer, function (err) {
                         if (err) throw err;
                     });
                 });

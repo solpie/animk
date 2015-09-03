@@ -11,7 +11,7 @@ class Layer {
     channels = [];
 
     constructor() {
-
+        this.name = "te12343s";
     }
 
     /**
@@ -85,6 +85,7 @@ class Layer {
         layerRecord.writeUint8(0);
 
         // length of the extra data field
+
         layerRecord.writeUint32(4 + 4 + 4);
 
         // layer mask data
@@ -94,10 +95,20 @@ class Layer {
         layerRecord.writeUint32(0); // length
 
         // Layer name: Pascal string, padded to a multiple of 4 bytes.
-        layerRecord.writeUint8(3);
-        layerRecord.writeUint8('P'.charCodeAt(0));
-        layerRecord.writeUint8('N'.charCodeAt(0));
-        layerRecord.writeUint8('G'.charCodeAt(0));
+        if (this.name) {
+            layerRecord.writeUint8(this.name.length);
+            for (var i = 0; i < 3; i++) {//todo name length only 3 char
+                var char = this.name[i];
+                console.log(this, "char", char.charCodeAt(0));
+                layerRecord.writeUint8(char.charCodeAt(0));
+            }
+        }
+        else {
+            layerRecord.writeUint8(3);
+            layerRecord.writeUint8('P'.charCodeAt(0));
+            layerRecord.writeUint8('N'.charCodeAt(0));
+            layerRecord.writeUint8('G'.charCodeAt(0));
+        }
 
         return layerRecord;
     }

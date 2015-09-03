@@ -96,13 +96,13 @@ class PsdFile {
         }));
 
         // layer channel image data
-        var layerChannnelImageData = Buffer.concat(psd.layers.map(function (layer:Layer) {
+        var layerChannelImageData = Buffer.concat(psd.layers.map(function (layer:Layer) {
             return layer.getChannelImageBinary().buffer;
         }));
 
         // layer info length
         var layerInfoLength = 4 + 2 + layerRecords.length +
-            layerChannnelImageData.length;
+            layerChannelImageData.length;
 
         // layer padding
         var layerInfoPadding = new Buffer(layerInfoLength % 2);
@@ -119,7 +119,7 @@ class PsdFile {
         var layerInfo = Buffer.concat([
             layerInfoHeader.buffer,
             layerRecords,
-            layerChannnelImageData,
+            layerChannelImageData,
             layerInfoPadding
         ]);
 
