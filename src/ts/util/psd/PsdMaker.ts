@@ -7,34 +7,38 @@ var concat = require('concat-frames');
 
 class PsdMaker {
     constructor() {
-        //var pngFilePath = "../test/test.png";
-        //var psdFilePath = "../test/test2.psd";
-        //fs.createReadStream(pngFilePath)
-        //    .pipe(new PNGDecoder())
-        //    .pipe(concat((frames)=> {
-        //        console.log(this, frames);
-        //        var image = frames[0];
-        //        this.convertPNG2PSD(image, function (psdFileBuffer) {
-        //            //callback(psdFileBuffer);
-        //            fs.writeFile(psdFilePath, psdFileBuffer, function(err) {
-        //                if (err) throw err;
-        //            });
-        //        });
-        //    }));
-        this.psd2png();
+        this.png2psd();
+        //this.psd2png();
+    }
+
+    png2psd() {
+        var pngFilePath = "../test/test10/image001.png";
+        var psdFilePath = "../test/test2.psd";
+        fs.createReadStream(pngFilePath)
+            .pipe(new PNGDecoder())
+            .pipe(concat((frames)=> {
+                console.log(this, frames);
+                var image = frames[0];
+                this.convertPNG2PSD(image, function (psdFileBuffer) {
+                    //callback(psdFileBuffer);
+                    fs.writeFile(psdFilePath, psdFileBuffer, function(err) {
+                        if (err) throw err;
+                    });
+                });
+            }));
     }
 
     psd2png() {
         var PSD = require('psd-parser');
         var psd = PSD.parse('../test/test2.psd');
         console.log(psd);
-        psd.getDescendants(); //±âÆ½»¯µÄÍ¼²ãÊý×é
-        psd.getTree(); //Ê÷ÐÍ½á¹¹µÄÍ¼²ãÊý×é£¬ÓëpsdÖÐ½á¹¹Ïà·û
-        console.log(psd._psd_); //½âÎöpsdºóµÄÔ­Ê¼¶ÔÏó
+        psd.getDescendants(); //ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        psd.getTree(); //ï¿½ï¿½ï¿½Í½á¹¹ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½psdï¿½Ð½á¹¹ï¿½ï¿½ï¿½
+        console.log(psd._psd_); //ï¿½ï¿½ï¿½ï¿½psdï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½
 
-        //psdËõÂÔÍ¼µÄÊä³ö,Ö»Ö§³ÖpngÊä³ö
-        //psd.saveAsPng('test.png') //Ä¿Ç°Òª×¢ÒâÄ¿Â¼ÊÇ·ñ´æÔÚ
-        //Ä³¸öÍ¼²ãµÄpngÊä³ö
+        //psdï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½,Ö»Ö§ï¿½ï¿½pngï¿½ï¿½ï¿½
+        //psd.saveAsPng('test.png') //Ä¿Ç°Òª×¢ï¿½ï¿½Ä¿Â¼ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
+        //Ä³ï¿½ï¿½Í¼ï¿½ï¿½ï¿½pngï¿½ï¿½ï¿½
         psd.getDescendants()[0].saveAsPng('../test/psd2png2.png')
     }
 

@@ -6,7 +6,7 @@
   "dependencies": {
     "concat-frames": "^1.0.1",
     "jdataview": "^2.4.6",
-    "psd-parse": "^0.1.6",
+    "psd-parser": "^0.1.6",
     "png-stream": "^1.0.1"
   },
   "window": {

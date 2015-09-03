@@ -51,12 +51,9 @@ class AppInfo extends EventDispatcher {
 
         //this.projectInfo.save('D:/projects/animk/test/data.json')
 
-
         //function loadUser() {
-
         //}
     }
-
 
     frameWidth() {
         return this.projectInfo.curComp.frameWidth
