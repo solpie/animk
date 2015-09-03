@@ -21,6 +21,7 @@ class PsdMaker {
         //            });
         //        });
         //    }));
+
         this.psd2png();
     }
     psd2png() {
