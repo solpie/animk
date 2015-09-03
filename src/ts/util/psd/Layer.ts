@@ -11,7 +11,7 @@ class Layer {
     channels = [];
 
     constructor() {
-        this.name = "te12343s";
+        //this.name = "te12343s";
     }
 
     /**
