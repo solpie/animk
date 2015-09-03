@@ -21,8 +21,21 @@ class PsdMaker {
                     });
                 });
             }));
+        this.psd2png();
     }
+    psd2png() {
+        var PSD = require('psd-parser');
+        var psd = PSD.parse('../test/test2.psd');
+        console.log(psd)
+        psd.getDescendants() //扁平化的图层数组
+        psd.getTree() //树型结构的图层数组，与psd中结构相符
+        console.log(psd._psd_) //解析psd后的原始对象
 
+        //psd缩略图的输出,只支持png输出
+        //psd.saveAsPng('test.png') //目前要注意目录是否存在
+        //某个图层的png输出
+        psd.getDescendants()[0].saveAsPng('../test/psd2png2.png')
+    }
     /**
      * convertPNG2PSD
      * @param image {png} png image data
