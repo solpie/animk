@@ -33,7 +33,7 @@ class Packer {
         }
     }
 
-    pack(pixelData, width, height, depthInBytes) {
+    pack(pixelData, width, height, depthInBytes,path) {
         var bufs = [];
         bufs.push(new Buffer(this.PNG_SIGNATURE));
         bufs.push(this._packIHDR(width, height, depthInBytes));
@@ -53,7 +53,7 @@ class Packer {
 
         deflate.on('end', ()=> {
             bufs.push(this._packIEND());
-            var stream2 = fs.createWriteStream('../test/test2.png');
+            var stream2 = fs.createWriteStream(path);
             stream2.write(Buffer.concat(bufs));
             stream2.close();
         });
@@ -61,36 +61,11 @@ class Packer {
         deflate.end(dataFilter);
     }
 
-    //pack(pixelData, width, height, depthInBytes) {
-    //    // Signature
-    //    this.emit('data', new Buffer(this.PNG_SIGNATURE));
-    //    this.emit('data', this._packIHDR(width, height, depthInBytes));
-    //
-    //    // filter pixel data
-    //    var filter = new Filter(width, height, depthInBytes, 4, pixelData, this._options); //UNDO : feed image depth
-    //    var dataFilter = filter.filter();
-    //    //console.log(this, "dataFilter len", dataFilter.length);
-    //    // compress it
-    //    var deflate = zlib.createDeflate({
-    //        chunkSize: this._options.deflateChunkSize,
-    //        level: this._options.deflateLevel,
-    //        strategy: this._options.deflateStrategy
-    //    });
-    //    //deflate.on('error', this.emit.bind(this, 'error'));
-    //
-    //    deflate.on('data', function (data) {
-    //        this.emit('data', this._packIDAT(data));
-    //    }.bind(this));
-    //
-    //    deflate.on('end', function () {
-    //        this.emit('data', this._packIEND());
-    //        this.emit('end');
-    //    }.bind(this));
-    //
-    //    deflate.end(dataFilter);
-    //    //deflate.end(pixelData);
-    //    return this;
-    //}
+    write(path) {
+        var stream2 = fs.createWriteStream(path);
+        stream2.write(Buffer.concat(bufs));
+        stream2.close();
+    }
 
     _packIHDR(width, height, depthInBytes) {
         var buf = new Buffer(13);

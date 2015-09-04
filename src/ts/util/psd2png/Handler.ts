@@ -1,4 +1,3 @@
-//var parseTextLayer = require('./textHelper');
 
 function newLayer(l) {
     function text() {

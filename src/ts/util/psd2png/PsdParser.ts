@@ -1,7 +1,9 @@
 /// <reference path="ImageHelper.ts"/>
 /// <reference path="Descriptor.ts"/>
 /// <reference path="Handler.ts"/>
-/// <reference path="layer/Records.ts"/>
+/// <reference path="layer/Records1.ts"/>
+/// <reference path="../png/Packer.ts"/>
+
 var PNG = require('pngjs').PNG,
     fs = require('fs');
 var MODES = [
@@ -36,7 +38,9 @@ class PsdParser {
     _bufferFile(buffer) {//file.js
         var jspack = require('jspack').jspack,
             iconv = require('iconv-lite');
-        var PSD = {};
+        var PSD = {
+            file: null
+        };
         PSD.file = {};
         PSD.file.buffer = buffer;
         var _pos = 0;

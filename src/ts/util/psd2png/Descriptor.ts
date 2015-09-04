@@ -144,7 +144,7 @@ class Descriptor {
 
 
     parseDescriptor() {
-        return new Descriptor(this.file)
+        return new Descriptor().init(this.file)
     }
 
 
@@ -154,9 +154,9 @@ class Descriptor {
             'Clss': this.parseClass,
             'Enmr': this.parseEnumeratedReference,
             'rele': this.parseOffset,
-            'Idnt': this.parseIdentifier,
+            //'Idnt': this.parseIdentifier,
             'indx': this.parseIndex,
-            'name': this.parseName
+            //'name': this.parseName,
         };
         var data = [];
         var itemNum = this.file.readInt();

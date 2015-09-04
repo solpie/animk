@@ -52,7 +52,6 @@ class Filter {
                     min = sum;
                 }
             }
-
             this._filters[sel](pxData, y, rawData);
         }
         return rawData;

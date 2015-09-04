@@ -23,7 +23,7 @@ class PngMaker {
                 pixeldata[idx + 3] = 0;
             }
         }
-        packer.pack(pixeldata, w, h, 1);
+        packer.pack(pixeldata, w, h, 1,'../test/test2.png');
         var psd = new PsdMaker();
     }
 
