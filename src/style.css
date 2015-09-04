@@ -405,10 +405,12 @@ body {
   background: #606060;
   opacity: .8;
   border-radius: 5px;
+  box-shadow: -5px 15px 15px #111111, 0 0 0 #111111, 0 5px 10px #111111, 5px 15px 15px #111111;
 }
 .ConsoleWin .In input {
   outline: none;
   border: 1px solid #404040;
+  box-shadow: 0 1px 0 #787878;
   margin-left: 8px;
   margin-top: 8px;
   border-radius: 5px;

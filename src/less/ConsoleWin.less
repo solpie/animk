@@ -1,5 +1,7 @@
 @import "theme";
-
+@SHOW_WIDTH : 5px;
+@SHADOW_FEA : 15px;
+@SHADOW_Y : 15px;
 .ConsoleWin {
   width: 255px;
   height: 250px;
@@ -12,11 +14,12 @@
   background: @Blender-Color-Light;
   opacity: .8;
   border-radius: 5px;
-
+  box-shadow: -@SHOW_WIDTH @SHADOW_Y @SHADOW_FEA #111,0 0 0 #111,0 @SHOW_WIDTH 10px #111,@SHOW_WIDTH @SHADOW_Y @SHADOW_FEA #111;
   .In {
     input {
       outline: none;
       border: 1px solid #404040;
+      box-shadow: 0 1px 0 #787878;
       margin-left: 8px;
       margin-top: 8px;
       border-radius: 5px;
