@@ -23,7 +23,7 @@ class TheMachine extends EventDispatcher {
             frameInfo.imageInfo.reloadImg();
             $(frameInfo.id$).attr("src", frameInfo.imageInfo.filename + "?fc=" + this._updateCount);
         }
-        appInfo.dis(TheMachineEvent.UPDATE_IMG);
+        appInfo.emit(TheMachineEvent.UPDATE_IMG);
     }
 
     watchAct() {
@@ -33,7 +33,7 @@ class TheMachine extends EventDispatcher {
             }
             else {
                 this.watchArr.push(this.ActFrameInfo);
-                this.dis(TheMachineEvent.ADD_IMG);
+                this.emit(TheMachineEvent.ADD_IMG);
             }
             this.open(this.ActFrameInfo.imageInfo.filename);
         }

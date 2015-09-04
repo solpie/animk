@@ -28,7 +28,7 @@ class SplitterView extends BaseWidget{
             console.log(this, "startMoveTimer splitter", this.id$);
         });
 
-        appInfo.add(MouseEvt.UP, ()=> {
+        appInfo.on(MouseEvt.UP, ()=> {
             this._isPress = false;
             this.stopMoveTimer();
         });
@@ -49,7 +49,7 @@ class SplitterView extends BaseWidget{
                     var dy = appInfo.mouseY - this._lastPos;
                     this._lastPos = appInfo.mouseY;
                     child1.height(child1.height() + dy);
-                    this.dis(ViewEvent.CHANGED, dy);
+                    this.emit(ViewEvent.CHANGED, dy);
                     //splitter.css({top: splitter.position().top + dy})
                 }
                 else if (this._dir == Direction.Horizontal) {
@@ -59,7 +59,7 @@ class SplitterView extends BaseWidget{
                     child1.width(child1.width() + dx);
                     var hs = $(this.id$);
                     hs.css({left: hs.position().left + dx});
-                    this.dis(ViewEvent.CHANGED, dx);
+                    this.emit(ViewEvent.CHANGED, dx);
                     //var c2 = $(this._childId$2);
                     //c2.css({left: hs.width() +hs.position().left+ dx});
                 }

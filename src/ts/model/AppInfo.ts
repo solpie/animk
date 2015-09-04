@@ -16,7 +16,7 @@ class AppInfo extends EventDispatcher {
 
     newProject() {
         this.projectInfo = new ProjectInfo();
-        this.dis(ProjectInfoEvent.NEW_PROJ);
+        this.emit(ProjectInfoEvent.NEW_PROJ);
         this.projectInfo.newComp(1280, 720, 24);
         this.projectInfo.curComp.setCursor(1);
 
@@ -24,7 +24,7 @@ class AppInfo extends EventDispatcher {
 
     openProject(path) {
         this.projectInfo = new ProjectInfo();
-        this.dis(ProjectInfoEvent.NEW_PROJ);
+        this.emit(ProjectInfoEvent.NEW_PROJ);
         this.projectInfo.open(path);
 
         //this.projectInfo.curComp.setCursor(1);

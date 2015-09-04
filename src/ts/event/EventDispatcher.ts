@@ -7,14 +7,14 @@ class EventDispatcher {
         this._funcId = 0;
     }
 
-    add(type:string, func) {
+    on(type:any, func) {
         if (!this._func[type])
             this._func[type] = [];
         this._funcId++;
         this._func[type].push({func: func, id: this._funcId});
     }
 
-    dis(type:string, param?) {
+    emit(type:any, param?) {
         if (this._func[type])
             for (var i = 0; i < this._func[type].length; ++i) {
                 var f = this._func[type][i];

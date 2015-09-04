@@ -1,5 +1,6 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 /// <reference path="BaseView.ts"/>
+/// <reference path="../Model/Command.ts"/>
 
 class SettingView extends BaseView {
     btnToPageArr;
@@ -7,6 +8,9 @@ class SettingView extends BaseView {
 
     constructor() {
         super();
+        cmd.on(CommandId.OpenSettingWin,()=>{
+            this.show();
+        })
 
     }
 

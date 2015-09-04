@@ -51,7 +51,7 @@ class FrameTimer extends EventDispatcher{
 
     onTick() {
         if (this._isBusy) {
-            this.dis(FrameTimerEvent.TICK);
+            this.emit(FrameTimerEvent.TICK);
             //console.log(this, "tick");
         }
         else {

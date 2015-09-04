@@ -19,7 +19,7 @@ class ProjectInfo extends EventDispatcher {
         this.comps.push(compInfo);
         compInfo.name = "Comp" + this.comps.length;
         console.log(this, "new CompInfo");
-        this.dis(CompInfoEvent.NEW_COMP, compInfo);
+        this.emit(CompInfoEvent.NEW_COMP, compInfo);
         return compInfo;
     }
 

@@ -16,7 +16,7 @@ class Slider extends BaseWidget {
             this.onDown();
         });
 
-        appInfo.add(MouseEvt.UP, ()=> {
+        appInfo.on(MouseEvt.UP, ()=> {
             this.onUp();
         });
 
@@ -34,7 +34,7 @@ class Slider extends BaseWidget {
             //change view
             //$(this.id$ + " " + ".Bar").width(barWidth);
             //$(this.id$ + " " + ".Label").html(parseInt(this._value * 100) + "%");
-            this.dis(ViewEvent.CHANGED, this._value);
+            this.emit(ViewEvent.CHANGED, this._value);
         }, 20);
     }
 
@@ -67,7 +67,7 @@ class Slider extends BaseWidget {
     onDown() {
         this._isPress = true;
         $(this.id$ + " " + ".Label").css({display: "block"});
-        this.dis(ViewEvent.CHANGED, this._value);
+        this.emit(ViewEvent.CHANGED, this._value);
         this.startMoveTimer();
     }
 

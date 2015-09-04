@@ -1,3 +1,4 @@
+/// <reference path="BaseView.ts"/>
 /// <reference path="SettingView.ts"/>
 
 class PopupView {
@@ -10,7 +11,7 @@ class PopupView {
     initSettingView() {
         this.settingView = new SettingView();
         $(ElmId$.fileMenuOption).on(MouseEvt.CLICK, ()=> {
-            this.settingView.show();
+            cmd.emit(CommandId.OpenSettingWin);
         });
     }
 }

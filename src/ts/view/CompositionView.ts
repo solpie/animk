@@ -23,14 +23,14 @@ class CompositionView implements IBaseView {
         this.compInfo = compInfo;
         this.trackViewArr = [];
 
-        this.compInfo.add(CompInfoEvent.UPDATE_CURSOR, (frameIdx) => {
+        this.compInfo.on(CompInfoEvent.UPDATE_CURSOR, (frameIdx) => {
             this.updateCursor(frameIdx);
         });
-        this.compInfo.add(CompInfoEvent.NEW_TRACK, (trackInfo:TrackInfo) => {
+        this.compInfo.on(CompInfoEvent.NEW_TRACK, (trackInfo:TrackInfo) => {
             this.onNewTrackView(trackInfo);
         });
 
-        this.compInfo.add(CompInfoEvent.DEL_TRACK, (idx:number)=> {
+        this.compInfo.on(CompInfoEvent.DEL_TRACK, (idx:number)=> {
             this.onDelTrackView(idx);
         });
         this.trackViewArr = [];
@@ -94,7 +94,7 @@ class CompositionView implements IBaseView {
 
     onUpdateTrackStart(trackInfo:TrackInfo) {
         this.updateMaxTrackWidth();
-        appInfo.dis(TheMachineEvent.UPDATE_IMG);
+        appInfo.emit(TheMachineEvent.UPDATE_IMG);
         //this.updateCursor(-1);
     }
 
@@ -122,7 +122,7 @@ class CompositionView implements IBaseView {
         $(ElmId$.cursor).css({
             left: fpos * appInfo.frameWidth() - this._hScrollVal
         });
-        appInfo.dis(TheMachineEvent.UPDATE_IMG);
+        appInfo.emit(TheMachineEvent.UPDATE_IMG);
     }
 
     onSelectFrame(selArr) {
@@ -143,14 +143,14 @@ class CompositionView implements IBaseView {
 
     onNewTrackView(trackInfo:TrackInfo) {
         console.log(this, "onNewTrackView");
-        trackInfo.add(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
+        trackInfo.on(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
             this.onSelTrackView(trackInfo);
         });
-        trackInfo.add(TrackInfoEvent.UPDATE_TRACK_START, (trackInfo:TrackInfo) => {
+        trackInfo.on(TrackInfoEvent.UPDATE_TRACK_START, (trackInfo:TrackInfo) => {
             this.onUpdateTrackStart(trackInfo);
         });
 
-        trackInfo.add(TrackInfoEvent.SEL_FRAME, (selArr)=> {
+        trackInfo.on(TrackInfoEvent.SEL_FRAME, (selArr)=> {
             this.onSelectFrame(selArr);
         });
         var view = new TrackView(trackInfo);
@@ -164,7 +164,7 @@ class CompositionView implements IBaseView {
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
         this.updateMaxTrackWidth();
-        appInfo.dis(TheMachineEvent.UPDATE_IMG);
+        appInfo.emit(TheMachineEvent.UPDATE_IMG);
     }
 
     updateMaxTrackWidth() {

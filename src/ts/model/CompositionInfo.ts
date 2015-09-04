@@ -37,7 +37,7 @@ class CompositionInfo extends EventDispatcher {
         this.trackInfoArr = [];
 
         this._frameTimer = new FrameTimer(framerate);
-        this._frameTimer.add(FrameTimerEvent.TICK, ()=> {
+        this._frameTimer.on(FrameTimerEvent.TICK, ()=> {
             this.onFrameTimerTick();
         });
     }
@@ -77,7 +77,7 @@ class CompositionInfo extends EventDispatcher {
 
     setCursor(framePos) {
         this._cursorPos = framePos;
-        this.dis(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
+        this.emit(CompInfoEvent.UPDATE_CURSOR, this._cursorPos);
     }
 
     forward() {
@@ -128,7 +128,7 @@ class CompositionInfo extends EventDispatcher {
         trackInfo.setStart(trackData.start);
         trackInfo.idx = this.trackInfoArr.length;
         this.trackInfoArr.push(trackInfo);
-        this.dis(CompInfoEvent.NEW_TRACK, trackInfo);
+        this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
     }
 
     delSelTrack() {
@@ -147,7 +147,7 @@ class CompositionInfo extends EventDispatcher {
         delete this.trackInfoArr[idx];
         console.log(this, "delTrack", idx + '');
         this.getMaxSize();
-        this.dis(CompInfoEvent.DEL_TRACK, idx);
+        this.emit(CompInfoEvent.DEL_TRACK, idx);
         //this.trackViewArr.splice(idx, 1);
     }
 

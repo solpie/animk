@@ -30,10 +30,10 @@ class AnimkView {
     constructor(appModel) {
         this.appInfo = appModel;
 
-        this.appInfo.add(ProjectInfoEvent.NEW_PROJ, ()=> {
+        this.appInfo.on(ProjectInfoEvent.NEW_PROJ, ()=> {
             this.onNewProject();
         });
-        this.appInfo.add(TheMachineEvent.UPDATE_IMG, ()=> {
+        this.appInfo.on(TheMachineEvent.UPDATE_IMG, ()=> {
             this.canvasView.updateComp();
         });
 
@@ -42,7 +42,7 @@ class AnimkView {
             this.appInfo.mouseY = e.clientY;
         };
         document.onmouseup = ()=> {
-            this.appInfo.dis(MouseEvt.UP);
+            this.appInfo.emit(MouseEvt.UP);
         };
         document.onkeydown = (e)=> {
             this.onKeyDown(e);
@@ -168,7 +168,7 @@ class AnimkView {
     onDomReady() {
         this.vSplitter = new SplitterView(Direction.Vertical, VSplitterId$);
         this.vSplitter.setChildren(ViewportId$, TimelineId$);
-        this.vSplitter.add(ViewEvent.CHANGED, (deltaVal:number)=> {
+        this.vSplitter.on(ViewEvent.CHANGED, (deltaVal:number)=> {
             //splitter.css({top: splitter.position().top + dy})
             this.timelineView.resize(-1, $(TimelineId$).height() - deltaVal);
 

@@ -1,4 +1,5 @@
 /// <reference path="../Model/appInfo.ts"/>
+/// <reference path="../Model/Command.ts"/>
 /// <reference path="../JQuery.ts"/>
 /// <reference path="../Node.ts"/>
 /// <reference path="../event/EventDispatcher.ts"/>

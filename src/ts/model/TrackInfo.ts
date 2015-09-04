@@ -47,7 +47,7 @@ class TrackInfo extends EventDispatcher {
     name(val?) {
         if (isdef(val)) {
             this._trackData.name = val;
-            this.dis(TrackInfoEvent.SET_NAME,val);
+            this.emit(TrackInfoEvent.SET_NAME,val);
         }
         else
             return this._trackData.name;
@@ -57,7 +57,7 @@ class TrackInfo extends EventDispatcher {
     opacity(val?) {
         if (isdef(val)) {
             this._trackData.opacity = val;
-            this.dis(TrackInfoEvent.SET_OPACITY);
+            this.emit(TrackInfoEvent.SET_OPACITY);
         }
         else
             return this._trackData.opacity;
@@ -66,8 +66,8 @@ class TrackInfo extends EventDispatcher {
     enable(val?) {
         if (isdef(val)) {
             this._trackData.enable = val;
-            this.dis(TrackInfoEvent.SET_ENABLE);
-            appInfo.dis(TheMachineEvent.UPDATE_IMG)
+            this.emit(TrackInfoEvent.SET_ENABLE);
+            appInfo.emit(TheMachineEvent.UPDATE_IMG)
         }
         else
             return this._trackData.enable;
@@ -79,7 +79,7 @@ class TrackInfo extends EventDispatcher {
 
     setStart(val) {
         this._start = val;
-        this.dis(TrackInfoEvent.UPDATE_TRACK_START, this)
+        this.emit(TrackInfoEvent.UPDATE_TRACK_START, this)
     }
 
     getStart() {
@@ -122,7 +122,7 @@ class TrackInfo extends EventDispatcher {
         if (this._loadCount > 0) {
         }
         else {
-            this.dis(TrackInfoEvent.LOADED);
+            this.emit(TrackInfoEvent.LOADED);
         }
     }
 
@@ -264,6 +264,6 @@ class TrackInfo extends EventDispatcher {
             var frameBack = this.frameInfoArr[i];
             frameBack.dtIdx(-1);
         }
-        this.dis(TrackInfoEvent.DEL_FRAME, frame);
+        this.emit(TrackInfoEvent.DEL_FRAME, frame);
     }
 }

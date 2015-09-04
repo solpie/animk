@@ -55,17 +55,17 @@ class TrackView extends BaseView implements IBaseView {
         this.id$ = ElmClass$.Track + "#" + idx;
         ///  trackInfo event
         //////// opacity slider
-        this.trackInfo.add(TrackInfoEvent.SET_OPACITY, ()=> {
+        this.trackInfo.on(TrackInfoEvent.SET_OPACITY, ()=> {
             this.onSetOpacity();
         });
 
         this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
-        this._slider.add(ViewEvent.CHANGED, (val)=> {
+        this._slider.on(ViewEvent.CHANGED, (val)=> {
             this.onSlider(val);
         });
 
         //////// visible checkbox
-        this.trackInfo.add(TrackInfoEvent.SET_ENABLE, ()=> {
+        this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
             this.onVisible();
         });
         $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
@@ -74,7 +74,7 @@ class TrackView extends BaseView implements IBaseView {
         ////////////////     track name input
         var trackName$ = $(this.id$ + " " + ElmClass$.Text);
         var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
-        this.trackInfo.add(TrackInfoEvent.SET_NAME, (name)=> {
+        this.trackInfo.on(TrackInfoEvent.SET_NAME, (name)=> {
             trackName$.html(name);
         });
         trackInput$.on(ViewEvent.CHANGED, ()=> {
@@ -103,7 +103,7 @@ class TrackView extends BaseView implements IBaseView {
             this.onMouseDown(e);
         });
 
-        appInfo.add(MouseEvt.UP, ()=> {
+        appInfo.on(MouseEvt.UP, ()=> {
             this.onUp();
         });
 
@@ -115,7 +115,7 @@ class TrackView extends BaseView implements IBaseView {
             if (this.trackInfo.isSelected && !this._isPressWidget)
                 this.setSelected(false);
             else
-                this.trackInfo.dis(TrackInfoEvent.SEL_TRACK, this.trackInfo);
+                this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
     }
@@ -154,13 +154,13 @@ class TrackView extends BaseView implements IBaseView {
 
     initFrame() {
         var frameWidth = appInfo.frameWidth();
-        this.trackInfo.add(TrackInfoEvent.LOADED, ()=> {
+        this.trackInfo.on(TrackInfoEvent.LOADED, ()=> {
             //this.trackInfo.getHold();
             this._frameView.resize(this.trackInfo.getHold() * frameWidth, -1);
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
-            appInfo.dis(TheMachineEvent.UPDATE_IMG);
+            appInfo.emit(TheMachineEvent.UPDATE_IMG);
         });
-        this.trackInfo.add(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
+        this.trackInfo.on(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
         });
         this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx + "");
@@ -174,7 +174,7 @@ class TrackView extends BaseView implements IBaseView {
 
     onSetOpacity() {
         this._slider.setBarWidth(this.trackInfo.opacity());
-        appInfo.dis(TheMachineEvent.UPDATE_IMG)
+        appInfo.emit(TheMachineEvent.UPDATE_IMG)
     }
 
     updateClip() {
@@ -212,7 +212,7 @@ class TrackView extends BaseView implements IBaseView {
         this._isPressBar = false;
         this._isPressWidget = false;
         if (this._pickFrame) {
-            this.trackInfo.dis(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
+            this.trackInfo.emit(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
             this._pickFrame.pressFlag = 0;
         }
         this._pickFrame = null;
