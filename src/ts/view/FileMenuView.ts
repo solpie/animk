@@ -5,8 +5,8 @@ class FileMenuView {
         cmd.on(CommandId.FileMenuOpen, ()=> {
             this.fileMenuOpen();
         });
-        cmd.on(CommandId.FileMenuSave, ()=> {
-            this.fileMenuSave();
+        cmd.on(CommandId.FileMenuSave, (path)=> {
+            this.fileMenuSave(path);
         });
     }
 

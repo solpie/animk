@@ -103,42 +103,22 @@ class AnimkView {
             });
 
             $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
-                this.fileMenuOpen();
+                cmd.emit(CommandId.FileMenuOpen);
             });
 
             $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
                 if (appInfo.projectInfo.saveFilename)
-                    this.fileMenuSave(appInfo.projectInfo.saveFilename);
+                    cmd.emit(CommandId.FileMenuSave,appInfo.projectInfo.saveFilename);
+                //this.fileMenuSave(appInfo.projectInfo.saveFilename);
                 else
-                    this.fileMenuSave();
+                    cmd.emit(CommandId.FileMenuSave);
             });
 
             $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
-                this.fileMenuSave();
+                cmd.emit(CommandId.FileMenuSave);
             });
         });
 
-    }
-
-    fileMenuOpen() {
-        chooseFile(ElmId$.openFileDialog).change(()=> {
-            var filename = $(ElmId$.openFileDialog).val();
-            console.log(this, "open project file", filename);
-            appInfo.openProject(filename);
-        });
-    }
-
-    fileMenuSave(path?) {
-        if (isdef(path)) {
-            appInfo.projectInfo.save(path)
-        }
-        else {
-            chooseFile(ElmId$.saveAsDialog).change(()=> {
-                var filename = $(ElmId$.saveAsDialog).val();
-                console.log(this, "save as", filename);
-                appInfo.projectInfo.save(filename);
-            });
-        }
     }
 
     onDomReady() {
