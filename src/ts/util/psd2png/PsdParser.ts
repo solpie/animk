@@ -1,23 +1,23 @@
 /// <reference path="ImageHelper.ts"/>
 /// <reference path="Descriptor.ts"/>
 /// <reference path="Handler.ts"/>
-/// <reference path="layer/Records1.ts"/>
+/// <reference path="layer/Records.ts"/>
 /// <reference path="../png/Packer.ts"/>
 
 var PNG = require('pngjs').PNG,
     fs = require('fs');
-var MODES = [
-    'BitMap',       //0
-    'Grayscale',    //1
-    'Indexed',      //2
-    'RGB',          //3
-    'CMYK',         //4
-    undefined,      //5
-    undefined,      //6
-    'Multichannel', //7
-    'Duotone',      //8
-    'Lab'           //9
-];
+//var MODES = [
+//    'BitMap',       //0
+//    'Grayscale',    //1
+//    'Indexed',      //2
+//    'RGB',          //3
+//    'CMYK',         //4
+//    undefined,      //5
+//    undefined,      //6
+//    'Multichannel', //7
+//    'Duotone',      //8
+//    'Lab'           //9
+//];
 class PsdParser {
 
     constructor() {
@@ -298,13 +298,22 @@ class PsdParser {
 
     __parseLayerMaskInfo(PSD) {
         var _ = PSD;
-        var layerMaskInfo = _.layerMaskInfo = {},
+        var layerMaskInfo = _.layerMaskInfo = {
+                startPos: 0,
+                length: 0,
+                layerInfo: null,
+                globalMask: null,
+            },//todo refactor to class
             file = _.file;
         var startPos = layerMaskInfo.startPos = file.now();
 
         var length = layerMaskInfo.length = file.readInt();
         //layers
-        var layerInfo = layerMaskInfo.layerInfo = {};
+        var layerInfo = layerMaskInfo.layerInfo = {
+            length: 0,
+            layerCount: 0,
+            layers: null,
+        };
 
         layerInfo.length = file.pad2(file.readInt());
 
@@ -325,7 +334,7 @@ class PsdParser {
             this.___parseChannelImage(layer, file, _.header.colorMode);
         });
 
-        layerMaskInfo.gloablMask = this.___parseGlobalMask(file);
+        layerMaskInfo.globalMask = this.___parseGlobalMask(file);
 
         layerInfo.layers.reverse();
 
@@ -418,7 +427,12 @@ class PsdParser {
     __parseImageData(PSD) {
         var _ = PSD;
 
-        var imageData = _.imageData = {},
+        var imageData = _.imageData = {
+                width: 0,
+                height: 0,
+                toImageData: null,
+                saveAsPng: null,
+            },//todo refactor to class
             file = _.file;
 
         var parsed = false, pos = file.now();

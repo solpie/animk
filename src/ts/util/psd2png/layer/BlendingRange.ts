@@ -1,8 +1,12 @@
+class BlendingRange{
+    grey:any;
+    channels:Array<any>;
+}
 function parseBlendingRange(file){
     var length = file.readInt(),
         endPos = file.now() + length;
 
-    var blendingRange = {};
+    var blendingRange = new BlendingRange();
 
     blendingRange.grey = {
         source: {

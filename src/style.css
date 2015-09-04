@@ -143,7 +143,13 @@
   height: 40px;
   background: #faf014;
 }
-.FileMenu .Bottom div {
+.FileMenu .Bottom .FileMenuBottom {
+  color: #dddddd;
+  position: relative;
+  top: 5px;
+  width: 90px;
+  height: 30px;
+  background: #222222;
   display: inline-block;
 }
 .BottomBar {
@@ -206,6 +212,7 @@
   top: 0;
   width: 1660px;
   height: 1024px;
+  display: none;
 }
 .PopupLayer .SettingWin {
   position: absolute;

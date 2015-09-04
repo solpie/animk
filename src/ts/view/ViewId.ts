@@ -38,6 +38,7 @@ var ElmId$ = {
     fileMenuOpen: "#FileMenuOpen",
     fileMenuSave: "#FileMenuSave",
     fileMenuSaveAs: "#FileMenuSaveAs",
+    fileMenuOption: "#FileMenuOption",
     //popup layer
     popupLayer: "#PopupLayer0",
     //

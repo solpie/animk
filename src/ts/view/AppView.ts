@@ -4,7 +4,7 @@
 /// <reference path="WindowView.ts"/>
 /// <reference path="../widget/Splitter.ts"/>
 /// <reference path="CanvasView.ts"/>
-/// <reference path="SettingView.ts"/>
+/// <reference path="PopupView.ts"/>
 /// <reference path="../JQuery.ts"/>
 
 var Keys = {
@@ -25,7 +25,7 @@ class AnimkView {
     timelineView:TimelineView;
     vSplitter:SplitterView;
     hSplitter:SplitterView;
-    settingView:SettingView;
+    popupView:PopupView;
 
     constructor(appModel) {
         this.appInfo = appModel;
@@ -53,16 +53,9 @@ class AnimkView {
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
-        this.initSettingView();
-        this.initFileMenu();
-    }
 
-    initSettingView() {
-        $.get('template/SettingWin.html', function (template) {
-            var rendered = Mustache.render(template);
-            $(ElmId$.popupLayer).html(rendered);
-            this.settingView = new SettingView();
-        });
+        this.popupView = new PopupView();
+        this.initFileMenu();
     }
 
     initZIndex() {
@@ -115,7 +108,7 @@ class AnimkView {
         $.get('template/TitleMenu.html', (template)=> {
             var rendered = Mustache.render(template);
             $(ElmId$.titleMenu).html(rendered);
-
+            this.popupView.initSettingView();
             var isShow:boolean = false;
             $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
                 isShow = !isShow;

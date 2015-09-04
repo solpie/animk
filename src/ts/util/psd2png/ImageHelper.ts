@@ -1,3 +1,5 @@
+/// <reference path="imageFormat/PsdRaw.ts"/>
+
 function _layerRaw(layer, file) {
     return file.read((layer.right - layer.left) * (layer.bottom - layer.top))
 }
@@ -42,7 +44,6 @@ function _layerRLE(layer, file) {
     return decodeRLE(layer.height, file, parseByteCounts(layer.height, file))
 }
 ///./imageFormat/psdRaw
-/// <reference path="imageFormat/PsdRaw.ts"/>
 function _psdRaw(PSD) {
     return processData(PSD.file.read(calculate(PSD)), PSD.header.channelsNum)
 }

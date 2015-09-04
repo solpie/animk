@@ -62,9 +62,9 @@ class Packer {
     }
 
     write(path) {
-        var stream2 = fs.createWriteStream(path);
-        stream2.write(Buffer.concat(bufs));
-        stream2.close();
+        //var stream2 = fs.createWriteStream(path);
+        //stream2.write(Buffer.concat(bufs));
+        //stream2.close();
     }
 
     _packIHDR(width, height, depthInBytes) {
