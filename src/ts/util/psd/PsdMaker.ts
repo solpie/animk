@@ -1,5 +1,6 @@
 /// <reference path="PsdFile.ts"/>
 /// <reference path="PsdImage.ts"/>
+/// <reference path="../psd2png/PsdParser.ts"/>
 
 
 var PNGDecoder = require('png-stream').Decoder;
@@ -7,8 +8,8 @@ var concat = require('concat-frames');
 
 class PsdMaker {
     constructor() {
-        this.png2psd();
-        //this.psd2png();
+        //this.png2psd();
+        this.psd2png();
     }
 
     png2psd() {
@@ -29,17 +30,25 @@ class PsdMaker {
     }
 
     psd2png() {
-        var PSD = require('psd-parser');
-        var psd = PSD.parse('../test/test2.psd');
-        console.log(psd);
-        psd.getDescendants(); //��ƽ����ͼ������
-        psd.getTree(); //���ͽṹ��ͼ�����飬��psd�нṹ���
-        console.log(psd._psd_); //����psd���ԭʼ����
+        var psdParser = new PsdParser();
+        var psd =psdParser.parse("../test/test2.psd");
+        //psd.getDescendants();
+        //psd.getTree();
+        psd.getDescendants()[0].saveAsPng('../test/psd2png2.png');
+        return;
 
-        //psd����ͼ�����,ֻ֧��png���
-        //psd.saveAsPng('test.png') //ĿǰҪע��Ŀ¼�Ƿ����
-        //ĳ��ͼ���png���
-        psd.getDescendants()[0].saveAsPng('../test/psd2png2.png')
+
+        //var PSD = require('psd-parser');
+        //var psd = PSD.parse('../test/test2.psd');
+        ////console.log(psd);
+        ////psd.getDescendants(); //��ƽ����ͼ������
+        ////psd.getTree(); //���ͽṹ��ͼ�����飬��psd�нṹ���?
+        ////console.log(psd._psd_); //����psd���ԭʼ����?
+        //
+        ////psd����ͼ�����?ֻ֧��png���?
+        ////psd.saveAsPng('test.png') //ĿǰҪע��Ŀ¼�Ƿ����?
+        ////ĳ��ͼ���png���?
+        //psd.getDescendants()[0].saveAsPng('../test/psd2png2.png')
     }
 
     /**
