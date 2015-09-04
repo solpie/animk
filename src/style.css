@@ -393,3 +393,7 @@ body {
   width: 8px;
   background: #141414;
 }
+.ConsoleWin .In input {
+  width: 500px;
+  height: 30px;
+}

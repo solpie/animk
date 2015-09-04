@@ -1,4 +1,7 @@
 /// <reference path="../model/AppInfo.ts"/>
+/// <reference path="ConsoleView.ts"/>
+/// <reference path="FileMenuView.ts"/>
+/// <reference path="KeyInput.ts"/>
 /// <reference path="ProjectView.ts"/>
 /// <reference path="TimelineView.ts"/>
 /// <reference path="WindowView.ts"/>
@@ -8,6 +11,9 @@
 /// <reference path="../JQuery.ts"/>
 
 var Keys = {
+    GraveAccent: (k)=> {
+        return k == 192
+    },
     Space: function (k) {
         return k == 32;
     },
@@ -44,17 +50,17 @@ class AnimkView {
         document.onmouseup = ()=> {
             this.appInfo.emit(MouseEvt.UP);
         };
-        document.onkeydown = (e)=> {
-            this.onKeyDown(e);
-        };
+
+        document.onkeydown = KeyInput.onKeyDown;
 
         //super();
         var titleBarView = new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
-
         this.popupView = new PopupView();
+        new ConsoleView();
+        new FileMenuView();
         this.initFileMenu();
     }
 
@@ -62,36 +68,6 @@ class AnimkView {
         for (var i in ZIdx) {
             $(ZIdx[i]).css({"z-index": 1000 + i});
         }
-    }
-
-    onKeyDown(e) {
-        var key = e.keyCode;
-        var isCtrl = e.ctrlKey;
-        var isShift = e.shiftKey;
-        var isAlt = e.altKey;
-        if (Keys.Char(key, "F")) {
-            appInfo.projectInfo.curComp.forward()
-        }
-        else if (Keys.Char(key, "D")) {
-            appInfo.projectInfo.curComp.backward()
-        }
-        else if (Keys.Space(key)) {//Space
-            appInfo.projectInfo.curComp.toggle();
-        }
-        else if (Keys.ESC(key)) {//Space
-            appInfo.projectInfo.curComp.stayBack();
-        }
-        else if (Keys.Char(key, "\r")) {//enter
-            appInfo.tm.watchAct();
-        }
-        /// project open save
-        else if (Keys.Char(key, "O") && isCtrl) {//enter
-            this.fileMenuOpen();
-        }
-        else if (Keys.Char(key, "S") && isCtrl) {//enter
-            this.fileMenuSave();
-        }
-        //console.log(this, e, key, isCtrl, isShift,isAlt);
     }
 
     resize(w, h) {

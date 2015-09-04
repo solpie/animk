@@ -1,6 +1,10 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 enum CommandId{
-    OpenSettingWin = 100000,
+    ShowConsoleWin = 100000,
+    HideConsoleWin,
+    OpenSettingWin,
+    FileMenuOpen,
+    FileMenuSave,
 }
 class CommandItem {
     id:number;
@@ -17,7 +21,9 @@ class Command extends EventDispatcher {
     constructor() {
         super();
         this.cmdArr = [];
-        this.newCmd(CommandId.OpenSettingWin, "open Option")
+        this.newCmd(CommandId.OpenSettingWin, "open Option");
+        this.newCmd(CommandId.FileMenuOpen, "open Project");
+        this.newCmd(CommandId.FileMenuSave, "save Project");
     }
 
     newCmd(id:number, name:string, desc?:string) {

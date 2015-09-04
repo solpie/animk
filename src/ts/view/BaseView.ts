@@ -42,3 +42,44 @@ class BaseView extends EventDispatcher implements IBaseView {
         $(this.id$).css({background: val});
     }
 }
+
+class BasePopup {
+    _isInit = false;
+    _tplPath:string;
+    _parentId$:string;
+    _html:string;
+
+    constructor(tplPath:string, parentId$:string) {
+        this._tplPath = tplPath;
+        this._parentId$ = parentId$;
+    }
+
+    _load() {
+        $.get(this._tplPath, (template)=> {
+            this._html = Mustache.render(template);
+            this._init();
+            this.show();
+        });
+    }
+
+    _init() {
+        this._isInit = true;
+    }
+
+    hide() {
+        var parent$ = $(this._parentId$);
+        parent$.html("");
+        parent$.hide();
+    }
+
+    show() {
+        if (!this._isInit) {
+            this._load();
+        }
+        else {
+            var parent$ = $(this._parentId$);
+            parent$.html(this._html);
+            parent$.show();
+        }
+    }
+}
