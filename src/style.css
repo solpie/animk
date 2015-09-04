@@ -394,16 +394,26 @@ body {
   background: #141414;
 }
 .ConsoleWin {
-  width: 530px;
-  height: 400px;
-  background: #554c0d;
+  width: 255px;
+  height: 250px;
   position: fixed;
   left: 50%;
   top: 50%;
+  border: #141414 1px solid;
   margin-left: width / 2;
   margin-top: height / 2;
+  background: #606060;
+  opacity: .8;
+  border-radius: 5px;
 }
 .ConsoleWin .In input {
-  width: 500px;
-  height: 25px;
+  outline: none;
+  border: 1px solid #404040;
+  margin-left: 8px;
+  margin-top: 8px;
+  border-radius: 5px;
+  width: 240px;
+  height: 22px;
+  color: white;
+  background: #323232;
 }

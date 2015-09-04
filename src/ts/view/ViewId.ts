@@ -65,6 +65,7 @@ var ElmClass$ = {
     Input: "input",
     FrameCanvas$: "FrameCanvas",
     Bar: ".Bar",
+    ConsoleInput: ".ConsoleInput",
 };
 //back is top
 var ZIdx = [ElmId$.cursor,

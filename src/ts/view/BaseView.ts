@@ -48,6 +48,7 @@ class BasePopup extends EventDispatcher {
     _tplPath:string;
     _parentId$:string;
     _html:string;
+    _this$:JQuery;
 
     constructor(tplPath:string, parentId$:string) {
         super();
