@@ -10,7 +10,6 @@ class PopupView {
     initSettingView() {
         this.settingView = new SettingView();
         $(ElmId$.fileMenuOption).on(MouseEvt.CLICK, ()=> {
-            $(ElmId$.fileMenu).hide();
             this.settingView.show();
         });
     }

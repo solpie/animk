@@ -110,21 +110,24 @@ class AnimkView {
             $(ElmId$.titleMenu).html(rendered);
             this.popupView.initSettingView();
             var isShow:boolean = false;
+
+            $(ElmId$.fileMenu).on(MouseEvt.UP, ()=> {
+                $(ElmId$.fileMenu).hide();
+            });
+
             $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
                 isShow = !isShow;
                 if (isShow)
-                    $(ElmId$.fileMenu).css({display: "block"});
+                    $(ElmId$.fileMenu).show();
                 else
-                    $(ElmId$.fileMenu).css({display: "none"});
+                    $(ElmId$.fileMenu).hide();
             });
 
             $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
-                $(ElmId$.fileMenu).css({display: "none"})
             });
 
             $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
                 this.fileMenuOpen();
-                $(ElmId$.fileMenu).css({display: "none"})
             });
 
             $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
@@ -132,12 +135,10 @@ class AnimkView {
                     this.fileMenuSave(appInfo.projectInfo.saveFilename);
                 else
                     this.fileMenuSave();
-                $(ElmId$.fileMenu).css({display: "none"})
             });
 
             $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
                 this.fileMenuSave();
-                $(ElmId$.fileMenu).css({display: "none"})
             });
         });
 

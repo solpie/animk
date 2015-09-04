@@ -1,7 +1,7 @@
 /// <reference path="ImageHelper.ts"/>
 /// <reference path="Descriptor.ts"/>
 /// <reference path="Handler.ts"/>
-/// <reference path="layer/Records.ts"/>
+/// <reference path="layer/Record.ts"/>
 /// <reference path="../png/Packer.ts"/>
 
 var PNG = require('pngjs').PNG,
