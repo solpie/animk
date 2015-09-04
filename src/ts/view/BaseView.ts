@@ -43,7 +43,7 @@ class BaseView extends EventDispatcher implements IBaseView {
     }
 }
 
-class BasePopup extends EventDispatcher{
+class BasePopup extends EventDispatcher {
     _isInit = false;
     _tplPath:string;
     _parentId$:string;
@@ -61,11 +61,16 @@ class BasePopup extends EventDispatcher{
             this._init();
             this.show();
             this.emit(ViewEvent.LOADED);
+            this._onLoad();
         });
     }
 
     _init() {
         this._isInit = true;
+    }
+
+    _onLoad() {
+
     }
 
     hide() {

@@ -2,29 +2,18 @@
 /// <reference path="BaseView.ts"/>
 /// <reference path="../Model/Command.ts"/>
 
-class SettingView extends BaseView {
+class SettingView extends BasePopup {
     btnToPageArr;
     _isInit = false;
 
     constructor() {
-        super();
-        cmd.on(CommandId.OpenSettingWin,()=>{
+        super('template/SettingWin.html', ElmId$.popupLayer);
+        cmd.on(CommandId.OpenSettingWin, ()=> {
             this.show();
-        })
-
-    }
-
-    _load() {
-        $.get('template/SettingWin.html', (template)=> {
-            var rendered = Mustache.render(template);
-            $(ElmId$.popupLayer).html(rendered);
-            this._init();
-            $(ElmId$.popupLayer).show();
         });
     }
 
-    _init() {
-        this._isInit = true;
+    _onLoad() {
         this.btnToPageArr = [];
         this.btnToPageArr.push([ElmId$.tabButton0, ElmId$.tabPage0]);
         this.btnToPageArr.push([ElmId$.tabButton1, ElmId$.tabPage1]);
@@ -45,16 +34,6 @@ class SettingView extends BaseView {
             $(ElmId$.popupLayer).hide();
         });
         this.showTabByAttrId($(ElmId$.tabButton0).attr("id"))
-    }
-
-    show() {
-        console.log(this, "show setting");
-        if (!this._isInit) {
-            this._load();
-        }
-        else {
-
-        }
     }
 
     showTabByAttrId(id:string) {
