@@ -1,5 +1,6 @@
 /// <reference path="../model/AppInfo.ts"/>
 /// <reference path="ConsoleView.ts"/>
+/// <reference path="TitleMenuView.ts"/>
 /// <reference path="FileMenuView.ts"/>
 /// <reference path="KeyInput.ts"/>
 /// <reference path="ProjectView.ts"/>
@@ -54,14 +55,18 @@ class AnimkView {
         document.onkeydown = KeyInput.onKeyDown;
 
         //super();
-        var titleBarView = new WindowView();
+        new WindowView();
         this.timelineView = new TimelineView();
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
         this.popupView = new PopupView();
         new ConsoleView();
-        new FileMenuView();
-        this.initFileMenu();
+        var tmv = new TitleMenuView();
+        tmv.on(ViewEvent.LOADED, ()=> {
+            new FileMenuView();
+            this.popupView.initSettingView();
+            tmv.onLoad();
+        });
     }
 
     initZIndex() {
@@ -78,47 +83,6 @@ class AnimkView {
         console.log(this, 'new project');
         var view = new ProjectView(this.appInfo.projectInfo);
         this.projectViewArr.push(view);
-    }
-
-    initFileMenu() {
-        $.get('template/TitleMenu.html', (template)=> {
-            var rendered = Mustache.render(template);
-            $(ElmId$.titleMenu).html(rendered);
-            this.popupView.initSettingView();
-            var isShow:boolean = false;
-
-            $(ElmId$.fileMenu).on(MouseEvt.UP, ()=> {
-                $(ElmId$.fileMenu).hide();
-            });
-
-            $(ElmId$.menuBtnFile).on(MouseEvt.CLICK, ()=> {
-                isShow = !isShow;
-                if (isShow)
-                    $(ElmId$.fileMenu).show();
-                else
-                    $(ElmId$.fileMenu).hide();
-            });
-
-            $(ElmId$.fileMenuNew).on(MouseEvt.CLICK, ()=> {
-            });
-
-            $(ElmId$.fileMenuOpen).on(MouseEvt.CLICK, ()=> {
-                cmd.emit(CommandId.FileMenuOpen);
-            });
-
-            $(ElmId$.fileMenuSave).on(MouseEvt.CLICK, ()=> {
-                if (appInfo.projectInfo.saveFilename)
-                    cmd.emit(CommandId.FileMenuSave,appInfo.projectInfo.saveFilename);
-                //this.fileMenuSave(appInfo.projectInfo.saveFilename);
-                else
-                    cmd.emit(CommandId.FileMenuSave);
-            });
-
-            $(ElmId$.fileMenuSaveAs).on(MouseEvt.CLICK, ()=> {
-                cmd.emit(CommandId.FileMenuSave);
-            });
-        });
-
     }
 
     onDomReady() {

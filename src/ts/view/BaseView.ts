@@ -43,13 +43,14 @@ class BaseView extends EventDispatcher implements IBaseView {
     }
 }
 
-class BasePopup {
+class BasePopup extends EventDispatcher{
     _isInit = false;
     _tplPath:string;
     _parentId$:string;
     _html:string;
 
     constructor(tplPath:string, parentId$:string) {
+        super();
         this._tplPath = tplPath;
         this._parentId$ = parentId$;
     }
@@ -59,6 +60,7 @@ class BasePopup {
             this._html = Mustache.render(template);
             this._init();
             this.show();
+            this.emit(ViewEvent.LOADED);
         });
     }
 

@@ -19,6 +19,7 @@ class ViewEvent {
     static CHANGED:string = "change";//build-in name
     static RESIZE:string = "resize";
     static SCROLL:string = "scroll";
+    static LOADED:string = "loaded";
 }
 ///   model  events
 class ProjectInfoEvent {

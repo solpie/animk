@@ -3,6 +3,7 @@ enum CommandId{
     ShowConsoleWin = 100000,
     HideConsoleWin,
     OpenSettingWin,
+    ToggleFileMenu,
     FileMenuOpen,
     FileMenuSave,
 }
