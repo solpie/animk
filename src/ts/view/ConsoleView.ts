@@ -31,6 +31,8 @@ class ConsoleView extends BasePopup {
             if (input == "`") {
                 this._input$.val("");
             }
+            else {
+            }
             var key = e.keyCode;
             if (Keys.Char(key, "\r")) {//enter
                 this._input$.val("");

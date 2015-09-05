@@ -65,6 +65,6 @@ gulp.task("dev-run", function () {
     run(path.join('cache', nwjsVersion, "win64", "nw.exe") + " src").exec();
 });
 //gulp.task("default", ["ts", "less", "nwjs"]);
-gulp.task("default", ["ts", "less"]);
+//gulp.task("default", ["ts", "less"]);
 //gulp.task("default", ["nwjs"]);
-//gulp.task("default", ["less"]);
+gulp.task("default", ["less"]);
