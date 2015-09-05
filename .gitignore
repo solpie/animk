@@ -3,4 +3,5 @@ build/
 /src/ts/**/*.js
 /src/**/*.js.map
 /src/less/*.css
+/src/node_modules/**
 *.png
