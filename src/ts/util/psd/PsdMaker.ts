@@ -3,32 +3,15 @@
 /// <reference path="../psd2png/PsdParser.ts"/>
 
 
-var PNGDecoder = require('png-stream').Decoder;
-var concat = require('concat-frames');
+//var PNGDecoder = require('png-stream').Decoder;
+//var concat = require('concat-frames');
 
 class PsdMaker {
     constructor() {
-        //this.png2psd();
         this.compPngArr2PSD([]);
         //this.psd2png();
     }
 
-    png2psd() {
-        var pngFilePath = "../test/test10/image001.png";
-        var psdFilePath = "../test/test2.psd";
-        fs.createReadStream(pngFilePath)
-            .pipe(new PNGDecoder())
-            .pipe(concat((frames)=> {
-                var image = frames[0];
-                console.log(this, image, image.pixels, image.colorSpace);
-                this.convertPNG2PSD(image, function (psdFileBuffer) {
-                    //callback(psdFileBuffer);
-                    fs.writeFile(psdFilePath, psdFileBuffer, function (err) {
-                        if (err) throw err;
-                    });
-                });
-            }));
-    }
 
     psd2png() {
         var psdParser = new PsdParser();
