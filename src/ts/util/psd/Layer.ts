@@ -44,7 +44,7 @@ class Layer {
 
         // Layer record
         var numChannel = this.channels.length;
-        var layerRecordSize = 34 + 4 + 4 + 4 + (6 * numChannel);
+        var layerRecordSize = 34 + 4 + 4 + 4 + (6 * numChannel)+4;
         var layerRecord = new jDataView(layerRecordSize);
 
         // rectangle
@@ -87,7 +87,7 @@ class Layer {
 
         // length of the extra data field
 
-        layerRecord.writeUint32(4 + 4 + 4);
+        layerRecord.writeUint32(4 + 4 + 4+4);
 
         // layer mask data
         layerRecord.writeUint32(0);
@@ -105,9 +105,13 @@ class Layer {
             }
         }
         else {
-            layerRecord.writeUint8(3);
+            layerRecord.writeUint8(7);
             layerRecord.writeUint8('P'.charCodeAt(0));
             layerRecord.writeUint8('N'.charCodeAt(0));
+            layerRecord.writeUint8('G'.charCodeAt(0));
+            layerRecord.writeUint8('G'.charCodeAt(0));
+            layerRecord.writeUint8('G'.charCodeAt(0));
+            layerRecord.writeUint8('G'.charCodeAt(0));
             layerRecord.writeUint8('G'.charCodeAt(0));
         }
 
