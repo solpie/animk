@@ -3,9 +3,6 @@
 /// <reference path="../psd2png/PsdParser.ts"/>
 
 
-//var PNGDecoder = require('png-stream').Decoder;
-//var concat = require('concat-frames');
-
 class PsdMaker {
     constructor() {
         this.compPngArr2PSD([]);
@@ -21,14 +18,15 @@ class PsdMaker {
         psd.getDescendants()[0].saveAsPng('../test/psd2png2.png');
         return;
     }
+
     compPngArr2PSD(pngArr:Array<string>) {
         var pngFilePath = "../test/test10/image001.png";
         pngArr.push(pngFilePath);
         pngArr.push("../test/test30/01.png");
         var PNG = require('pngjs').PNG;
-        var self = this;
+        //var self = this;
         var pngDataArr = [];
-        var whileLength = function () {
+        var whileLength = ()=> {
             var pngPath = pngArr.pop();
             if (pngPath) {
                 fs.createReadStream(pngPath)
@@ -36,21 +34,17 @@ class PsdMaker {
                         filterType: 4
                     }))
                     .on('parsed', function (data) {
+                        //this is PNG
                         var image = this;
                         image.pixels = image.data;
                         image.colorSpace = 'rgba';
                         pngDataArr.push(image);
                         whileLength();
-                        //console.log(this, data);
-                        //self.convertPNGs2PSD(image, function (psdFileBuffer) {
-
-                        //this.pack().pipe(fs.createWriteStream('out.png'));
                     });
             }
             else {
                 console.log(this, "png layer length", pngDataArr.length);
-                self.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', function (psdFileBuffer) {
-                    //callback(psdFileBuffer);
+                this.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', function (psdFileBuffer) {
                     fs.writeFile("out.psd", psdFileBuffer, function (err) {
                         if (err) throw err;
                     });
@@ -58,27 +52,6 @@ class PsdMaker {
             }
         };
         whileLength();
-        //for (var i = 0; i < pngArr.length; i++) {
-        //    var pngPath = pngArr[i];
-        //    fs.createReadStream(pngPath)
-        //        .pipe(new PNG({
-        //            filterType: 4
-        //        }))
-        //        .on('parsed', function (data) {
-        //            var image = this;
-        //            image.pixels = image.data;
-        //            image.colorSpace = 'rgba';
-        //            //console.log(this, data);
-        //            //self.convertPNGs2PSD(image, function (psdFileBuffer) {
-        //            self.convertPNG2PSD(image, function (psdFileBuffer) {
-        //                //callback(psdFileBuffer);
-        //                fs.writeFile("out.psd", psdFileBuffer, function (err) {
-        //                    if (err) throw err;
-        //                });
-        //            });
-        //            //this.pack().pipe(fs.createWriteStream('out.png'));
-        //        });
-        //}
     }
 
     /**

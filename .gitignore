@@ -5,3 +5,5 @@ build/
 /src/less/*.css
 /src/node_modules/**
 *.png
+*.psd
+*.db
