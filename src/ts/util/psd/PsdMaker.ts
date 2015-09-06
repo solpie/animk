@@ -67,7 +67,9 @@ class PsdMaker {
         for (var i = 0; i < png.length; i++) {
             pngLayer = png[i];
             var image = new PsdImage(pngLayer.width, pngLayer.height,
-                colorSpace, new jDataView(pngLayer.pixels));
+                colorSpace, pngLayer.pixels);
+            //var image = new PsdImage(pngLayer.width, pngLayer.height,
+            //    colorSpace, new jDataView(pngLayer.pixels));
             var layer = new Layer();
             layer.drawImage(image);
             layer.opacity = .5;//todo deal with alpha
@@ -76,9 +78,8 @@ class PsdMaker {
 
         // create merged image data
         var b = new Buffer(4);
-        b.fill(0);
         psd.imageData = new PsdImage(1, 1,
-            pngLayer.colorSpace, new jDataView(b));
+            pngLayer.colorSpace, b);
 
         //psd.imageData = new PsdImage(pngLayer.width, pngLayer.height,
         //    pngLayer.colorSpace, new jDataView(pngLayer.pixels));
