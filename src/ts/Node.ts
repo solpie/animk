@@ -27,9 +27,14 @@ declare class Buffer {
     fill(val);
 
     length:number;
-    writeUInt16BE(val1,val2);
-    writeUInt32BE(val1,val2);
-    writeInt32BE(val1,val2);
+    writeUInt16BE(val1,val2?);
+    writeUInt32BE(val1,val2?);
+    writeUInt32LE(val1,val2?);
+    writeInt32BE(val1,val2?);
+
+    writeInt16LE(value);
+    writeInt16BE(value,offset?);
+    writeInt32LE(value);
     slice(val1,val2);
 }
 

@@ -52,7 +52,7 @@ class PsdFile {
 
         // Image Data Block
         var imageData = this.imageData.toBinary();
-        console.log(this, "imageData buffer",imageData,imageData.length);
+        console.log(this, "imageData buffer", imageData, imageData.length);
         // return buffer
         var data = Buffer.concat([
             header.buffer,
@@ -108,14 +108,14 @@ class PsdFile {
         layerInfoLength += layerInfoPadding.length;
 
         // layer info header
-        var layerInfoHeader = new jDataView(4 + 2);
-        layerInfoHeader.writeUint32(layerInfoLength - 4); // Length of the layers info
+        var layerInfoHeader = new Buffer(4 + 2);
+        layerInfoHeader.writeUInt32BE(layerInfoLength - 4); // Length of the layers info
         var layerCount = psd.layers.length;
-        layerInfoHeader.writeInt16(layerCount); // Layer count
+        layerInfoHeader.writeInt16BE(layerCount, 4); // Layer count
 
         // layer info
         var layerInfo = Buffer.concat([
-            layerInfoHeader.buffer,
+            layerInfoHeader,
             layerRecords,
             layerChannelImageData,
             layerInfoPadding
