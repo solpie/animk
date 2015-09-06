@@ -5,7 +5,7 @@
 
 class PsdMaker {
     constructor() {
-        this.compPngArr2PSD([]);
+        //this.compPngArr2PSD([]);
         //this.psd2png();
     }
 

@@ -9,6 +9,7 @@ class ConsoleView extends BasePopup {
             this.show();
             var input$ = $(ElmClass$.ConsoleInput);
             if (input$) {
+                console.log(this, "input$", input$.val());
                 this._onLoad();
             }
         });
@@ -23,16 +24,23 @@ class ConsoleView extends BasePopup {
 
     _onLoad() {
         this._input$ = $(ElmClass$.ConsoleInput);
+        this._input$.val(this._input$.val().replace("`", ""));
         this._input$.focus();
-        $(ElmClass$.ConsoleInput).val("");
+        //$(ElmClass$.ConsoleInput).val("");
+
         console.log(this, this._input$);
-        this._input$.on(KeyEvt.UP, (e)=> {
+        //this._input$.on(KeyEvt.DOWN, (e)=> {
+        //    this._input$.val(this._input$.val().replace("`", ""));
+        //});
+        this._input$.on(KeyEvt.PRESS, (e)=> {
             var input = this._input$.val();
-            if (input == "`") {
-                this._input$.val("");
-            }
-            else {
-            }
+            this._input$.val(this._input$.val().replace("`", ""));
+
+            //if (input == "`") {
+            //    this._input$.val("");
+            //}
+            //else {
+            //}
             var key = e.keyCode;
             if (Keys.Char(key, "\r")) {//enter
                 this._input$.val("");

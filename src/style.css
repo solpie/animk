@@ -419,3 +419,11 @@ body {
   color: white;
   background: #323232;
 }
+.ConsoleWin .Hint {
+  margin-top: 8px;
+}
+.ConsoleWin .Hint .CmdItem {
+  width: 100%;
+  height: 20px;
+  background: #faf014;
+}

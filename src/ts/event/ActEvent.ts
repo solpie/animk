@@ -14,6 +14,7 @@ class MouseEvt {
 class KeyEvt{
     static DOWN:string = "keydown";//build-in name
     static UP:string = "keyup";//build-in name
+    static PRESS:string = "keypress";//build-in name
 
 }
 class ViewEvent {
