@@ -30,9 +30,7 @@ class PsdFile {
     }
 
     appendLayer(layer:Layer) {
-        //if (layer instanceof Layer) {
         this.layers.push(layer);
-        //}
         return this;
     }
 
@@ -54,14 +52,14 @@ class PsdFile {
 
         // Image Data Block
         var imageData = this.imageData.toBinary();
-
+        console.log(this, "imageData buffer",imageData,imageData.length);
         // return buffer
         var data = Buffer.concat([
             header.buffer,
             colorModeData.buffer,
             imageResources.buffer,
             layer.buffer,
-            imageData.buffer
+            imageData
         ]);
         return data;
     }

@@ -4,7 +4,7 @@ class Layer {
     left = 0;
     width = 0;
     height = 0;
-    blendmode = 'norm';
+    blendMode = 'norm';
     opacity = 1;
     name = '';
     hasAlpha = true;
@@ -71,7 +71,7 @@ class Layer {
         layerRecord.writeString('8BIM');
 
         // blend mode key
-        layerRecord.writeString(this.blendmode);
+        layerRecord.writeString(this.blendMode);
 
         // opacity
         layerRecord.writeUint8(Math.round(this.opacity * 255));

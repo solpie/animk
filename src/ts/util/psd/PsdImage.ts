@@ -2,15 +2,16 @@
 /// <reference path="../../Node.ts"/>
 var jDataView = require('jdataview');
 class PsdImage {
-     width;
-     height;
-     colorSpace;
-     colorMode;
-     hasAlpha;
-     pixcels;
-     numChannel;
-     numPixcels;
-     channels;
+    width;
+    height;
+    colorSpace;
+    colorMode;
+    hasAlpha;
+    pixcels;
+    numChannel;
+    numPixcels;
+    channels;
+
     constructor(width, height, colorSpace, pixcels) {
         // init params
         this.width = (typeof width === 'number') ? width : 0;
@@ -27,7 +28,7 @@ class PsdImage {
         if (this.pixcels.byteLength !== this.numPixcels) {
             throw new Error('mismatch number of pixcels.');
         }
-
+        console.log(this, "numChannel", this.numChannel);
         // init channels
         var that = this;
         var channels = [];
@@ -36,7 +37,10 @@ class PsdImage {
         }
         for (i = 0; i < this.numPixcels; i += this.numChannel) {
             for (var index = 0; index < this.numChannel; index++) {
-                channels[index].push(this.pixcels.getUint8(i + index));
+                if (index == 3)//todo write alpha
+                    channels[index].push(100);
+                else
+                    channels[index].push(this.pixcels.getUint8(i + index));
             }
         }
         this.channels = channels.map(function (channel) {
@@ -61,10 +65,15 @@ class PsdImage {
         });
 
         // return binary buffer
-        return new jDataView(Buffer.concat([
+        return Buffer.concat([
             compType,
             Buffer.concat(byteCounts),
             Buffer.concat(compressedImages)
-        ]));
+        ]);
+        //return new jDataView(Buffer.concat([
+        //    compType,
+        //    Buffer.concat(byteCounts),
+        //    Buffer.concat(compressedImages)
+        //]));
     }
 }

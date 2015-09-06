@@ -5,7 +5,7 @@
 
 class PsdMaker {
     constructor() {
-        //this.compPngArr2PSD([]);
+        this.compPngArr2PSD([]);
         //this.psd2png();
     }
 
@@ -20,12 +20,13 @@ class PsdMaker {
     }
 
     compPngArr2PSD(pngArr:Array<string>) {
-        var pngFilePath = "../test/test10/image001.png";
-        pngArr.push(pngFilePath);
         pngArr.push("../test/test30/01.png");
+        pngArr.push("../test/test10/image001.png");
         var PNG = require('pngjs').PNG;
         //var self = this;
         var pngDataArr = [];
+        var startTime = new Date().getTime();
+        console.log(this, "comp start:", startTime);
         var whileLength = ()=> {
             var pngPath = pngArr.pop();
             if (pngPath) {
@@ -39,6 +40,7 @@ class PsdMaker {
                         image.pixels = image.data;
                         image.colorSpace = 'rgba';
                         pngDataArr.push(image);
+                        console.log(this, "parsed", new Date().getTime() - startTime);
                         whileLength();
                     });
             }
@@ -47,53 +49,13 @@ class PsdMaker {
                 this.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', function (psdFileBuffer) {
                     fs.writeFile("out.psd", psdFileBuffer, function (err) {
                         if (err) throw err;
+
+                        console.log(this, "sus", new Date().getTime() - startTime);
                     });
                 });
             }
         };
         whileLength();
-    }
-
-    /**
-     * convertPNG2PSD
-     * @param image {png} png image data
-     * @param callback {function} function(psdBuffer)
-     */
-    convertPNG2PSD(png, callback) {
-        // create psd data
-        var psd = new PsdFile(png.width, png.height, png.colorSpace);
-
-        // append layer
-        var image = new PsdImage(png.width, png.height,
-            png.colorSpace, new jDataView(png.pixels));
-        var layer = new Layer();
-        layer.drawImage(image);
-        psd.appendLayer(layer);
-
-        //layer = new Layer();
-        //layer.drawImage(image);
-        //psd.appendLayer(layer);
-
-        //create merged image data
-        psd.imageData = new PsdImage(png.width, png.height,
-            png.colorSpace, new jDataView(png.pixels));
-
-        // alpha blend whth white background
-        if (psd.hasAlpha) {
-            //var channels = psd.imageData.channels;
-            //var alphaPixels = channels[channels.length - 1].pixels;
-            //for (var i = 0, l = channels.length - 1; i < l; i++) {
-            //    var pixels = channels[i].pixels;
-            //    for (var index = 0; index < pixels.byteLength; index++) {
-            //        var color = pixels.getUint8(index);
-            //        var alpha = alphaPixels.getUint8(index);
-            //        var blendedColor = this.alphaBlendWithWhite(color, alpha);
-            //        pixels.setUint8(index, blendedColor);
-            //    }
-            //}
-        }
-
-        callback(psd.toBinary());
     }
 
     convertPNGs2PSD(png, w, h, colorSpace, callback) {
@@ -111,24 +73,28 @@ class PsdMaker {
             psd.appendLayer(layer);
         }
 
-
         // create merged image data
-        psd.imageData = new PsdImage(pngLayer.width, pngLayer.height,
-            pngLayer.colorSpace, new jDataView(pngLayer.pixels));
+        var b = new Buffer(4);
+        b.fill(0);
+        psd.imageData = new PsdImage(1, 1,
+            pngLayer.colorSpace, new jDataView(b));
+
+        //psd.imageData = new PsdImage(pngLayer.width, pngLayer.height,
+        //    pngLayer.colorSpace, new jDataView(pngLayer.pixels));
 
         // alpha blend whth white background
         if (psd.hasAlpha) {
-            var channels = psd.imageData.channels;
-            var alphaPixels = channels[channels.length - 1].pixels;
-            for (var i = 0, l = channels.length - 1; i < l; i++) {
-                var pixels = channels[i].pixels;
-                for (var index = 0; index < pixels.byteLength; index++) {
-                    var color = pixels.getUint8(index);
-                    var alpha = alphaPixels.getUint8(index);
-                    var blendedColor = this.alphaBlendWithWhite(color, alpha);
-                    pixels.setUint8(index, blendedColor);
-                }
-            }
+            //var channels = psd.imageData.channels;
+            //var alphaPixels = channels[channels.length - 1].pixels;
+            //for (var i = 0, l = channels.length - 1; i < l; i++) {
+            //    var pixels = channels[i].pixels;
+            //    for (var index = 0; index < pixels.byteLength; index++) {
+            //        var color = pixels.getUint8(index);
+            //        var alpha = alphaPixels.getUint8(index);
+            //        var blendedColor = this.alphaBlendWithWhite(color, alpha);
+            //        pixels.setUint8(index, blendedColor);
+            //    }
+            //}
         }
 
         callback(psd.toBinary());
