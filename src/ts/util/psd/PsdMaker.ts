@@ -70,6 +70,7 @@ class PsdMaker {
                 colorSpace, new jDataView(pngLayer.pixels));
             var layer = new Layer();
             layer.drawImage(image);
+            layer.opacity = .5;//todo deal with alpha
             psd.appendLayer(layer);
         }
 

@@ -28,7 +28,6 @@ class PsdImage {
         if (this.pixcels.byteLength !== this.numPixcels) {
             throw new Error('mismatch number of pixcels.');
         }
-        console.log(this, "numChannel", this.numChannel);
         // init channels
         var that = this;
         var channels = [];
@@ -37,10 +36,7 @@ class PsdImage {
         }
         for (i = 0; i < this.numPixcels; i += this.numChannel) {
             for (var index = 0; index < this.numChannel; index++) {
-                if (index == 3)//todo write alpha
-                    channels[index].push(100);
-                else
-                    channels[index].push(this.pixcels.getUint8(i + index));
+                channels[index].push(this.pixcels.getUint8(i + index));
             }
         }
         this.channels = channels.map(function (channel) {
