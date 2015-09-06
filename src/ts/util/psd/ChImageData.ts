@@ -125,10 +125,10 @@ class ChImageData {
         // get RLE compressed data
         var compressedData = this.compressRLE();
 
-        return new jDataView(Buffer.concat([
+        return Buffer.concat([
             compType, // compression
             compressedData.byteCounts.buffer, // byte counts
             compressedData.image.buffer // RLE compressed data
-        ]));
+        ]);
     }
 }

@@ -29,7 +29,7 @@ class Layer {
     getChannelImageBinary() {
         var that = this;
         var channelImageData = Buffer.concat(that.channels.map(function (channel) {
-            return channel.toBinary().buffer;
+            return channel.toBinary();
         }));
 
         return new jDataView(channelImageData);
@@ -63,7 +63,7 @@ class Layer {
             layerRecord.writeInt16(id);
 
             // length
-            var channelByteLength = channel.toBinary().byteLength;
+            var channelByteLength = channel.toBinary().length;
             layerRecord.writeUint32(channelByteLength);
         });
 
