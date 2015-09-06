@@ -40,12 +40,12 @@ class PsdFile {
         var header = this._getHeaderBinary(this);
 
         // Color Mode Data Block
-        var colorModeData = new jDataView(4);
-        colorModeData.writeUint32(0);
+        var colorModeData = new Buffer(4);
+        colorModeData.writeUInt32BE(0);
 
         // Image Resources Block
-        var imageResources = new jDataView(4);
-        imageResources.writeUint32(0);
+        var imageResources = new Buffer(4);
+        imageResources.writeUInt32BE(0);
 
         // Layer Block
         var layerData = this._createLayerBlockBuffer(this);
@@ -56,8 +56,8 @@ class PsdFile {
         // return buffer
         var data = Buffer.concat([
             header.buffer,
-            colorModeData.buffer,
-            imageResources.buffer,
+            colorModeData,
+            imageResources,
             layerData,
             imageData
         ]);
