@@ -48,7 +48,7 @@ class PsdFile {
         imageResources.writeUint32(0);
 
         // Layer Block
-        var layer = this._createLayerBlockBuffer(this);
+        var layerData = this._createLayerBlockBuffer(this);
 
         // Image Data Block
         var imageData = this.imageData.toBinary();
@@ -58,7 +58,7 @@ class PsdFile {
             header.buffer,
             colorModeData.buffer,
             imageResources.buffer,
-            layer.buffer,
+            layerData,
             imageData
         ]);
         return data;
@@ -133,18 +133,15 @@ class PsdFile {
         globalLayerMaskInfo.writeUint8(0); // Filler: zeros
 
         // layer block
-        var layerHedaer = new jDataView(4);
+        var layerHeader = new Buffer(4);
         var layerLength = layerInfo.length + globalLayerMaskInfoSize;
-        layerHedaer.writeUint32(layerLength); // Length of the layer section
-
-        // layer
-        var layer = new jDataView(Buffer.concat([
-            layerHedaer.buffer,
+        layerHeader.writeUInt32BE(layerLength); // Length of the layer section
+        // layer data
+        return Buffer.concat([
+            layerHeader,
             layerInfo,
             globalLayerMaskInfo.buffer
-        ]));
-
-        return layer;
+        ]);
     }
 
 }
