@@ -14,16 +14,18 @@ class ChImageData {
         var width = this.width;
         var height = this.height;
         var compressedLines = [];
-        var byteCounts = new jDataView(new Buffer(this.height * 2));
-        byteCounts.buffer.fill(0);
+        var byteCounts = new Buffer(this.height * 2);
+        byteCounts.fill(0);
 
+        var ofs = 0;
         for (var i = 0; i < height; i++) {
             // read line data
             var start = i * width;
             var end = start + width;
             var compressedLine = this.encodeRLE(this.pixels.slice(start, end));
             compressedLines.push(compressedLine);
-            byteCounts.writeUint16(compressedLine.length);
+            byteCounts.writeUInt16BE(compressedLine.length, ofs);
+            ofs += 2;
         }
 
         return {
@@ -127,7 +129,7 @@ class ChImageData {
 
         return Buffer.concat([
             compType, // compression
-            compressedData.byteCounts.buffer, // byte counts
+            compressedData.byteCounts, // byte counts
             compressedData.image // RLE compressed data
         ]);
     }
