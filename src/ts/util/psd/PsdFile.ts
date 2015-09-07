@@ -82,8 +82,8 @@ class PsdFile {
 
     _createLayerBlockBuffer(psd) {
         if (psd.layers.length === 0) {
-            var nullLayer = new jDataView(4);
-            nullLayer.writeUint32(0);
+            var nullLayer = new Buffer(4);
+            nullLayer.writeUInt32BE(0);
             return nullLayer;
         }
 
