@@ -27,7 +27,7 @@ class PsdImage {
         this.channels = [];
 
         if (this.pixels.length !== this.numPixels) {
-            throw new Error('mismatch number of pixels.');
+            throw new Error('mismatch number of pixels.' + this.pixels.length);
         }
         // init channels
         var self = this;

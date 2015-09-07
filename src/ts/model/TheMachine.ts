@@ -50,36 +50,51 @@ class TheMachine extends EventDispatcher {
         //    this.open(this.ActFrameInfo.imageInfo.filename);
         //}
         if (this._layers.length) {
-            var pngPathArr = this._layers;
             var pngDataArr = [];
-            var parsingCount = pngPathArr.length;
-            var onParsed = function () {
-                parsingCount--;
-                if (parsingCount) {
 
+
+            var parsingCount = 0;
+            var onParsed = ()=> {
+                parsingCount++;
+                if (parsingCount < pngDataArr.length) {
+                    pngDataArr[parsingCount].load(onParsed);
                 }
                 else {
+                    console.log(this, "convertPNGs2PSD");
                     PsdMaker.convertPNGs2PSD(pngDataArr, appInfo.projectInfo.curComp.width,
-                        appInfo.projectInfo.curComp.height, "rgba", "../test/comp.psd")
+                        appInfo.projectInfo.curComp.height, "rgba", "D:\\projects\\animk\\test\\comp.psd", this.open);
+                    //this.open("../test/comp.psd");
                 }
             };
-            pngPathArr.map(function (imageInfo:ImageInfo) {
-                var png = new PNG({
-                    filterType: 4
-                });
-                png.opacity = imageInfo.opacity;
-                fs.createReadStream(imageInfo.filename)
-                    .pipe(png)
-                    .on('parsed', function (data) {
-                        //this is PNG
-                        var image = this;
-                        image.pixels = image.data;
-                        image.colorSpace = 'rgba';
-                        pngDataArr.push(image);
-                        //console.log(this, "parsed", new Date().getTime() - startTime);
-                        onParsed();
-                    });
-            })
+
+            for (var i = 0; i < this._layers.length; i++) {
+                var imageInfo:ImageInfo = this._layers[i];
+                var pngData:PngLayerData = new PngLayerData();
+                pngDataArr.push(pngData);
+                pngData.width = imageInfo.width;
+                pngData.height = imageInfo.height;
+                pngData.opacity = imageInfo.opacity;
+                pngData.filename = imageInfo.filename;
+            }
+            pngDataArr[0].load(onParsed);
+
+            //pngPathArr.map(function (imageInfo:ImageInfo) {
+            //    var png = new PNG({
+            //        filterType: 4
+            //    });
+            //    fs.createReadStream(imageInfo.filename)
+            //        .pipe(png)
+            //        .on('parsed', function (data) {
+            //            //this is PNG
+            //            var image = this;
+            //            image.pixels = image.data;
+            //            image.colorSpace = 'rgba';
+            //            image.opacity = imageInfo.opacity;
+            //            pngDataArr.push(image);
+            //            //console.log(this, "parsed", new Date().getTime() - startTime);
+            //            onParsed();
+            //        });
+            //})
 
         }
     }

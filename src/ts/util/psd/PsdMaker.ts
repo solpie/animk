@@ -1,11 +1,39 @@
 /// <reference path="PsdFile.ts"/>
 /// <reference path="PsdImage.ts"/>
 /// <reference path="../psd2png/PsdParser.ts"/>
+var PNG = require('pngjs').PNG;
 
+class PngLayerData {
+    width:number;
+    height:number;
+    opacity:number;
+    pixels:Buffer;
+    filename:string;
 
+    constructor() {
+        //console.log(this, "new PngLayerData");
+    }
+
+    load(callback) {
+        var self = this;
+        if (this.filename)
+            fs.createReadStream(this.filename)
+                .pipe(new PNG({
+                    filterType: 4
+                }))
+                .on('parsed', function (data) {
+                    //this is PNG
+                    self.pixels = this.data;
+                    self.width = this.width;
+                    self.height = this.height;
+                    //console.log(this, "parsed", data, this.data);
+                    callback();
+                });
+    }
+}
 class PsdMaker {
     constructor() {
-        this.compPngArr2PSD([]);
+        //this.compPngArr2PSD([]);
         //this.psd2png();
     }
 
@@ -46,18 +74,19 @@ class PsdMaker {
             }
             else {
                 console.log(this, "png layer length", pngDataArr.length);
-                PsdMaker.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', "out.psd");
+                PsdMaker.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', "out.psd", function (path) {
+                });
             }
         };
         whileLength();
     }
 
-    static convertPNGs2PSD(pngArr, w, h, colorSpace, path:string) {
+    static convertPNGs2PSD(pngArr:Array<PngLayerData>, w, h, colorSpace, path:string, pathCallback) {
         // create psd data
         var psd = new PsdFile(w, h, colorSpace);
 
         // append layer
-        var pngLayer;
+        var pngLayer:PngLayerData;
         for (var i = 0; i < pngArr.length; i++) {
             pngLayer = pngArr[i];
             var image = new PsdImage(pngLayer.width, pngLayer.height,
@@ -73,7 +102,7 @@ class PsdMaker {
         // create merged image data
         var b = new Buffer(4);
         psd.imageData = new PsdImage(1, 1,
-            pngLayer.colorSpace, b);
+            colorSpace, b);
 
         //psd.imageData = new PsdImage(pngLayer.width, pngLayer.height,
         //    pngLayer.colorSpace, new jDataView(pngLayer.pixels));
@@ -94,8 +123,10 @@ class PsdMaker {
         }
 
 
-        fs.writeFile(path, psd.toBinary(), function (err) {
+        fs.writeFile(path, psd.
+            toBinary(), function (err) {
             if (err) throw err;
+            pathCallback(path);
             //console.log(this, "sus", new Date().getTime() - startTime);
         });
         //callback(psd.toBinary());

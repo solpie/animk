@@ -46,11 +46,13 @@ class AppInfo extends EventDispatcher {
             }
         });
 
-        var pnglib = new PngMaker();
-        pnglib.createPng(300, 300);
+        //var pnglib = new PngMaker();
+        //pnglib.createPng(300, 300);
+
+
         //this.projectInfo = new ProjectInfo();
         //this.dis(ProjectInfoEvent.NEW_PROJ);
-        //this.projectInfo.open('../test/data.json');
+        this.projectInfo.open('../test/data.json');
 
         //this.projectInfo.save('D:/projects/animk/test/data.json')
 

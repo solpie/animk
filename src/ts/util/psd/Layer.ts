@@ -10,7 +10,7 @@ class Layer {
     channels = [];
 
     constructor() {
-        this.name = "PNGG";
+        this.name = "png";
     }
 
     /**
@@ -40,7 +40,7 @@ class Layer {
         var that = this;
         var layerNameDataLen;
         if (!this.name)
-            this.name = "PNG";
+            this.name = "png";
         layerNameDataLen = Math.ceil((this.name.length + 1) / 4) * 4;
 
         // Layer record
@@ -61,58 +61,58 @@ class Layer {
         this.channels.forEach(function (channel, index) {
             // id
             var id = (that.hasAlpha && index === numChannel - 1) ? -1 : index;
-            layerRecord.writeInt16BE(id,ofs);
+            layerRecord.writeInt16BE(id, ofs);
             ofs += 2;
             // length
             var channelByteLength = channel.toBinary().length;
-            layerRecord.writeUInt32BE(channelByteLength,ofs);
+            layerRecord.writeUInt32BE(channelByteLength, ofs);
             ofs += 4;
         });
 
         // blend mode signature
-        layerRecord.write('8BIM',ofs);
+        layerRecord.write('8BIM', ofs);
         ofs += 4;
         // blend mode key
-        layerRecord.write(this.blendMode,ofs);
+        layerRecord.write(this.blendMode, ofs);
         ofs += 4;
 
         // opacity
-        layerRecord.writeUInt8(Math.round(this.opacity * 255),ofs);
+        layerRecord.writeUInt8(Math.round(this.opacity * 255), ofs);
         ofs += 1;
         // clipping
-        layerRecord.writeUInt8(0,ofs); // base
+        layerRecord.writeUInt8(0, ofs); // base
         ofs += 1;
 
         // flags
-        layerRecord.writeUInt8(parseInt('00001000', 2),ofs);
+        layerRecord.writeUInt8(parseInt('00001000', 2), ofs);
         ofs += 1;
 
         // filler (zero)
-        layerRecord.writeUInt8(0,ofs);
+        layerRecord.writeUInt8(0, ofs);
         ofs += 1;
 
         // length of the extra data field
 
-        layerRecord.writeUInt32BE(4 + 4 + layerNameDataLen,ofs);
+        layerRecord.writeUInt32BE(4 + 4 + layerNameDataLen, ofs);
         ofs += 4;
 
         // layer mask data
-        layerRecord.writeUInt32BE(0,ofs);
+        layerRecord.writeUInt32BE(0, ofs);
         ofs += 4;
 
         // layer blending ranges data
-        layerRecord.writeUInt32BE(0,ofs); // length
+        layerRecord.writeUInt32BE(0, ofs); // length
         ofs += 4;
 
         // Layer name: Pascal string, padded to a multiple of 4 bytes.
         if (this.name) {
-            layerRecord.writeUInt8(layerNameDataLen - 1,ofs);
+            layerRecord.writeUInt8(layerNameDataLen - 1, ofs);
             ofs += 1;
 
             for (var i = 0; i < this.name.length; i++) {
                 var char = this.name[i];
                 //console.log(this, "char", char.charCodeAt(0));
-                layerRecord.writeUInt8(char.charCodeAt(0),ofs);
+                layerRecord.writeUInt8(char.charCodeAt(0), ofs);
                 ofs += 1;
             }
         }

@@ -40,25 +40,24 @@ class PsdFile {
 
         // Color Mode Data Block
         var colorModeData = new Buffer(4);
-        colorModeData.writeUInt32BE(0);
+        //colorModeData.writeUInt32BE(0);
 
         // Image Resources Block
         var imageResources = new Buffer(4);
-        imageResources.writeUInt32BE(0);
+        //imageResources.writeUInt32BE(0);
 
         // Layer Block
         var layerData = this._createLayerBlockBuffer(this);
 
-        // Image Data Block
-        var imageData = this.imageData.toBinary();
-        console.log(this, "imageData buffer", imageData, imageData.length);
+        // Merge Image Data Block
+        //var imageData = this.imageData.toBinary();
         // return buffer
         var data = Buffer.concat([
             header,
             colorModeData,
             imageResources,
             layerData,
-            imageData
+            //imageData
         ]);
         return data;
     }
@@ -71,11 +70,11 @@ class PsdFile {
         //header.writeUint16(0); // Reserved   +2=8
         //header.writeUint16(0); // Reserved   +2=10
         //header.writeUint16(0); // Reserved   +2=12
-        header.writeUInt16BE(psd.numChannel,12); // number of color chunnel +2=14
-        header.writeUInt32BE(psd.height,14); // rows +4=18
-        header.writeUInt32BE(psd.width,18); // columns +4=22
-        header.writeUInt16BE(8,22); // Depth  +2 = 24
-        header.writeUInt16BE(psd.COLOR_MODE[psd.colorMode],24); // color mode
+        header.writeUInt16BE(psd.numChannel, 12); // number of color chunnel +2=14
+        header.writeUInt32BE(psd.height, 14); // rows +4=18
+        header.writeUInt32BE(psd.width, 18); // columns +4=22
+        header.writeUInt16BE(8, 22); // Depth  +2 = 24
+        header.writeUInt16BE(psd.COLOR_MODE[psd.colorMode], 24); // color mode
         return header;
     }
 
