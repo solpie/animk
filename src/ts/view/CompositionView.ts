@@ -78,7 +78,7 @@ class CompositionView implements IBaseView {
         for (var i = 0; i < this.compInfo.trackInfoArr.length; i++) {
             var trackInfo:TrackInfo = this.compInfo.trackInfoArr[i];
             if (trackInfo) {
-                var trackId$ = ElmClass$.Track + "#" + trackInfo.idx;
+                var trackId$ = ElmClass$.Track + "#" + trackInfo.idx2();
                 clip$ = $(trackId$ + " " + ElmClass$.Clip);
                 clip$.css({left: trackInfo.getStart() * frameWidth - this._hScrollVal});
                 console.log(this, clip$);
@@ -186,18 +186,23 @@ class CompositionView implements IBaseView {
         var trackViewB:TrackView;
         for (var i = 0; i < this.trackViewArr.length; i++) {
             var trackView:TrackView = this.trackViewArr[i];
-            if (trackView.trackInfo._lastIdx == idxA) {
+            if (trackView.trackInfo.lastIdx == idxA) {
                 trackViewA = trackView;
             }
-            if (trackView.trackInfo._lastIdx == idxB) {
+            if (trackView.trackInfo.lastIdx == idxB) {
                 trackViewB = trackView;
             }
         }
 
         if (trackViewA && trackViewB) {
-            var aTop = $(trackViewA.el).position().top;
-            $(trackViewA.el).css({top: $(trackViewB.el).position().top});
-            $(trackViewB.el).css({top: aTop});
+            var aTop = $(trackViewA.id$).position().top;
+            trackViewA.top($(trackViewB.id$).position().top);
+            trackViewB.top(aTop);
+
+            trackViewA.id$ = ElmClass$.Track + "#" + idxB;
+            trackViewB.id$ = ElmClass$.Track + "#" + idxA;
+            $(trackViewA.id$).attr("id", idxB);
+            $(trackViewB.id$).attr("id", idxA);
             console.log(this, "onSwapTrack", idxA, idxB);
         }
     }

@@ -126,7 +126,7 @@ class CompositionInfo extends EventDispatcher {
         trackInfo.newImage(trackData.frames);
         trackInfo.path = trackData.path;
         trackInfo.setStart(trackData.start);
-        trackInfo.idx = this.trackInfoArr.length;
+        trackInfo.idx2(this.trackInfoArr.length);
         this.trackInfoArr.push(trackInfo);
         this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
     }
@@ -136,7 +136,7 @@ class CompositionInfo extends EventDispatcher {
         for (var i in this.trackInfoArr) {
             trackInfo = this.trackInfoArr[i];
             if (trackInfo && trackInfo.isSelected) {
-                this.delTrack(trackInfo.idx);
+                this.delTrack(trackInfo.idx2());
                 break;
             }
         }

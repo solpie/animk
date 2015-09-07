@@ -23,7 +23,7 @@ class TrackView extends BaseView implements IBaseView {
     render() {
         var template = $('.Track-tpl').html();
         return Mustache.render(template, {
-            idx: this.trackInfo.idx,
+            idx: this.trackInfo.idx2(),
             name: this.trackInfo.name(),
             frameIdxArr: this.trackInfo.getIdxArr(),
             //imgs: this.trackInfo.getImgs()
@@ -163,7 +163,7 @@ class TrackView extends BaseView implements IBaseView {
         this.trackInfo.on(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
         });
-        this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx + "");
+        this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx2() + "");
         this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth + 15);
         for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
@@ -205,14 +205,14 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     getFrameId$(idx) {
-        return "#" + ElmClass$.TrackCls + this.trackInfo.idx + ElmClass$.Frame + (idx + 1)
+        return "#" + ElmClass$.TrackCls + this.trackInfo.idx2() + ElmClass$.Frame + (idx + 1)
     }
 
     onUp() {
         this._isPressBar = false;
         this._isPressWidget = false;
         if (this._pickFrame) {
-            this.trackInfo.emit(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx, this._pickFrame.getIdx()]);
+            this.trackInfo.emit(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx2(), this._pickFrame.getIdx()]);
             this._pickFrame.pressFlag = 0;
         }
         this._pickFrame = null;
@@ -290,11 +290,11 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onDelTrack() {
-        appInfo.projectInfo.curComp.delTrack(this.trackInfo.idx);
+        appInfo.projectInfo.curComp.delTrack(this.trackInfo.idx2());
     }
 
     remove() {
-        console.log(this, "remove track idx:", this.trackInfo.idx);
+        console.log(this, "remove track idx:", this.trackInfo.idx2());
         $(this.el).remove();
     }
 
