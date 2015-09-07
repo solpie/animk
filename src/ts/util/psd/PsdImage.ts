@@ -1,6 +1,7 @@
 /// <reference path="ChImageData.ts"/>
 /// <reference path="../../Node.ts"/>
-var jDataView = require('jdataview');
+
+
 class PsdImage {
     width;
     height;

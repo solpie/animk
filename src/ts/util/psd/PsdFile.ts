@@ -1,7 +1,6 @@
 /// <reference path="Layer.ts"/>
 /// <reference path="PsdImage.ts"/>
 
-var jDataView = require('jdataview');
 
 class PsdFile {
     width;

@@ -4,7 +4,6 @@
   "main": "main.html",
   "version": "0.1.0",
   "dependencies": {
-    "jdataview": "^2.5.0",
     "pngjs": "^0.4.0"
   },
   "window": {

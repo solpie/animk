@@ -1,4 +1,3 @@
-var jDataView = require('jdataview');
 class Layer {
     top = 0;
     left = 0;
