@@ -64,7 +64,7 @@ class TheMachine extends EventDispatcher {
                     pngDataArr[parsingCount].load(onParsed);
                 else
                     this.convertPNGs2PSD(pngDataArr, appInfo.projectInfo.curComp.width,
-                        appInfo.projectInfo.curComp.height, "rgba", poi.filename, this.open);
+                        appInfo.projectInfo.curComp.height, "rgba", poi.filename);
             };
 
             for (var i = 0; i < this._layers.length; i++) {
@@ -80,7 +80,7 @@ class TheMachine extends EventDispatcher {
     }
 
 
-    convertPNGs2PSD(pngArr:Array<PngLayerData>, w, h, colorSpace, path:string, pathCallback) {
+    convertPNGs2PSD(pngArr:Array<PngLayerData>, w, h, colorSpace, path:string) {
         // create psd data
         var psd = new PsdFile(w, h, colorSpace);
 
@@ -101,32 +101,10 @@ class TheMachine extends EventDispatcher {
         psd.imageData = new PsdImage(1, 1,
             colorSpace, b);
 
-        //psd.imageData = new PsdImage(pngLayer.width, pngLayer.height,
-        //    pngLayer.colorSpace, new jDataView(pngLayer.pixels));
-
-        // alpha blend whth white background
-        if (psd.hasAlpha) {
-            //var channels = psd.imageData.channels;
-            //var alphaPixels = channels[channels.length - 1].pixels;
-            //for (var i = 0, l = channels.length - 1; i < l; i++) {
-            //    var pixels = channels[i].pixels;
-            //    for (var index = 0; index < pixels.byteLength; index++) {
-            //        var color = pixels.getUint8(index);
-            //        var alpha = alphaPixels.getUint8(index);
-            //        var blendedColor = this.alphaBlendWithWhite(color, alpha);
-            //        pixels.setUint8(index, blendedColor);
-            //    }
-            //}
-        }
-
-
-        fs.writeFile(path, psd.
-            toBinary(), function (err) {
+        fs.writeFile(path, psd.toBinary(), (err) => {
             if (err) throw err;
-            pathCallback(path);
-            //console.log(this, "sus", new Date().getTime() - startTime);
+            this.open(path);
         });
-        //callback(psd.toBinary());
     }
 
     open(path:string) {
