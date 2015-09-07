@@ -1,7 +1,7 @@
 class ChImageData {
     width;
     height;
-    pixels;
+    pixels:Buffer;
 
     constructor(width, height, pixels) {
         this.width = width;
@@ -21,7 +21,7 @@ class ChImageData {
             // read line data
             var start = i * width;
             var end = start + width;
-            var compressedLine = this.encodeRLE(this.pixels.buffer.slice(start, end));
+            var compressedLine = this.encodeRLE(this.pixels.slice(start, end));
             compressedLines.push(compressedLine);
             byteCounts.writeUint16(compressedLine.length);
         }

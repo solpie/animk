@@ -41,7 +41,7 @@ class PsdImage {
         }
 
         this.channels = channels.map(function (channel) {
-            return new ChImageData(self.width, self.height, new jDataView(channel));
+            return new ChImageData(self.width, self.height, channel);
         });
     }
 
