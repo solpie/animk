@@ -28,7 +28,7 @@ class ChImageData {
 
         return {
             byteCounts: byteCounts,
-            image: new jDataView(Buffer.concat(compressedLines))
+            image: Buffer.concat(compressedLines)
         };
     }
 
@@ -128,7 +128,7 @@ class ChImageData {
         return Buffer.concat([
             compType, // compression
             compressedData.byteCounts.buffer, // byte counts
-            compressedData.image.buffer // RLE compressed data
+            compressedData.image // RLE compressed data
         ]);
     }
 }

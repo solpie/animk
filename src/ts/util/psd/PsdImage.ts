@@ -57,7 +57,7 @@ class PsdImage {
         this.channels.forEach(function (channel:ChImageData) {
             var comp = channel.compressRLE();
             byteCounts.push(comp.byteCounts.buffer);
-            compressedImages.push(comp.image.buffer);
+            compressedImages.push(comp.image);
         });
 
         // return binary buffer
