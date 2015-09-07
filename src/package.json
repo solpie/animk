@@ -4,7 +4,9 @@
   "main": "main.html",
   "version": "0.1.0",
   "dependencies": {
-    "pngjs": "^0.4.0"
+    "pngjs": "^0.4.0",
+    "iconv-lite": "^0.4.11",
+    "jspack": "^0.0.4"
   },
   "window": {
     "frame": false,

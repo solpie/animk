@@ -75,6 +75,8 @@ class ProjectInfo extends EventDispatcher {
                 var trackInfo:TrackInfo = compInfo.trackInfoArr[j];
                 if (!trackInfo)
                     continue;
+                //compData.tracks.push(trackInfo._trackData);
+
                 var trackData:TrackData = {
                     name: trackInfo.name(),
                     opacity: trackInfo.opacity(),
@@ -83,6 +85,7 @@ class ProjectInfo extends EventDispatcher {
                     loopType: trackInfo.loopType,
                     end: trackInfo.getEnd(),
                     path: trackInfo.path,
+                    isRef: trackInfo.isRef(),
                     frames: [],
                 };
                 compData.tracks.push(trackData);

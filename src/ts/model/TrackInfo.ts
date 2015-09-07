@@ -19,6 +19,7 @@ class TrackData {//for save
     loopType:number;
     end:number = 1;
     path:string;
+    isRef:boolean = false;// reference track
     frames:Array<FrameData>;
 }
 class TrackInfo extends EventDispatcher {
@@ -47,7 +48,7 @@ class TrackInfo extends EventDispatcher {
     name(val?) {
         if (isdef(val)) {
             this._trackData.name = val;
-            this.emit(TrackInfoEvent.SET_NAME,val);
+            this.emit(TrackInfoEvent.SET_NAME, val);
         }
         else
             return this._trackData.name;
@@ -71,6 +72,14 @@ class TrackInfo extends EventDispatcher {
         }
         else
             return this._trackData.enable;
+    }
+
+    isRef(val?) {
+        if (isdef(val)) {
+            this._trackData.isRef = val;
+        }
+        else
+            return this._trackData.isRef;
     }
 
     getPath() {

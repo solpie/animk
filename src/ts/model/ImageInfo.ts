@@ -12,7 +12,9 @@ class ImageInfo {
     height;
     img:Image;
     updateCount:number = 0;
+
     opacity:number = 1;//for png output
+    isRef:boolean;//for png update
 
     constructor(filename?) {
         this.filename = filename;

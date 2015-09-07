@@ -1,8 +1,9 @@
 /// <reference path="ProjectInfo.ts"/>
 /// <reference path="SettingInfo.ts"/>
-/// <reference path="TheMachine.ts"/>
+/// <reference path="tm/TheMachine.ts"/>
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="../util/png/PngMaker.ts"/>
+/// <reference path="../util/psd/PsdMaker.ts"/>
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
     tm:TheMachine;
@@ -48,11 +49,11 @@ class AppInfo extends EventDispatcher {
 
         //var pnglib = new PngMaker();
         //pnglib.createPng(300, 300);
-
+        //var psd = new PsdMaker();
 
         //this.projectInfo = new ProjectInfo();
         //this.dis(ProjectInfoEvent.NEW_PROJ);
-        this.projectInfo.open('../test/data.json');
+        //this.projectInfo.open('../test/data.json');
 
         //this.projectInfo.save('D:/projects/animk/test/data.json')
 

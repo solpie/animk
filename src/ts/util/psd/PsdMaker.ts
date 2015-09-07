@@ -34,17 +34,18 @@ class PngLayerData {
 class PsdMaker {
     constructor() {
         //this.compPngArr2PSD([]);
-        //this.psd2png();
+        this.psd2png();
     }
 
 
     psd2png() {
         var psdParser = new PsdParser();
-        var psd = psdParser.parse("../test/test2.psd");
+        var psd = psdParser.parse("../test/comp.psd");
         //psd.getDescendants();
         //psd.getTree();
         psd.getDescendants()[0].saveAsPng('../test/psd2png2.png');
-        return;
+        console.log(this, "psd2png");
+        //return;
     }
 
     compPngArr2PSD(pngArr:Array<string>) {
@@ -91,8 +92,6 @@ class PsdMaker {
             pngLayer = pngArr[i];
             var image = new PsdImage(pngLayer.width, pngLayer.height,
                 colorSpace, pngLayer.pixels);
-            //var image = new PsdImage(pngLayer.width, pngLayer.height,
-            //    colorSpace, new jDataView(pngLayer.pixels));
             var layer = new Layer();
             layer.drawImage(image);
             layer.opacity = pngLayer.opacity;
