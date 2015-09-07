@@ -53,8 +53,12 @@ class AppInfo extends EventDispatcher {
 
         //this.projectInfo = new ProjectInfo();
         //this.dis(ProjectInfoEvent.NEW_PROJ);
-        //this.projectInfo.open('../test/data.json');
-
+        cmd.on(CommandId.testSwapTrack, ()=> {
+            this.projectInfo.curComp.swapTrack(2, 1);
+        });
+        cmd.on(CommandId.testProject, ()=> {
+            this.projectInfo.open('../test/data.json');
+        });
         //this.projectInfo.save('D:/projects/animk/test/data.json')
 
         //function loadUser() {

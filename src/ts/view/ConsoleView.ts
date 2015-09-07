@@ -2,6 +2,7 @@
 
 class ConsoleView extends BasePopup {
     _input$:JQuery;
+    _cmdItemArr:Array<CommandItem>;
 
     constructor() {
         super('template/ConsoleWin.html', ElmId$.popupLayer);
@@ -14,12 +15,17 @@ class ConsoleView extends BasePopup {
             }
         });
         cmd.on(CommandId.HideConsoleWin, ()=> {
-            this.hide();
+            this.close();
         });
     }
 
     _init() {
         super._init();
+    }
+
+    close() {
+        KeyInput.isBlock = false;
+        this.hide();
     }
 
     _onLoad() {
@@ -49,8 +55,12 @@ class ConsoleView extends BasePopup {
             var key = e.keyCode;
             if (Keys.Char(key, "\r")) {//enter
                 this._input$.val("");
-            }
+                if (this._cmdItemArr.length == 1) {
+                    cmd.emit(this._cmdItemArr[0].id);
+                }
 
+                this.close();
+            }
         });
         //this._input$.on(ViewEvent.CHANGED, ()=> {
         //    var input = $(ElmClass$.ConsoleInput).val();
@@ -62,22 +72,43 @@ class ConsoleView extends BasePopup {
     }
 
     updateItem(key:string) {
-        var items;
 
         if (key) {
-            items = [];
+            this._cmdItemArr = [];
             cmd.cmdArr.map((ci:CommandItem)=> {
-                if (ci.name.toLowerCase().search(key.toLowerCase()) > -1) {
-                    items.push(ci);
+                var ciname = ci.name.toLowerCase();
+                var a = key.split(' ');
+                if (a.length > 1) {
+                    var match = true;
+                    var cnameArr = ciname.split(" ");
+                    if (cnameArr.length < a.length)
+                        return;
+                    for (var i = 0; i < a.length; i++) {
+                        var sidx = cnameArr[i].search(a[i].toLowerCase());
+                        if (sidx != 0) {
+                            match = false;
+                            break;
+                        }
+                        //else if (sidx != ciname.length && ciname.substr(sidx - 1, 1) != "") {
+                        //    console.log(this, "mismatch", ciname.substr(sidx - 1, 1), a[i])
+                        //    match = false;
+                        //    break
+                        //}
+                    }
+                    if (match)
+                        this._cmdItemArr.push(ci);
+                }
+                else if (ciname.search(key.toLowerCase()) > -1) {
+                    this._cmdItemArr.push(ci);
                 }
             })
         }
         else {
-            items = cmd.cmdArr;
+            this._cmdItemArr = cmd.cmdArr;
         }
         var itemHtml = "";
-        for (var i = 0; i < items.length; i++) {
-            var commandItem:CommandItem = items[i];
+        for (var i = 0; i < this._cmdItemArr.length; i++) {
+            var commandItem:CommandItem = this._cmdItemArr[i];
             itemHtml += '<div class="CmdItem" id="CmdItemId' + i + '">' + commandItem.name + '</div>'
         }
         $(ElmId$.consoleItemHint).html(itemHtml);
