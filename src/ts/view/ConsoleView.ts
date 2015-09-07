@@ -24,7 +24,8 @@ class ConsoleView extends BasePopup {
 
     _onLoad() {
         this._input$ = $(ElmClass$.ConsoleInput);
-        this._input$.val(this._input$.val().replace("`", ""));
+        if (this._input$.val())
+            this._input$.val(this._input$.val().replace("`", ""));
         this._input$.focus();
         //$(ElmClass$.ConsoleInput).val("");
 
@@ -32,9 +33,13 @@ class ConsoleView extends BasePopup {
         //this._input$.on(KeyEvt.DOWN, (e)=> {
         //    this._input$.val(this._input$.val().replace("`", ""));
         //});
+        this._input$.on(KeyEvt.UP, (e)=> {
+            this.updateItem(this._input$.val());
+        });
         this._input$.on(KeyEvt.PRESS, (e)=> {
             var input = this._input$.val();
-            this._input$.val(this._input$.val().replace("`", ""));
+            if (input)
+                this._input$.val(input.replace("`", ""));
 
             //if (input == "`") {
             //    this._input$.val("");
@@ -45,6 +50,7 @@ class ConsoleView extends BasePopup {
             if (Keys.Char(key, "\r")) {//enter
                 this._input$.val("");
             }
+
         });
         //this._input$.on(ViewEvent.CHANGED, ()=> {
         //    var input = $(ElmClass$.ConsoleInput).val();
@@ -53,5 +59,27 @@ class ConsoleView extends BasePopup {
         //    }
         //    console.log(this, input);
         //});
+    }
+
+    updateItem(key:string) {
+        var items;
+
+        if (key) {
+            items = [];
+            cmd.cmdArr.map((ci:CommandItem)=> {
+                if (ci.name.toLowerCase().search(key.toLowerCase()) > -1) {
+                    items.push(ci);
+                }
+            })
+        }
+        else {
+            items = cmd.cmdArr;
+        }
+        var itemHtml = "";
+        for (var i = 0; i < items.length; i++) {
+            var commandItem:CommandItem = items[i];
+            itemHtml += '<div class="CmdItem" id="CmdItemId' + i + '">' + commandItem.name + '</div>'
+        }
+        $(ElmId$.consoleItemHint).html(itemHtml);
     }
 }

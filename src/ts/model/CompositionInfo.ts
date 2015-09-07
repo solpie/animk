@@ -151,6 +151,19 @@ class CompositionInfo extends EventDispatcher {
         //this.trackViewArr.splice(idx, 1);
     }
 
+
+    swapTrack(idxA:number, idxB:number) {
+        var trackInfoA:TrackInfo = this.trackInfoArr[idxA];
+        var trackInfoB:TrackInfo = this.trackInfoArr[idxB];
+        if (trackInfoA && trackInfoB) {
+            trackInfoA.idx = idxB;
+            trackInfoB.idx = idxA;
+            this.trackInfoArr[idxB] = trackInfoA;
+            this.trackInfoArr[idxA] = trackInfoB;
+            this.emit(CompInfoEvent.DEL_TRACK, [idxA, idxB])
+        }
+    }
+
     getMaxSize() {
         var maxFrame = 0;
         var trackEnd;

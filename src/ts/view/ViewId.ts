@@ -50,6 +50,9 @@ var ElmId$ = {
     tabPage1: "#TabPage1",
     tabButton2: "#TabButton2",
     tabPage2: "#TabPage2",
+
+    //console
+    consoleItemHint: "#ConsoleHint0",
 };
 var ElmClass$ = {
     Track: ".Track",

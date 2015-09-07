@@ -276,4 +276,5 @@ class TrackInfo extends EventDispatcher {
         }
         this.emit(TrackInfoEvent.DEL_FRAME, frame);
     }
+
 }
