@@ -24,7 +24,6 @@ class PngMaker {
             }
         }
         packer.pack(pixeldata, w, h, 1,'../test/test2.png');
-        var psd = new PsdMaker();
     }
 
 }

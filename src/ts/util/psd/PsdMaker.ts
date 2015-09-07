@@ -11,7 +11,6 @@ class PngLayerData {
     filename:string;
 
     constructor() {
-        //console.log(this, "new PngLayerData");
     }
 
     load(callback) {
@@ -34,7 +33,7 @@ class PngLayerData {
 class PsdMaker {
     constructor() {
         //this.compPngArr2PSD([]);
-        this.psd2png();
+        //this.psd2png();
     }
 
 
