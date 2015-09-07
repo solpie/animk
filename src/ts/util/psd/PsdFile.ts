@@ -55,7 +55,7 @@ class PsdFile {
         console.log(this, "imageData buffer", imageData, imageData.length);
         // return buffer
         var data = Buffer.concat([
-            header.buffer,
+            header,
             colorModeData,
             imageResources,
             layerData,
@@ -65,19 +65,18 @@ class PsdFile {
     }
 
     _getHeaderBinary(psd) {
-        var header = new jDataView(new Buffer(26));
-        header.buffer.fill(0);
-        header.writeString('8BPS'); // Signature
-        header.writeUint16(1); // Version 1
-        header.writeUint16(0); // Reserved
-        header.writeUint16(0); // Reserved
-        header.writeUint16(0); // Reserved
-        header.writeUint16(psd.numChannel); // number of color chunnel
-        header.writeUint32(psd.height); // rows
-        header.writeUint32(psd.width); // columns
-        header.writeUint16(8); // Depth
-        header.writeUint16(psd.COLOR_MODE[psd.colorMode]); // color mode
-
+        var header = new Buffer(26);
+        header.fill(0);
+        header.write('8BPS'); // Signature 4
+        header.writeUInt16BE(1, 4); // Version 1  +2=6
+        //header.writeUint16(0); // Reserved   +2=8
+        //header.writeUint16(0); // Reserved   +2=10
+        //header.writeUint16(0); // Reserved   +2=12
+        header.writeUInt16BE(psd.numChannel,12); // number of color chunnel +2=14
+        header.writeUInt32BE(psd.height,14); // rows +4=18
+        header.writeUInt32BE(psd.width,18); // columns +4=22
+        header.writeUInt16BE(8,22); // Depth  +2 = 24
+        header.writeUInt16BE(psd.COLOR_MODE[psd.colorMode],24); // color mode
         return header;
     }
 
