@@ -50,6 +50,7 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
+
         var idx = this.trackInfo.idx;
         this.id$ = ElmClass$.Track + "#" + idx;
         ///  trackInfo event

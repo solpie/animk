@@ -89,11 +89,6 @@ class ConsoleView extends BasePopup {
                             match = false;
                             break;
                         }
-                        //else if (sidx != ciname.length && ciname.substr(sidx - 1, 1) != "") {
-                        //    console.log(this, "mismatch", ciname.substr(sidx - 1, 1), a[i])
-                        //    match = false;
-                        //    break
-                        //}
                     }
                     if (match)
                         this._cmdItemArr.push(ci);

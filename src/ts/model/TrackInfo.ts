@@ -31,6 +31,7 @@ class TrackInfo extends EventDispatcher {
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
     /////// save data;
+    _lastIdx:number;//for swap track
     isRomve:boolean;
     _imgArr:Array<string>;
     isSelected:boolean;
@@ -43,6 +44,15 @@ class TrackInfo extends EventDispatcher {
         this._trackData = trackData;
         this.frameInfoArr = [];
         this.removedFrameArr = [];
+    }
+
+    idx2(val?) {
+        if (isdef(val)) {
+            this._lastIdx = this.idx;
+            this.idx = val;
+        }
+        else
+            return this.idx;
     }
 
     name(val?) {

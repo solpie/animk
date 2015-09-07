@@ -33,9 +33,12 @@ class BaseView extends EventDispatcher implements IBaseView {
     height() {
         return $(this.id$).height();
     }
-
     width() {
         return $(this.id$).width();
+    }
+
+    top(val){
+        $(this.id$).css({top: val});
     }
 
     setColor(val:string) {

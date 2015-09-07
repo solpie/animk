@@ -156,11 +156,11 @@ class CompositionInfo extends EventDispatcher {
         var trackInfoA:TrackInfo = this.trackInfoArr[idxA];
         var trackInfoB:TrackInfo = this.trackInfoArr[idxB];
         if (trackInfoA && trackInfoB) {
-            trackInfoA.idx = idxB;
-            trackInfoB.idx = idxA;
+            trackInfoA.idx2(idxB);
+            trackInfoB.idx2(idxA);
             this.trackInfoArr[idxB] = trackInfoA;
             this.trackInfoArr[idxA] = trackInfoB;
-            this.emit(CompInfoEvent.DEL_TRACK, [idxA, idxB])
+            this.emit(CompInfoEvent.SWAP_TRACK, [idxA, idxB])
         }
     }
 

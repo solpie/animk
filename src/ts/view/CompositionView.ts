@@ -26,6 +26,9 @@ class CompositionView implements IBaseView {
         this.compInfo.on(CompInfoEvent.UPDATE_CURSOR, (frameIdx) => {
             this.updateCursor(frameIdx);
         });
+        this.compInfo.on(CompInfoEvent.SWAP_TRACK, (idsArr:Array<number>) => {
+            this.onSwapTrack(idsArr[0], idsArr[1]);
+        });
         this.compInfo.on(CompInfoEvent.NEW_TRACK, (trackInfo:TrackInfo) => {
             this.onNewTrackView(trackInfo);
         });
@@ -111,6 +114,7 @@ class CompositionView implements IBaseView {
             console.log(this, i);
         }
     }
+
     updateCursor(frameIdx?) {
         var fpos;
         if (frameIdx != -1) {
@@ -141,7 +145,6 @@ class CompositionView implements IBaseView {
     }
 
     onNewTrackView(trackInfo:TrackInfo) {
-        console.log(this, "onNewTrackView");
         trackInfo.on(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
             this.onSelTrackView(trackInfo);
         });
@@ -152,13 +155,19 @@ class CompositionView implements IBaseView {
         trackInfo.on(TrackInfoEvent.SEL_FRAME, (selArr)=> {
             this.onSelectFrame(selArr);
         });
+        var top = 0;
+        this.trackViewArr.map((tv:TrackView)=> {
+            top += tv.height();
+        });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
+        console.log(this, "new Track Top", top);
         view.setParent($(CompositionId$));
+        view.top(top);
 
         trackInfo.opacity(trackInfo.opacity());
         trackInfo.enable(trackInfo.enable());
-        
+
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);
         view.hScrollTo(this._hScrollVal);
@@ -170,6 +179,27 @@ class CompositionView implements IBaseView {
         var frameWidth = appInfo.frameWidth();
         var compMaxWidth:number = (this.compInfo.getMaxSize() + 4) * frameWidth;
         $(ElmId$.trackWidth).width(compMaxWidth);
+    }
+
+    onSwapTrack(idxA:number, idxB:number) {
+        var trackViewA:TrackView;
+        var trackViewB:TrackView;
+        for (var i = 0; i < this.trackViewArr.length; i++) {
+            var trackView:TrackView = this.trackViewArr[i];
+            if (trackView.trackInfo._lastIdx == idxA) {
+                trackViewA = trackView;
+            }
+            if (trackView.trackInfo._lastIdx == idxB) {
+                trackViewB = trackView;
+            }
+        }
+
+        if (trackViewA && trackViewB) {
+            var aTop = $(trackViewA.el).position().top;
+            $(trackViewA.el).css({top: $(trackViewB.el).position().top});
+            $(trackViewB.el).css({top: aTop});
+            console.log(this, "onSwapTrack", idxA, idxB);
+        }
     }
 
     onDelTrackView(idx:number) {
