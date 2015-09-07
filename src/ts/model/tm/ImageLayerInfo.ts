@@ -26,4 +26,31 @@ class ImageLayerInfo { //glue ImageInfo and PsdLayer
                     callback();
                 });
     }
+
+    static png2psd(pngArr:Array<ImageLayerInfo>, w, h, colorSpace, path:string, pathCallback) {
+        // create psd data
+        var psd = new PsdFile(w, h, colorSpace);
+
+        // append layer
+        var pngLayer:ImageLayerInfo;
+        for (var i = 0; i < pngArr.length; i++) {
+            pngLayer = pngArr[i];
+            var image = new PsdImage(pngLayer.width, pngLayer.height,
+                colorSpace, pngLayer.pixels);
+            var layer = new Layer();
+            layer.drawImage(image);
+            layer.opacity = pngLayer.opacity;
+            psd.appendLayer(layer);
+        }
+
+        // create merged image data
+        var b = new Buffer(4);
+        psd.imageData = new PsdImage(1, 1,
+            colorSpace, b);
+
+        fs.writeFile(path, psd.toBinary(), (err) => {
+            if (err) throw err;
+            pathCallback(path);
+        });
+    }
 }

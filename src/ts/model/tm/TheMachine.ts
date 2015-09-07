@@ -1,6 +1,9 @@
 /// <reference path="../../event/ActEvent.ts"/>
-/// <reference path="../../util/psd/PsdMaker.ts"/>
+
+/// <reference path="../../util/psd/PsdFile.ts"/>
+/// <reference path="../../util/psd/PsdImage.ts"/>
 /// <reference path="POI.ts"/>
+/// <reference path="ImageLayerInfo.ts"/>
 /// <reference path="../AppInfo.ts"/>
 /// <reference path="../FrameInfo.ts"/>
 /// <reference path="../../JQuery.ts"/>
@@ -16,6 +19,7 @@ class TheMachine extends EventDispatcher {
 
     constructor() {
         super();
+        // <reference path="../../util/psd/PsdMaker.ts"/>
         this.watchArr = [];
         this._layers = [];
     }
@@ -56,56 +60,57 @@ class TheMachine extends EventDispatcher {
             var poi = new POI();
             poi.filename = "D:\\projects\\animk\\test\\comp.psd";
             this.watchArr.push(poi);
-            var pngDataArr = [];
+            var imageLayerInfoArr = [];
             var parsingCount = 0;
             var onParsed = ()=> {
                 parsingCount++;
-                if (parsingCount < pngDataArr.length)
-                    pngDataArr[parsingCount].load(onParsed);
+                if (parsingCount < imageLayerInfoArr.length)
+                    imageLayerInfoArr[parsingCount].load(onParsed);
                 else
-                    this.convertPNGs2PSD(pngDataArr, appInfo.projectInfo.curComp.width,
-                        appInfo.projectInfo.curComp.height, "rgba", poi.filename);
+                    ImageLayerInfo.png2psd(imageLayerInfoArr, appInfo.projectInfo.curComp.width,
+                        appInfo.projectInfo.curComp.height, "rgba",
+                        poi.filename, this.open);
             };
 
             for (var i = 0; i < this._layers.length; i++) {
                 var imageInfo:ImageInfo = this._layers[i];
                 poi.imageInfoArr.push(imageInfo);
-                var pngData:PngLayerData = new PngLayerData();
-                pngDataArr.push(pngData);
-                pngData.opacity = imageInfo.opacity;
-                pngData.filename = imageInfo.filename;
+                var imageLayerInfo:ImageLayerInfo = new ImageLayerInfo();
+                imageLayerInfoArr.push(imageLayerInfo);
+                imageLayerInfo.opacity = imageInfo.opacity;
+                imageLayerInfo.filename = imageInfo.filename;
             }
-            pngDataArr[0].load(onParsed);
+            imageLayerInfoArr[0].load(onParsed);
         }
     }
 
 
-    convertPNGs2PSD(pngArr:Array<PngLayerData>, w, h, colorSpace, path:string) {
-        // create psd data
-        var psd = new PsdFile(w, h, colorSpace);
-
-        // append layer
-        var pngLayer:PngLayerData;
-        for (var i = 0; i < pngArr.length; i++) {
-            pngLayer = pngArr[i];
-            var image = new PsdImage(pngLayer.width, pngLayer.height,
-                colorSpace, pngLayer.pixels);
-            var layer = new Layer();
-            layer.drawImage(image);
-            layer.opacity = pngLayer.opacity;
-            psd.appendLayer(layer);
-        }
-
-        // create merged image data
-        var b = new Buffer(4);
-        psd.imageData = new PsdImage(1, 1,
-            colorSpace, b);
-
-        fs.writeFile(path, psd.toBinary(), (err) => {
-            if (err) throw err;
-            this.open(path);
-        });
-    }
+    //PNGcomp2PSD(pngArr:Array<ImageLayerInfo>, w, h, colorSpace, path:string) {
+    //    // create psd data
+    //    var psd = new PsdFile(w, h, colorSpace);
+    //
+    //    // append layer
+    //    var pngLayer:ImageLayerInfo;
+    //    for (var i = 0; i < pngArr.length; i++) {
+    //        pngLayer = pngArr[i];
+    //        var image = new PsdImage(pngLayer.width, pngLayer.height,
+    //            colorSpace, pngLayer.pixels);
+    //        var layer = new Layer();
+    //        layer.drawImage(image);
+    //        layer.opacity = pngLayer.opacity;
+    //        psd.appendLayer(layer);
+    //    }
+    //
+    //    // create merged image data
+    //    var b = new Buffer(4);
+    //    psd.imageData = new PsdImage(1, 1,
+    //        colorSpace, b);
+    //
+    //    fs.writeFile(path, psd.toBinary(), (err) => {
+    //        if (err) throw err;
+    //        this.open(path);
+    //    });
+    //}
 
     open(path:string) {
         path = path.replace("/", "\\");

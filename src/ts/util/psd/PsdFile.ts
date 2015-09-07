@@ -40,11 +40,11 @@ class PsdFile {
 
         // Color Mode Data Block
         var colorModeData = new Buffer(4);
-        //colorModeData.writeUInt32BE(0);
+        colorModeData.writeUInt32BE(0);
 
         // Image Resources Block
         var imageResources = new Buffer(4);
-        //imageResources.writeUInt32BE(0);
+        imageResources.writeUInt32BE(0);
 
         // Layer Block
         var layerData = this._createLayerBlockBuffer(this);
