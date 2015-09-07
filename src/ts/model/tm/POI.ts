@@ -3,17 +3,17 @@
 
 class POI {
     filename:string;//psd path
-    imageInfoArr:Array<ImageInfo> = [];
+    imageLayerInfoArr:Array<ImageLayerInfo> = [];
 
     psd2png() {
         if (this.filename) {
             var psdParser = new PsdParser();
             var psd = psdParser.parse(this.filename);
-            for (var i = 0; i < this.imageInfoArr.length; i++) {
-                var imageInfo:ImageInfo = this.imageInfoArr[i];
-                if (!imageInfo.isRef) {
-                    console.log(this, "psd2png", imageInfo.filename);
-                    psd.getDescendants()[i].saveAsPng(imageInfo.filename + "test.png");
+            for (var i = 0; i < this.imageLayerInfoArr.length; i++) {
+                var imageLayerInfo:ImageLayerInfo = this.imageLayerInfoArr[i];
+                if (!imageLayerInfo.isRef) {
+                    console.log(this, "psd2png", imageLayerInfo.filename, i);
+                    psd.getDescendants()[this.imageLayerInfoArr.length - 1 - i].saveAsPng(imageLayerInfo.filename + "test.png");
                 }
             }
         }

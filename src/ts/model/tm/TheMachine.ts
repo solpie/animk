@@ -15,7 +15,7 @@ class TheMachine extends EventDispatcher {
     ActFrameInfo:FrameInfo;
     watchArr:Array<POI>;
     _updateCount:number = 0;//for clear cache
-    _layers:Array<ImageInfo>;
+    _layers:Array<ImageLayerInfo>;
 
     constructor() {
         super();
@@ -41,8 +41,13 @@ class TheMachine extends EventDispatcher {
         this._layers.length = 0;
     }
 
-    addLayer(imageInfo:ImageInfo) {
-        this._layers.push(imageInfo);
+    addLayer(imageInfo:ImageInfo, opacity, isRef) {
+        var imageLayerInfo = new ImageLayerInfo();
+        imageLayerInfo.filename = imageInfo.filename;
+        imageLayerInfo.opacity = opacity;
+        imageLayerInfo.isRef = isRef;
+        imageLayerInfo.imageInfo = imageInfo;
+        this._layers.push(imageLayerInfo);
     }
 
     watchAct() {
@@ -60,27 +65,19 @@ class TheMachine extends EventDispatcher {
             var poi = new POI();
             poi.filename = "D:\\projects\\animk\\test\\comp.psd";
             this.watchArr.push(poi);
-            var imageLayerInfoArr = [];
+            //var imageLayerInfoArr = [];
             var parsingCount = 0;
             var onParsed = ()=> {
                 parsingCount++;
-                if (parsingCount < imageLayerInfoArr.length)
-                    imageLayerInfoArr[parsingCount].load(onParsed);
+                if (parsingCount < this._layers.length)
+                    this._layers[parsingCount].load(onParsed);
                 else
-                    ImageLayerInfo.png2psd(imageLayerInfoArr, appInfo.projectInfo.curComp.width,
+                    ImageLayerInfo.png2psd(this._layers, appInfo.projectInfo.curComp.width,
                         appInfo.projectInfo.curComp.height, "rgba",
                         poi.filename, this.open);
             };
-
-            for (var i = 0; i < this._layers.length; i++) {
-                var imageInfo:ImageInfo = this._layers[i];
-                poi.imageInfoArr.push(imageInfo);
-                var imageLayerInfo:ImageLayerInfo = new ImageLayerInfo();
-                imageLayerInfoArr.push(imageLayerInfo);
-                imageLayerInfo.opacity = imageInfo.opacity;
-                imageLayerInfo.filename = imageInfo.filename;
-            }
-            imageLayerInfoArr[0].load(onParsed);
+            poi.imageLayerInfoArr = this._layers.concat();
+            this._layers[0].load(onParsed);
         }
     }
 

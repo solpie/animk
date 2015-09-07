@@ -3,9 +3,10 @@ class ImageLayerInfo { //glue ImageInfo and PsdLayer
     width:number;
     height:number;
     opacity:number;
+    isRef:boolean;
     pixels:Buffer;
     filename:string;
-
+    imageInfo:ImageInfo;
     constructor() {
         //console.log(this, "new PngLayerData");
     }
