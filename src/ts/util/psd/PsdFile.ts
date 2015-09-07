@@ -89,7 +89,7 @@ class PsdFile {
 
         // layer records
         var layerRecords = Buffer.concat(psd.layers.map(function (layer) {
-            return layer.toBinary().buffer;
+            return layer.toBinary();
         }));
 
         // layer channel image data

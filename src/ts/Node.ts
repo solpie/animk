@@ -27,7 +27,8 @@ declare class Buffer {
     fill(val);
 
     length:number;
-    write(str:string);
+    write(str:string,ofs?);
+    writeUInt8(val1,val2?);
     writeUInt16BE(val1,val2?);
     writeUInt32BE(val1,val2?);
     writeInt32BE(val1,val2?);
