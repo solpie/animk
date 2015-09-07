@@ -27,12 +27,11 @@ class Layer {
     }
 
     getChannelImageBinary() {
-        var that = this;
-        var channelImageData = Buffer.concat(that.channels.map(function (channel) {
+        var channelImageData = Buffer.concat(this.channels.map(function (channel) {
             return channel.toBinary();
         }));
 
-        return new jDataView(channelImageData);
+        return channelImageData;
     }
 
     /**

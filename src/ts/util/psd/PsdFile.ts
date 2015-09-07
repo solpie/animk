@@ -94,7 +94,7 @@ class PsdFile {
 
         // layer channel image data
         var layerChannelImageData = Buffer.concat(psd.layers.map(function (layer:Layer) {
-            return layer.getChannelImageBinary().buffer;
+            return layer.getChannelImageBinary();
         }));
 
         // layer info length
