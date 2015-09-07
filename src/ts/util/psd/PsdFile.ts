@@ -123,14 +123,14 @@ class PsdFile {
 
         // Global layer mask info
         var globalLayerMaskInfoSize = 4 + 2 + 8 + 2 + 1 + 1;
-        var globalLayerMaskInfo = new jDataView(new Buffer(globalLayerMaskInfoSize));
-        globalLayerMaskInfo.writeUint32(globalLayerMaskInfoSize - 4); // length
-        globalLayerMaskInfo.writeUint16(0); // Overlay color space
-        globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
-        globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
-        globalLayerMaskInfo.writeUint16(0); // Opacity
-        globalLayerMaskInfo.writeUint8(0); // kind
-        globalLayerMaskInfo.writeUint8(0); // Filler: zeros
+        var globalLayerMaskInfo = new Buffer(globalLayerMaskInfoSize);
+        globalLayerMaskInfo.writeUInt32BE(globalLayerMaskInfoSize - 4); // length
+        //globalLayerMaskInfo.writeUint16(0); // Overlay color space
+        //globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
+        //globalLayerMaskInfo.writeUint32(0); // 4 * 2 byte color components
+        //globalLayerMaskInfo.writeUint16(0); // Opacity
+        //globalLayerMaskInfo.writeUint8(0); // kind
+        //globalLayerMaskInfo.writeUint8(0); // Filler: zeros
 
         // layer block
         var layerHeader = new Buffer(4);
@@ -140,7 +140,7 @@ class PsdFile {
         return Buffer.concat([
             layerHeader,
             layerInfo,
-            globalLayerMaskInfo.buffer
+            globalLayerMaskInfo
         ]);
     }
 
