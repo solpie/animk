@@ -28,15 +28,18 @@ class CanvasView extends BaseView {
     updateComp() {
         this.ctx.clearRect(0, 0, this._width, this._height);
         var trackInfoArr = appInfo.projectInfo.curComp.trackInfoArr;
+        appInfo.tm.cleanLayer();
         for (var i = trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = trackInfoArr[i];
             if (trackInfo && trackInfo.enable()) {
-                var img:Image = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
-                if (img) {
+                var imageInfo:ImageInfo = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
+                if (imageInfo) {
+                    imageInfo.opacity = trackInfo.opacity();
+                    appInfo.tm.addLayer(imageInfo);
                     //console.log(this, "comp", img.src);
                     //this.ctx.save();
                     this.ctx.globalAlpha = trackInfo.opacity();
-                    this.ctx.drawImage(img, 0, 0);
+                    this.ctx.drawImage(imageInfo.img, 0, 0);
                     //this.ctx.restore();
                     this.savePng();
                 }

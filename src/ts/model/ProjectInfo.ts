@@ -52,7 +52,9 @@ class ProjectInfo extends EventDispatcher {
         var projData = {
             linAnil: {
                 version: this.version,
-                setting: {},
+                setting: {
+                    tmp: "c:/tmp",
+                },
                 composition: []
             }
         };
@@ -98,7 +100,7 @@ class ProjectInfo extends EventDispatcher {
             }
         }
 
-        jsonfile.writeFile(path, projData,null, function (err) {
+        jsonfile.writeFile(path, projData, null, function (err) {
             //console.error(err)
         });
 

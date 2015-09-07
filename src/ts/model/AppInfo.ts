@@ -1,16 +1,19 @@
 /// <reference path="ProjectInfo.ts"/>
+/// <reference path="SettingInfo.ts"/>
 /// <reference path="TheMachine.ts"/>
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="../util/png/PngMaker.ts"/>
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
     tm:TheMachine;
+    settingInfo:SettingInfo;
     mouseX:number;
     mouseY:number;
 
     constructor() {
         super();
         this.tm = new TheMachine();
+        this.settingInfo = new SettingInfo();
     }
 
 

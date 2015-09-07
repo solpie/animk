@@ -39,7 +39,6 @@ class TrackView extends BaseView implements IBaseView {
             if (frameInfo) {
                 actHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
                 actHint.css({display: "block"});
-                appInfo.tm.actImg = frameInfo.imageInfo.filename;
                 appInfo.tm.ActFrameInfo = frameInfo;
             }
         }

@@ -126,17 +126,18 @@ class TrackInfo extends EventDispatcher {
         }
     }
 
-    getCurImg(frameIdx:number):Image {
+    getCurImg(frameIdx:number):ImageInfo {
         frameIdx -= this._start - 1;
         for (var i = 0; i < this.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.frameInfoArr[i];
             if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
-                return frameInfo.imageInfo.img;
+                return frameInfo.imageInfo;
             }
         }
         if (frameIdx > frameInfo.getEnd() && this.loopType == TrackLoopType.HOLD) {
-            return frameInfo.imageInfo.img;
+            return frameInfo.imageInfo;
         }
+        return null;
     }
 
 

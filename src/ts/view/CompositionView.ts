@@ -111,7 +111,6 @@ class CompositionView implements IBaseView {
             console.log(this, i);
         }
     }
-
     updateCursor(frameIdx?) {
         var fpos;
         if (frameIdx != -1) {

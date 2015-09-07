@@ -46,33 +46,27 @@ class PsdMaker {
             }
             else {
                 console.log(this, "png layer length", pngDataArr.length);
-                this.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', function (psdFileBuffer) {
-                    fs.writeFile("out.psd", psdFileBuffer, function (err) {
-                        if (err) throw err;
-
-                        console.log(this, "sus", new Date().getTime() - startTime);
-                    });
-                });
+                PsdMaker.convertPNGs2PSD(pngDataArr, 1280, 720, 'rgba', "out.psd");
             }
         };
         whileLength();
     }
 
-    convertPNGs2PSD(png, w, h, colorSpace, callback) {
+    static convertPNGs2PSD(pngArr, w, h, colorSpace, path:string) {
         // create psd data
         var psd = new PsdFile(w, h, colorSpace);
 
         // append layer
         var pngLayer;
-        for (var i = 0; i < png.length; i++) {
-            pngLayer = png[i];
+        for (var i = 0; i < pngArr.length; i++) {
+            pngLayer = pngArr[i];
             var image = new PsdImage(pngLayer.width, pngLayer.height,
                 colorSpace, pngLayer.pixels);
             //var image = new PsdImage(pngLayer.width, pngLayer.height,
             //    colorSpace, new jDataView(pngLayer.pixels));
             var layer = new Layer();
             layer.drawImage(image);
-            layer.opacity = .5;//todo deal with alpha
+            layer.opacity = pngLayer.opacity;
             psd.appendLayer(layer);
         }
 
@@ -99,7 +93,12 @@ class PsdMaker {
             //}
         }
 
-        callback(psd.toBinary());
+
+        fs.writeFile(path, psd.toBinary(), function (err) {
+            if (err) throw err;
+            //console.log(this, "sus", new Date().getTime() - startTime);
+        });
+        //callback(psd.toBinary());
     }
 
     /**
