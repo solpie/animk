@@ -57,6 +57,7 @@ class ConsoleView extends BasePopup {
                 this._input$.val("");
                 if (this._cmdItemArr.length == 1) {
                     cmd.emit(this._cmdItemArr[0].id);
+                    this._cmdItemArr.length = 0;
                 }
 
                 this.close();

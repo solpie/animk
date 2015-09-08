@@ -33,11 +33,12 @@ class BaseView extends EventDispatcher implements IBaseView {
     height() {
         return $(this.id$).height();
     }
+
     width() {
         return $(this.id$).width();
     }
 
-    top(val){
+    top(val) {
         $(this.id$).css({top: val});
     }
 
@@ -62,19 +63,18 @@ class BasePopup extends EventDispatcher {
     _load() {
         $.get(this._tplPath, (template)=> {
             this._html = Mustache.render(template);
-            this._init();
             this.show();
-            this.emit(ViewEvent.LOADED);
-            this._onLoad();
+            this._init();
         });
     }
 
     _init() {
         this._isInit = true;
+        this.emit(ViewEvent.LOADED);
     }
 
     _onLoad() {
-
+        //override in subClass
     }
 
     hide() {
@@ -82,9 +82,7 @@ class BasePopup extends EventDispatcher {
         parent$.html("");
         parent$.hide();
     }
-    _onShow(){
 
-    }
     show() {
         if (!this._isInit) {
             this._load();
@@ -93,7 +91,7 @@ class BasePopup extends EventDispatcher {
             var parent$ = $(this._parentId$);
             parent$.html(this._html);
             parent$.show();
-            this._onShow();
+            this._onLoad();
         }
     }
 }

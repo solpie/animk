@@ -10,6 +10,7 @@ enum CommandId{
     ToggleFileMenu,
     FileMenuOpen,
     FileMenuSave,
+    OpenOnHoldWin,
 }
 class CommandItem {
     id:number;
@@ -29,6 +30,8 @@ class Command extends EventDispatcher {
         this.newCmd(CommandId.OpenSettingWin, "open Option");
         this.newCmd(CommandId.FileMenuOpen, "open Project");
         this.newCmd(CommandId.FileMenuSave, "save Project");
+        //
+        this.newCmd(CommandId.OpenOnHoldWin, "open on hold win");
         ////test cmd
         this.newCmd(CommandId.testSwapTrack, "test swap track");
         this.newCmd(CommandId.testNewProject, "test new project");

@@ -12,18 +12,18 @@ class SettingView extends BasePopup {
             this.show();
         });
     }
-    _onShow(){
-        this._onLoad();
-    }
+
     _onLoad() {
         this.btnToPageArr = [];
         this.btnToPageArr.push([ElmId$.tabButton0, ElmId$.tabPage0]);
         this.btnToPageArr.push([ElmId$.tabButton1, ElmId$.tabPage1]);
         this.btnToPageArr.push([ElmId$.tabButton2, ElmId$.tabPage2]);
+
         var onClickBtn = (e)=> {
             var btnTarget$ = $(e.target);
             this.showTabByAttrId(btnTarget$.attr("id"));
         };
+
         for (var i = 0; i < this.btnToPageArr.length; i++) {
             var btnToPage = this.btnToPageArr[i];
             $(btnToPage[1]).hide();
@@ -34,6 +34,7 @@ class SettingView extends BasePopup {
             $(ElmId$.settingWin).hide();
             $(ElmId$.popupLayer).hide();
         });
+
         this.showTabByAttrId($(ElmId$.tabButton0).attr("id"))
     }
 

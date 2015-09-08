@@ -53,6 +53,9 @@ var ElmId$ = {
 
     //console
     consoleItemHint: "#ConsoleHint0",
+    // on hold win
+    onHoldWin: "#OnHoldWin0",
+    onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",
 };
 var ElmClass$ = {
     Track: ".Track",

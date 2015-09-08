@@ -43,12 +43,18 @@ class AppInfo extends EventDispatcher {
         //pnglib.createPng(300, 300);
         //var psd = new PsdMaker();
 
+        //cmd.on(CommandId.OpenOnHoldWin, ()=> {
+        //
+        //});
+
         cmd.on(CommandId.testSwapTrack, ()=> {
             this.projectInfo.curComp.swapTrack(2, 1);
         });
+
         cmd.on(CommandId.testProject, ()=> {
             this.projectInfo.open('../test/data.json');
         });
+
         cmd.on(CommandId.testSaveProject, ()=> {
             this.projectInfo.save('D:/projects/animk/test/data.json')
         });

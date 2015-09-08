@@ -21,7 +21,6 @@
   display: none;
   left: 0;
   top: 0;
-  /*top: 25px;*/
   width: 135px;
 }
 .Track .Panel .Slider {
@@ -213,8 +212,6 @@
   height: 500px;
   left: 200px;
   top: 200px;
-  border: #141414 2px solid;
-  background: #222222;
 }
 .SettingWin .Tab .Bar {
   position: absolute;
@@ -413,8 +410,11 @@ body {
   background: #faf014;
 }
 .OnHoldWin {
+  position: absolute;
   width: 415px;
   height: 235px;
+  left: 200px;
+  top: 200px;
 }
 .PopupLayer {
   position: absolute;
@@ -423,6 +423,10 @@ body {
   width: 1660px;
   height: 1024px;
   display: none;
+}
+.PopupLayer .PopupWin {
+  border: #141414 2px solid;
+  background: #222222;
 }
 .PopupLayer .Title {
   width: 100%;
