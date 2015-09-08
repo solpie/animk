@@ -85,7 +85,7 @@ class ProjectInfo extends EventDispatcher {
                     loopType: trackInfo.loopType,
                     end: trackInfo.getEnd(),
                     path: trackInfo.path,
-                    isRef: trackInfo.isRef(),
+                    act: trackInfo.actType(),
                     frames: [],
                 };
                 compData.tracks.push(trackData);

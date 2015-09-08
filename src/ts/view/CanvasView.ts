@@ -34,10 +34,12 @@ class CanvasView extends BaseView {
             if (trackInfo && trackInfo.enable()) {
                 var imageInfo:ImageInfo = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (imageInfo) {
-                    var isRef = false;
-                    if (trackInfo.name() == "ref")
-                        isRef = true;
-                    appInfo.tm.addLayer(imageInfo,trackInfo.opacity(),isRef);
+                    if (trackInfo.actType() != ImageTrackActType.NOEDIT) {
+                        var isRef = false;
+                        if (trackInfo.name() == "ref")
+                            isRef = true;
+                        appInfo.tm.addLayer(imageInfo, trackInfo.opacity(), isRef);
+                    }
                     //console.log(this, "comp", img.src);
                     //this.ctx.save();
                     this.ctx.globalAlpha = trackInfo.opacity();

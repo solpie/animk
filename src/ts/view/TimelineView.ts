@@ -5,7 +5,6 @@ interface File {
 class TimelineView extends BaseView {
     constructor() {
         super();
-        this.el = $("#timeline");
         $(ElmId$.btnNewTrack).on(MouseEvt.CLICK, ()=> {
             this.onNewTrack();
         });

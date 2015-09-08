@@ -11,11 +11,17 @@ enum TrackType{
     COMP,
     AUDIO,
 }
+enum ImageTrackActType{
+    NORMAL = 1,//in psd ,render
+    REF,// in psd ,no render
+    NOEDIT,//not in psd in psd but render
+}
 class TrackData {//for save
     name:string;
     opacity:number;
     enable:boolean = true;
     start:number = 1;
+    act:number = ImageTrackActType.NORMAL;
     loopType:number;
     end:number = 1;
     path:string;
@@ -84,12 +90,12 @@ class TrackInfo extends EventDispatcher {
             return this._trackData.enable;
     }
 
-    isRef(val?) {
+    actType(val?) {
         if (isdef(val)) {
-            this._trackData.isRef = val;
+            this._trackData.act = val;
         }
         else
-            return this._trackData.isRef;
+            return this._trackData.act;
     }
 
     getPath() {

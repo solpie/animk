@@ -26,7 +26,6 @@ class TrackView extends BaseView implements IBaseView {
             idx: this.trackInfo.idx2(),
             name: this.trackInfo.name(),
             frameIdxArr: this.trackInfo.getIdxArr(),
-            //imgs: this.trackInfo.getImgs()
         });
     }
 
@@ -90,7 +89,6 @@ class TrackView extends BaseView implements IBaseView {
         //////////////////////////////////////////////
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
         var clipWidth = this.trackInfo.getHold() * frameWidth;
-        this.el = $(this.id$)[0];
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         this.updateClip();
 
