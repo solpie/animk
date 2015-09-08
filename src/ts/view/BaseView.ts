@@ -52,12 +52,13 @@ class BasePopup extends EventDispatcher {
     _tplPath:string;
     _parentId$:string;
     _html:string;
-    _this$:JQuery;
+    _this$:string;
 
-    constructor(tplPath:string, parentId$:string) {
+    constructor(tplPath:string, parentId$:string, this$?:string) {
         super();
         this._tplPath = tplPath;
         this._parentId$ = parentId$;
+        this._this$ = this$;
     }
 
     _load() {
@@ -69,18 +70,32 @@ class BasePopup extends EventDispatcher {
     }
 
     _init() {
-        this._isInit = true;
-        this.emit(ViewEvent.LOADED);
+        if (!this._isInit) {
+            this._isInit = true;
+            $(this._parentId$).append(this._html);
+            this._onLoad();
+            this.emit(ViewEvent.LOADED);
+        }
     }
 
     _onLoad() {
         //override in subClass
     }
 
+    _onShow() {
+        //override in subClass
+    }
+
     hide() {
         var parent$ = $(this._parentId$);
-        parent$.html("");
+        this.hideThis$();
         parent$.hide();
+        this.emit(ViewEvent.HIDED);
+    }
+
+    hideThis$() {
+        if (this._this$)
+            $(this._this$).hide();
     }
 
     show() {
@@ -89,9 +104,11 @@ class BasePopup extends EventDispatcher {
         }
         else {
             var parent$ = $(this._parentId$);
-            parent$.html(this._html);
             parent$.show();
-            this._onLoad();
+            if (this._this$) {
+                $(this._this$).show();
+                this._onShow();
+            }
         }
     }
 }

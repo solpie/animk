@@ -52,6 +52,7 @@ var ElmId$ = {
     tabPage2: "#TabPage2",
 
     //console
+    consoleWin: "#ConsoleWin0",
     consoleItemHint: "#ConsoleHint0",
     // on hold win
     onHoldWin: "#OnHoldWin0",

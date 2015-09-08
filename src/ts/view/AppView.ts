@@ -1,5 +1,5 @@
 /// <reference path="../model/AppInfo.ts"/>
-/// <reference path="ConsoleView.ts"/>
+/// <reference path="PopupView.ts"/>
 /// <reference path="TitleMenuView.ts"/>
 /// <reference path="FileMenuView.ts"/>
 /// <reference path="KeyInput.ts"/>
@@ -8,7 +8,6 @@
 /// <reference path="WindowView.ts"/>
 /// <reference path="../widget/Splitter.ts"/>
 /// <reference path="CanvasView.ts"/>
-/// <reference path="PopupView.ts"/>
 /// <reference path="../JQuery.ts"/>
 
 var Keys = {
@@ -60,7 +59,6 @@ class AnimkView {
         this.projectViewArr = [];
         this.canvasView = new CanvasView();
         this.popupView = new PopupView();
-        new ConsoleView();
         var tmv = new TitleMenuView();
         tmv.on(ViewEvent.LOADED, ()=> {
             new FileMenuView();

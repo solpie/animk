@@ -22,6 +22,7 @@ class ViewEvent {
     static RESIZE:string = "resize";
     static SCROLL:string = "scroll";
     static LOADED:string = "loaded";
+    static HIDED:string = "hided";
 }
 ///   model  events
 class ProjectInfoEvent {

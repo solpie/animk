@@ -5,37 +5,43 @@ class ConsoleView extends BasePopup {
     _cmdItemArr:Array<CommandItem>;
 
     constructor() {
-        super('template/ConsoleWin.html', ElmId$.popupLayer);
+        super('template/ConsoleWin.html', ElmId$.popupLayer, ElmId$.consoleWin);
         cmd.on(CommandId.ShowConsoleWin, ()=> {
             this.show();
             var input$ = $(ElmClass$.ConsoleInput);
-            if (input$) {
-                console.log(this, "input$", input$.val());
-                this._onLoad();
-            }
+            //if (input$) {
+            //    console.log(this, "input$", input$.val());
+            //    this._onLoad();
+            //}
         });
         cmd.on(CommandId.HideConsoleWin, ()=> {
             this.close();
         });
     }
 
-    _init() {
-        super._init();
+    //_init() {
+    //    super._init();
+    //}
+    _onShow() {
+        //delay
+        setTimeout(()=> {
+            this._input$.focus();
+        }, 200);
+        //this._input$.val("");
     }
 
     close() {
         KeyInput.isBlock = false;
+        this._input$.val("");
         this.hide();
     }
 
     _onLoad() {
         this._input$ = $(ElmClass$.ConsoleInput);
-        if (this._input$.val())
-            this._input$.val(this._input$.val().replace("`", ""));
-        this._input$.focus();
+
         //$(ElmClass$.ConsoleInput).val("");
 
-        console.log(this, this._input$);
+        console.log(this, "_onLoad", this._input$);
         //this._input$.on(KeyEvt.DOWN, (e)=> {
         //    this._input$.val(this._input$.val().replace("`", ""));
         //});
@@ -53,23 +59,17 @@ class ConsoleView extends BasePopup {
             //else {
             //}
             var key = e.keyCode;
-            if (Keys.Char(key, "\r")) {//enter
+            if (Keys.ESC(key) || Keys.Char(key, "\r")) {//enter
                 this._input$.val("");
                 if (this._cmdItemArr.length == 1) {
                     cmd.emit(this._cmdItemArr[0].id);
                     this._cmdItemArr.length = 0;
+
                 }
 
                 this.close();
             }
         });
-        //this._input$.on(ViewEvent.CHANGED, ()=> {
-        //    var input = $(ElmClass$.ConsoleInput).val();
-        //    if (input == "`") {
-        //        $(ElmClass$.ConsoleInput).val("");
-        //    }
-        //    console.log(this, input);
-        //});
     }
 
     updateItem(key:string) {
