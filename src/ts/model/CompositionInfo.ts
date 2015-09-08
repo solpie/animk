@@ -13,6 +13,10 @@ class CompositionData {
     height:number;
     width:number;
     tracks:Array<TrackData>;
+
+    static clone(val:CompositionData) {
+        //todo clone this
+    }
 }
 class CompositionInfo extends EventDispatcher {
     name:string;

@@ -43,7 +43,6 @@ class TrackData {//for save
             td.frames.push(FrameData.clone(val.frames[i]))
         }
         return td;
-
     }
 }
 class TrackInfo extends EventDispatcher {
