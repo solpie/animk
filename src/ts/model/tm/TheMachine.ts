@@ -74,44 +74,42 @@ class TheMachine extends EventDispatcher {
                 else
                     ImageLayerInfo.png2psd(this._layers, appInfo.projectInfo.curComp.width,
                         appInfo.projectInfo.curComp.height, "rgba",
-                        poi.filename, this.open);
+                        poi.filename, (p)=> {
+                            this.open(p);
+                        });
+
             };
             poi.imageLayerInfoArr = this._layers.concat();
             this._layers[0].load(onParsed);
         }
     }
 
+    onPOIchange(path) {
+        console.log(this, "onPOIchange", path);
+    }
 
-    //PNGcomp2PSD(pngArr:Array<ImageLayerInfo>, w, h, colorSpace, path:string) {
-    //    // create psd data
-    //    var psd = new PsdFile(w, h, colorSpace);
-    //
-    //    // append layer
-    //    var pngLayer:ImageLayerInfo;
-    //    for (var i = 0; i < pngArr.length; i++) {
-    //        pngLayer = pngArr[i];
-    //        var image = new PsdImage(pngLayer.width, pngLayer.height,
-    //            colorSpace, pngLayer.pixels);
-    //        var layer = new Layer();
-    //        layer.drawImage(image);
-    //        layer.opacity = pngLayer.opacity;
-    //        psd.appendLayer(layer);
-    //    }
-    //
-    //    // create merged image data
-    //    var b = new Buffer(4);
-    //    psd.imageData = new PsdImage(1, 1,
-    //        colorSpace, b);
-    //
-    //    fs.writeFile(path, psd.toBinary(), (err) => {
-    //        if (err) throw err;
-    //        this.open(path);
-    //    });
-    //}
+    watchPOI(path:string) {
+        console.log(this, "watchPOI", path);
+        fs.watch(path, function (event, filename) {
+            console.log('event is: ' + event);
+            if (filename) {
+                console.log('filename provided: ' + filename);
+                if (event == "change") {
+
+                }
+            } else {
+                console.log('filename not provided');
+            }
+        });
+    }
+
 
     open(path:string) {
         path = path.replace("/", "\\");
+        var self = this;
+        self.watchPOI(path);
         console.log(this, "open:", path);
+
         exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
             if (stdout) {
                 console.log('stdout: ' + stdout);

@@ -12,7 +12,9 @@ class SettingView extends BasePopup {
             this.show();
         });
     }
-
+    _onShow(){
+        this._onLoad();
+    }
     _onLoad() {
         this.btnToPageArr = [];
         this.btnToPageArr.push([ElmId$.tabButton0, ElmId$.tabPage0]);
@@ -27,7 +29,6 @@ class SettingView extends BasePopup {
             $(btnToPage[1]).hide();
             $(btnToPage[0]).on(MouseEvt.CLICK, onClickBtn);
         }
-
 
         $(ElmId$.btnCloseSetting).on(MouseEvt.CLICK, ()=> {
             $(ElmId$.settingWin).hide();

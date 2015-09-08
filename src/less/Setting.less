@@ -1,61 +1,39 @@
 @import "lib";
 
-.PopupLayer {
+.SettingWin {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: @Size-Def-Width;
-  height: @Size-Def-Height;
-  display: none;
-  .Mask {
-    //width: 100%;
-    //height: 100%;
-    //opacity: .3;
-    //position: absolute;
-    //background: @Theme-Color-Dark;
-  }
-  .SettingWin {
-    position: absolute;
-    width: 648px;
-    height: 500px;
-    left: 200px;
-    top: 200px;
-    border: @Theme-Border-Popup;
-    background: @Theme-Color-Dark;
+  width: 648px;
+  height: 500px;
+  left: 200px;
+  top: 200px;
+  border: @Theme-Border-Popup;
+  background: @Theme-Color-Dark;
 
-    .Title {
-      width: 100%;
+
+  .Tab {
+    .Bar {
+      position: absolute;
+      top: 32px;
       height: 30px;
-      background: @Theme-Color-Light;
-      button {
-        float: right;
+      .Button {
+        top: 8px;
+        height: 22px;
+        background: @Theme-Color-Dark;
+        text-align: center;
+        display: inline-block;
+        border: @Theme-Border;
       }
     }
-    .Tab {
-      .Bar {
-        position: absolute;
-        top: 32px;
-        height: 30px;
-        .Button {
-          top: 8px;
-          height: 22px;
-          background: @Theme-Color-Dark;
-          text-align: center;
-          display: inline-block;
-          border: @Theme-Border;
-        }
-      }
-      .Content {
-        position: absolute;
-        top: 64px;
-        height: 436px;
+    .Content {
+      position: absolute;
+      top: 64px;
+      height: 436px;
 
-        width: 100%;
-        background: @Theme-Color-Dark3;
-        overflow-y: scroll;
-        .Page {
-          height: 438px;
-        }
+      width: 100%;
+      background: @Theme-Color-Dark3;
+      overflow-y: scroll;
+      .Page {
+        height: 438px;
       }
     }
   }

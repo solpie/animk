@@ -82,7 +82,9 @@ class BasePopup extends EventDispatcher {
         parent$.html("");
         parent$.hide();
     }
+    _onShow(){
 
+    }
     show() {
         if (!this._isInit) {
             this._load();
@@ -91,6 +93,7 @@ class BasePopup extends EventDispatcher {
             var parent$ = $(this._parentId$);
             parent$.html(this._html);
             parent$.show();
+            this._onShow();
         }
     }
 }
