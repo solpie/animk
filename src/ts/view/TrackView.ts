@@ -74,23 +74,18 @@ class TrackView extends BaseView implements IBaseView {
         ////////////////     track name input
         var trackName$ = $(this.id$ + " " + ElmClass$.Text);
         var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
+
         this.trackInfo.on(TrackInfoEvent.SET_NAME, (name)=> {
             trackName$.html(name);
         });
+
         trackInput$.on(ViewEvent.CHANGED, ()=> {
             var newName = trackInput$.val();
             this.trackInfo.name(newName);
         });
+
         trackName$.on(MouseEvt.DBLCLICK, ()=> {
-            trackInput$.val(this.trackInfo.name());
-            trackInput$.css({display: "block"});
-            trackInput$.focus();
-            trackInput$.on(KeyEvt.DOWN, (e)=> {
-                if (Keys.Char(e.keyCode, "\r")) {
-                    trackInput$.css({display: "none"});
-                    trackInput$.unbind(KeyEvt.DOWN);
-                }
-            });
+            this.showTrackRenameInput();
         });
         //////////////////////////////////////////////
         var frameWidth = appInfo.projectInfo.curComp.frameWidth;
@@ -118,6 +113,21 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
+    }
+
+    showTrackRenameInput() {
+        var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
+        trackInput$.val(this.trackInfo.name());
+        trackInput$.css({display: "block"});
+        trackInput$.focus();
+        KeyInput.isBlock = true;
+        trackInput$.on(KeyEvt.DOWN, (e)=> {
+            if (Keys.ESC(e.keyCode) || Keys.Char(e.keyCode, "\r")) {
+                KeyInput.isBlock = false;
+                trackInput$.css({display: "none"});
+                trackInput$.unbind(KeyEvt.DOWN);
+            }
+        });
     }
 
     onVisible() {

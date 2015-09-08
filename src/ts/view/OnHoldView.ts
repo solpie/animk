@@ -1,5 +1,8 @@
 /// <reference path="BaseView.ts"/>
 
-class OnHoldView {
+class OnHoldView extends BasePopup {
+    constructor() {
+        super();
+    }
 
 }

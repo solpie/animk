@@ -72,7 +72,6 @@ class ConsoleView extends BasePopup {
     }
 
     updateItem(key:string) {
-
         if (key) {
             this._cmdItemArr = [];
             cmd.cmdArr.map((ci:CommandItem)=> {

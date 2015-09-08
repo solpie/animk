@@ -7,6 +7,7 @@ class ImageLayerInfo { //glue ImageInfo and PsdLayer
     pixels:Buffer;
     filename:string;
     imageInfo:ImageInfo;
+
     constructor() {
         //console.log(this, "new PngLayerData");
     }
