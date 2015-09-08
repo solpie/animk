@@ -20,26 +20,37 @@ class TrackData {//for save
     name:string;
     opacity:number;
     enable:boolean = true;
+    type:number = TrackType.IMAGE;
     start:number = 1;
     act:number = ImageTrackActType.NORMAL;
-    loopType:number;
+    loopType:number = TrackLoopType.HOLD;
     end:number = 1;
     path:string;
-    isRef:boolean = false;// reference track
     frames:Array<FrameData>;
+
+    static clone(val:TrackData) {
+        var td = new TrackData();
+        for (var p in val) {
+            if (p != "frames")
+                td[p] = val[p];
+            else {
+                //console.log(this, "no clone for Array");
+            }
+
+        }
+        td.frames = [];
+        for (var i = 0; i < val.frames.length; i++) {
+            td.frames.push(FrameData.clone(val.frames[i]))
+        }
+        return td;
+
+    }
 }
 class TrackInfo extends EventDispatcher {
-    idx:number;
-    //name:string;
-    type:number;
-    path:string;
-    loopType = TrackLoopType.HOLD;
+    _idx:number;
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
-    /////// save data;
     lastIdx:number;//for swap track
-    isRomve:boolean;
-    _imgArr:Array<string>;
     isSelected:boolean;
     _start:number = 1;
     _hold:number = 1;
@@ -54,11 +65,11 @@ class TrackInfo extends EventDispatcher {
 
     idx2(val?) {
         if (isdef(val)) {
-            this.lastIdx = this.idx;
-            this.idx = val;
+            this.lastIdx = this._idx;
+            this._idx = val;
         }
         else
-            return this.idx;
+            return this._idx;
     }
 
     name(val?) {
@@ -68,6 +79,14 @@ class TrackInfo extends EventDispatcher {
         }
         else
             return this._trackData.name;
+    }
+
+    loopType(val?) {
+        if (isdef(val)) {
+            this._trackData.loopType = val;
+        }
+        else
+            return this._trackData.loopType;
     }
 
 
@@ -98,8 +117,12 @@ class TrackInfo extends EventDispatcher {
             return this._trackData.act;
     }
 
-    getPath() {
-        return this._trackData.path;
+    path(val?) {
+        if (isdef(val)) {
+            this._trackData.path = val;
+        }
+        else
+            return this._trackData.path;
     }
 
     setStart(val) {
@@ -109,6 +132,10 @@ class TrackInfo extends EventDispatcher {
 
     getStart() {
         return this._start;
+    }
+
+    trackData():TrackData {
+        return this._trackData;
     }
 
     _loadCount;
@@ -159,7 +186,7 @@ class TrackInfo extends EventDispatcher {
                 return frameInfo.imageInfo;
             }
         }
-        if (frameIdx > frameInfo.getEnd() && this.loopType == TrackLoopType.HOLD) {
+        if (frameIdx > frameInfo.getEnd() && this.loopType() == TrackLoopType.HOLD) {
             return frameInfo.imageInfo;
         }
         return null;

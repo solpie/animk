@@ -33,9 +33,8 @@ class ProjectInfo extends EventDispatcher {
             for (var i = 0; i < projData.linAnil.composition.length; i++) {
                 var compData:CompositionData = projData.linAnil.composition[i];
                 var compInfo:CompositionInfo = this.newComp(compData.width, compData.height, compData.framerate);
-
                 for (var j = 0; j < compData.tracks.length; j++) {
-                    var trackData:TrackData = compData.tracks[j];
+                    var trackData = compData.tracks[j];
                     var path = trackData.path;
                     for (var k = 0; k < trackData.frames.length; k++) {
                         var frameData:FrameData = trackData.frames[k];
@@ -75,30 +74,14 @@ class ProjectInfo extends EventDispatcher {
                 var trackInfo:TrackInfo = compInfo.trackInfoArr[j];
                 if (!trackInfo)
                     continue;
-                //compData.tracks.push(trackInfo._trackData);
-
-                var trackData:TrackData = {
-                    name: trackInfo.name(),
-                    opacity: trackInfo.opacity(),
-                    enable: trackInfo.enable(),
-                    start: trackInfo.getStart(),
-                    loopType: trackInfo.loopType,
-                    end: trackInfo.getEnd(),
-                    path: trackInfo.path,
-                    act: trackInfo.actType(),
-                    frames: [],
-                };
+                console.log(this, "get TrackData", j, trackInfo.trackData());
+                var trackData:TrackData = TrackData.clone(trackInfo.trackData());
                 compData.tracks.push(trackData);
-                for (var k = 0; k < trackInfo.frameInfoArr.length; k++) {
-                    var frameInfo:FrameInfo = trackInfo.frameInfoArr[k];
-                    if (!frameInfo)
+                for (var k = 0; k < trackData.frames.length; k++) {
+                    var frameData:FrameData = trackData.frames[k];
+                    if (!frameData)
                         continue;
-                    var frameData:FrameData = {
-                        start: frameInfo.getStart(),
-                        hold: frameInfo.getHold(),
-                        filename: M_path.basename(frameInfo.imageInfo.filename),
-                    };
-                    trackData.frames.push(frameData)
+                    frameData.filename = M_path.basename(frameData.filename);
                 }
             }
         }

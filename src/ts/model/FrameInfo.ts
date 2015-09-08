@@ -8,6 +8,14 @@ class FrameData {
     start:number;
     hold:number;
     filename:number;
+
+    static clone(val:FrameData) {
+        var fd = new FrameData();
+        for (var p in val) {
+            fd[p] = val[p];
+        }
+        return fd;
+    }
 }
 class FrameInfo extends EventDispatcher {
     _idx = -1;

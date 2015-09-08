@@ -50,7 +50,7 @@ class TrackView extends BaseView implements IBaseView {
     setParent(parent:JQuery) {
         super.setParent(parent);
 
-        var idx = this.trackInfo.idx;
+        var idx = this.trackInfo.idx2();
         this.id$ = ElmClass$.Track + "#" + idx;
         ///  trackInfo event
         //////// opacity slider
