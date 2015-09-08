@@ -2,6 +2,8 @@
 enum CommandId{
     ShowConsoleWin = 100000,
     testSwapTrack,
+    testNewProject,
+    testSaveProject,
     testProject,
     HideConsoleWin,
     OpenSettingWin,
@@ -28,7 +30,9 @@ class Command extends EventDispatcher {
         this.newCmd(CommandId.FileMenuOpen, "open Project");
         this.newCmd(CommandId.FileMenuSave, "save Project");
         ////test cmd
-        this.newCmd(CommandId.testSwapTrack, "test Swap track");
+        this.newCmd(CommandId.testSwapTrack, "test swap track");
+        this.newCmd(CommandId.testNewProject, "test new project");
+        this.newCmd(CommandId.testSaveProject, "test save project");
         this.newCmd(CommandId.testProject, "test project");
     }
 

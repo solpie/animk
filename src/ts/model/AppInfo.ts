@@ -36,33 +36,28 @@ class AppInfo extends EventDispatcher {
 
 
     test(test?) {
-        $("#btnTest").on(MouseEvt.CLICK, ()=> {
-            //this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
-            //console.log(this, "test");
-            {//test project
-                this.newProject();
-                this.projectInfo.newComp(1280, 720, 24).newTrack('D:/projects/animk/test/test30');
-                this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
-                this.projectInfo.curComp.setCursor(1);
-            }
-        });
+        //this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
+        //console.log(this, "test");
 
         //var pnglib = new PngMaker();
         //pnglib.createPng(300, 300);
         //var psd = new PsdMaker();
 
-        //this.projectInfo = new ProjectInfo();
-        //this.dis(ProjectInfoEvent.NEW_PROJ);
         cmd.on(CommandId.testSwapTrack, ()=> {
             this.projectInfo.curComp.swapTrack(2, 1);
         });
         cmd.on(CommandId.testProject, ()=> {
             this.projectInfo.open('../test/data.json');
         });
-        //this.projectInfo.save('D:/projects/animk/test/data.json')
-
-        //function loadUser() {
-        //}
+        cmd.on(CommandId.testSaveProject, ()=> {
+            this.projectInfo.save('D:/projects/animk/test/data.json')
+        });
+        cmd.on(CommandId.testNewProject, ()=> {
+            this.newProject();
+            this.projectInfo.newComp(1280, 720, 24).newTrack('D:/projects/animk/test/test30');
+            this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
+            this.projectInfo.curComp.setCursor(1);
+        });
     }
 
     frameWidth() {
