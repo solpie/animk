@@ -1,6 +1,4 @@
-/// <reference path="../../event/EventDispatcher.ts"/>
-/// <reference path="../BaseView.ts"/>
-/// <reference path="../../Model/Command.ts"/>
+/// <reference path="BasePopup.ts"/>
 
 class SettingView extends BasePopup {
     btnToPageArr;

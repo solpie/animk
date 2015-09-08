@@ -1,4 +1,4 @@
-/// <reference path="../BaseView.ts"/>
+/// <reference path="BasePopup.ts"/>
 /// <reference path="SettingView.ts"/>
 /// <reference path="ConsoleView.ts"/>
 /// <reference path="OnHoldView.ts"/>

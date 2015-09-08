@@ -303,10 +303,6 @@ class TrackView extends BaseView implements IBaseView {
         appInfo.projectInfo.curComp.delTrack(this.trackInfo.idx2());
     }
 
-    remove() {
-        console.log(this, "remove track idx:", this.trackInfo.idx2());
-        $(this.el).remove();
-    }
 
     hScrollTo(val:number) {
         $(this.id$ + " " + ElmClass$.TrackArea).scrollLeft(val);

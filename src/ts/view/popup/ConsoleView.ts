@@ -1,4 +1,4 @@
-/// <reference path="../BaseView.ts"/>
+/// <reference path="BasePopup.ts"/>
 
 class ConsoleView extends BasePopup {
     _input$:JQuery;
@@ -19,13 +19,16 @@ class ConsoleView extends BasePopup {
         setTimeout(()=> {
             this._input$.focus();
         }, 200);
+
         //this._input$.val("");
     }
 
     close() {
-        KeyInput.isBlock = false;
-        this._input$.val("");
-        this.hide();
+        if (this._input$) {
+            KeyInput.isBlock = false;
+            this._input$.val("");
+            this.hide();
+        }
     }
 
     _onLoad() {

@@ -213,8 +213,16 @@ class CompositionView implements IBaseView {
         //delete this.trackInfoArr[idx];
         this._trackHeight -= this.trackViewArr[idx].height();
         this.setTrackHeight(this._trackHeight);
-        this.trackViewArr[idx].remove();
+        var delTrackView:TrackView = this.trackViewArr[idx];
+        var delTrackViewHeight = delTrackView.height();
+        delTrackView.remove();
         delete this.trackViewArr[idx];
+        for (var i = idx + 1; i < this.trackViewArr.length; i++) {
+            var trackView:TrackView = this.trackViewArr[i];
+            if (trackView) {
+                trackView.top(trackView.top() - delTrackViewHeight);
+            }
+        }
         //this.trackViewArr.splice(idx, 1);
     }
 
