@@ -1,5 +1,5 @@
 /// <reference path="../model/AppInfo.ts"/>
-/// <reference path="PopupView.ts"/>
+/// <reference path="popup/PopupView.ts"/>
 /// <reference path="TitleMenuView.ts"/>
 /// <reference path="FileMenuView.ts"/>
 /// <reference path="KeyInput.ts"/>

@@ -1,4 +1,4 @@
-/// <reference path="BaseView.ts"/>
+/// <reference path="../BaseView.ts"/>
 
 class ConsoleView extends BasePopup {
     _input$:JQuery;
@@ -8,20 +8,12 @@ class ConsoleView extends BasePopup {
         super('template/ConsoleWin.html', ElmId$.popupLayer, ElmId$.consoleWin);
         cmd.on(CommandId.ShowConsoleWin, ()=> {
             this.show();
-            var input$ = $(ElmClass$.ConsoleInput);
-            //if (input$) {
-            //    console.log(this, "input$", input$.val());
-            //    this._onLoad();
-            //}
         });
         cmd.on(CommandId.HideConsoleWin, ()=> {
             this.close();
         });
     }
 
-    //_init() {
-    //    super._init();
-    //}
     _onShow() {
         //delay
         setTimeout(()=> {
@@ -60,6 +52,7 @@ class ConsoleView extends BasePopup {
             //}
             var key = e.keyCode;
             if (Keys.ESC(key) || Keys.Char(key, "\r")) {//enter
+                this.close();
                 this._input$.val("");
                 if (this._cmdItemArr.length == 1) {
                     cmd.emit(this._cmdItemArr[0].id);
@@ -67,7 +60,6 @@ class ConsoleView extends BasePopup {
 
                 }
 
-                this.close();
             }
         });
     }

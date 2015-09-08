@@ -11,7 +11,10 @@ class KeyInput {
             appInfo.projectInfo.curComp.stayBack();
             cmd.emit(CommandId.HideConsoleWin);
         }
-        if (KeyInput.isBlock)return;
+        if (KeyInput.isBlock) {
+            console.log(this, "KeyInput Block");
+            return;
+        }
         if (Keys.Char(key, "F")) {
             appInfo.projectInfo.curComp.forward()
         }

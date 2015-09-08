@@ -1,4 +1,4 @@
-/// <reference path="BaseView.ts"/>
+/// <reference path="../BaseView.ts"/>
 
 class OnHoldView extends BasePopup {
     constructor() {
@@ -11,10 +11,8 @@ class OnHoldView extends BasePopup {
 
     _onLoad() {
         console.log(this, "onLoad", $(ElmId$.onHoldWin));
-        //$(ElmId$.onHoldWin).show();
         $(ElmId$.onHoldWinCloseBtn).on(MouseEvt.CLICK, ()=> {
-            //$(ElmId$.onHoldWin).hide();
-            $(ElmId$.popupLayer).hide();
+            this.hide();
         });
     }
 }

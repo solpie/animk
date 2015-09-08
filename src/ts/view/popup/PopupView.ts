@@ -1,4 +1,4 @@
-/// <reference path="BaseView.ts"/>
+/// <reference path="../BaseView.ts"/>
 /// <reference path="SettingView.ts"/>
 /// <reference path="ConsoleView.ts"/>
 /// <reference path="OnHoldView.ts"/>
@@ -16,7 +16,8 @@ class PopupView {
     hideAll() {
         this._popupArr.map((view:BasePopup)=> {
             view.hideThis$();
-        })
+        });
+        KeyInput.isBlock = false;
     }
 
     newView(cls){

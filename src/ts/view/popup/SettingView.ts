@@ -1,6 +1,6 @@
-/// <reference path="../event/EventDispatcher.ts"/>
-/// <reference path="BaseView.ts"/>
-/// <reference path="../Model/Command.ts"/>
+/// <reference path="../../event/EventDispatcher.ts"/>
+/// <reference path="../BaseView.ts"/>
+/// <reference path="../../Model/Command.ts"/>
 
 class SettingView extends BasePopup {
     btnToPageArr;
@@ -31,8 +31,7 @@ class SettingView extends BasePopup {
         }
 
         $(ElmId$.btnCloseSetting).on(MouseEvt.CLICK, ()=> {
-            $(ElmId$.settingWin).hide();
-            $(ElmId$.popupLayer).hide();
+            this.hide();
         });
 
         this.showTabByAttrId($(ElmId$.tabButton0).attr("id"))
