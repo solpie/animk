@@ -110,6 +110,7 @@ class TrackView extends BaseView implements IBaseView {
 
     _initView() {
         this.onSetOpacity();
+        this._updateActHint()
     }
 
     _initMenu() {
@@ -124,7 +125,8 @@ class TrackView extends BaseView implements IBaseView {
 
     }
 
-    setActHint(type:number) {
+    _updateActHint() {
+        var type = this.trackInfo.actType();
         var actHint$ = $(this.id$ + " " + ElmClass$.ActHint);
         if (type == ImageTrackActType.NOEDIT) {
             actHint$.css({background: ColorTheme.IMAGE_ACT_NOEDIT});
@@ -202,7 +204,7 @@ class TrackView extends BaseView implements IBaseView {
         });
 
         this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
-            this.setActHint(v);
+            this._updateActHint();
         });
         var frameWidth = appInfo.frameWidth();
         this.trackInfo.on(TrackInfoEvent.LOADED, ()=> {

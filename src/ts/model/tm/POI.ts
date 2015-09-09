@@ -3,6 +3,7 @@
 
 class POI {
     filename:string;//psd path
+    basename:string;
     imageLayerInfoArr:Array<ImageLayerInfo> = [];
 
     psd2png() {
@@ -12,14 +13,15 @@ class POI {
             for (var i = 0; i < this.imageLayerInfoArr.length; i++) {
                 var imageLayerInfo:ImageLayerInfo = this.imageLayerInfoArr[i];
                 if (!imageLayerInfo.isRef) {
-                    console.log(this, "psd2png", imageLayerInfo.filename, i);
-                    psd.getDescendants()[this.imageLayerInfoArr.length - 1 - i].saveAsPng(imageLayerInfo.filename + "test.png");
+                    psd.getDescendants()[this.imageLayerInfoArr.length - 1 - i].saveAsPng(imageLayerInfo.filename, ()=> {
+                        console.log(this, "psd2png", imageLayerInfo.filename);
+                        imageLayerInfo.imageInfo.reloadImg();
+                    });
                 }
             }
         }
         else {
             throw new Error("no psd filename")
         }
-
     }
 }

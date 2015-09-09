@@ -406,7 +406,7 @@ class PsdParser {
             return self.pixelData
         };
 
-        layer.saveAsPng = function (output) {
+        layer.saveAsPng = function (output, callback) {
             var self = this;
             self.parseImageData();
             var png = new PNG({
@@ -416,7 +416,9 @@ class PsdParser {
             });
             if (self.pixelData) {
                 png.data = self.pixelData;
-                png.pack().pipe(fs.createWriteStream(output))
+                var dst = fs.createWriteStream(output);
+                dst.on("finish", callback);
+                png.pack().pipe(dst);
             } else {
                 throw 'Not support the colorMode'
             }

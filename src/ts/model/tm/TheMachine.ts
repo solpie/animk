@@ -13,21 +13,21 @@ var exec = require('child_process').exec;
 
 class TheMachine extends EventDispatcher {
     ActFrameInfo:FrameInfo;
-    watchArr:Array<POI>;
+    watchPOIArr:Array<POI>;
     _updateCount:number = 0;//for clear cache
     _layers:Array<ImageLayerInfo>;
 
     constructor() {
         super();
         // <reference path="../../util/psd/PsdMaker.ts"/>
-        this.watchArr = [];
+        this.watchPOIArr = [];
         this._layers = [];
     }
 
     updateWatchArr() {
         this._updateCount++;
-        for (var i = 0; i < this.watchArr.length; i++) {
-            var poi:POI = this.watchArr[i];
+        for (var i = 0; i < this.watchPOIArr.length; i++) {
+            var poi:POI = this.watchPOIArr[i];
             poi.psd2png();
 
             //poi.imageInfoArr.map((imageInfo:ImageInfo)=> {
@@ -65,9 +65,10 @@ class TheMachine extends EventDispatcher {
         }
         if (this._layers.length) {
             var poi = new POI();
-            var filename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
-            poi.filename = M_path.join(appInfo.settingInfo.tmpPath(), filename);
-            this.watchArr.push(poi);
+            var basename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
+            poi.basename = basename;
+            poi.filename = M_path.join(appInfo.settingInfo.tmpPath(), basename);
+            this.watchPOIArr.push(poi);
             var parsingCount = 0;
             var onParsed = ()=> {
                 parsingCount++;
@@ -87,17 +88,24 @@ class TheMachine extends EventDispatcher {
     }
 
     onPOIchange(path) {
+        for (var i = 0; i < this.watchPOIArr.length; i++) {
+            var poi:POI = this.watchPOIArr[i];
+            if (poi.basename == path) {
+                this._updateCount++;
+                poi.psd2png();
+            }
+        }
         console.log(this, "onPOIchange", path);
     }
 
     watchPOI(path:string) {
         console.log(this, "watchPOI", path);
-        fs.watch(path, function (event, filename) {
+        fs.watch(path, (event, filename)=> {
             console.log('event is: ' + event);
             if (filename) {
                 console.log('filename provided: ' + filename);
                 if (event == "change") {
-
+                    this.onPOIchange(filename);
                 }
             } else {
                 console.log('filename not provided');
