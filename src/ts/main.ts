@@ -3,6 +3,7 @@
 /// <reference path="model/Command.ts"/>
 /// <reference path="view/AppView.ts"/>
 var cmd:Command = new Command();
+var appInfo = new AppInfo();
 var app:AnimkView;
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {

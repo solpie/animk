@@ -51,7 +51,15 @@ class BasePopup extends BaseView {
             $(this._this$).hide();
     }
 
+    setMousePass(val) {
+        if (val)
+            $(this._parentId$).css({"pointer-events": "none"});
+        else
+            $(this._parentId$).css({"pointer-events": "auto"});
+    }
+
     show() {
+        this.setMousePass(false);
         if (!this._isInit) {
             this._load();
         }

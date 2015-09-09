@@ -97,6 +97,13 @@
   background: #FAF014;
   display: none;
 }
+.TrackMenu {
+  width: 120px;
+  height: 200px;
+  border: #141414 2px solid;
+  background: #222222;
+  position: absolute;
+}
 .FileMenu {
   position: absolute;
   width: 480px;
@@ -423,6 +430,7 @@ body {
   width: 1660px;
   height: 1024px;
   display: none;
+  pointer-events: none;
 }
 .PopupLayer .PopupWin {
   border: #141414 2px solid;

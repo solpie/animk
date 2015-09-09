@@ -62,6 +62,12 @@ class TrackView extends BaseView implements IBaseView {
         this._slider.on(ViewEvent.CHANGED, (val)=> {
             this.onSlider(val);
         });
+        /// track menu
+        var panel$ = this.id$ + " " + ElmClass$.Panel;
+        $(panel$).on(MouseEvt.RCLICK, ()=> {
+            this._isPressWidget = true;
+            cmd.emit(CommandId.ShowTrackMenu);
+        });
 
         //////// visible checkbox
         this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
@@ -193,27 +199,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     onDelFrame(delFrame:FrameInfo) {
-        $(this.getFrameId$(delFrame.getIdx())).remove();
-        var isEnd = false;
-        var idx = delFrame.getIdx();
-        while (!isEnd) {
-            var frame$ = $(this.getFrameId$(idx));
-            if (frame$) {
-                console.log(this, "delFrame", frame$.attr("id"));
-                frame$.attr("id", this.getFrameId$(idx - 1));
-                console.log(this, "delFrame", frame$.attr("id"));
-                idx++;
-                if (idx == 10)
-                    isEnd = true;
-            }
-            else
-                isEnd = true;
-        }
         this.updateClip();
-    }
-
-    getFrameId$(idx) {
-        return "#" + ElmClass$.TrackCls + this.trackInfo.idx2() + ElmClass$.Frame + (idx + 1)
     }
 
     onUp() {
@@ -295,10 +281,6 @@ class TrackView extends BaseView implements IBaseView {
             //console.log(this, "stopMoveTimer", this._timerId);
             this._timerId = 0;
         }
-    }
-
-    onDelTrack() {
-        appInfo.projectInfo.curComp.delTrack(this.trackInfo.idx2());
     }
 
 

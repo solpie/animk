@@ -27,14 +27,20 @@ declare class Buffer {
     fill(val);
 
     length:number;
-    write(str:string,ofs?);
-    writeUInt8(val1,val2?);
-    writeUInt16BE(val1,val2?);
-    writeUInt32BE(val1,val2?);
-    writeInt32BE(val1,val2?);
 
-    writeInt16BE(value,offset?);
-    slice(val1,val2);
+    write(str:string, ofs?);
+
+    writeUInt8(val1, val2?);
+
+    writeUInt16BE(val1, val2?);
+
+    writeUInt32BE(val1, val2?);
+
+    writeInt32BE(val1, val2?);
+
+    writeInt16BE(value, offset?);
+
+    slice(val1, val2);
 }
 
 
@@ -56,5 +62,11 @@ var M_path = require("path");
 ////////////// macro
 var isdef = function (val) {
     return val != undefined
+};
+var prop = function (obj, paramName, v) {
+    if (isdef(v))
+        obj[paramName] = v;
+    else
+        return obj[paramName]
 };
 

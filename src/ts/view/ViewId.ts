@@ -54,6 +54,8 @@ var ElmId$ = {
     //console
     consoleWin: "#ConsoleWin0",
     consoleItemHint: "#ConsoleHint0",
+    // track
+    trackMenu: "#TrackMenu0",
     // on hold win
     onHoldWin: "#OnHoldWin0",
     onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",
@@ -62,6 +64,7 @@ var ElmClass$ = {
     Track: ".Track",
     TrackCls: "Track",
     TrackArea: ".TrackArea",
+    Panel: ".Panel",
     Clip: ".Clip",
     CheckBox: ".CheckBox",
     Slider: ".Slider",

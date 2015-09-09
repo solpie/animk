@@ -10,6 +10,7 @@ class MouseEvt {
     static UP:string = "mouseup";//build-in name
     static DOWN:string = "mousedown";//build-in name
     static LEAVE:string = "mouseleave";//build-in name
+    static RCLICK:string = "contextmenu";//build-in name
 }
 class KeyEvt{
     static DOWN:string = "keydown";//build-in name

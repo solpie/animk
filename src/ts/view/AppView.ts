@@ -74,6 +74,8 @@ class AnimkView {
     }
 
     resize(w, h) {
+        this.appInfo.width(w);
+        this.appInfo.height(h);
         this.timelineView.resize(w, h - $(ViewportId$).height() - $(TitleBarId$).height() - 29 - $(ElmId$.bottomBar).height());
     }
 
