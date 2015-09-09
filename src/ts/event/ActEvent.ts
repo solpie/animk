@@ -32,7 +32,9 @@ class ViewEvent {
 ///   model  events
 class ProjectInfoEvent {
     static NEW_PROJ:string = "NEW_PROJ";
-
+}
+class SettingInfoEvent {
+    static SET_TMP_PATH:string = "SET_TMP_PATH";
 }
 class CompInfoEvent {
     static NEW_COMP:string = "new comp";

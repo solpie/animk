@@ -17,7 +17,7 @@ class ProjectInfo extends EventDispatcher {
         var compInfo:CompositionInfo = new CompositionInfo(width, height, framerate);
         this.curComp = compInfo;
         this.comps.push(compInfo);
-        compInfo.name = "Comp" + this.comps.length;
+        compInfo.name("Comp" + this.comps.length);
         console.log(this, "new CompInfo");
         this.emit(CompInfoEvent.NEW_COMP, compInfo);
         return compInfo;
@@ -62,7 +62,7 @@ class ProjectInfo extends EventDispatcher {
             if (!compInfo)
                 continue;
             var compData:CompositionData = {
-                name: compInfo.name,
+                name: compInfo.name(),
                 framerate: compInfo.framerate,
                 framewidth: compInfo.frameWidth,
                 height: compInfo.height,

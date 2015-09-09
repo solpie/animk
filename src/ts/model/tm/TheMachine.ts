@@ -51,21 +51,11 @@ class TheMachine extends EventDispatcher {
     }
 
     watchAct() {
-        //if (this.ActFrameInfo) {
-        //    if (this.watchArr.indexOf(this.ActFrameInfo) > -1) {
-        //        console.log(this, "watching");
-        //    }
-        //    else {
-        //        this.watchArr.push(this.ActFrameInfo);
-        //        this.emit(TheMachineEvent.ADD_IMG);
-        //    }
-        //    this.open(this.ActFrameInfo.imageInfo.filename);
-        //}
         if (this._layers.length) {
             var poi = new POI();
-            poi.filename = "D:\\projects\\animk\\test\\comp.psd";
+            var filename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
+            poi.filename = M_path.join(appInfo.settingInfo.tmpPath(), filename);
             this.watchArr.push(poi);
-            //var imageLayerInfoArr = [];
             var parsingCount = 0;
             var onParsed = ()=> {
                 parsingCount++;

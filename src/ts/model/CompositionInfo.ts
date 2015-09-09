@@ -19,7 +19,7 @@ class CompositionData {
     }
 }
 class CompositionInfo extends EventDispatcher {
-    name:string;
+    //name:string;
     framerate:number = 24;
     trackInfoArr:Array<TrackInfo>;
     _compTrackInfoArr:Array<TrackInfo>;
@@ -32,9 +32,11 @@ class CompositionInfo extends EventDispatcher {
     _stayBack;
     _frameTimer:FrameTimer;
     isInit:boolean = false;
+    _compData:CompositionData;
 
     constructor(width, height, framerate) {
         super();
+        this._compData = new CompositionData;
         this.width = width;
         this.height = height;
         this.framerate = framerate;
@@ -44,6 +46,10 @@ class CompositionInfo extends EventDispatcher {
         this._frameTimer.on(FrameTimerEvent.TICK, ()=> {
             this.onFrameTimerTick();
         });
+    }
+
+    name(v?) {
+        return prop(this._compData, "name", v)
     }
 
     onFrameTimerTick() {
