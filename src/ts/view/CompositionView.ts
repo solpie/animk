@@ -30,7 +30,7 @@ class CompositionView implements IBaseView {
             this.onSwapTrack(idsArr[0], idsArr[1]);
         });
         this.compInfo.on(CompInfoEvent.NEW_TRACK, (trackInfo:TrackInfo) => {
-            this.onNewTrackView(trackInfo);
+            this.newTrackView(trackInfo);
         });
 
         this.compInfo.on(CompInfoEvent.DEL_TRACK, (idx:number)=> {
@@ -80,7 +80,7 @@ class CompositionView implements IBaseView {
             if (trackInfo) {
                 var trackId$ = ElmClass$.Track + "#" + trackInfo.idx2();
                 clip$ = $(trackId$ + " " + ElmClass$.Clip);
-                clip$.css({left: trackInfo.getStart() * frameWidth - this._hScrollVal});
+                clip$.css({left: trackInfo.start() * frameWidth - this._hScrollVal});
                 console.log(this, clip$);
             }
         }
@@ -144,7 +144,7 @@ class CompositionView implements IBaseView {
         }
     }
 
-    onNewTrackView(trackInfo:TrackInfo) {
+    newTrackView(trackInfo:TrackInfo) {
         trackInfo.on(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
             this.onSelTrackView(trackInfo);
         });
@@ -161,7 +161,7 @@ class CompositionView implements IBaseView {
         });
         var view = new TrackView(trackInfo);
         this.trackViewArr.push(view);
-        console.log(this, "new Track Top", top);
+        console.log(this, "new Track Top", top, "layerIdx", trackInfo.layerIdx());
         view.setParent($(CompositionId$));
         view.top(top);
 
@@ -186,24 +186,18 @@ class CompositionView implements IBaseView {
         var trackViewB:TrackView;
         for (var i = 0; i < this.trackViewArr.length; i++) {
             var trackView:TrackView = this.trackViewArr[i];
-            if (trackView.trackInfo.lastIdx == idxA) {
+            if (trackView.trackInfo.idx2() == idxA) {
                 trackViewA = trackView;
             }
-            if (trackView.trackInfo.lastIdx == idxB) {
+            if (trackView.trackInfo.idx2() == idxB) {
                 trackViewB = trackView;
             }
         }
-
         if (trackViewA && trackViewB) {
             var aTop = $(trackViewA.id$).position().top;
             trackViewA.top($(trackViewB.id$).position().top);
             trackViewB.top(aTop);
-
-            trackViewA.id$ = ElmClass$.Track + "#" + idxB;
-            trackViewB.id$ = ElmClass$.Track + "#" + idxA;
-            $(trackViewA.id$).attr("id", idxB);
-            $(trackViewB.id$).attr("id", idxA);
-            console.log(this, "onSwapTrack", idxA, idxB);
+            console.log(this, "onSwapTrack", trackViewA.trackInfo.name(), trackViewB.trackInfo.name());
         }
     }
 

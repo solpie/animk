@@ -27,7 +27,7 @@ class CanvasView extends BaseView {
 
     updateComp() {
         this.ctx.clearRect(0, 0, this._width, this._height);
-        var trackInfoArr = appInfo.projectInfo.curComp.trackInfoArr;
+        var trackInfoArr = appInfo.curComp().getCompTrackInfoArr();
         appInfo.tm.cleanLayer();
         for (var i = trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = trackInfoArr[i];

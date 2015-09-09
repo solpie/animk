@@ -48,12 +48,11 @@ class TrackInfo extends EventDispatcher {
     _idx:number;
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
-    lastIdx:number;//for swap track
     isSelected:boolean;
-    _start:number = 1;
     _hold:number = 1;
     _isSel:Boolean = false;
     removedFrameArr:Array<FrameInfo>;
+    _layerIdx:number;
 
     constructor(trackData:TrackData) {
         super();
@@ -64,11 +63,14 @@ class TrackInfo extends EventDispatcher {
 
     idx2(val?) {
         if (isdef(val)) {
-            this.lastIdx = this._idx;
             this._idx = val;
         }
         else
             return this._idx;
+    }
+
+    layerIdx(v?) {
+        return prop(this, "_layerIdx", v);
     }
 
     isSel(v?) {
@@ -128,13 +130,10 @@ class TrackInfo extends EventDispatcher {
             return this._trackData.path;
     }
 
-    setStart(val) {
-        this._start = val;
-        this.emit(TrackInfoEvent.UPDATE_TRACK_START, this)
-    }
-
-    getStart() {
-        return this._start;
+    start(v?) {
+        return prop(this._trackData, "start", v, ()=> {
+            this.emit(TrackInfoEvent.UPDATE_TRACK_START, this)
+        });
     }
 
     trackData():TrackData {
@@ -182,7 +181,7 @@ class TrackInfo extends EventDispatcher {
     }
 
     getCurImg(frameIdx:number):ImageInfo {
-        frameIdx -= this._start - 1;
+        frameIdx -= this.start() - 1;
         for (var i = 0; i < this.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.frameInfoArr[i];
             if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
@@ -209,7 +208,7 @@ class TrackInfo extends EventDispatcher {
     }
 
     getEnd() {
-        return this._start + this._hold - 1;
+        return this.start() + this._hold - 1;
     }
 
     getPickFrameInfo(mouseX) {

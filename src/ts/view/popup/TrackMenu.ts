@@ -35,25 +35,22 @@ class TrackMenu extends BasePopup {
         var trackInfo:TrackInfo = appInfo.curComp().getSelTrackInfo();
         if (trackInfo) {
             var trackInfoB:TrackInfo;
+            var compTrackInfoArr:Array<TrackInfo> = appInfo.curComp().getCompTrackInfoArr();
             if (deltaIdx > 0) {
-                for (var i = trackInfo.idx2() + deltaIdx; i < appInfo.curComp().trackInfoArr.length; i++) {
-                    trackInfoB = appInfo.curComp().trackInfoArr[i];
-                    if (trackInfoB) {
+                for (var i = 0; i < compTrackInfoArr.length; i++) {
+                    var tInfo:TrackInfo = compTrackInfoArr[i];
+                    if (tInfo && tInfo.layerIdx() > trackInfo.layerIdx()) {
+                        trackInfoB = tInfo;
                         break;
-                    }
-                    else {
-                        console.log(this, "no track in", i);
                     }
                 }
             }
             else {
-                for (var i = trackInfo.idx2() + deltaIdx; i > -1; i--) {
-                    trackInfoB = appInfo.curComp().trackInfoArr[i];
-                    if (trackInfoB) {
+                for (var i = compTrackInfoArr.length - 1; i > -1; i--) {
+                    var tInfo:TrackInfo = compTrackInfoArr[i];
+                    if (tInfo && tInfo.layerIdx() < trackInfo.layerIdx()) {
+                        trackInfoB = tInfo;
                         break;
-                    }
-                    else {
-                        console.log(this, "no track in", i);
                     }
                 }
             }

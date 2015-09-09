@@ -127,8 +127,9 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo = new TrackInfo(trackData);
         trackInfo.newImage(trackData.frames);
         trackInfo.path(trackData.path);
-        trackInfo.setStart(trackData.start);
+        trackInfo.start(trackData.start);
         trackInfo.idx2(this.trackInfoArr.length);
+        trackInfo.layerIdx(this.trackInfoArr.length);
         this.trackInfoArr.push(trackInfo);
         this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
     }
@@ -136,7 +137,7 @@ class CompositionInfo extends EventDispatcher {
     getSelTrackInfo() {
         for (var i = 0; i < this.trackInfoArr.length; i++) {
             var trackInfo:TrackInfo = this.trackInfoArr[i];
-            if (trackInfo&&trackInfo.isSelected) {
+            if (trackInfo && trackInfo.isSelected) {
                 return trackInfo;
             }
         }
@@ -162,15 +163,41 @@ class CompositionInfo extends EventDispatcher {
         //this.trackViewArr.splice(idx, 1);
     }
 
+    getCompTrackInfoArr() {
+        var compare = function (prop) {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop];
+                var val2 = obj2[prop];
+                if (val1 < val2) {
+                    return -1;
+                } else if (val1 > val2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        };
+        var a = [];
+        this.trackInfoArr.map((tInfo)=> {
+            if (tInfo)
+                a.push(tInfo);
+        });
+        a.sort(compare("_layerIdx"));
+        //a.map((tInfo:TrackInfo)=> {
+        //    console.log(this, tInfo.idx2(), tInfo.layerIdx())
+        //});
+        return a;
+    }
 
     swapTrack(idxA:number, idxB:number) {
         var trackInfoA:TrackInfo = this.trackInfoArr[idxA];
         var trackInfoB:TrackInfo = this.trackInfoArr[idxB];
         if (trackInfoA && trackInfoB) {
-            trackInfoA.idx2(idxB);
-            trackInfoB.idx2(idxA);
-            this.trackInfoArr[idxB] = trackInfoA;
-            this.trackInfoArr[idxA] = trackInfoB;
+            var tmpLayerIdx = trackInfoA.layerIdx();
+            console.log(this, "swapTrack BF", trackInfoA.idx2(), trackInfoA.layerIdx());
+            trackInfoA.layerIdx(trackInfoB.layerIdx());
+            trackInfoB.layerIdx(tmpLayerIdx);
+            console.log(this, "swapTrack AT", trackInfoA.idx2(), trackInfoA.layerIdx());
             this.emit(CompInfoEvent.SWAP_TRACK, [idxA, idxB])
         }
     }

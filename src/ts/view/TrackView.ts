@@ -18,6 +18,7 @@ class TrackView extends BaseView implements IBaseView {
     constructor(trackInfo:TrackInfo) {
         super();
         this.trackInfo = trackInfo;
+
     }
 
     render() {
@@ -48,14 +49,11 @@ class TrackView extends BaseView implements IBaseView {
     //use for add Child view to parent
     setParent(parent:JQuery) {
         super.setParent(parent);
+        this.bindTrackInfoEvent();
 
         var idx = this.trackInfo.idx2();
         this.id$ = ElmClass$.Track + "#" + idx;
-        ///  trackInfo event
-        //////// opacity slider
-        this.trackInfo.on(TrackInfoEvent.SET_OPACITY, ()=> {
-            this.onSetOpacity();
-        });
+
 
         this._slider = new Slider(this.id$ + " " + ElmClass$.Slider);
         this._slider.on(ViewEvent.CHANGED, (val)=> {
@@ -63,10 +61,6 @@ class TrackView extends BaseView implements IBaseView {
         });
         /// track menu
         this._initMenu();
-        //////// visible checkbox
-        this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
-            this.onVisible();
-        });
         $(this.id$ + " " + ElmClass$.CheckBox).on(MouseEvt.DOWN, ()=> {
             this.trackInfo.enable(!this.trackInfo.enable());
         });
@@ -74,9 +68,6 @@ class TrackView extends BaseView implements IBaseView {
         var trackName$ = $(this.id$ + " " + ElmClass$.Text);
         var trackInput$ = $(this.id$ + " " + ElmClass$.Input);
 
-        this.trackInfo.on(TrackInfoEvent.SET_NAME, (name)=> {
-            trackName$.html(name);
-        });
 
         trackInput$.on(ViewEvent.CHANGED, ()=> {
             var newName = trackInput$.val();
@@ -125,9 +116,7 @@ class TrackView extends BaseView implements IBaseView {
             this._isPressWidget = true;
             cmd.emit(CommandId.ShowTrackMenu);
         });
-        this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
-            this.setActHint(v);
-        });
+
     }
 
     setActHint(type:number) {
@@ -190,20 +179,41 @@ class TrackView extends BaseView implements IBaseView {
         this.startMoveTimer();
     }
 
-    _bindTrackInfoEvent() {
+    bindTrackInfoEvent() {
+///  trackInfo event
+        //////// opacity slider
+        //this.trackInfo.removeAll();
+        this.trackInfo.on(TrackInfoEvent.SET_OPACITY, ()=> {
+            this.onSetOpacity();
+        });
 
-    }
+        //////// visible checkbox
+        this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
+            this.onVisible();
+        });
 
-    _initFrame() {
+        var trackName$ = $(this.id$ + " " + ElmClass$.Text);
+        this.trackInfo.on(TrackInfoEvent.SET_NAME, (name)=> {
+            trackName$.html(name);
+        });
+
+        this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
+            this.setActHint(v);
+        });
         var frameWidth = appInfo.frameWidth();
         this.trackInfo.on(TrackInfoEvent.LOADED, ()=> {
             this._frameView.resize(this.trackInfo.getHold() * frameWidth, -1);
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
             appInfo.emit(TheMachineEvent.UPDATE_IMG);
         });
+
         this.trackInfo.on(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
         });
+    }
+
+    _initFrame() {
+        var frameWidth = appInfo.frameWidth();
         this._frameView = new FrameView(ElmClass$.FrameCanvas$ + this.trackInfo.idx2() + "");
         this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth + 15);
         for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
@@ -220,7 +230,7 @@ class TrackView extends BaseView implements IBaseView {
     updateClip() {
         var frameWidth = appInfo.frameWidth();
         var clip = $(this.id$ + " " + ElmClass$.Clip);
-        clip.css({left: this.trackInfo.getStart() * frameWidth - appInfo.projectInfo.curComp.hScrollVal});
+        clip.css({left: this.trackInfo.start() * frameWidth - appInfo.projectInfo.curComp.hScrollVal});
         //clip.width((this.trackInfo.getHold()) * frameWidth);
     }
 
@@ -279,7 +289,7 @@ class TrackView extends BaseView implements IBaseView {
                 if (dx > frameWidth) {
                     this._lastX = appInfo.mouseX;
                     if (this._isPressBar) {
-                        this.trackInfo.setStart(this.trackInfo.getStart() + 1);
+                        this.trackInfo.start(this.trackInfo.start() + 1);
                         clip.css({left: clip.position().left + frameWidth});
                     } else if (this._pickFrame) {
                         this.onPickFrame(true);
@@ -288,7 +298,7 @@ class TrackView extends BaseView implements IBaseView {
                 else if (dx < -frameWidth) {
                     this._lastX = appInfo.mouseX;
                     if (this._isPressBar) {
-                        this.trackInfo.setStart(this.trackInfo.getStart() - 1);
+                        this.trackInfo.start(this.trackInfo.start() - 1);
                         clip.css({left: clip.position().left - frameWidth});
                     } else if (this._pickFrame) {
                         this.onPickFrame(false);
