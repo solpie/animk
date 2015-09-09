@@ -31,18 +31,18 @@ class TrackView extends BaseView implements IBaseView {
 
     setActFrame(frameIdx) {
         console.log(this, "SEL_FRAME", frameIdx, this.id$);
-        var actHint = $(this.id$ + " " + ElmClass$.ActHint);
+        var focusHint = $(this.id$ + " " + ElmClass$.FocusHint);
         if (frameIdx) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[frameIdx];
             //actHint.css({top: 65});
             if (frameInfo) {
-                actHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
-                actHint.css({display: "block"});
+                focusHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
+                focusHint.css({display: "block"});
                 appInfo.tm.ActFrameInfo = frameInfo;
             }
         }
         else {
-            actHint.css({display: "none"})
+            focusHint.css({display: "none"})
         }
     }
 
@@ -67,6 +67,9 @@ class TrackView extends BaseView implements IBaseView {
         $(panel$).on(MouseEvt.RCLICK, ()=> {
             this._isPressWidget = true;
             cmd.emit(CommandId.ShowTrackMenu);
+        });
+        this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
+            this.setActHint(v);
         });
 
         //////// visible checkbox
@@ -117,6 +120,19 @@ class TrackView extends BaseView implements IBaseView {
                 this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
         });
         this.initFrame();
+    }
+
+    setActHint(type:number) {
+        var actHint$ = $(this.id$ + " " + ElmClass$.ActHint);
+        if (type == ImageTrackActType.NOEDIT) {
+            actHint$.css({background: ColorTheme.IMAGE_ACT_NOEDIT});
+        }
+        else if (type == ImageTrackActType.NORMAL) {
+            actHint$.css({background: ColorTheme.IMAGE_ACT_NORMAL});
+        }
+        else if (type == ImageTrackActType.REF) {
+            actHint$.css({background: ColorTheme.IMAGE_ACT_REF});
+        }
     }
 
     showTrackRenameInput() {

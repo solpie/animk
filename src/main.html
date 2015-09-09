@@ -14,7 +14,7 @@
     <script type="text/template" class="Track-tpl">
         <div class="Track" id="{{idx}}">
             <div class="Panel">
-                <div class="Hint" style="width: 5px;height: 95%;background: #FAF014;display: inline-block;"></div>
+                <div class="ActHint" style="width: 5px;height: 95%;background: #FAF014;display: inline-block;"></div>
                 <div class="Label" style="display: inline-block;">
                     <div class="Text">{{name}}</div>
                     <input type="text"/>
@@ -32,7 +32,7 @@
             <div class="TrackArea">
                 <div class="Clip">
                     <canvas class="FrameCanvas" id="FrameCanvas{{idx}}"></canvas>
-                    <div class="ActHint"></div>
+                    <div class="FocusHint"></div>
                 </div>
             </div>
         </div>

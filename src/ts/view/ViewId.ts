@@ -54,8 +54,11 @@ var ElmId$ = {
     //console
     consoleWin: "#ConsoleWin0",
     consoleItemHint: "#ConsoleHint0",
-    // track
+    // track menu
     trackMenu: "#TrackMenu0",
+    trackMenuNoEdit: "#MenuItemNoEdit",
+    trackMenuNormal: "#MenuItemNormal",
+    trackMenuReference: "#MenuItemReference",
     // on hold win
     onHoldWin: "#OnHoldWin0",
     onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",
@@ -64,11 +67,12 @@ var ElmClass$ = {
     Track: ".Track",
     TrackCls: "Track",
     TrackArea: ".TrackArea",
+    ActHint: ".ActHint",
     Panel: ".Panel",
     Clip: ".Clip",
     CheckBox: ".CheckBox",
     Slider: ".Slider",
-    ActHint: ".ActHint",
+    FocusHint: ".FocusHint",
     Frame: "Frame",
     VisibleCheckBox: ".VisibleCheckBox",
     Text: ".Text",

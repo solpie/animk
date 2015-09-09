@@ -53,6 +53,7 @@ class TrackInfo extends EventDispatcher {
     isSelected:boolean;
     _start:number = 1;
     _hold:number = 1;
+    _isSel:Boolean = false;
     removedFrameArr:Array<FrameInfo>;
 
     constructor(trackData:TrackData) {
@@ -69,6 +70,12 @@ class TrackInfo extends EventDispatcher {
         }
         else
             return this._idx;
+    }
+
+    isSel(v?) {
+        return prop(this, "_isSel", v, ()=> {
+            this.emit(TrackInfoEvent.SEL_TRACK)
+        })
     }
 
     name(val?) {
@@ -109,11 +116,9 @@ class TrackInfo extends EventDispatcher {
     }
 
     actType(val?) {
-        if (isdef(val)) {
-            this._trackData.act = val;
-        }
-        else
-            return this._trackData.act;
+        return prop(this._trackData, "act", val, ()=> {
+            this.emit(TrackInfoEvent.SET_ACT_TYPE, val)
+        });
     }
 
     path(val?) {

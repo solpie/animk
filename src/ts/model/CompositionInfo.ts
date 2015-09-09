@@ -32,7 +32,6 @@ class CompositionInfo extends EventDispatcher {
     _frameTimer:FrameTimer;
     isInit:boolean = false;
 
-
     constructor(width, height, framerate) {
         super();
         this.width = width;
@@ -76,7 +75,6 @@ class CompositionInfo extends EventDispatcher {
             this.setCursor(1);
             this._stayBack = -1;
         }
-
     }
 
     setCursor(framePos) {
@@ -133,6 +131,15 @@ class CompositionInfo extends EventDispatcher {
         trackInfo.idx2(this.trackInfoArr.length);
         this.trackInfoArr.push(trackInfo);
         this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
+    }
+
+    getSelTrackInfo() {
+        for (var i = 0; i < this.trackInfoArr.length; i++) {
+            var trackInfo:TrackInfo = this.trackInfoArr[i];
+            if (trackInfo&&trackInfo.isSelected) {
+                return trackInfo;
+            }
+        }
     }
 
     delSelTrack() {

@@ -88,7 +88,7 @@
   /*background: #000000;*/
   font-size: 0;
 }
-.Track .TrackArea .Clip .ActHint {
+.Track .TrackArea .Clip .FocusHint {
   -webkit-transition: left .2s ease;
   position: absolute;
   height: 2px;
@@ -103,6 +103,11 @@
   border: #141414 2px solid;
   background: #222222;
   position: absolute;
+  pointer-events: auto;
+  -webkit-user-select: none;
+}
+.TrackMenu .MenuItem {
+  background: #faf014;
 }
 .FileMenu {
   position: absolute;
@@ -430,7 +435,6 @@ body {
   width: 1660px;
   height: 1024px;
   display: none;
-  pointer-events: none;
 }
 .PopupLayer .PopupWin {
   border: #141414 2px solid;
