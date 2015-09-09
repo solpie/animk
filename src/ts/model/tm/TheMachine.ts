@@ -15,13 +15,11 @@ class TheMachine extends EventDispatcher {
     ActFrameInfo:FrameInfo;
     watchPOIArr:Array<POI>;
     _updateCount:number = 0;//for clear cache
-    _layers:Array<ImageLayerInfo>;
 
     constructor() {
         super();
         // <reference path="../../util/psd/PsdMaker.ts"/>
         this.watchPOIArr = [];
-        this._layers = [];
     }
 
     updateWatchArr() {
@@ -30,40 +28,39 @@ class TheMachine extends EventDispatcher {
             var poi:POI = this.watchPOIArr[i];
             poi.psd2png();
 
-            //poi.imageInfoArr.map((imageInfo:ImageInfo)=> {
-            //    imageInfo.reloadImg();
-            //});
         }
         appInfo.emit(TheMachineEvent.UPDATE_IMG);
     }
 
-    cleanLayer() {
-        this._layers.length = 0;
-    }
-
-    addLayer(imageInfo:ImageInfo, opacity, isRef) {
-        var imageLayerInfo = new ImageLayerInfo();
-        imageLayerInfo.filename = imageInfo.filename;
-        imageLayerInfo.opacity = opacity;
-        imageLayerInfo.isRef = isRef;
-        imageLayerInfo.imageInfo = imageInfo;
-        this._layers.push(imageLayerInfo);
-    }
-
-    watchAct() {
+    _buildLayerArr():Array<ImageLayerInfo> {
         var trackInfoArr = appInfo.curComp().getCompTrackInfoArr();
-        this.cleanLayer();
+        var watchArr:Array<ImageLayerInfo> = [];
         for (var i = trackInfoArr.length - 1; i > -1; i--) {
             var trackInfo:TrackInfo = trackInfoArr[i];
             if (trackInfo.actType() != ImageTrackActType.NOEDIT) {
                 var imageInfo:ImageInfo = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
                 if (imageInfo) {
                     var isRef = (trackInfo.actType() == ImageTrackActType.REF);
-                    this.addLayer(imageInfo, trackInfo.opacity(), isRef);
+                    var imageLayerInfo = new ImageLayerInfo();
+                    imageLayerInfo.filename = imageInfo.filename;
+                    imageLayerInfo.opacity = trackInfo.opacity();
+                    imageLayerInfo.isRef = isRef;
+                    imageLayerInfo.imageInfo = imageInfo;
+                    watchArr.push(imageLayerInfo);
                 }
             }
         }
-        if (this._layers.length) {
+        return watchArr;
+    }
+
+    rebuild() {
+        //todo: rebuild FrameComp when trackInfo start change
+    }
+
+    watchCurFrame() {
+        //todo: check if POI existed
+        var arrayImageLayerInfo:Array<ImageLayerInfo> = this._buildLayerArr();
+        if (arrayImageLayerInfo.length) {
             var poi = new POI();
             var basename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
             poi.basename = basename;
@@ -72,18 +69,18 @@ class TheMachine extends EventDispatcher {
             var parsingCount = 0;
             var onParsed = ()=> {
                 parsingCount++;
-                if (parsingCount < this._layers.length)
-                    this._layers[parsingCount].load(onParsed);
+                if (parsingCount < arrayImageLayerInfo.length)
+                    arrayImageLayerInfo[parsingCount].load(onParsed);
                 else
-                    ImageLayerInfo.png2psd(this._layers, appInfo.projectInfo.curComp.width,
+                    ImageLayerInfo.png2psd(arrayImageLayerInfo, appInfo.projectInfo.curComp.width,
                         appInfo.projectInfo.curComp.height, "rgba",
                         poi.filename, (p)=> {
                             this.open(p);
                         });
 
             };
-            poi.imageLayerInfoArr = this._layers.concat();
-            this._layers[0].load(onParsed);
+            poi.imageLayerInfoArr = arrayImageLayerInfo;
+            arrayImageLayerInfo[0].load(onParsed);
         }
     }
 

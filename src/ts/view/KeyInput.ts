@@ -25,7 +25,7 @@ class KeyInput {
             appInfo.projectInfo.curComp.toggle();
         }
         else if (Keys.Char(key, "\r")) {//enter
-            appInfo.tm.watchAct();
+            appInfo.tm.watchCurFrame();
         }
         /// project open save
         else if (Keys.Char(key, "O") && isCtrl) {//enter
