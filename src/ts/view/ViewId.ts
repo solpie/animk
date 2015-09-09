@@ -43,6 +43,7 @@ var ElmId$ = {
     popupLayer: "#PopupLayer0",
     //
     btnCloseSetting: "#BtnCloseSetting0",
+    //setting win
     settingWin: "#SettingWin0",
     tabButton0: "#TabButton0",
     tabPage0: "#TabPage0",
@@ -50,7 +51,8 @@ var ElmId$ = {
     tabPage1: "#TabPage1",
     tabButton2: "#TabButton2",
     tabPage2: "#TabPage2",
-
+    settingTmpPath: "#SettingTmpPath0",
+    settingDrawApp1: "#SettingDrawApp1",
     //console
     consoleWin: "#ConsoleWin0",
     consoleItemHint: "#ConsoleHint0",

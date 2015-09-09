@@ -20,7 +20,7 @@ class ImageInfo {
 
     reloadImg() {
         if (this.filename) {
-            //todo load in PNG buffer
+            //todo load ref track in PNG buffer
             this.updateCount++;
             this.img.src = this.filename + "?c=" + this.updateCount;
         }

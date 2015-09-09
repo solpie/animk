@@ -34,6 +34,9 @@ class SettingView extends BasePopup {
 
         this.showTabByAttrId($(ElmId$.tabButton0).attr("id"))
     }
+    _onShow(){
+        $(ElmId$.settingTmpPath).val(appInfo.settingInfo.tmpPath());
+    }
 
     showTabByAttrId(id:string) {
         for (var i = 0; i < this.btnToPageArr.length; i++) {

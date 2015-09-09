@@ -94,7 +94,6 @@ class TrackView extends BaseView implements IBaseView {
         this.setColor('#444');
         console.log(this, "setParent", clip, clipWidth);
 
-        //todo MouseDown is duplicate
         $(this.id$).on(MouseEvt.DOWN, (e)=> {
             if (e.button == MouseButton.LEFT) {
                 if (this.trackInfo.isSelected && !this._isPressWidget)
