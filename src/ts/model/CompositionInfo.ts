@@ -22,6 +22,7 @@ class CompositionInfo extends EventDispatcher {
     name:string;
     framerate:number = 24;
     trackInfoArr:Array<TrackInfo>;
+    _compTrackInfoArr:Array<TrackInfo>;
     frameWidth:number = 40;
     width:number;
     height:number;
@@ -130,8 +131,13 @@ class CompositionInfo extends EventDispatcher {
         trackInfo.start(trackData.start);
         trackInfo.idx2(this.trackInfoArr.length);
         trackInfo.layerIdx(this.trackInfoArr.length);
-        this.trackInfoArr.push(trackInfo);
+        this.appendTrackInfo(trackInfo);
         this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
+    }
+
+    appendTrackInfo(trackInfo:TrackInfo) {
+        this.trackInfoArr.push(trackInfo);
+        this._updateCompTrackArr();
     }
 
     getSelTrackInfo() {
@@ -164,6 +170,12 @@ class CompositionInfo extends EventDispatcher {
     }
 
     getCompTrackInfoArr() {
+        if (!this._compTrackInfoArr)
+            this._updateCompTrackArr();
+        return this._compTrackInfoArr;
+    }
+
+    _updateCompTrackArr() {
         var compare = function (prop) {
             return function (obj1, obj2) {
                 var val1 = obj1[prop];
@@ -183,13 +195,41 @@ class CompositionInfo extends EventDispatcher {
                 a.push(tInfo);
         });
         a.sort(compare("_layerIdx"));
-        //a.map((tInfo:TrackInfo)=> {
-        //    console.log(this, tInfo.idx2(), tInfo.layerIdx())
-        //});
-        return a;
+        this._compTrackInfoArr = a;
+    }
+
+    moveTrack(deltaIdx) {
+        var trackInfo:TrackInfo = this.getSelTrackInfo();
+        if (trackInfo) {
+            var trackInfoB:TrackInfo;
+            var compTrackInfoArr:Array<TrackInfo> = this.getCompTrackInfoArr();
+            console.log(this, "compTrackInfoArr", compTrackInfoArr.length);
+            if (deltaIdx > 0) {// move down
+                for (var i = 0; i < compTrackInfoArr.length; i++) {
+                    var tInfo:TrackInfo = compTrackInfoArr[i];
+                    if (tInfo && tInfo.layerIdx() > trackInfo.layerIdx()) {
+                        trackInfoB = tInfo;
+                        break;
+                    }
+                }
+            }
+            else {
+                for (var i = compTrackInfoArr.length - 1; i > -1; i--) {
+                    var tInfo:TrackInfo = compTrackInfoArr[i];
+                    if (tInfo && tInfo.layerIdx() < trackInfo.layerIdx()) {
+                        trackInfoB = tInfo;
+                        break;
+                    }
+                }
+            }
+            if (trackInfoB)
+                this.swapTrack(trackInfo.idx2(), trackInfoB.idx2());
+        }
     }
 
     swapTrack(idxA:number, idxB:number) {
+
+
         var trackInfoA:TrackInfo = this.trackInfoArr[idxA];
         var trackInfoB:TrackInfo = this.trackInfoArr[idxB];
         if (trackInfoA && trackInfoB) {
@@ -198,6 +238,7 @@ class CompositionInfo extends EventDispatcher {
             trackInfoA.layerIdx(trackInfoB.layerIdx());
             trackInfoB.layerIdx(tmpLayerIdx);
             console.log(this, "swapTrack AT", trackInfoA.idx2(), trackInfoA.layerIdx());
+            this._updateCompTrackArr();
             this.emit(CompInfoEvent.SWAP_TRACK, [idxA, idxB])
         }
     }

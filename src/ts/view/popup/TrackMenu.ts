@@ -32,32 +32,33 @@ class TrackMenu extends BasePopup {
     }
 
     _swapTrack(deltaIdx:number) {
-        var trackInfo:TrackInfo = appInfo.curComp().getSelTrackInfo();
-        if (trackInfo) {
-            var trackInfoB:TrackInfo;
-            var compTrackInfoArr:Array<TrackInfo> = appInfo.curComp().getCompTrackInfoArr();
-            if (deltaIdx > 0) {
-                for (var i = 0; i < compTrackInfoArr.length; i++) {
-                    var tInfo:TrackInfo = compTrackInfoArr[i];
-                    if (tInfo && tInfo.layerIdx() > trackInfo.layerIdx()) {
-                        trackInfoB = tInfo;
-                        break;
-                    }
-                }
-            }
-            else {
-                for (var i = compTrackInfoArr.length - 1; i > -1; i--) {
-                    var tInfo:TrackInfo = compTrackInfoArr[i];
-                    if (tInfo && tInfo.layerIdx() < trackInfo.layerIdx()) {
-                        trackInfoB = tInfo;
-                        break;
-                    }
-                }
-            }
-            if (trackInfoB)
-                appInfo.projectInfo.curComp.swapTrack(trackInfo.idx2(), trackInfoB.idx2());
-            this.hide();
-        }
+        //var trackInfo:TrackInfo = appInfo.curComp().getSelTrackInfo();
+        //if (trackInfo) {
+        //    var trackInfoB:TrackInfo;
+        //    var compTrackInfoArr:Array<TrackInfo> = appInfo.curComp().getCompTrackInfoArr();
+        //    if (deltaIdx > 0) {
+        //        for (var i = 0; i < compTrackInfoArr.length; i++) {
+        //            var tInfo:TrackInfo = compTrackInfoArr[i];
+        //            if (tInfo && tInfo.layerIdx() > trackInfo.layerIdx()) {
+        //                trackInfoB = tInfo;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    else {
+        //        for (var i = compTrackInfoArr.length - 1; i > -1; i--) {
+        //            var tInfo:TrackInfo = compTrackInfoArr[i];
+        //            if (tInfo && tInfo.layerIdx() < trackInfo.layerIdx()) {
+        //                trackInfoB = tInfo;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    if (trackInfoB)
+        //        appInfo.projectInfo.curComp.swapTrack(trackInfo.idx2(), trackInfoB.idx2());
+        appInfo.curComp().moveTrack(deltaIdx);
+        this.hide();
+        //}
     }
 
     setTrackActType(type:number) {
