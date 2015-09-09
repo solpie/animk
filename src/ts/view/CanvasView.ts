@@ -38,7 +38,7 @@ class CanvasView extends BaseView {
                         var isRef = (trackInfo.actType() == ImageTrackActType.REF);
                         appInfo.tm.addLayer(imageInfo, trackInfo.opacity(), isRef);
                     }
-                    //console.log(this, "comp", img.src);
+                    //console.log(this, "comp", trackInfo.opacity(), trackInfo.name());
                     //this.ctx.save();
                     this.ctx.globalAlpha = trackInfo.opacity();
                     this.ctx.drawImage(imageInfo.img, 0, 0);

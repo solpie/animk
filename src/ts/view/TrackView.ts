@@ -105,6 +105,11 @@ class TrackView extends BaseView implements IBaseView {
 
         });
         this._initFrame();
+        this._initView();
+    }
+
+    _initView() {
+        this.onSetOpacity();
     }
 
     _initMenu() {
@@ -186,7 +191,6 @@ class TrackView extends BaseView implements IBaseView {
         this.trackInfo.on(TrackInfoEvent.SET_OPACITY, ()=> {
             this.onSetOpacity();
         });
-
         //////// visible checkbox
         this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
             this.onVisible();

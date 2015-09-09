@@ -18,7 +18,7 @@ enum ImageTrackActType{
 }
 class TrackData {//for save
     name:string;
-    opacity:number;
+    opacity:number = 1;
     enable:boolean = true;
     type:number = TrackType.IMAGE;
     start:number = 1;
