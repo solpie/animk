@@ -59,6 +59,8 @@ var ElmId$ = {
     trackMenuNoEdit: "#MenuItemNoEdit",
     trackMenuNormal: "#MenuItemNormal",
     trackMenuReference: "#MenuItemReference",
+    trackMenuMoveUp: "#MenuItemMoveUp",
+    trackMenuMoveDown: "#MenuItemMoveDown",
     // on hold win
     onHoldWin: "#OnHoldWin0",
     onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",

@@ -22,6 +22,45 @@ class TrackMenu extends BasePopup {
         $(ElmId$.trackMenuReference).on(MouseEvt.CLICK, ()=> {
             this.setTrackActType(ImageTrackActType.REF)
         });
+
+        $(ElmId$.trackMenuMoveDown).on(MouseEvt.CLICK, ()=> {
+            this._swapTrack(1);
+        });
+        $(ElmId$.trackMenuMoveUp).on(MouseEvt.CLICK, ()=> {
+            this._swapTrack(-1);
+        });
+    }
+
+    _swapTrack(deltaIdx:number) {
+        var trackInfo:TrackInfo = appInfo.curComp().getSelTrackInfo();
+        if (trackInfo) {
+            var trackInfoB:TrackInfo;
+            if (deltaIdx > 0) {
+                for (var i = trackInfo.idx2() + deltaIdx; i < appInfo.curComp().trackInfoArr.length; i++) {
+                    trackInfoB = appInfo.curComp().trackInfoArr[i];
+                    if (trackInfoB) {
+                        break;
+                    }
+                    else {
+                        console.log(this, "no track in", i);
+                    }
+                }
+            }
+            else {
+                for (var i = trackInfo.idx2() + deltaIdx; i > -1; i--) {
+                    trackInfoB = appInfo.curComp().trackInfoArr[i];
+                    if (trackInfoB) {
+                        break;
+                    }
+                    else {
+                        console.log(this, "no track in", i);
+                    }
+                }
+            }
+            if (trackInfoB)
+                appInfo.projectInfo.curComp.swapTrack(trackInfo.idx2(), trackInfoB.idx2());
+            this.hide();
+        }
     }
 
     setTrackActType(type:number) {

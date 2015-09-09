@@ -34,7 +34,6 @@ class TrackView extends BaseView implements IBaseView {
         var focusHint = $(this.id$ + " " + ElmClass$.FocusHint);
         if (frameIdx) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[frameIdx];
-            //actHint.css({top: 65});
             if (frameInfo) {
                 focusHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
                 focusHint.css({display: "block"});
@@ -191,10 +190,13 @@ class TrackView extends BaseView implements IBaseView {
         this.startMoveTimer();
     }
 
+    _bindTrackInfoEvent() {
+
+    }
+
     _initFrame() {
         var frameWidth = appInfo.frameWidth();
         this.trackInfo.on(TrackInfoEvent.LOADED, ()=> {
-            //this.trackInfo.getHold();
             this._frameView.resize(this.trackInfo.getHold() * frameWidth, -1);
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
             appInfo.emit(TheMachineEvent.UPDATE_IMG);
@@ -208,7 +210,6 @@ class TrackView extends BaseView implements IBaseView {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
             frameInfo.imageInfo.reloadImg();
         }
-
     }
 
     onSetOpacity() {
@@ -217,7 +218,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     updateClip() {
-        var frameWidth = appInfo.projectInfo.curComp.frameWidth;
+        var frameWidth = appInfo.frameWidth();
         var clip = $(this.id$ + " " + ElmClass$.Clip);
         clip.css({left: this.trackInfo.getStart() * frameWidth - appInfo.projectInfo.curComp.hScrollVal});
         //clip.width((this.trackInfo.getHold()) * frameWidth);

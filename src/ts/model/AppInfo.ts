@@ -80,7 +80,12 @@ class AppInfo extends EventDispatcher {
     }
 
     frameWidth() {
-        return this.projectInfo.curComp.frameWidth
+        return this.projectInfo.curComp.frameWidth;
+    }
+
+    curComp()
+    {
+        return this.projectInfo.curComp;
     }
 }
 
