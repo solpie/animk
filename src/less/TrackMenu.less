@@ -1,12 +1,28 @@
 .TrackMenu {
   width: 120px;
   height: 200px;
-  border: @Theme-Border-Popup;
-  background: @Theme-Color-Dark;
+  left: 50%;
+  top: 50%;
+  border: @Theme-Border;
+  background: @Blender-Color-Light;
+  opacity: .8;
+  border-radius: 5px;
+  box-shadow: -@SHOW_WIDTH @SHADOW_Y @SHADOW_FEA #111, 0 0 0 #111, 0 @SHOW_WIDTH 10px #111,@SHOW_WIDTH 10px @SHADOW_FEA #111;
   position: absolute;
   pointer-events: auto;
-  -webkit-user-select: none;
+  cursor: default;
   .MenuItem {
-    background: @Theme-Color-Light;
+    cursor: pointer;
+    color: @Theme-Font-Color-Light;
+    font-size: 16px;
+    &:hover {
+      color: @Theme-Font-Color-Dark;
+      background: @Theme-Color-Light;
+    }
+    height: 20px;
+  }
+  .MenuSeparator {
+    border-top: @Theme-Border-Menu-Separator;
+    height: 2px;
   }
 }

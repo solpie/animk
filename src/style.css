@@ -100,14 +100,30 @@
 .TrackMenu {
   width: 120px;
   height: 200px;
-  border: #141414 2px solid;
-  background: #222222;
+  left: 50%;
+  top: 50%;
+  border: #141414 1px solid;
+  background: #606060;
+  opacity: .8;
+  border-radius: 5px;
+  box-shadow: -5px 15px 15px #111111, 0 0 0 #111111, 0 5px 10px #111111, 5px 10px 15px #111111;
   position: absolute;
   pointer-events: auto;
-  -webkit-user-select: none;
+  cursor: default;
 }
 .TrackMenu .MenuItem {
+  cursor: pointer;
+  color: #dddddd;
+  font-size: 16px;
+  height: 20px;
+}
+.TrackMenu .MenuItem:hover {
+  color: #222222;
   background: #faf014;
+}
+.TrackMenu .MenuSeparator {
+  border-top: #999999 1px solid;
+  height: 2px;
 }
 .FileMenu {
   position: absolute;

@@ -28,7 +28,6 @@ class TrackMenu extends BasePopup {
         var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getSelTrackInfo();
         if (trackInfo) {
             trackInfo.actType(type);
-            console.log(this, trackInfo, trackInfo.name())
             this.hide();
         }
     }
@@ -37,7 +36,10 @@ class TrackMenu extends BasePopup {
         var menuHeight = this.menuHeight;
         var top = appInfo.mouseY;
         console.log(this, appInfo.height(), top, menuHeight);
-
+        var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getSelTrackInfo();
+        if (trackInfo) {
+            $(this.id$ + " " + ElmClass$.MenuTitle).html(trackInfo.name());
+        }
         if (appInfo.height() - top < menuHeight) {
             top = top - menuHeight;
         }

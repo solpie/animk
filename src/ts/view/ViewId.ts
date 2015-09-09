@@ -80,6 +80,8 @@ var ElmClass$ = {
     FrameCanvas$: "FrameCanvas",
     Bar: ".Bar",
     ConsoleInput: ".ConsoleInput",
+    // track menu
+    MenuTitle: ".MenuTitle",
 };
 //back is top
 var ZIdx = [ElmId$.cursor,

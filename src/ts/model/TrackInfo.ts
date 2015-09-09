@@ -36,7 +36,6 @@ class TrackData {//for save
             else {
                 //console.log(this, "no clone for Array");
             }
-
         }
         td.frames = [];
         for (var i = 0; i < val.frames.length; i++) {
