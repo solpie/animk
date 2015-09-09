@@ -51,6 +51,18 @@ class TheMachine extends EventDispatcher {
     }
 
     watchAct() {
+        var trackInfoArr = appInfo.curComp().getCompTrackInfoArr();
+        this.cleanLayer();
+        for (var i = trackInfoArr.length - 1; i > -1; i--) {
+            var trackInfo:TrackInfo = trackInfoArr[i];
+            if (trackInfo.actType() != ImageTrackActType.NOEDIT) {
+                var imageInfo:ImageInfo = trackInfo.getCurImg(appInfo.projectInfo.curComp.getCursor());
+                if (imageInfo) {
+                    var isRef = (trackInfo.actType() == ImageTrackActType.REF);
+                    this.addLayer(imageInfo, trackInfo.opacity(), isRef);
+                }
+            }
+        }
         if (this._layers.length) {
             var poi = new POI();
             var filename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
