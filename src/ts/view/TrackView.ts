@@ -63,15 +63,7 @@ class TrackView extends BaseView implements IBaseView {
             this.onSlider(val);
         });
         /// track menu
-        var panel$ = this.id$ + " " + ElmClass$.Panel;
-        $(panel$).on(MouseEvt.RCLICK, ()=> {
-            this._isPressWidget = true;
-            cmd.emit(CommandId.ShowTrackMenu);
-        });
-        this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
-            this.setActHint(v);
-        });
-
+        this._initMenu();
         //////// visible checkbox
         this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
             this.onVisible();
@@ -113,13 +105,30 @@ class TrackView extends BaseView implements IBaseView {
         console.log(this, "setParent", clip, clipWidth);
 
         //todo MouseDown is duplicate
-        $(this.id$).on(MouseEvt.DOWN, ()=> {
-            if (this.trackInfo.isSelected && !this._isPressWidget)
-                this.setSelected(false);
-            else
-                this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
+        $(this.id$).on(MouseEvt.DOWN, (e)=> {
+            if (e.button == MouseButton.LEFT) {
+                if (this.trackInfo.isSelected && !this._isPressWidget)
+                    this.setSelected(false);
+                else
+                    this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
+            }
+
         });
-        this.initFrame();
+        this._initFrame();
+    }
+
+    _initMenu() {
+        var panel$ = this.id$ + " " + ElmClass$.Panel;
+        $(panel$).on(MouseEvt.RCLICK, ()=> {
+            if (!this.trackInfo.isSelected) {
+                this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
+            }
+            this._isPressWidget = true;
+            cmd.emit(CommandId.ShowTrackMenu);
+        });
+        this.trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (v)=> {
+            this.setActHint(v);
+        });
     }
 
     setActHint(type:number) {
@@ -182,7 +191,7 @@ class TrackView extends BaseView implements IBaseView {
         this.startMoveTimer();
     }
 
-    initFrame() {
+    _initFrame() {
         var frameWidth = appInfo.frameWidth();
         this.trackInfo.on(TrackInfoEvent.LOADED, ()=> {
             //this.trackInfo.getHold();

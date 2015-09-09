@@ -3,7 +3,11 @@ class BaseEvent {
     type:string;
     target:EventDispatcher;
 }
-
+enum  MouseButton{
+    LEFT = 0,
+    MID ,
+    RIGHT,
+}
 class MouseEvt {
     static CLICK:string = "click";//build-in name
     static DBLCLICK:string = "dblclick";//build-in name
@@ -12,7 +16,7 @@ class MouseEvt {
     static LEAVE:string = "mouseleave";//build-in name
     static RCLICK:string = "contextmenu";//build-in name
 }
-class KeyEvt{
+class KeyEvt {
     static DOWN:string = "keydown";//build-in name
     static UP:string = "keyup";//build-in name
     static PRESS:string = "keypress";//build-in name
