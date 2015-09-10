@@ -155,6 +155,7 @@ class TheMachine extends EventDispatcher {
 
     open(path:string) {
         if (appInfo.settingInfo.drawApp1Path()) {
+
             path = path.replace("/", "\\");
             console.log(this, "open:", path);
             var appPath = '"' + appInfo.settingInfo.drawApp1Path().replace("/", "\\") + '" ';

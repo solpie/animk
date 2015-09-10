@@ -8,10 +8,10 @@ var NwBuilder = require('nw-builder');
 var nwjsVersion = "0.12.1";
 var isDev = true;
 var tsc = function () {
-   return run('tsc --out src/main.js src/ts/main.ts').exec();
+    return run('tsc --out src/main.js src/ts/main.ts').exec();
 };
 var runNw = function () {
-   return run(path.join('cache', nwjsVersion, "win64", "nw.exe") + " src").exec();
+    return run(path.join('cache', nwjsVersion, "win64", "nw.exe") + " src").exec();
 };
 gulp.task('ts', function () {
     run('tsc --out src/main.js src/ts/main.ts').exec();
@@ -25,8 +25,8 @@ gulp.task("less", function () {
             }))
 
             .pipe(gulp.dest('./src/'));
-            //.pipe(tsc())
-            //.pipe(runNw());
+    //.pipe(tsc())
+    //.pipe(runNw());
     else
         return gulp.src('./src/less/style.less')
             .pipe(less({
@@ -66,5 +66,5 @@ gulp.task("dev-run", function () {
 });
 //gulp.task("default", ["ts", "less", "nwjs"]);
 //gulp.task("default", ["ts", "less"]);
-//gulp.task("default", ["nwjs"]);
-gulp.task("default", ["less"]);
+gulp.task("default", ["nwjs"]);
+//gulp.task("default", ["less"]);
