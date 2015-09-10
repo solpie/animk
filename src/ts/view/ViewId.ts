@@ -16,7 +16,8 @@ var ElmId$ = {
     trackWidth: "#trackWidth",
     bottomBar: "#BottomBar0",
     cursorMask: "#cursorMask",
-    btnNewTrack: "#btnNewTrack",
+    btnImportTrack: "#btnImpTrack0",
+    btnNewTrack: "#btnNewTrack0",
     btnDelTrack: "#btnDelTrack",
     btnUpdate: "#btnUpdate",
     timestampBar: "#TimestampBar0",
@@ -74,6 +75,8 @@ var ElmId$ = {
     // on hold win
     onHoldWin: "#OnHoldWin0",
     onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",
+    // new png win
+    newPngWin: "#NewPngWin0",
 };
 var ElmClass$ = {
     Track: ".Track",

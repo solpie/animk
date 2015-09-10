@@ -4,6 +4,7 @@
 /// <reference path="OnHoldView.ts"/>
 /// <reference path="TrackMenu.ts"/>
 /// <reference path="DialogOK.ts"/>
+/// <reference path="NewPngWin.ts"/>
 
 class PopupView {
     settingView:SettingView;
@@ -11,6 +12,7 @@ class PopupView {
     consoleView:ConsoleView;
     trackMenu:TrackMenu;
     dialogOK:DialogOK;
+    newPngWin:NewPngWin;
     _popupArr;
 
     constructor() {
@@ -24,7 +26,7 @@ class PopupView {
         KeyInput.isBlock = false;
     }
 
-    newView(cls) {
+    newPopupView(cls) {
         var obj = new cls;
         this._popupArr.push(obj);
         obj.on(ViewEvent.HIDED, ()=> {
@@ -34,14 +36,15 @@ class PopupView {
     }
 
     initSettingView() {
-        this.settingView = this.newView(SettingView);
+        this.settingView = this.newPopupView(SettingView);
         $(ElmId$.fileMenuOption).on(MouseEvt.CLICK, ()=> {
             cmd.emit(CommandId.ShowSettingWin);
         });
 
-        this.onHoldView = this.newView(OnHoldView);//       OnHoldView();
-        this.consoleView = this.newView(ConsoleView);//     ConsoleView();
-        this.trackMenu = this.newView(TrackMenu);//         TrackMenu();
-        this.dialogOK = this.newView(DialogOK);//           DialogOK();
+        this.onHoldView = this.newPopupView(OnHoldView);//       OnHoldView();
+        this.consoleView = this.newPopupView(ConsoleView);//     ConsoleView();
+        this.trackMenu = this.newPopupView(TrackMenu);//         TrackMenu();
+        this.dialogOK = this.newPopupView(DialogOK);//           DialogOK();
+        this.newPngWin = this.newPopupView(NewPngWin)
     }
 }

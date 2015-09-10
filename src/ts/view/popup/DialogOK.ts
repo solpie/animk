@@ -23,7 +23,6 @@ class DialogOK extends BasePopup {
     }
 
     _onLoad() {
-
         $(ElmId$.dialogOKBtnOK).on(MouseEvt.CLICK, ()=> {
             this._callOk();
         });

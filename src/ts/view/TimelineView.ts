@@ -5,8 +5,11 @@ interface File {
 class TimelineView extends BaseView {
     constructor() {
         super();
-        $(ElmId$.btnNewTrack).on(MouseEvt.CLICK, ()=> {
+        $(ElmId$.btnImportTrack).on(MouseEvt.CLICK, ()=> {
             this.onNewTrack();
+        });
+        $(ElmId$.btnNewTrack).on(MouseEvt.CLICK, ()=> {
+            cmd.emit(CommandId.ShowNewPngWin);
         });
         $(ElmId$.btnDelTrack).on(MouseEvt.CLICK, ()=> {
             this.onDelTrack();

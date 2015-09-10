@@ -472,3 +472,11 @@ body {
 .Dialog .Content {
   height: 100px;
 }
+.NewPngWin {
+  width: 400px;
+  height: 240px;
+  position: absolute;
+}
+.NewPngWin .Setting {
+  height: 185px;
+}

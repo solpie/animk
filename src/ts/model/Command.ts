@@ -19,6 +19,9 @@ enum CommandId{
     HideTrackMenu,
     ShowDialogOK,
     HideDialogOK,
+
+    ShowNewPngWin,
+    HideNewPngWin,
 }
 class CommandItem {
     id:number;

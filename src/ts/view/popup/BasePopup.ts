@@ -72,4 +72,11 @@ class BasePopup extends BaseView {
             }
         }
     }
+
+    center(w, h) {
+        var left = (w - this.width()) * .5;
+        var top = (h - this.height()) * .5;
+        this.top(top);
+        this.left(left);
+    }
 }
