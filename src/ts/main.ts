@@ -2,6 +2,7 @@
 /// <reference path="model/AppInfo.ts"/>
 /// <reference path="model/Command.ts"/>
 /// <reference path="view/AppView.ts"/>
+/// <reference path="test.ts"/>
 var cmd:Command = new Command();
 var appInfo = new AppInfo();
 var app:AnimkView;
@@ -10,5 +11,6 @@ $(() => {
     // Finally, we kick things off by creating the **App**.
     app = new AnimkView(appInfo);
     app.onDomReady();
-    appInfo.test(false);
+    new Test(cmd,appInfo);
+    //appInfo.test(false);
 });

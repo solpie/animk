@@ -3,12 +3,14 @@
 /// <reference path="ConsoleView.ts"/>
 /// <reference path="OnHoldView.ts"/>
 /// <reference path="TrackMenu.ts"/>
+/// <reference path="DialogOK.ts"/>
 
 class PopupView {
     settingView:SettingView;
     onHoldView:OnHoldView;
     consoleView:ConsoleView;
     trackMenu:TrackMenu;
+    dialogOK:DialogOK;
     _popupArr;
 
     constructor() {
@@ -40,6 +42,6 @@ class PopupView {
         this.onHoldView = this.newView(OnHoldView);//       OnHoldView();
         this.consoleView = this.newView(ConsoleView);//     ConsoleView();
         this.trackMenu = this.newView(TrackMenu);//         TrackMenu();
-
+        this.dialogOK = this.newView(DialogOK);//           DialogOK();
     }
 }

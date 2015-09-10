@@ -464,3 +464,11 @@ body {
 .PopupLayer .Title button {
   float: right;
 }
+.Dialog {
+  width: 285px;
+  height: 165px;
+  position: absolute;
+}
+.Dialog .Content {
+  height: 100px;
+}

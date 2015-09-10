@@ -60,30 +60,6 @@ class AppInfo extends EventDispatcher {
         //
         //});
 
-        cmd.on(CommandId.testSwapTrack, ()=> {
-            this.projectInfo.curComp.swapTrack(2, 1);
-        });
-        cmd.on(CommandId.testRender, ()=> {
-            var option = new RenderOption();
-            option.path = "D:/projects/animk/test/render";
-            option.start = 1;
-            option.end = 5;
-            this.curComp().render(option);
-        });
-
-        cmd.on(CommandId.testProject, ()=> {
-            this.projectInfo.open('../test/data.json');
-        });
-
-        cmd.on(CommandId.testSaveProject, ()=> {
-            this.projectInfo.save('D:/projects/animk/test/data.json')
-        });
-        cmd.on(CommandId.testNewProject, ()=> {
-            this.newProject();
-            this.projectInfo.newComp(1280, 720, 24).newTrack('D:/projects/animk/test/test30');
-            this.projectInfo.curComp.newTrack('D:/projects/animk/test/test10');
-            this.projectInfo.curComp.setCursor(1);
-        });
     }
 
     frameWidth() {

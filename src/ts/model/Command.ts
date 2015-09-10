@@ -7,6 +7,7 @@ enum CommandId{
     testSaveProject,
     testProject,
     testRender,
+    testDialog,
     //
     HideConsoleWin,
     OpenSettingWin,
@@ -16,6 +17,8 @@ enum CommandId{
     OpenOnHoldWin,
     ShowTrackMenu,
     HideTrackMenu,
+    ShowDialogOK,
+    HideDialogOK,
 }
 class CommandItem {
     id:number;
@@ -47,6 +50,7 @@ class Command extends EventDispatcher {
         this.newCmd(CommandId.testSaveProject, "test save project");
         this.newCmd(CommandId.testProject, "test project");
         this.newCmd(CommandId.testRender, "test render");
+        this.newCmd(CommandId.testDialog, "test dialog");
     }
 
     newCmd(id:number, name:string, desc?:string) {

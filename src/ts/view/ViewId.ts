@@ -41,6 +41,11 @@ var ElmId$ = {
     fileMenuOption: "#FileMenuOption",
     //popup layer
     popupLayer: "#PopupLayer0",
+    //dialog
+    dialogOK: "#DialogOK1",
+    dialogOKBtnOK: "#DialogBtnOK0",
+    dialogOKBtnCancel: "#DialogBtnCancel0",
+    dialogOKContent: "#DialogOKContent0",
     //
     btnCloseSetting: "#BtnCloseSetting0",
     canvasRender: "#CanvasRender0",
