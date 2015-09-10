@@ -63,6 +63,13 @@ class AppInfo extends EventDispatcher {
         cmd.on(CommandId.testSwapTrack, ()=> {
             this.projectInfo.curComp.swapTrack(2, 1);
         });
+        cmd.on(CommandId.testRender, ()=> {
+            var option = new RenderOption();
+            option.path = "D:/projects/animk/test/render";
+            option.start = 1;
+            option.end = 5;
+            this.curComp().render(option);
+        });
 
         cmd.on(CommandId.testProject, ()=> {
             this.projectInfo.open('../test/data.json');

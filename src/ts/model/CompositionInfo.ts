@@ -2,8 +2,8 @@
 /// <reference path="../event/ActEvent.ts"/>
 /// <reference path="TrackInfo.ts"/>
 /// <reference path="FrameInfo.ts"/>
+/// <reference path="RenderOption.ts"/>
 /// <reference path="FrameTimer.ts"/>
-/// <reference path="../view/TrackView.ts"/>
 /// <reference path="../Node.ts"/>
 
 class CompositionData {
@@ -33,6 +33,9 @@ class CompositionInfo extends EventDispatcher {
     _frameTimer:FrameTimer;
     isInit:boolean = false;
     _compData:CompositionData;
+    //render
+    isRendering:boolean;
+    _renderOption:RenderOption;
 
     constructor(width, height, framerate) {
         super();
@@ -172,7 +175,6 @@ class CompositionInfo extends EventDispatcher {
         console.log(this, "delTrack", idx + '');
         this.getMaxSize();
         this.emit(CompInfoEvent.DEL_TRACK, idx);
-        //this.trackViewArr.splice(idx, 1);
     }
 
     getCompTrackInfoArr() {
@@ -262,5 +264,29 @@ class CompositionInfo extends EventDispatcher {
         }
         this._maxPos = maxFrame;
         return maxFrame
+    }
+
+    render(option:RenderOption) {
+        this.isRendering = true;
+        this._renderOption = option;
+        this.setCursor(option.start);
+    }
+
+    renderPng(dataBuffer:Buffer) {
+        var path = M_path.join(this._renderOption.path, "frame" + this._cursorPos + ".png");
+        fs.writeFile(path, dataBuffer, (err)=> {
+            if (err) {
+                console.log(this, "render err", err);
+                this.isRendering = false;
+            } else {
+                console.log(this, "render", path);
+                if (this._cursorPos < this._renderOption.end)
+                    this.forward();
+                else {
+                    this.isRendering = false;
+                    console.log(this, "render complete!");
+                }
+            }
+        });
     }
 }

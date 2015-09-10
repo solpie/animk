@@ -6,6 +6,7 @@ class CanvasView extends BaseView {
     ctx:any;
     _height;
     _width;
+    isRender:boolean;
 
     constructor() {
         super()
@@ -35,32 +36,38 @@ class CanvasView extends BaseView {
                 if (imageInfo) {
                     //console.log(this, "comp", trackInfo.opacity(), trackInfo.name());
                     //this.ctx.save();
+                    if (appInfo.curComp().isRendering && trackInfo.actType() == ImageTrackActType.REF) {
+                        continue;
+                    }
                     this.ctx.globalAlpha = trackInfo.opacity();
                     this.ctx.drawImage(imageInfo.img, 0, 0);
-                    //this.ctx.restore();
-                    this.savePng();
                 }
                 else {
                     console.log(this, "can not comp trk ", i);
                 }
             }
         }
+        if (appInfo.curComp().isRendering)
+            appInfo.curComp().renderPng(this._getCompBuf())
     }
+    _getCompBuf(){
+        var imgData = this.canvasEl.toDataURL('image/png');
+        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        return new Buffer(base64Data, 'base64');
+    }
+    renderPng() {
+        var imgData = this.canvasEl.toDataURL('image/png');
+        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        var dataBuffer = new Buffer(base64Data, 'base64');
+        fs.writeFile("../test/testComp.png", dataBuffer, function (err) {
+            if (err) {
+                //response.write(err);
+                console.log(this, "err", err);
 
-    savePng() {
-        //var dataURL = this.canvasEl.toDataURL('image/png');
-        //console.log(this, dataURL);
-        ////dataURL = dataURL.replace("image/png", "image/octet-stream");
-        //var dataBuffer = new Buffer(dataURL, 'base64');
-        //fs.writeFile("test.png", dataBuffer, function (err) {
-        //    if (err) {
-        //        //response.write(err);
-        //        console.log(this, "err", err);
-        //
-        //    } else {
-        //        console.log(this, "sus");
-        //        //response.write("保存成功！");
-        //    }
-        //});
+            } else {
+                console.log(this, "sus");
+                //response.write("保存成功！");
+            }
+        });
     }
 }

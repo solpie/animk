@@ -1,10 +1,13 @@
 /// <reference path="../event/EventDispatcher.ts"/>
 enum CommandId{
     ShowConsoleWin = 100000,
+    //test cmd
     testSwapTrack,
     testNewProject,
     testSaveProject,
     testProject,
+    testRender,
+    //
     HideConsoleWin,
     OpenSettingWin,
     ToggleFileMenu,
@@ -43,6 +46,7 @@ class Command extends EventDispatcher {
         this.newCmd(CommandId.testNewProject, "test new project");
         this.newCmd(CommandId.testSaveProject, "test save project");
         this.newCmd(CommandId.testProject, "test project");
+        this.newCmd(CommandId.testRender, "test render");
     }
 
     newCmd(id:number, name:string, desc?:string) {
