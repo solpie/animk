@@ -40,6 +40,7 @@ declare var $:{
 
 interface HTMLElement {
     getContext(val:string):any;
+    toDataURL(val:string):any;
 }
 declare var Mustache:{
     render(tpl:string, data?:Object);

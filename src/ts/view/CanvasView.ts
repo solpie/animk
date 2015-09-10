@@ -50,11 +50,13 @@ class CanvasView extends BaseView {
         if (appInfo.curComp().isRendering)
             appInfo.curComp().renderPng(this._getCompBuf())
     }
-    _getCompBuf(){
+
+    _getCompBuf() {
         var imgData = this.canvasEl.toDataURL('image/png');
         var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
         return new Buffer(base64Data, 'base64');
     }
+
     renderPng() {
         var imgData = this.canvasEl.toDataURL('image/png');
         var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");

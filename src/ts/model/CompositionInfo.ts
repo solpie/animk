@@ -236,8 +236,6 @@ class CompositionInfo extends EventDispatcher {
     }
 
     swapTrack(idxA:number, idxB:number) {
-
-
         var trackInfoA:TrackInfo = this.trackInfoArr[idxA];
         var trackInfoB:TrackInfo = this.trackInfoArr[idxB];
         if (trackInfoA && trackInfoB) {

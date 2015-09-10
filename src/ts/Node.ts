@@ -20,7 +20,7 @@ function walk(path):Array<string> {
     return fileArr;
 }
 declare class Buffer {
-    constructor(val?);
+    constructor(val?,encoding?);
 
     static concat(val?);
 
