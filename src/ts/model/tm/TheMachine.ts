@@ -57,6 +57,12 @@ class TheMachine extends EventDispatcher {
         trackInfo.on(TrackInfoEvent.SET_TRACK_START, (trackInfo:TrackInfo) => {
             this._rebuild();
         });
+        trackInfo.on(TrackInfoEvent.SET_ACT_TYPE, (trackInfo:TrackInfo) => {
+            this._rebuild();
+        });
+        trackInfo.on(TrackInfoEvent.SET_ENABLE, (trackInfo:TrackInfo) => {
+            this._rebuild();
+        });
     }
 
     _rebuild() {
