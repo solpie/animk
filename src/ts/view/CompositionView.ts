@@ -148,9 +148,11 @@ class CompositionView implements IBaseView {
         trackInfo.on(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {
             this.onSelTrackView(trackInfo);
         });
-        trackInfo.on(TrackInfoEvent.UPDATE_TRACK_START, (trackInfo:TrackInfo) => {
+
+        trackInfo.on(TrackInfoEvent.SET_TRACK_START, (trackInfo:TrackInfo) => {
             this.onUpdateTrackStart(trackInfo);
         });
+        appInfo.tm.watchTrack(trackInfo);
 
         trackInfo.on(TrackInfoEvent.SEL_FRAME, (selArr)=> {
             this.onSelectFrame(selArr);
@@ -165,8 +167,8 @@ class CompositionView implements IBaseView {
         view.setParent($(CompositionId$));
         view.top(top);
 
-        trackInfo.opacity(trackInfo.opacity());
-        trackInfo.enable(trackInfo.enable());
+        //trackInfo.opacity(trackInfo.opacity());
+        //trackInfo.enable(trackInfo.enable());
 
         this._trackHeight += view.height();
         this.setTrackHeight(this._trackHeight);

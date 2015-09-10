@@ -108,8 +108,9 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     _initView() {
-        this.onSetOpacity();
-        this._updateActHint()
+        this._updateVisible();
+        this._updateOpacity();
+        this._updateActHint();
     }
 
     _initMenu() {
@@ -153,7 +154,7 @@ class TrackView extends BaseView implements IBaseView {
         });
     }
 
-    onVisible() {
+    _updateVisible() {
         if (this.trackInfo.enable())
             $(this.id$ + " " + ElmClass$.VisibleCheckBox).css({background: "#FAF014"});
         else
@@ -190,11 +191,11 @@ class TrackView extends BaseView implements IBaseView {
         //////// opacity slider
         //this.trackInfo.removeAll();
         this.trackInfo.on(TrackInfoEvent.SET_OPACITY, ()=> {
-            this.onSetOpacity();
+            this._updateOpacity();
         });
         //////// visible checkbox
         this.trackInfo.on(TrackInfoEvent.SET_ENABLE, ()=> {
-            this.onVisible();
+            this._updateVisible();
         });
 
         var trackName$ = $(this.id$ + " " + ElmClass$.Text);
@@ -227,7 +228,7 @@ class TrackView extends BaseView implements IBaseView {
         }
     }
 
-    onSetOpacity() {
+    _updateOpacity() {
         this._slider.setBarWidth(this.trackInfo.opacity());
         appInfo.emit(TheMachineEvent.UPDATE_IMG)
     }

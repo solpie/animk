@@ -5,6 +5,8 @@ class POI {
     filename:string;//psd path
     basename:string;
     imageLayerInfoArr:Array<ImageLayerInfo> = [];
+    isBeingWatched:boolean = false;
+    watchCallback:any;
 
     psd2png() {
         if (this.filename) {
@@ -24,4 +26,5 @@ class POI {
             throw new Error("no psd filename")
         }
     }
+
 }

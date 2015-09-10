@@ -52,7 +52,7 @@ class TrackInfoEvent {
     static SET_OPACITY:string = "set track opacity";
     static SET_ENABLE:string = "set track enable";
     static SET_NAME:string = "set track name";
-    static UPDATE_TRACK_START:string = "UPDATE_TRACK_START";
+    static SET_TRACK_START:string = "SET_TRACK_START";
 }
 class FrameTimerEvent {
     static TICK:string = "TICK";

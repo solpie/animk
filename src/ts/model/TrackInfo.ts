@@ -132,7 +132,7 @@ class TrackInfo extends EventDispatcher {
 
     start(v?) {
         return prop(this._trackData, "start", v, ()=> {
-            this.emit(TrackInfoEvent.UPDATE_TRACK_START, this)
+            this.emit(TrackInfoEvent.SET_TRACK_START, this)
         });
     }
 

@@ -53,16 +53,50 @@ class TheMachine extends EventDispatcher {
         return watchArr;
     }
 
-    rebuild() {
-        //todo: rebuild FrameComp when trackInfo start change
+    watchTrack(trackInfo:TrackInfo) {
+        trackInfo.on(TrackInfoEvent.SET_TRACK_START, (trackInfo:TrackInfo) => {
+            this._rebuild();
+        });
+    }
+
+    _rebuild() {
+        for (var i = 0; i < this.watchPOIArr.length; i++) {
+            var poi:POI = this.watchPOIArr[i];
+            if (poi.watchCallback) {
+                console.log(this, "_rebuild", poi.filename);
+                poi.isBeingWatched = false;
+            }
+        }
+        this.watchPOIArr.length = 0;
+    }
+
+    _isExistPOI() {
+        var basename = this._getCurFrameBaseName();
+        for (var i = 0; i < this.watchPOIArr.length; i++) {
+            var poi:POI = this.watchPOIArr[i];
+            if (poi.basename == basename) {
+                return poi;
+            }
+        }
+        return null;
+    }
+
+    _getCurFrameBaseName() {
+        return appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
     }
 
     watchCurFrame() {
-        //todo: check if POI existed
+        var existPOI = this._isExistPOI();
+        if (existPOI) {
+            console.log(this, "cur frame exist");
+            this.open(existPOI.filename);
+            return;
+        }
+
         var arrayImageLayerInfo:Array<ImageLayerInfo> = this._buildLayerArr();
         if (arrayImageLayerInfo.length) {
             var poi = new POI();
-            var basename = appInfo.curComp().name() + "frame" + appInfo.curComp().getCursor() + ".psd";
+            var basename = this._getCurFrameBaseName();
             poi.basename = basename;
             poi.filename = M_path.join(appInfo.settingInfo.tmpPath(), basename);
             this.watchPOIArr.push(poi);
@@ -71,13 +105,15 @@ class TheMachine extends EventDispatcher {
                 parsingCount++;
                 if (parsingCount < arrayImageLayerInfo.length)
                     arrayImageLayerInfo[parsingCount].load(onParsed);
-                else
+                else {
+                    console.log(this, "new poi");
                     ImageLayerInfo.png2psd(arrayImageLayerInfo, appInfo.projectInfo.curComp.width,
                         appInfo.projectInfo.curComp.height, "rgba",
                         poi.filename, (p)=> {
                             this.open(p);
+                            this.watchPOI(poi);
                         });
-
+                }
             };
             poi.imageLayerInfoArr = arrayImageLayerInfo;
             arrayImageLayerInfo[0].load(onParsed);
@@ -87,7 +123,7 @@ class TheMachine extends EventDispatcher {
     onPOIchange(path) {
         for (var i = 0; i < this.watchPOIArr.length; i++) {
             var poi:POI = this.watchPOIArr[i];
-            if (poi.basename == path) {
+            if (poi.isBeingWatched&&poi.basename == path) {
                 this._updateCount++;
                 poi.psd2png();
             }
@@ -95,26 +131,30 @@ class TheMachine extends EventDispatcher {
         console.log(this, "onPOIchange", path);
     }
 
-    watchPOI(path:string) {
+    watchPOI(poi:POI) {
+        //fs.unwatchFile
+        var path = poi.filename;
+        poi.isBeingWatched = true;
         console.log(this, "watchPOI", path);
-        fs.watch(path, (event, filename)=> {
-            console.log('event is: ' + event);
-            if (filename) {
-                console.log('filename provided: ' + filename);
-                if (event == "change") {
-                    this.onPOIchange(filename);
+        if (!poi.watchCallback) {
+            poi.watchCallback = (event, filename)=> {
+                console.log('event is: ' + event);
+                if (filename) {
+                    console.log('filename provided: ' + filename);
+                    if (event == "change") {
+                        this.onPOIchange(filename);
+                    }
+                } else {
+                    console.log('filename not provided');
                 }
-            } else {
-                console.log('filename not provided');
             }
-        });
+        }
+        fs.watch(path, poi.watchCallback);
     }
 
 
     open(path:string) {
         path = path.replace("/", "\\");
-        var self = this;
-        self.watchPOI(path);
         console.log(this, "open:", path);
 
         exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
