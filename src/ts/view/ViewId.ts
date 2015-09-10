@@ -57,8 +57,10 @@ var ElmId$ = {
     tabPage1: "#TabPage1",
     tabButton2: "#TabButton2",
     tabPage2: "#TabPage2",
-    settingTmpPath: "#SettingTmpPath0",
-    settingDrawApp1: "#SettingDrawApp1",
+    settingTmpPathText: "#SettingTmpPath0",
+    settingTmpPathBtn: "#SettingTmpPathBtn0",
+    settingDrawApp1Text: "#SettingDrawApp1",
+    settingDrawApp1Btn: "#SettingDrawApp1Btn0",
     //console
     consoleWin: "#ConsoleWin0",
     consoleItemHint: "#ConsoleHint0",

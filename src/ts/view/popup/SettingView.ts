@@ -32,10 +32,39 @@ class SettingView extends BasePopup {
             this.hide();
         });
 
-        this.showTabByAttrId($(ElmId$.tabButton0).attr("id"))
+        this.showTabByAttrId($(ElmId$.tabButton0).attr("id"));
+        this._pagePath();
     }
-    _onShow(){
-        $(ElmId$.settingTmpPath).val(appInfo.settingInfo.tmpPath());
+
+    _pagePath() {
+        //set tmp path
+        appInfo.settingInfo.on(SettingInfoEvent.SET_TMP_PATH, ()=> {
+            $(ElmId$.settingTmpPathText).val(appInfo.settingInfo.tmpPath());
+        });
+
+        $(ElmId$.settingTmpPathBtn).on(MouseEvt.CLICK, ()=> {
+            chooseFile(ElmId$.openFileDialog).change(function () {
+                var filename = $(ElmId$.openFileDialog).val();
+                appInfo.settingInfo.tmpPath(filename);
+            });
+        });
+        //set draw app
+        appInfo.settingInfo.on(SettingInfoEvent.SET_DRAW_APP1, ()=> {
+            $(ElmId$.settingDrawApp1Text).val(appInfo.settingInfo.drawApp1Path());
+        });
+
+        $(ElmId$.settingDrawApp1Btn).on(MouseEvt.CLICK, ()=> {
+            chooseFile(ElmId$.openFileDialog).change(function () {
+                var filename = $(ElmId$.openFileDialog).val();
+                appInfo.settingInfo.drawApp1Path(filename);
+            });
+        });
+
+    }
+
+    _onShow() {
+        $(ElmId$.settingTmpPathText).val(appInfo.settingInfo.tmpPath());
+        $(ElmId$.settingDrawApp1Text).val(appInfo.settingInfo.drawApp1Path());
     }
 
     showTabByAttrId(id:string) {
