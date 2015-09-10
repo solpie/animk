@@ -10,11 +10,11 @@ enum CommandId{
     testDialog,
     //
     HideConsoleWin,
-    OpenSettingWin,
+    ShowSettingWin,
     ToggleFileMenu,
     FileMenuOpen,
     FileMenuSave,
-    OpenOnHoldWin,
+    ShowOnHoldWin,
     ShowTrackMenu,
     HideTrackMenu,
     ShowDialogOK,
@@ -35,11 +35,11 @@ class Command extends EventDispatcher {
     constructor() {
         super();
         this.cmdArr = [];
-        this.newCmd(CommandId.OpenSettingWin, "open Option");
+        this.newCmd(CommandId.ShowSettingWin, "open Option");
         this.newCmd(CommandId.FileMenuOpen, "open Project");
         this.newCmd(CommandId.FileMenuSave, "save Project");
         //
-        this.newCmd(CommandId.OpenOnHoldWin, "open on hold win");
+        this.newCmd(CommandId.ShowOnHoldWin, "open on hold win");
 
         this.newCmd(CommandId.ShowTrackMenu, "show track menu");
         this.newCmd(CommandId.HideTrackMenu, "hide track menu");

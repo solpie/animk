@@ -4,8 +4,8 @@
 class OnHoldView extends BasePopup {
     constructor() {
         super('template/OnHoldWin.html', ElmId$.popupLayer, ElmId$.onHoldWin);
-        cmd.on(CommandId.OpenOnHoldWin, ()=> {
-            console.log(this, "OpenOnHoldWin");
+        cmd.on(CommandId.ShowOnHoldWin, ()=> {
+            console.log(this, "ShowOnHoldWin");
             this.show();
         });
     }

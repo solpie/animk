@@ -17,7 +17,7 @@ class Test {
         });
         cmd.on(CommandId.testDialog, ()=> {
             var dialogItem = new DialogItem();
-            dialogItem.content = "can you here me?";
+            dialogItem.content = "can you hear me?";
 
             dialogItem.callbackOK = function () {
                 console.log(this, "yes");

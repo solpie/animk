@@ -6,7 +6,7 @@ class SettingView extends BasePopup {
 
     constructor() {
         super('template/SettingWin.html', ElmId$.popupLayer, ElmId$.settingWin);
-        cmd.on(CommandId.OpenSettingWin, ()=> {
+        cmd.on(CommandId.ShowSettingWin, ()=> {
             this.show();
         });
     }

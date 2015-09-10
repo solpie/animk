@@ -36,7 +36,7 @@ class PopupView {
     initSettingView() {
         this.settingView = this.newView(SettingView);
         $(ElmId$.fileMenuOption).on(MouseEvt.CLICK, ()=> {
-            cmd.emit(CommandId.OpenSettingWin);
+            cmd.emit(CommandId.ShowSettingWin);
         });
 
         this.onHoldView = this.newView(OnHoldView);//       OnHoldView();

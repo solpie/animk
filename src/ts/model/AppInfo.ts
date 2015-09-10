@@ -56,7 +56,7 @@ class AppInfo extends EventDispatcher {
         //pnglib.createPng(300, 300);
         //var psd = new PsdMaker();
 
-        //cmd.on(CommandId.OpenOnHoldWin, ()=> {
+        //cmd.on(CommandId.ShowOnHoldWin, ()=> {
         //
         //});
 

@@ -123,7 +123,7 @@ class TheMachine extends EventDispatcher {
     onPOIchange(path) {
         for (var i = 0; i < this.watchPOIArr.length; i++) {
             var poi:POI = this.watchPOIArr[i];
-            if (poi.isBeingWatched&&poi.basename == path) {
+            if (poi.isBeingWatched && poi.basename == path) {
                 this._updateCount++;
                 poi.psd2png();
             }
@@ -154,19 +154,26 @@ class TheMachine extends EventDispatcher {
 
 
     open(path:string) {
-        path = path.replace("/", "\\");
-        console.log(this, "open:", path);
+        if (appInfo.settingInfo.drawApp1Path()) {
+            path = path.replace("/", "\\");
+            console.log(this, "open:", path);
+            var appPath = '"' + appInfo.settingInfo.drawApp1Path().replace("/", "\\") + '" ';
+            exec(appPath + path, function (error, stdout, stderr) {
+                //exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
+                if (stdout) {
+                    console.log('stdout: ' + stdout);
+                }
+                if (stderr) {
+                    console.log('stderr: ' + stderr);
+                }
+                if (error !== null) {
+                    console.log('Exec error: ' + error);
+                }
+            });
+        }
+        else {
+            cmd.emit(CommandId.ShowSettingWin);
+        }
 
-        exec('"C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe" ' + path, function (error, stdout, stderr) {
-            if (stdout) {
-                console.log('stdout: ' + stdout);
-            }
-            if (stderr) {
-                console.log('stderr: ' + stderr);
-            }
-            if (error !== null) {
-                console.log('Exec error: ' + error);
-            }
-        });
     }
 }
