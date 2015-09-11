@@ -49,7 +49,6 @@ var ElmId$ = {
     dialogOKContent: "#DialogOKContent0",
     //
     btnCloseSetting: "#BtnCloseSetting0",
-    canvasRender: "#CanvasRender0",
     //setting win
     settingWin: "#SettingWin0",
     tabButton0: "#TabButton0",

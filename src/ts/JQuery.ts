@@ -2,6 +2,7 @@ interface JQuery {
     fadeIn(): JQuery;
     fadeOut(): JQuery;
     focus(): JQuery;
+    focusout(): JQuery;
     html(): string;
     html(val:string): JQuery;
     data(val:string):JQuery;

@@ -70,11 +70,12 @@ class PsdFile {
         //header.writeUint16(0); // Reserved   +2=8
         //header.writeUint16(0); // Reserved   +2=10
         //header.writeUint16(0); // Reserved   +2=12
-        header.writeUInt16BE(psd.numChannel, 12); // number of color chunnel +2=14
+        header.writeUInt16BE(3, 12); // number of color chunnel +2=14
         header.writeUInt32BE(psd.height, 14); // rows +4=18
         header.writeUInt32BE(psd.width, 18); // columns +4=22
         header.writeUInt16BE(8, 22); // Depth  +2 = 24
         header.writeUInt16BE(psd.COLOR_MODE[psd.colorMode], 24); // color mode
+        //header.writeUInt16BE(psd.COLOR_MODE[psd.colorMode], 24); // color mode
         return header;
     }
 
