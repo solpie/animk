@@ -6,7 +6,6 @@ class POI {
     basename:string;
     imageLayerInfoArr:Array<ImageLayerInfo> = [];
     isBeingWatched:boolean = false;
-    watchCallback:any;
 
     psd2png() {
         if (this.filename) {

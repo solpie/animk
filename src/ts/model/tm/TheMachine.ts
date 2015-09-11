@@ -15,11 +15,13 @@ class TheMachine extends EventDispatcher {
     ActFrameInfo:FrameInfo;
     watchPOIArr:Array<POI>;
     _updateCount:number = 0;//for clear cache
+    _onWatchArr;
 
     constructor() {
         super();
         // <reference path="../../util/psd/PsdMaker.ts"/>
         this.watchPOIArr = [];
+        this._onWatchArr = {};
     }
 
     updateWatchArr() {
@@ -68,10 +70,8 @@ class TheMachine extends EventDispatcher {
     _rebuild() {
         for (var i = 0; i < this.watchPOIArr.length; i++) {
             var poi:POI = this.watchPOIArr[i];
-            if (poi.watchCallback) {
-                console.log(this, "_rebuild", poi.filename);
-                poi.isBeingWatched = false;
-            }
+            console.log(this, "_rebuild", poi.filename);
+            poi.isBeingWatched = false;
         }
         this.watchPOIArr.length = 0;
     }
@@ -142,8 +142,8 @@ class TheMachine extends EventDispatcher {
         var path = poi.filename;
         poi.isBeingWatched = true;
         console.log(this, "watchPOI", path);
-        if (!poi.watchCallback) {
-            poi.watchCallback = (event, filename)=> {
+        if (!this._onWatchArr[path]) {
+            fs.watch(path, (event, filename)=> {
                 console.log('event is: ' + event);
                 if (filename) {
                     console.log('filename provided: ' + filename);
@@ -153,9 +153,9 @@ class TheMachine extends EventDispatcher {
                 } else {
                     console.log('filename not provided');
                 }
-            }
+            });
+            this._onWatchArr[path] = true;
         }
-        fs.watch(path, poi.watchCallback);
     }
 
 
