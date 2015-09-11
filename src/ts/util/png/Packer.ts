@@ -33,7 +33,7 @@ class Packer {
         }
     }
 
-    pack(pixelData, width, height, depthInBytes, path) {
+    pack(pixelData, width, height, depthInBytes, path, callback) {
         var bufs = [];
         bufs.push(new Buffer(this.PNG_SIGNATURE));
         bufs.push(this._packIHDR(width, height, depthInBytes));
@@ -53,9 +53,11 @@ class Packer {
 
         deflate.on('end', ()=> {
             bufs.push(this._packIEND());
-            var stream2 = fs.createWriteStream(path);
-            stream2.write(Buffer.concat(bufs));
-            stream2.close();
+            //var stream = fs.createWriteStream(path);
+            //stream.write(Buffer.concat(bufs));
+            //stream.close();
+            var buffer = Buffer.concat(bufs);
+            writeBuffer(path, buffer, callback);
         });
 
         deflate.end(dataFilter);

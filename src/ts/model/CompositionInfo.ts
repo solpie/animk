@@ -125,9 +125,9 @@ class CompositionInfo extends EventDispatcher {
     }
 
 
-    newEmptyTrack(path, count) {
-        var pnglib = new PngMaker();
-
+    newEmptyTrack(trackName, path, count) {
+        console.log(this, "newEmptyTrack");
+        var pngMaker = new PngMaker();
         var pad = function () {
             var tbl = [];
             return function (num, n) {
@@ -137,19 +137,33 @@ class CompositionInfo extends EventDispatcher {
                 return tbl[len] + num;
             }
         }();
-
+        var finishCount = 0;
+        var onCreateFile = ()=> {
+            finishCount++;
+            if (finishCount > 0 && finishCount == count) {
+                this.newTrack(path, trackName);
+            }
+            console.log(this, "onCreateFile");
+        };
         for (var i = 0; i < count; i++) {
-            pnglib.createPng(10, 10, M_path.join(path, "frame" + pad(i + 1, 3)));
+            pngMaker.createPng(1, 1, M_path.join(path, "frame" + pad(i + 1, 3) + ".png"),onCreateFile);
         }
     }
 
-    newTrack(path) {
+    newTrack(path, name?) {
         var trackData:TrackData = new TrackData();
         trackData.frames = this.walk(path);
-        trackData.name = 'track#' + this.trackInfoArr.length;
+        if (isdef(name))
+            trackData.name = name;
+        else
+            trackData.name = this.newTrackName();//
         trackData.path = path;
         trackData.start = 1;
         this.newTrackByTrackData(trackData);
+    }
+
+    newTrackName() {
+        return 'track#' + this.trackInfoArr.length;
     }
 
     newTrackByTrackData(trackData:TrackData) {

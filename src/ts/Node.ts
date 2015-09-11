@@ -20,7 +20,7 @@ function walk(path):Array<string> {
     return fileArr;
 }
 declare class Buffer {
-    constructor(val?,encoding?);
+    constructor(val?, encoding?);
 
     static concat(val?);
 
@@ -71,5 +71,21 @@ var prop = function (obj, paramName, v, callback?) {
     }
     else
         return obj[paramName]
+};
+
+var writeBuffer = function (path, buffer, callback) {
+    fs.open(path, 'w', null, function (err, fd) {
+        if (err) {
+            throw err;
+        }
+        fs.write(fd, buffer, 0, buffer.length, null, function (err) {
+            if (err) {
+                throw err;
+            }
+            fs.close(fd, function () {
+                callback();
+            });
+        });
+    });
 };
 

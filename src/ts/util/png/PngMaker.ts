@@ -4,7 +4,7 @@
 
 class PngMaker {
 
-    createPng(w, h, path) {
+    createPng(w, h, path,callback) {
         var packer = new Packer({
             width: w,
             depthInBytes: 1,
@@ -24,7 +24,8 @@ class PngMaker {
         //        pixelData[idx + 3] = 0;
         //    }
         //}
-        packer.pack(pixelData, w, h, 1, path);
+
+        packer.pack(pixelData, w, h, 1, path,callback);
     }
 
 }

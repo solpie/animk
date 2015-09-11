@@ -15,7 +15,12 @@ class NewPngWin extends BasePopup {
     _onLoad() {
         $(ElmId$.newPngWinBtnOK).on(MouseEvt.CLICK, ()=> {
             var count = $(ElmId$.newPngWinCount).val();
-            appInfo.curComp().newEmptyTrack("../test/empty", count);
+            var trackName = $(ElmId$.newPngWinTrackName).val();
+            if (count > 999) {
+                console.log(this, "too many");
+            }
+            else
+                appInfo.curComp().newEmptyTrack(trackName, "D:/projects/animk/test/empty", count);
             this.hide();
         });
 
@@ -25,6 +30,8 @@ class NewPngWin extends BasePopup {
     }
 
     _onShow() {
+        $(ElmId$.newPngWinTrackName).val(appInfo.curComp().newTrackName());
+        $(ElmId$.newPngWinCount).val(10);
         this.center(appInfo.width(), appInfo.height())
     }
 }
