@@ -268,7 +268,9 @@ class TrackView extends BaseView implements IBaseView {
         if (isMoveToRight) {
             if (this._pickFrame.pressFlag == PressFlag.R) {
                 this.trackInfo.R2R(this._pickFrame);
+                appInfo.curComp().getMaxSize();
                 this._frameView.updateFrame(this.trackInfo.frameInfoArr, 1);
+
             }
             else if (this._pickFrame.pressFlag == PressFlag.L) {
                 this.trackInfo.L2R(this._pickFrame);
@@ -278,10 +280,12 @@ class TrackView extends BaseView implements IBaseView {
         else {
             if (this._pickFrame.pressFlag == PressFlag.R) {
                 this.trackInfo.R2L(this._pickFrame);
+                appInfo.curComp().getMaxSize();
                 this._frameView.updateFrame(this.trackInfo.frameInfoArr, -1);
             }
-            else if (this._pickFrame.pressFlag == PressFlag.L)
+            else if (this._pickFrame.pressFlag == PressFlag.L) {
                 this.trackInfo.L2L(this._pickFrame);
+            }
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
         }
     }

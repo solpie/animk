@@ -429,7 +429,7 @@ class PsdParser {
     static transPixels(pixW, pixH, pix, left, top) {
         var w = pixW + left;
         var h = pixH + top;
-        var transPixels = new Buffer((w ) * (h ) * 4);
+        var transPixels = new Buffer(w * h * 4);
         transPixels.fill(0);
         for (var y = 0; y < h; y++) {
             for (var x = 0; x < w; x++) {
@@ -442,9 +442,7 @@ class PsdParser {
                         transPixels[idx + 2] = pix[idxW + 2];//blue
                         transPixels[idx + 3] = pix[idxW + 3];
                     }
-
                 }
-
             }
         }
         return transPixels;
