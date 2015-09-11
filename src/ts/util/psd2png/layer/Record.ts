@@ -45,7 +45,6 @@ class Records {
             left = file.readInt(),
             bottom = file.readInt(),
             right = file.readInt();
-
         var channelCount = file.readShort();
 
         var channelInfo = [];

@@ -4,7 +4,7 @@
 
 class PngMaker {
 
-    createPng(w, h, path,callback) {
+    createPng(w, h, path, callback) {
         var packer = new Packer({
             width: w,
             depthInBytes: 1,
@@ -12,7 +12,7 @@ class PngMaker {
             height: h
         });
         var pixelData = new Buffer(w * h * 4);
-        pixelData.fill(0);
+        pixelData.fill(1);
         //for (var y = 0; y < h; y++) {
         //    for (var x = 0; x < w; x++) {
         //        var idx = (w * y + x) << 2;
@@ -25,7 +25,45 @@ class PngMaker {
         //    }
         //}
 
-        packer.pack(pixelData, w, h, 1, path,callback);
+        packer.pack(pixelData, w, h, 1, path, callback);
+    }
+
+    transPng(w, h, path, callback) {
+        var packer = new Packer({
+            width: w,
+            depthInBytes: 1,
+            filterType: 0,
+            height: h
+        });
+
+        var pixelData = new Buffer(w * h * 4);
+        pixelData.fill(0);
+
+        var left = 20;
+        var top = 30;
+        var WhiteData = new Buffer(30 * 20 * 4);
+        WhiteData.fill(255);
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                if (x >= left && y >= top) {
+                    var idx = (w * y + x) << 2;
+                    var idxW = (30 * (y - top) + (x - left)) << 2;
+                    if (idxW > -1) {
+                        if (idxW == 0)
+                            console.log(this, "x", x, "y", y);
+                        pixelData[idx] = WhiteData[idxW];//red
+                        pixelData[idx + 1] = WhiteData[idxW + 1];//green
+                        pixelData[idx + 2] = WhiteData[idxW + 2];//blue
+                        // opacity
+                        pixelData[idx + 3] = WhiteData[idxW + 3];
+                    }
+
+                }
+
+            }
+        }
+
+        packer.pack(pixelData, w, h, 1, path, callback);
     }
 
 }
