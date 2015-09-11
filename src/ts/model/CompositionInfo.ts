@@ -124,6 +124,25 @@ class CompositionInfo extends EventDispatcher {
         return fileArr;
     }
 
+
+    newEmptyTrack(path, count) {
+        var pnglib = new PngMaker();
+
+        var pad = function () {
+            var tbl = [];
+            return function (num, n) {
+                var len = n - num.toString().length;
+                if (len <= 0) return num;
+                if (!tbl[len]) tbl[len] = (new Array(len + 1)).join('0');
+                return tbl[len] + num;
+            }
+        }();
+
+        for (var i = 0; i < count; i++) {
+            pnglib.createPng(10, 10, M_path.join(path, "frame" + pad(i + 1, 3)));
+        }
+    }
+
     newTrack(path) {
         var trackData:TrackData = new TrackData();
         trackData.frames = this.walk(path);

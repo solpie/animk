@@ -77,7 +77,14 @@ var ElmId$ = {
     onHoldWinCloseBtn: "#BtnCloseOnHoldWin0",
     // new png win
     newPngWin: "#NewPngWin0",
+    newPngWinTrackName: "#NewPngWinTrackName0",
+    newPngWinWidth: "#NewPngWinWidth0",
+    newPngWinHeight: "#NewPngWinWidth0",
+    newPngWinCount: "#NewPngWinCount0",
+    newPngWinBtnOK: "#NewPngWinBtnOK0",
+    newPngWinBtnCancel: "#NewPngWinBtnCancel0",
 };
+
 var ElmClass$ = {
     Track: ".Track",
     TrackCls: "Track",

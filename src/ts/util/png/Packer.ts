@@ -33,7 +33,7 @@ class Packer {
         }
     }
 
-    pack(pixelData, width, height, depthInBytes,path) {
+    pack(pixelData, width, height, depthInBytes, path) {
         var bufs = [];
         bufs.push(new Buffer(this.PNG_SIGNATURE));
         bufs.push(this._packIHDR(width, height, depthInBytes));

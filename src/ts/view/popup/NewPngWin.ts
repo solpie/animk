@@ -13,7 +13,15 @@ class NewPngWin extends BasePopup {
 
 
     _onLoad() {
+        $(ElmId$.newPngWinBtnOK).on(MouseEvt.CLICK, ()=> {
+            var count = $(ElmId$.newPngWinCount).val();
+            appInfo.curComp().newEmptyTrack("../test/empty", count);
+            this.hide();
+        });
 
+        $(ElmId$.newPngWinBtnCancel).on(MouseEvt.CLICK, ()=> {
+            this.hide();
+        });
     }
 
     _onShow() {

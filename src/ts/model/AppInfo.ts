@@ -52,8 +52,7 @@ class AppInfo extends EventDispatcher {
         //this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
         //console.log(this, "test");
 
-        //var pnglib = new PngMaker();
-        //pnglib.createPng(300, 300);
+
         //var psd = new PsdMaker();
 
         //cmd.on(CommandId.ShowOnHoldWin, ()=> {
