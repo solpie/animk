@@ -12,7 +12,7 @@ class PngMaker {
             height: h
         });
         var pixelData = new Buffer(w * h * 4);
-        pixelData.fill(1);
+        pixelData.fill(0);
         //for (var y = 0; y < h; y++) {
         //    for (var x = 0; x < w; x++) {
         //        var idx = (w * y + x) << 2;
@@ -64,6 +64,30 @@ class PngMaker {
         }
 
         packer.pack(pixelData, w, h, 1, path, callback);
+    }
+
+    static transPixels(pixW, pixH, pix, left, top) {
+        var w = pixW + left;
+        var h = pixH + top;
+        var transPixels = new Buffer((w ) * (h ) * 4);
+        transPixels.fill(0);
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                if (x >= left && y >= top) {
+                    var idx = (w * y + x) << 2;
+                    var idxW = (pixW * (y - top) + (x - left)) << 2;
+                    if (idxW > -1) {
+                        transPixels[idx] = pix[idxW];//red
+                        transPixels[idx + 1] = pix[idxW + 1];//green
+                        transPixels[idx + 2] = pix[idxW + 2];//blue
+                        transPixels[idx + 3] = pix[idxW + 3];
+                    }
+
+                }
+
+            }
+        }
+        return transPixels;
     }
 
 }

@@ -149,8 +149,8 @@ class CompositionInfo extends EventDispatcher {
         var w = this.width;
         var h = this.height;
         for (var i = 0; i < count; i++) {
-            pngMaker.transPng(50, 50, M_path.join(path, "frame" + pad(i + 1, 3) + ".png"), onCreateFile);
-            //pngMaker.createPng(1, 1, M_path.join(path, "frame" + pad(i + 1, 3) + ".png"), onCreateFile);
+            //pngMaker.transPng(50, 50, M_path.join(path, "frame" + pad(i + 1, 3) + ".png"), onCreateFile);
+            pngMaker.createPng(1, 1, M_path.join(path, "frame" + pad(i + 1, 3) + ".png"), onCreateFile);
         }
     }
 
