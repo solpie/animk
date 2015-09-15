@@ -8,19 +8,20 @@ var TrackHeightId$ = "#trackHeight";
 var HScrollBarId$ = "#HScrollBar0";
 var TrackToolId$ = "#TrackTool0";
 var TitleBarId$ = "#titleBar";
-var ElmData = {
-    Start: "dtStart",
-};
 var ElmId$ = {
-    cursor: "#Cursor0",
-    trackWidth: "#trackWidth",
     bottomBar: "#BottomBar0",
+    //timeline
     cursorMask: "#cursorMask",
+    trackWidth: "#trackWidth",
+    cursor: "#Cursor0",
+    timestamp: "#Timestamp0",
+    timestampBar: "#TimestampBar0",
+
     btnImportTrack: "#btnImpTrack0",
     btnNewTrack: "#btnNewTrack0",
     btnDelTrack: "#btnDelTrack",
     btnUpdate: "#btnUpdate",
-    timestampBar: "#TimestampBar0",
+    //viewport
     compCanvas: "#Canvas0",
     hSplitter: "#HSplitter0",
     comp: "#Comp0",
@@ -105,7 +106,9 @@ var ElmClass$ = {
     MenuTitle: ".MenuTitle",
 };
 //back is top
-var ZIdx = [ElmId$.cursor,
+var ZIdx = [
+    ElmId$.timestamp,
+    ElmId$.cursor,
     ElmId$.cursorMask,
     VScrollBarId$,
     ElmId$.fileMenu,

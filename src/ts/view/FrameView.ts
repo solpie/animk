@@ -41,7 +41,7 @@ class FrameView extends BaseView {
                 var thumbWidth = frameWidth - 1;
                 var thumbHeight = thumbWidth / img.width * img.height;
                 this.ctx.fillStyle = "#fff";
-                this.ctx.fillRect(frameX + 1, this.barHeight, thumbWidth, thumbWidth);
+                this.ctx._fillRect(frameX + 1, this.barHeight, thumbWidth, thumbWidth);
                 var thumbY = (thumbWidth - thumbHeight) * .5;
                 this.ctx.drawImage(img, frameX + 1, thumbY + this.barHeight, thumbWidth, thumbHeight);
 
@@ -72,6 +72,6 @@ class FrameView extends BaseView {
         if (a)
             this.ctx.globalAlpha = a;
         this.ctx.fillStyle = col;
-        this.ctx.fillRect(x, y, w, h);
+        this.ctx._fillRect(x, y, w, h);
     }
 }

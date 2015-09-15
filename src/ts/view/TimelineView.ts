@@ -1,8 +1,11 @@
 /// <reference path="BaseView.ts"/>
+/// <reference path="TimestampView.ts"/>
 interface File {
     path:string;
 }
 class TimelineView extends BaseView {
+    _timestamp:TimestampView;
+
     constructor() {
         super();
         $(ElmId$.btnImportTrack).on(MouseEvt.CLICK, ()=> {
@@ -19,6 +22,8 @@ class TimelineView extends BaseView {
         });
 
         this.initDrag();
+
+        this._timestamp = new TimestampView();
     }
 
     updateImg() {
@@ -107,6 +112,7 @@ class TimelineView extends BaseView {
             var trackToolBarWidth = $(TrackToolId$).width();
             $(HScrollBarId$).width(w - 200);
             $(ElmId$.cursorMask).width(w);
+            this._timestamp.resize(w, -1);
         }
     }
 }

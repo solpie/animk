@@ -455,6 +455,10 @@ body {
   position: absolute;
   background: #2f2f2f;
 }
+.Timeline .TimestampBar .Timestamp {
+  position: absolute;
+  top: 15px;
+}
 .Timeline .TimestampBar .HScrollBar {
   position: absolute;
   height: 16px;
@@ -465,12 +469,6 @@ body {
 }
 .Timeline .TimestampBar .HScrollBar #trackWidth {
   height: 1px;
-}
-.Timeline .TimestampBar .HScrollBar .Timestamp {
-  position: absolute;
-  top: 0;
-  width: 200px;
-  height: 40px;
 }
 .Timeline .TimestampBar .VScrollBar {
   position: absolute;
