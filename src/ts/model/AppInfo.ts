@@ -5,8 +5,8 @@
 /// <reference path="../util/png/PngMaker.ts"/>
 /// <reference path="../util/psd/PsdMaker.ts"/>
 class AppData {
-    winWidth:number=1660;
-    winHeight:number=1024;
+    winWidth:number = 1660;
+    winHeight:number = 1024;
 }
 class AppInfo extends EventDispatcher {
     projectInfo:ProjectInfo;
@@ -47,26 +47,11 @@ class AppInfo extends EventDispatcher {
         //this.projectInfo.curComp.setCursor(1);
     }
 
-
-    test(test?) {
-        //this.projectInfo.curComp.newTrack('D:/projects/animk/test/test60');
-        //console.log(this, "test");
-
-
-        //var psd = new PsdMaker();
-
-        //cmd.on(CommandId.ShowOnHoldWin, ()=> {
-        //
-        //});
-
-    }
-
     frameWidth() {
         return this.projectInfo.curComp.frameWidth;
     }
 
-    curComp()
-    {
+    curComp() {
         return this.projectInfo.curComp;
     }
 }

@@ -12,5 +12,4 @@ $(() => {
     app = new AnimkView(appInfo);
     app.onDomReady();
     new Test(cmd,appInfo);
-    //appInfo.test(false);
 });
