@@ -41,7 +41,7 @@ class FrameView extends BaseView {
                 var thumbWidth = frameWidth - 1;
                 var thumbHeight = thumbWidth / img.width * img.height;
                 this.ctx.fillStyle = "#fff";
-                this.ctx._fillRect(frameX + 1, this.barHeight, thumbWidth, thumbWidth);
+                this._fillRect(frameX + 1, this.barHeight, thumbWidth, thumbWidth);
                 var thumbY = (thumbWidth - thumbHeight) * .5;
                 this.ctx.drawImage(img, frameX + 1, thumbY + this.barHeight, thumbWidth, thumbHeight);
 
@@ -52,7 +52,7 @@ class FrameView extends BaseView {
                     this.ctx.fillText(frameInfo.getHold(), frameX + holdWidth - 10, 15 + this.barHeight);
                 }
                 ///////draw bar
-                this.fillRect("#2f2f2f", frameX, 0, holdWidth, this.barHeight);
+                this._fillRect("#2f2f2f", frameX, 0, holdWidth, this.barHeight);
                 /////// draw idx
                 this.ctx.globalAlpha = 1;
                 this.ctx.font = '10px serif';
@@ -67,11 +67,10 @@ class FrameView extends BaseView {
     }
 
 
-
-    fillRect(col, x, y, w, h, a?) {
+    _fillRect(col, x, y, w, h, a?) {
         if (a)
             this.ctx.globalAlpha = a;
         this.ctx.fillStyle = col;
-        this.ctx._fillRect(x, y, w, h);
+        this.ctx.fillRect(x, y, w, h);
     }
 }
