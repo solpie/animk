@@ -318,7 +318,7 @@ class TrackInfo extends EventDispatcher {
             frameBack.setStart(frameBack.getStart() - 1);
         }
         //todo show dialog
-        fs.unlinkSync(pickFrame.imageInfo.filename);
+        fs.unlink(pickFrame.imageInfo.filename);
         var ret = this.frameInfoArr[0].getNameAndCount();
         var basename = ret[0];
         var numPad = ret[1];
@@ -338,30 +338,26 @@ class TrackInfo extends EventDispatcher {
         var i = removeIdx;
         var funcRename = (i)=> {
             if (i < this.frameInfoArr.length) {
-                var oldname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
+                var oldname = this.frameInfoArr[i].imageInfo.filename;
+                //var oldname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
                 var newname = M_path.join(path, basename + pad(i+1, numPad) + ext);
                 fs.rename(oldname, newname, (err)=> {
                     console.log(this, 'reload idx:', i, newname);
+                    var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
                     this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
-                    this.frameInfoArr[i].imageInfo.reloadImg();
-                    i++;
+                    this.frameInfoArr[i].imageInfo.reloadImg(updateCount);
                     if (err) {
                         throw err;
                     }
-                    else if (i == this.frameInfoArr.length) {
-
-                    }
+                    i++;
                     funcRename(i);
                 });
             }
-            else if (i == this.frameInfoArr.length) {
-                this._hold--;
-                this.emit(TrackInfoEvent.DEL_FRAME, pickFrame);
-                this.emit(TrackInfoEvent.LOADED);
-            }
         };
         funcRename(i);
-
+        this._hold--;
+        this.emit(TrackInfoEvent.DEL_FRAME, pickFrame);
+        this.emit(TrackInfoEvent.LOADED);
     }
 
     R2R(pickFrame:FrameInfo) {
