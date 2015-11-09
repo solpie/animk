@@ -73,4 +73,28 @@ class FrameInfo extends EventDispatcher {
     getEnd() {
         return this._end;
     }
+
+    getNameAndCount() {
+        //image001.png
+
+        var a = this.imageInfo.basename.split('.');
+        //var a = "scn3#001.png".split('.');
+        var name = a[0]; //image001
+        var ext = '.'+a[1];//.png
+
+        var re = /[0-9]+/g;
+        //var ret = re.exec(name);
+        var ret = name.match(re);
+
+
+        //console.log(this,"ret",ret);
+        //for (var i = 0; i < ret.length; i++) {
+        //    var obj = ret[i];
+        //    console.log(this,obj);
+        //}
+        var num = ret[ret.length - 1];
+        var numPad = num.length;
+        var basename = name.replace(num, "");
+        return [basename, numPad,ext]
+    }
 }

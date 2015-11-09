@@ -12,10 +12,12 @@ class ImageInfo {
     height;
     img:Image;
     updateCount:number = 0;
-
+    basename;
     constructor(filename?) {
         this.filename = filename;
         this.img = new Image();
+        this.basename = M_path.basename(filename);
+        this.path = filename.replace(this.basename, "");
     }
 
     reloadImg() {

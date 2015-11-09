@@ -11,8 +11,21 @@ class FrameView extends BaseView {
         super();
         this.canvasEl = document.getElementById(frameCanvasId);
         this.ctx = this.canvasEl.getContext("2d");
-
+        //
+        cmd.on(CommandId.InsertFrame, (idx)=> {
+            this._insertFrame(idx)
+        })
     }
+
+    _insertFrame(idx?) {
+        var selTrackInfo = appInfo.curComp().getSelTrackInfo();
+        if (!idx) {
+            idx = selTrackInfo.selectFrame();
+        }
+        selTrackInfo.insertFrame(idx);
+        console.log(this, idx);
+    }
+
 
     resize(w, h) {
         if (w != -1)
@@ -40,8 +53,7 @@ class FrameView extends BaseView {
 
                 var thumbWidth = frameWidth - 1;
                 var thumbHeight = thumbWidth / img.width * img.height;
-                this.ctx.fillStyle = "#fff";
-                this._fillRect(frameX + 1, this.barHeight, thumbWidth, thumbWidth);
+                this._fillRect("#fff", frameX + 1, this.barHeight, thumbWidth, thumbWidth);
                 var thumbY = (thumbWidth - thumbHeight) * .5;
                 this.ctx.drawImage(img, frameX + 1, thumbY + this.barHeight, thumbWidth, thumbHeight);
 

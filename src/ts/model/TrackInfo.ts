@@ -46,9 +46,11 @@ class TrackData {//for save
 }
 class TrackInfo extends EventDispatcher {
     _idx:number;
+    _selectFrameIdx:number;
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
     isSelected:boolean;
+
     _hold:number = 1;
     _isSel:Boolean = false;
     removedFrameArr:Array<FrameInfo>;
@@ -236,6 +238,55 @@ class TrackInfo extends EventDispatcher {
         //console.log(this, "?Frame");
     }
 
+    insertFrame(idx) {
+        //todo
+        if (this.frameInfoArr.length) {
+            //
+            var ret = this.frameInfoArr[0].getNameAndCount();
+            var basename = ret[0];
+            var numPad = ret[1];
+            var ext = ret[2];
+            var pad = function () {
+                var tbl = [];
+                return function (num, n) {
+                    var len = n - num.toString().length;
+                    if (len <= 0) return num;
+                    if (!tbl[len]) tbl[len] = (new Array(len + 1)).join('0');
+                    return tbl[len] + num;
+                }
+            }();
+            console.log(this, basename, numPad, ext);
+
+            //rename backward frames
+            var isErr = false;
+            var path = this.frameInfoArr[0].imageInfo.path;
+            for (var i = this.frameInfoArr.length-1; i >= idx; i--) {
+                var imageInfo:ImageInfo = this.frameInfoArr[i].imageInfo;
+                var oldname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
+                var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
+                console.log(this, 'rename', imageInfo.filename, 'to', newname);
+                fs.rename(oldname, newname, (err)=> {
+                    if (err) {
+                        isErr = true;
+                        throw err;
+                    }
+                    else if (i == idx) {
+                        ////new png file
+                        //var pngMaker = new PngMaker();
+                        //pngMaker.createPng(1, 1, M_path.join(this.frameInfoArr[0].imageInfo.path, basename + pad(idx + 1, numPad) + ext), ()=> {
+                        //});
+                        console.log('done!');
+                        //var insertFrameInfo = new FrameInfo()
+                        //this.frameInfoArr.splice(idx, insertFrameInfo);
+                    }
+                })
+            }
+
+
+        }
+
+    }
+
     R2R(pickFrame:FrameInfo) {
         pickFrame.setHold(pickFrame.getHold() + 1);
         console.log(this, "R2R pick idx:", pickFrame.getIdx(), "hold:", pickFrame.getHold());
@@ -320,6 +371,16 @@ class TrackInfo extends EventDispatcher {
             frameBack.dtIdx(-1);
         }
         this.emit(TrackInfoEvent.DEL_FRAME, frame);
+    }
+
+    selectFrame(frameIdx?) {
+        if (isdef(frameIdx)) {
+            this._selectFrameIdx = frameIdx;
+            this.emit(TrackInfoEvent.SEL_FRAME, [this.idx2(), frameIdx]);
+
+        }
+        else
+            return this._selectFrameIdx;
     }
 
 }

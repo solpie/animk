@@ -140,9 +140,9 @@ class CompositionView implements IBaseView {
                 else
                     trackView.setActFrame(frameIdx);
             }
-
         }
     }
+
 
     newTrackView(trackInfo:TrackInfo) {
         trackInfo.on(TrackInfoEvent.SEL_TRACK, (trackInfo:TrackInfo) => {

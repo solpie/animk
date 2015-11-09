@@ -248,7 +248,8 @@ class TrackView extends BaseView implements IBaseView {
         this._isPressBar = false;
         this._isPressWidget = false;
         if (this._pickFrame) {
-            this.trackInfo.emit(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx2(), this._pickFrame.getIdx()]);
+            //this.trackInfo.emit(TrackInfoEvent.SEL_FRAME, [this.trackInfo.idx2(), this._pickFrame.getIdx()]);
+            this.trackInfo.selectFrame(this._pickFrame.getIdx());
             this._pickFrame.pressFlag = 0;
         }
         this._pickFrame = null;
