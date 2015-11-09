@@ -239,7 +239,6 @@ class TrackInfo extends EventDispatcher {
     }
 
     insertFrame(idx) {
-        //todo
         if (this.frameInfoArr.length) {
             //
             var ret = this.frameInfoArr[0].getNameAndCount();
@@ -259,9 +258,9 @@ class TrackInfo extends EventDispatcher {
 
             //rename backward frames
             var path = this.frameInfoArr[0].imageInfo.path;
-            var i = this.frameInfoArr.length-1;
+            var i = this.frameInfoArr.length - 1;
             var funcRename = (i)=> {
-                if(i>=idx){
+                if (i >= idx) {
                     var oldname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
                     var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
                     fs.rename(oldname, newname, (err)=> {
@@ -271,11 +270,21 @@ class TrackInfo extends EventDispatcher {
                         else if (i == idx) {
                             //new png file
                             var pngMaker = new PngMaker();
-                            pngMaker.createPng(1, 1, M_path.join(this.frameInfoArr[0].imageInfo.path, basename + pad(idx + 1, numPad) + ext), ()=> {
+                            var newFrameName = M_path.join(this.frameInfoArr[0].imageInfo.path, basename + pad(idx + 1, numPad) + ext);
+                            pngMaker.createPng(1, 1, newFrameName, ()=> {
+                                var insertFrameInfo = new FrameInfo(newFrameName);
+                                insertFrameInfo.setIdx(idx);
+                                insertFrameInfo.setHold(0);
+                                insertFrameInfo.setStart(idx + 1);
+                                for (var j = idx; j < this.frameInfoArr.length; j++) {
+                                    var frameInfo = this.frameInfoArr[j];
+                                    frameInfo.setIdx(frameInfo.getIdx() + 1);
+                                }
+                                this.frameInfoArr.splice(idx, 0, insertFrameInfo);
+                                this.R2R(insertFrameInfo);
+                                this.emit(TrackInfoEvent.LOADED);
                                 console.log('done!');
                             });
-                            //var insertFrameInfo = new FrameInfo()
-                            //this.frameInfoArr.splice(idx, insertFrameInfo);
                         }
                         funcRename(i);
                     });

@@ -22,7 +22,6 @@ class FrameInfo extends EventDispatcher {
     _start:number = 1;
     _end = 1;
     _hold = 1;
-    id$:string;
     imageInfo:ImageInfo;
     pressFlag = 0;
 
