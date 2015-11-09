@@ -225,7 +225,7 @@ class TrackView extends BaseView implements IBaseView {
         this._frameView.resize(frameWidth * this.trackInfo.frameInfoArr.length, frameWidth + 15);
         for (var i = 0; i < this.trackInfo.frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[i];
-            frameInfo.imageInfo.reloadImg();
+            frameInfo.imageInfo.updateImg();
         }
     }
 

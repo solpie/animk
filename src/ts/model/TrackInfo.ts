@@ -267,9 +267,7 @@ class TrackInfo extends EventDispatcher {
                     fs.rename(oldname, newname, (err)=> {
 
                         console.log(this, 'reload idx:', i, newname);
-                        var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
-                        this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
-                        this.frameInfoArr[i].imageInfo.reloadImg(updateCount);
+                        var updateCount =this.frameInfoArr[i].imageInfo.reloadImg(newname);
                         if (err) {
                             throw err;
                         }
@@ -285,7 +283,7 @@ class TrackInfo extends EventDispatcher {
                                     insertFrameInfo.setStart(this.frameInfoArr[i].getEnd() + 1)
                                 else
                                     insertFrameInfo.setStart(1);
-                                insertFrameInfo.imageInfo.reloadImg(updateCount);
+                                insertFrameInfo.imageInfo.updateImg(updateCount);
                                 for (var j = idx; j < this.frameInfoArr.length; j++) {
                                     var frameInfo = this.frameInfoArr[j];
                                     frameInfo.setIdx(frameInfo.getIdx() + 1);
@@ -344,13 +342,10 @@ class TrackInfo extends EventDispatcher {
         var funcRename = (i)=> {
             if (i < this.frameInfoArr.length) {
                 var oldname = this.frameInfoArr[i].imageInfo.filename;
-                //var oldname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
                 var newname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
                 fs.rename(oldname, newname, (err)=> {
                     console.log(this, 'reload idx:', i, newname);
-                    var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
-                    this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
-                    this.frameInfoArr[i].imageInfo.reloadImg(updateCount);
+                    this.frameInfoArr[i].imageInfo.reloadImg(newname);
                     if (err) {
                         throw err;
                     }
@@ -455,7 +450,6 @@ class TrackInfo extends EventDispatcher {
         if (isdef(frameIdx)) {
             this._selectFrameIdx = frameIdx;
             this.emit(TrackInfoEvent.SEL_FRAME, [this.idx2(), frameIdx]);
-
         }
         else
             return this._selectFrameIdx;

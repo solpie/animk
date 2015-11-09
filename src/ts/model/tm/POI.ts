@@ -16,7 +16,7 @@ class POI {
                 if (!imageLayerInfo.isRef) {
                     psd.getDescendants()[this.imageLayerInfoArr.length - 1 - i].saveAsPng(imageLayerInfo.filename, ()=> {
                         console.log(this, "psd2png", imageLayerInfo.filename);
-                        imageLayerInfo.imageInfo.reloadImg();
+                        imageLayerInfo.imageInfo.updateImg();
                     });
                 }
             }

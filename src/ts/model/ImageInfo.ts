@@ -15,19 +15,28 @@ class ImageInfo {
     basename;
 
     constructor(filename?) {
-        this.filename = filename;
-        this.img = new Image();
-        this.basename = M_path.basename(filename);
-        this.path = filename.replace(this.basename, "");
+        this.reloadImg(filename);
     }
 
-    reloadImg(count?) {
+    updateImg(count?) {
         if (this.filename) {
             //todo load ref track in PNG buffer
-            if (count)
+            if(count)
                 this.updateCount = count;
             this.updateCount++;
             this.img.src = this.filename + "?c=" + this.updateCount;
         }
     }
+
+    reloadImg(filename) {
+        this.filename = filename;
+        this.img = new Image();
+        this.basename = M_path.basename(filename);
+        this.path = filename.replace(this.basename, "");
+        this.updateCount++;
+        this.img.src = this.filename + "?c=" + this.updateCount;
+        return this.updateCount;
+    }
+
+
 }
