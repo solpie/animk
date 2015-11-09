@@ -265,6 +265,7 @@ class TrackInfo extends EventDispatcher {
                     var oldname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
                     var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
                     fs.rename(oldname, newname, (err)=> {
+
                         console.log(this, 'reload idx:', i, newname);
                         var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
                         this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
@@ -280,7 +281,10 @@ class TrackInfo extends EventDispatcher {
                                 var insertFrameInfo = new FrameInfo(newFrameName);
                                 insertFrameInfo.setIdx(idx);
                                 insertFrameInfo.setHold(0);
-                                insertFrameInfo.setStart(idx + 1);
+                                if (idx > 0)
+                                    insertFrameInfo.setStart(this.frameInfoArr[i].getEnd() + 1)
+                                else
+                                    insertFrameInfo.setStart(1);
                                 insertFrameInfo.imageInfo.reloadImg(updateCount);
                                 for (var j = idx; j < this.frameInfoArr.length; j++) {
                                     var frameInfo = this.frameInfoArr[j];
@@ -316,7 +320,7 @@ class TrackInfo extends EventDispatcher {
         for (var i = removeIdx; i < this.frameInfoArr.length; i++) {
             var frameBack = this.frameInfoArr[i];
             frameBack.dtIdx(-1);
-            frameBack.setStart(frameBack.getStart() - 1);
+            frameBack.setStart(frameBack.getStart() - pickFrame.getHold());
         }
         //todo show dialog
         fs.unlink(pickFrame.imageInfo.filename);
@@ -341,7 +345,7 @@ class TrackInfo extends EventDispatcher {
             if (i < this.frameInfoArr.length) {
                 var oldname = this.frameInfoArr[i].imageInfo.filename;
                 //var oldname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
-                var newname = M_path.join(path, basename + pad(i+1, numPad) + ext);
+                var newname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
                 fs.rename(oldname, newname, (err)=> {
                     console.log(this, 'reload idx:', i, newname);
                     var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
