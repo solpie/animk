@@ -258,33 +258,32 @@ class TrackInfo extends EventDispatcher {
             console.log(this, basename, numPad, ext);
 
             //rename backward frames
-            var isErr = false;
             var path = this.frameInfoArr[0].imageInfo.path;
-            for (var i = this.frameInfoArr.length-1; i >= idx; i--) {
-                var imageInfo:ImageInfo = this.frameInfoArr[i].imageInfo;
-                var oldname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
-                var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
-                console.log(this, 'rename', imageInfo.filename, 'to', newname);
-                fs.rename(oldname, newname, (err)=> {
-                    if (err) {
-                        isErr = true;
-                        throw err;
-                    }
-                    else if (i == idx) {
-                        ////new png file
-                        //var pngMaker = new PngMaker();
-                        //pngMaker.createPng(1, 1, M_path.join(this.frameInfoArr[0].imageInfo.path, basename + pad(idx + 1, numPad) + ext), ()=> {
-                        //});
-                        console.log('done!');
-                        //var insertFrameInfo = new FrameInfo()
-                        //this.frameInfoArr.splice(idx, insertFrameInfo);
-                    }
-                })
-            }
-
-
+            var i = this.frameInfoArr.length-1;
+            var funcRename = (i)=> {
+                if(i>=idx){
+                    var oldname = M_path.join(path, basename + pad(i + 1, numPad) + ext);
+                    var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
+                    fs.rename(oldname, newname, (err)=> {
+                        if (err) {
+                            throw err;
+                        }
+                        else if (i == idx) {
+                            //new png file
+                            var pngMaker = new PngMaker();
+                            pngMaker.createPng(1, 1, M_path.join(this.frameInfoArr[0].imageInfo.path, basename + pad(idx + 1, numPad) + ext), ()=> {
+                                console.log('done!');
+                            });
+                            //var insertFrameInfo = new FrameInfo()
+                            //this.frameInfoArr.splice(idx, insertFrameInfo);
+                        }
+                        funcRename(i);
+                    });
+                    i--;
+                }
+            };
+            funcRename(i);
         }
-
     }
 
     R2R(pickFrame:FrameInfo) {
