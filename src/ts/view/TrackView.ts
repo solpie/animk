@@ -33,7 +33,7 @@ class TrackView extends BaseView implements IBaseView {
     setActFrame(frameIdx) {
         console.log(this, "SEL_FRAME", frameIdx, this.id$);
         var focusHint = $(this.id$ + " " + ElmClass$.FocusHint);
-        if (frameIdx) {
+        if (frameIdx > -1) {
             var frameInfo:FrameInfo = this.trackInfo.frameInfoArr[frameIdx];
             if (frameInfo) {
                 focusHint.css({left: (frameInfo.getStart() - 1) * appInfo.frameWidth()});
