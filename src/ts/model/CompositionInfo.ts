@@ -186,10 +186,10 @@ class CompositionInfo extends EventDispatcher {
         this._updateCompTrackArr();
     }
 
-    getSelTrackInfo() {
+    getActiveTrackInfo() {
         for (var i = 0; i < this.trackInfoArr.length; i++) {
             var trackInfo:TrackInfo = this.trackInfoArr[i];
-            if (trackInfo && trackInfo.isSelected) {
+            if (trackInfo && trackInfo.isActive) {
                 return trackInfo;
             }
         }
@@ -199,7 +199,7 @@ class CompositionInfo extends EventDispatcher {
         var trackInfo:TrackInfo;
         for (var i in this.trackInfoArr) {
             trackInfo = this.trackInfoArr[i];
-            if (trackInfo && trackInfo.isSelected) {
+            if (trackInfo && trackInfo.isActive) {
                 this.delTrack(trackInfo.idx2());
                 break;
             }
@@ -244,7 +244,7 @@ class CompositionInfo extends EventDispatcher {
     }
 
     moveTrack(deltaIdx) {
-        var trackInfo:TrackInfo = this.getSelTrackInfo();
+        var trackInfo:TrackInfo = this.getActiveTrackInfo();
         if (trackInfo) {
             var trackInfoB:TrackInfo;
             var compTrackInfoArr:Array<TrackInfo> = this.getCompTrackInfoArr();

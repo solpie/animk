@@ -22,8 +22,9 @@ enum CommandId{
 
     ShowNewPngWin,
     HideNewPngWin,
-        //
+    //frame cmd
     InsertFrame,
+    DeleteFrame,
 }
 class CommandItem {
     id:number;
@@ -48,7 +49,9 @@ class Command extends EventDispatcher {
 
         this.newCmd(CommandId.ShowTrackMenu, "show track menu");
         this.newCmd(CommandId.HideTrackMenu, "hide track menu");
+        //frame cmd
         this.newCmd(CommandId.InsertFrame, "insert frame");
+        this.newCmd(CommandId.DeleteFrame, "delete frame");
         ////test cmd
 
         this.newCmd(CommandId.testSwapTrack, "test swap track");

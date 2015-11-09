@@ -96,7 +96,7 @@ class TrackView extends BaseView implements IBaseView {
 
         $(this.id$).on(MouseEvt.DOWN, (e)=> {
             if (e.button == MouseButton.LEFT) {
-                if (this.trackInfo.isSelected && !this._isPressWidget)
+                if (this.trackInfo.isActive && !this._isPressWidget)
                     this.setSelected(false);
                 else
                     this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
@@ -116,7 +116,7 @@ class TrackView extends BaseView implements IBaseView {
     _initMenu() {
         var panel$ = this.id$ + " " + ElmClass$.Panel;
         $(panel$).on(MouseEvt.RCLICK, ()=> {
-            if (!this.trackInfo.isSelected) {
+            if (!this.trackInfo.isActive) {
                 this.trackInfo.emit(TrackInfoEvent.SEL_TRACK, this.trackInfo);
             }
             this._isPressWidget = true;
@@ -215,6 +215,7 @@ class TrackView extends BaseView implements IBaseView {
 
         this.trackInfo.on(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
+
         });
     }
 
@@ -242,6 +243,7 @@ class TrackView extends BaseView implements IBaseView {
 
     onDelFrame(delFrame:FrameInfo) {
         this.updateClip();
+        appInfo.curComp().getMaxSize();
     }
 
     onUp() {
@@ -258,7 +260,7 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     setSelected(val:boolean) {
-        this.trackInfo.isSelected = val;
+        this.trackInfo.isActive = val;
         if (val)//todo light color
             this.setColor("#666");
         else

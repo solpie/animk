@@ -49,6 +49,7 @@ class TrackInfo extends EventDispatcher {
     _selectFrameIdx:number;
     frameInfoArr:Array<FrameInfo>;
     _trackData:TrackData;
+    isActive:boolean;
     isSelected:boolean;
 
     _hold:number = 1;
@@ -75,11 +76,11 @@ class TrackInfo extends EventDispatcher {
         return prop(this, "_layerIdx", v);
     }
 
-    isSel(v?) {
-        return prop(this, "_isSel", v, ()=> {
-            this.emit(TrackInfoEvent.SEL_TRACK)
-        })
-    }
+    //isSel(v?) {
+    //    return prop(this, "_isSel", v, ()=> {
+    //        this.emit(TrackInfoEvent.SEL_TRACK)
+    //    })
+    //}
 
     name(val?) {
         if (isdef(val)) {
@@ -295,6 +296,70 @@ class TrackInfo extends EventDispatcher {
         }
     }
 
+
+    deleteFrame(pickFrame:FrameInfo) {
+        //if (pickFrame.getIdx() < this.frameInfoArr.length - 1)
+        //{
+        //    this.L2L(this.frameInfoArr[pickFrame.getIdx() + 1]);
+        //}
+        //else//last frame
+        //    this.removeFrame(pickFrame);
+        console.log(this, "removeFrame idx", pickFrame.getIdx(), 'len:', this.frameInfoArr.length);
+        var removeIdx = pickFrame.getIdx();
+        this.frameInfoArr.splice(removeIdx, 1);
+        console.log(this, "removeFrame length", this.frameInfoArr.length);
+        for (var i = removeIdx; i < this.frameInfoArr.length; i++) {
+            var frameBack = this.frameInfoArr[i];
+            frameBack.dtIdx(-1);
+            frameBack.setStart(frameBack.getStart() - 1);
+        }
+        //todo show dialog
+        fs.unlinkSync(pickFrame.imageInfo.filename);
+        var ret = this.frameInfoArr[0].getNameAndCount();
+        var basename = ret[0];
+        var numPad = ret[1];
+        var ext = ret[2];
+        var pad = function () {
+            var tbl = [];
+            return function (num, n) {
+                var len = n - num.toString().length;
+                if (len <= 0) return num;
+                if (!tbl[len]) tbl[len] = (new Array(len + 1)).join('0');
+                return tbl[len] + num;
+            }
+        }();
+
+        //rename backward frames
+        var path = this.frameInfoArr[0].imageInfo.path;
+        var i = removeIdx;
+        var funcRename = (i)=> {
+            if (i < this.frameInfoArr.length) {
+                var oldname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
+                var newname = M_path.join(path, basename + pad(i+1, numPad) + ext);
+                fs.rename(oldname, newname, (err)=> {
+                    console.log(this, 'reload idx:', i, newname);
+                    this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
+                    this.frameInfoArr[i].imageInfo.reloadImg();
+                    i++;
+                    if (err) {
+                        throw err;
+                    }
+                    else if (i == this.frameInfoArr.length) {
+
+                    }
+                    funcRename(i);
+                });
+            }
+            else if (i == this.frameInfoArr.length) {
+                this._hold--;
+                this.emit(TrackInfoEvent.DEL_FRAME, pickFrame);
+                this.emit(TrackInfoEvent.LOADED);
+            }
+        };
+        funcRename(i);
+
+    }
+
     R2R(pickFrame:FrameInfo) {
         pickFrame.setHold(pickFrame.getHold() + 1);
         console.log(this, "R2R pick idx:", pickFrame.getIdx(), "hold:", pickFrame.getHold());
@@ -367,7 +432,7 @@ class TrackInfo extends EventDispatcher {
         //    dumpTrackFrameIdx(trackInfo);
     }
 
-
+    //for L2L only
     removeFrame(frame:FrameInfo) {
         console.log(this, "removeFrame idx", frame.getIdx(), 'len:', this.frameInfoArr.length);
         var removeIdx = frame.getIdx();

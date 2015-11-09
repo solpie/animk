@@ -32,7 +32,7 @@ class TrackMenu extends BasePopup {
     }
 
     _swapTrack(deltaIdx:number) {
-        //var trackInfo:TrackInfo = appInfo.curComp().getSelTrackInfo();
+        //var trackInfo:TrackInfo = appInfo.curComp().getActiveTrackInfo();
         //if (trackInfo) {
         //    var trackInfoB:TrackInfo;
         //    var compTrackInfoArr:Array<TrackInfo> = appInfo.curComp().getCompTrackInfoArr();
@@ -62,7 +62,7 @@ class TrackMenu extends BasePopup {
     }
 
     setTrackActType(type:number) {
-        var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getSelTrackInfo();
+        var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getActiveTrackInfo();
         if (trackInfo) {
             trackInfo.actType(type);
             this.hide();
@@ -73,7 +73,7 @@ class TrackMenu extends BasePopup {
         var menuHeight = this.menuHeight;
         var top = appInfo.mouseY;
         console.log(this, appInfo.height(), top, menuHeight);
-        var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getSelTrackInfo();
+        var trackInfo:TrackInfo = appInfo.projectInfo.curComp.getActiveTrackInfo();
         if (trackInfo) {
             $(this.id$ + " " + ElmClass$.MenuTitle).html(trackInfo.name());
         }

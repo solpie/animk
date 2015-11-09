@@ -14,18 +14,26 @@ class FrameView extends BaseView {
         //
         cmd.on(CommandId.InsertFrame, (idx)=> {
             this._insertFrame(idx)
+        });
+        cmd.on(CommandId.DeleteFrame,()=>{
+            this._deleteSelFrame();
         })
     }
 
     _insertFrame(idx?) {
-        var selTrackInfo = appInfo.curComp().getSelTrackInfo();
+        var selTrackInfo = appInfo.curComp().getActiveTrackInfo();
         if (!idx) {
             idx = selTrackInfo.selectFrame();
         }
         selTrackInfo.insertFrame(idx);
-        console.log(this, idx);
     }
 
+    _deleteSelFrame(){
+        var actTrackInfo = appInfo.curComp().getActiveTrackInfo();
+        var actFrameIdx = actTrackInfo.selectFrame();
+        actTrackInfo.deleteFrame(actTrackInfo.frameInfoArr[actFrameIdx]);
+        this.updateFrame(actTrackInfo.frameInfoArr)
+    }
 
     resize(w, h) {
         if (w != -1)
