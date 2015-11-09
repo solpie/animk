@@ -211,11 +211,11 @@ class TrackView extends BaseView implements IBaseView {
             this._frameView.resize(this.trackInfo.getHold() * frameWidth, -1);
             this._frameView.updateFrame(this.trackInfo.frameInfoArr);
             appInfo.emit(TheMachineEvent.UPDATE_IMG);
+            appInfo.curComp().getMaxSize();
         });
 
         this.trackInfo.on(TrackInfoEvent.DEL_FRAME, (delFrame:FrameInfo)=> {
             this.onDelFrame(delFrame);
-
         });
     }
 

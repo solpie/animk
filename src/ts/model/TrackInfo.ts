@@ -266,8 +266,9 @@ class TrackInfo extends EventDispatcher {
                     var newname = M_path.join(path, basename + pad(i + 2, numPad) + ext);
                     fs.rename(oldname, newname, (err)=> {
                         console.log(this, 'reload idx:', i, newname);
+                        var updateCount = this.frameInfoArr[i].imageInfo.updateCount;
                         this.frameInfoArr[i].imageInfo = new ImageInfo(newname);
-                        this.frameInfoArr[i].imageInfo.reloadImg();
+                        this.frameInfoArr[i].imageInfo.reloadImg(updateCount);
                         if (err) {
                             throw err;
                         }
@@ -280,7 +281,7 @@ class TrackInfo extends EventDispatcher {
                                 insertFrameInfo.setIdx(idx);
                                 insertFrameInfo.setHold(0);
                                 insertFrameInfo.setStart(idx + 1);
-                                insertFrameInfo.imageInfo.reloadImg();
+                                insertFrameInfo.imageInfo.reloadImg(updateCount);
                                 for (var j = idx; j < this.frameInfoArr.length; j++) {
                                     var frameInfo = this.frameInfoArr[j];
                                     frameInfo.setIdx(frameInfo.getIdx() + 1);
