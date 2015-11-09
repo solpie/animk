@@ -2,7 +2,7 @@
 /// <reference path="../event/ActEvent.ts"/>
 class SettingData {
     tmpPath:string = "c:/tmp";
-    drawApp1Path:string = "C:\\Program Files\\CELSYS\\CLIP STUDIO\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe";
+    drawApp1Path:string = "C:\\Program Files\\CELSYS\\CLIP STUDIO 1.5\\CLIP STUDIO PAINT\\CLIPStudioPaint.exe";
     drawApp2Path:string = "";
 }
 
