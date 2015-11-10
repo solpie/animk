@@ -454,5 +454,4 @@ class TrackInfo extends EventDispatcher {
         else
             return this._selectFrameIdx;
     }
-
 }

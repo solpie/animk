@@ -25,6 +25,9 @@ enum CommandId{
     //frame cmd
     InsertFrame,
     DeleteFrame,
+    ZoomOutMax,
+    ZoomInMax,
+
 }
 class CommandItem {
     id:number;
@@ -52,6 +55,8 @@ class Command extends EventDispatcher {
         //frame cmd
         this.newCmd(CommandId.InsertFrame, "insert frame");
         this.newCmd(CommandId.DeleteFrame, "delete frame");
+        //zoom
+        this.newCmd(CommandId.ZoomOutMax, "zoom out max");
         ////test cmd
 
         this.newCmd(CommandId.testSwapTrack, "test swap track");

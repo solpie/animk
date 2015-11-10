@@ -11,7 +11,12 @@ class TimestampView extends BaseView {
         this.canvasEl = document.getElementById("Timestamp0");
         this.ctx = this.canvasEl.getContext("2d");
         this.resize(1500, 20);
+
+        cmd.on(CompInfoEvent.FRAME_WIDTH_CHANGE, ()=> {
+            this._update();
+        })
     }
+
 
     resize(w, h) {
         console.log(this, "resize width:", w);
@@ -35,14 +40,17 @@ class TimestampView extends BaseView {
 
         console.log(this, "draw timestamp", frameWidth, this._width);
         this.ctx.clearRect(0, 0, this._width, this._height);
-        var frameIdx;
-        for (var i = 0; i < this._width; i += frameWidth) {
-            this._fillRect("#ffffff", i, 0, 1, this._height);
-            frameIdx = i / frameWidth;
-            this.ctx.font = '10px serif';
-            this.ctx.fillStyle = '#FFF';
-            //this.ctx.textAlign = "center";
-            this.ctx.fillText(frameIdx , i+5, 10);
+
+        if (frameWidth >= 20) {
+            var frameIdx;
+            for (var i = 0; i < this._width; i += frameWidth) {
+                this._fillRect("#ffffff", i, 0, 1, this._height);
+                frameIdx = i / frameWidth;
+                this.ctx.font = '10px serif';
+                this.ctx.fillStyle = '#FFF';
+                //this.ctx.textAlign = "center";
+                this.ctx.fillText(frameIdx, i + 5, 10);
+            }
         }
     }
 

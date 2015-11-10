@@ -15,9 +15,15 @@ class FrameView extends BaseView {
         cmd.on(CommandId.InsertFrame, (idx)=> {
             this._insertFrame(idx)
         });
-        cmd.on(CommandId.DeleteFrame,()=>{
+        cmd.on(CommandId.DeleteFrame, ()=> {
             this._deleteSelFrame();
-        })
+        });
+
+        cmd.on(CompInfoEvent.FRAME_WIDTH_CHANGE, ()=> {
+            if (appInfo.curComp().getActiveTrackInfo()) {
+                this.updateFrame(appInfo.curComp().getActiveTrackInfo().frameInfoArr)
+            }
+        });
     }
 
     _insertFrame(idx?) {
@@ -28,11 +34,11 @@ class FrameView extends BaseView {
         selTrackInfo.insertFrame(idx);
     }
 
-    _deleteSelFrame(){
+    _deleteSelFrame() {
         var actTrackInfo = appInfo.curComp().getActiveTrackInfo();
         var actFrameIdx = actTrackInfo.selectFrame();
         actTrackInfo.deleteFrame(actTrackInfo.frameInfoArr[actFrameIdx]);
-        this.updateFrame(actTrackInfo.frameInfoArr)
+        this.updateFrame(actTrackInfo.frameInfoArr,0)
     }
 
     resize(w, h) {
@@ -47,9 +53,9 @@ class FrameView extends BaseView {
 
     updateFrame(frameInfoArr, changeCount?) {
         var frameWidth = appInfo.frameWidth();
-        if (changeCount)
+        if (isdef(changeCount))
             this.resize(this._width + changeCount * frameWidth, this._height);
-        console.log(this, "updateFrame");
+        console.log(this, "updateFrame frameWidth:", frameWidth);
         for (var i = 0; i < frameInfoArr.length; i++) {
             var frameInfo:FrameInfo = frameInfoArr[i];
             var img = frameInfo.imageInfo.img;

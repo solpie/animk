@@ -59,6 +59,12 @@ class CompositionInfo extends EventDispatcher {
         this.forward();
     }
 
+    //zoom
+    zoomByFrameWidth(frameWidth) {
+        this.frameWidth = frameWidth;
+        cmd.emit(CompInfoEvent.FRAME_WIDTH_CHANGE);
+    }
+
     play() {
         this._stayBack = this._cursorPos;
         this._frameTimer.start();

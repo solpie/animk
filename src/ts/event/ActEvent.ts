@@ -44,7 +44,9 @@ class CompInfoEvent {
     static DEL_TRACK:string = "delete track";
     static SWAP_TRACK:string = "swap track";
     static UPDATE_CURSOR:string = "UPDATE_Cursor";
+    static FRAME_WIDTH_CHANGE:string = "frame width change";
 }
+
 class TrackInfoEvent {
     static LOADED:string = "load all imgs";
     static SEL_TRACK:string = "select track";
@@ -62,5 +64,4 @@ class FrameTimerEvent {
 class TheMachineEvent {
     static UPDATE_IMG:string = "UPDATE_IMG";
     static ADD_IMG:string = "ADD_IMG";
-
 }

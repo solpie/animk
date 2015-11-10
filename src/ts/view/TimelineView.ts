@@ -21,9 +21,17 @@ class TimelineView extends BaseView {
             this.updateImg();
         });
 
+        cmd.on(CompInfoEvent.FRAME_WIDTH_CHANGE, ()=> {
+            this._updateCursor();
+        });
+
         this.initDrag();
 
         this._timestamp = new TimestampView();
+    }
+
+    _updateCursor() {
+        $(ElmId$.cursorMask).width(appInfo.frameWidth());
     }
 
     updateImg() {

@@ -36,6 +36,7 @@ class CompositionView implements IBaseView {
         this.compInfo.on(CompInfoEvent.DEL_TRACK, (idx:number)=> {
             this.onDelTrackView(idx);
         });
+
         this.trackViewArr = [];
 
         this.setCompositionHeight($(CompositionId$).height());
@@ -114,6 +115,7 @@ class CompositionView implements IBaseView {
             console.log(this, i);
         }
     }
+
 
     updateCursor(frameIdx?) {
         var fpos;
