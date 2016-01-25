@@ -40,8 +40,18 @@ class Test {
             appInfo.projectInfo.curComp.setCursor(1);
         });
 
-        cmd.on(CommandId.ZoomOutMax,()=>{
+        cmd.on(CommandId.ZoomOutMax, ()=> {
             appInfo.curComp().zoomByFrameWidth(20);
-        })
+        });
+
+        cmd.on(CommandId.ImportAudio, ()=> {
+            appInfo.newProject();
+            var trkData = new TrackData();
+            trkData.type = TrackType.AUDIO;
+            trkData.enable = true;
+            trkData.path = "D:\\projects\\animk\\test\\test.mp3";
+            //trkData.path = "D:/projects/animk/test/test.mp3";
+            appInfo.curComp().newTrackByTrackData(trkData);
+        });
     }
 }

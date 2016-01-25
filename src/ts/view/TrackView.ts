@@ -22,12 +22,23 @@ class TrackView extends BaseView implements IBaseView {
     }
 
     render() {
-        var template = $('.Track-tpl').html();
-        return Mustache.render(template, {
-            idx: this.trackInfo.idx2(),
-            name: this.trackInfo.name(),
-            frameIdxArr: this.trackInfo.getIdxArr(),
-        });
+        var trackType = this.trackInfo.trackData().type;
+        if (trackType == TrackType.IMAGE) {
+            var template = $('.Track-tpl').html();
+            return Mustache.render(template, {
+                idx: this.trackInfo.idx2(),
+                name: this.trackInfo.name(),
+                frameIdxArr: this.trackInfo.getIdxArr(),
+            });
+        }
+        else if (trackType == TrackType.AUDIO) {
+            var template = $('.Track-audio-tpl').html();
+            return Mustache.render(template, {
+                idx: this.trackInfo.idx2(),
+                name: this.trackInfo.name(),
+                path:this.trackInfo.trackData().path,
+            });
+        }
     }
 
     setActFrame(frameIdx) {

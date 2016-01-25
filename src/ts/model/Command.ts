@@ -27,6 +27,8 @@ enum CommandId{
     DeleteFrame,
     ZoomOutMax,
     ZoomInMax,
+    //audio
+    ImportAudio,
 
 }
 class CommandItem {
@@ -57,6 +59,8 @@ class Command extends EventDispatcher {
         this.newCmd(CommandId.DeleteFrame, "delete frame");
         //zoom
         this.newCmd(CommandId.ZoomOutMax, "zoom out max");
+        //audio import
+        this.newCmd(CommandId.ImportAudio, "import audio");
         ////test cmd
 
         this.newCmd(CommandId.testSwapTrack, "test swap track");

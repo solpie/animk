@@ -178,7 +178,12 @@ class CompositionInfo extends EventDispatcher {
 
     newTrackByTrackData(trackData:TrackData) {
         var trackInfo:TrackInfo = new TrackInfo(trackData);
-        trackInfo.newImage(trackData.frames);
+        if (trackData.type == TrackType.AUDIO) {
+
+        }
+        else {
+            trackInfo.newImage(trackData.frames);
+        }
         //trackInfo.path(trackData.path);
         //trackInfo.start(trackData.start);
         trackInfo.idx2(this.trackInfoArr.length);
@@ -186,6 +191,7 @@ class CompositionInfo extends EventDispatcher {
         this.appendTrackInfo(trackInfo);
         this.emit(CompInfoEvent.NEW_TRACK, trackInfo);
     }
+
 
     appendTrackInfo(trackInfo:TrackInfo) {
         this.trackInfoArr.push(trackInfo);

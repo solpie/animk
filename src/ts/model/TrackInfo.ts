@@ -184,17 +184,19 @@ class TrackInfo extends EventDispatcher {
     }
 
     getCurImg(frameIdx:number):ImageInfo {
-        frameIdx -= this.start() - 1;
-        for (var i = 0; i < this.frameInfoArr.length; i++) {
-            var frameInfo:FrameInfo = this.frameInfoArr[i];
-            if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
+        if (this.trackData().type == TrackType.IMAGE) {
+            frameIdx -= this.start() - 1;
+            for (var i = 0; i < this.frameInfoArr.length; i++) {
+                var frameInfo:FrameInfo = this.frameInfoArr[i];
+                if (frameInfo.getStart() <= frameIdx && frameInfo.getEnd() >= frameIdx) {
+                    return frameInfo.imageInfo;
+                }
+            }
+            if (frameIdx > frameInfo.getEnd() && this.loopType() == TrackLoopType.HOLD) {
                 return frameInfo.imageInfo;
             }
+            return null;
         }
-        if (frameIdx > frameInfo.getEnd() && this.loopType() == TrackLoopType.HOLD) {
-            return frameInfo.imageInfo;
-        }
-        return null;
     }
 
 
@@ -267,7 +269,7 @@ class TrackInfo extends EventDispatcher {
                     fs.rename(oldname, newname, (err)=> {
 
                         console.log(this, 'reload idx:', i, newname);
-                        var updateCount =this.frameInfoArr[i].imageInfo.reloadImg(newname);
+                        var updateCount = this.frameInfoArr[i].imageInfo.reloadImg(newname);
                         if (err) {
                             throw err;
                         }

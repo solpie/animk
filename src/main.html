@@ -37,6 +37,32 @@
             </div>
         </div>
     </script>
+
+    <script type="text/template" class="Track-audio-tpl">
+        <div class="Track" id="{{idx}}">
+            <div class="Panel">
+                <div class="ActHint" style="width: 5px;height: 95%;background: #FAF014;display: inline-block;"></div>
+                <div class="Label" style="display: inline-block;">
+                    <div class="Text">{{name}}</div>
+                    <input type="text"/>
+                </div>
+                <div class="CheckBox">
+                    <label class="VisibleCheckBox"></label>
+                </div>
+
+                <div class="Slider">
+                    <div class="Bar">
+                        <div class="Label">100%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="TrackArea">
+                <div class="Clip">
+                    <audio src="{{path}}" controls="controls" autoplay="autoplay"></audio>
+                </div>
+            </div>
+        </div>
+    </script>
 </head>
 <body style="-webkit-app-region:drag">
 <div style="display:none;">

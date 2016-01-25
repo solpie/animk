@@ -10,20 +10,22 @@ class FrameView extends BaseView {
     constructor(frameCanvasId:string) {
         super();
         this.canvasEl = document.getElementById(frameCanvasId);
-        this.ctx = this.canvasEl.getContext("2d");
-        //
-        cmd.on(CommandId.InsertFrame, (idx)=> {
-            this._insertFrame(idx)
-        });
-        cmd.on(CommandId.DeleteFrame, ()=> {
-            this._deleteSelFrame();
-        });
+        if (this.canvasEl) {//todo init
+            this.ctx = this.canvasEl.getContext("2d");
+            //
+            cmd.on(CommandId.InsertFrame, (idx)=> {
+                this._insertFrame(idx)
+            });
+            cmd.on(CommandId.DeleteFrame, ()=> {
+                this._deleteSelFrame();
+            });
 
-        cmd.on(CompInfoEvent.FRAME_WIDTH_CHANGE, ()=> {
-            if (appInfo.curComp().getActiveTrackInfo()) {
-                this.updateFrame(appInfo.curComp().getActiveTrackInfo().frameInfoArr)
-            }
-        });
+            cmd.on(CompInfoEvent.FRAME_WIDTH_CHANGE, ()=> {
+                if (appInfo.curComp().getActiveTrackInfo()) {
+                    this.updateFrame(appInfo.curComp().getActiveTrackInfo().frameInfoArr)
+                }
+            });
+        }
     }
 
     _insertFrame(idx?) {
@@ -38,7 +40,7 @@ class FrameView extends BaseView {
         var actTrackInfo = appInfo.curComp().getActiveTrackInfo();
         var actFrameIdx = actTrackInfo.selectFrame();
         actTrackInfo.deleteFrame(actTrackInfo.frameInfoArr[actFrameIdx]);
-        this.updateFrame(actTrackInfo.frameInfoArr,0)
+        this.updateFrame(actTrackInfo.frameInfoArr, 0)
     }
 
     resize(w, h) {
@@ -46,8 +48,10 @@ class FrameView extends BaseView {
             this._width = w;
         if (h != -1)
             this._height = h;
-        this.canvasEl.setAttribute("width", this._width + "");
-        this.canvasEl.setAttribute("height", this._height + "");
+        if (this.canvasEl) {
+            this.canvasEl.setAttribute("width", this._width + "");
+            this.canvasEl.setAttribute("height", this._height + "");
+        }
     }
 
 
