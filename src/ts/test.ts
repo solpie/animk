@@ -49,9 +49,14 @@ class Test {
             var trkData = new TrackData();
             trkData.type = TrackType.AUDIO;
             trkData.enable = true;
-            trkData.path = "D:\\projects\\animk\\test\\test.mp3";
-            //trkData.path = "D:/projects/animk/test/test.mp3";
+            //trkData.path = "D:\\projects\\animk\\test\\test.mp3";
+            trkData.path = "D:/projects/animk/test/test.wav";
             appInfo.curComp().newTrackByTrackData(trkData);
+
+            //var audio   = document.createElement('audio');
+            //audio.src = trkData.path;
+            //console.log(this, "audio state: ", audio.readyState);
+            //audio.play();
         });
     }
 }
