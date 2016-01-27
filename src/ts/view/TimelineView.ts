@@ -31,7 +31,8 @@ class TimelineView extends BaseView {
     }
 
     _updateCursor() {
-        $(ElmId$.cursorMask).width(appInfo.frameWidth());
+        console.log(this, "updateCursor width: ",appInfo.frameWidth());
+        $(ElmId$.cursor).width(appInfo.frameWidth());
     }
 
     updateImg() {
